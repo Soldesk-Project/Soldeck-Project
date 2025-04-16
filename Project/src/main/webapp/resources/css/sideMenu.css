@@ -1,0 +1,24 @@
+.side{
+    border: 1px dashed;
+    list-style-type: none;
+    position: fixed;
+    padding: 0;
+    width: 182px;
+    height: 50%;
+    padding: 15px;
+    margin: 0;
+}
+.side li{
+    border: 1px solid black;
+    display: block;
+	width: 140px;
+	text-align: center;
+	text-decoration: none;
+	color: white;
+	padding: 20px;
+}
+.side li:hover{
+	color: blueviolet;
+	background-color: gray;
+	font-weight: bold;
+}

@@ -1,0 +1,114 @@
+.signup-container {
+    width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.signup-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.birth-date input {
+    width: calc(100% - 12px);
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.birth-date {
+    display: flex;
+    justify-content: space-between;
+}
+
+.birth-date input {
+    width: 30%;
+}
+
+.gender {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gender-option {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-right: 10px;
+    width: 120px;
+}
+
+.gender-option label {
+    margin-right: 5px;
+}
+
+.gender-option input[type="radio"] {
+    appearance: none;
+    width: 40px;
+    height: 25px;
+    border: 1px solid #ccc;
+    outline: none;
+    margin: 0;
+    margin-left: 5px;
+}
+
+.gender-option input[type="radio"]:checked {
+    background-color: #007bff;
+    position: relative; /* 체크 표시 위치 설정 */
+}
+
+.gender-option input[type="radio"]:checked::after {
+    content: '✓'; /* 체크 표시 */
+    position: absolute; /* 체크 표시 위치 설정 */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 14px;
+}
+
+.gender-option {
+    border: none;
+    padding: 0;
+    margin-right: 15px;
+    width: 120px;
+}
+
+.gender-option label {
+    margin-right: 5px;
+    padding: 5px 10px;
+    border: 1px solid #ccc; 
+    border-radius: 5px;
+    width: 100%;
+    text-align: center;
+}
+
+button[type="submit"] {
+    width: 50%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    margin: 20px auto 0;
+    display: block;
+}

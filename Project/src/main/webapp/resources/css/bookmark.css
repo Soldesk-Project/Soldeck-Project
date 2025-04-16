@@ -1,0 +1,87 @@
+
+/*------------------ body / main menu -------------------------*/
+.container{
+	width: 1200px;
+	height: 1500px;
+	margin: auto;
+}
+.side-menu{
+	width: 230px;
+	height: 100%;
+	float: left;
+}
+.main-menu{
+	width: 80%;
+	float: right;
+}
+.list-title{
+	width: 600px;
+  	height: 60px;
+  	border: 1px dashed;
+  	align-items: center;
+	display: flex;
+}
+.list-title span{
+	font-size: 20px;
+}
+.list-content{
+	overflow: auto;
+	width: 90%;
+	height: 600px; 
+  	border: 1px dashed;
+	margin: 15px 0;
+}
+.view-img{
+	display: inline-block;
+	width: 150px;
+	height: 150px;
+	margin: 20px;
+	border: 1px solid black;
+}
+.view-info{
+	float: right;
+	width: 600px;
+	height: 150px;
+	border: 1px dashed;
+	font-size: 20px;
+	margin: 20px ;
+}
+.info-text{
+	margin: 5px;
+}
+.bookmark-img{
+	float: right;
+	font-size: 10px;
+	margin: 10px;
+	width: 40px;
+	height: 40px;
+	border: 1px solid black;
+}
+
+
+/*------------------ 사이드 메뉴 css -------------------------*/
+
+.side{
+    border: 1px dashed;
+    list-style-type: none;
+    position: fixed;
+    padding: 0;
+    width: 182px;
+    height: 50%;
+    padding: 15px;
+    margin: 0;
+}
+.side li{
+    border: 1px solid black;
+    display: block;
+	width: 140px;
+	text-align: center;
+	text-decoration: none;
+	color: white;
+	padding: 20px;
+}
+.side li:hover{
+	color: blueviolet;
+	background-color: gray;
+	font-weight: bold;
+}
