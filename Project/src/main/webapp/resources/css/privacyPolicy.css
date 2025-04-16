@@ -60,41 +60,104 @@
 
 #firstTable th {
     background-color: #f2f2f2;
+    text-align: center;
 }
 
 #firstTable td:nth-child(1) {
-    width: 170px;
+    width: 130px;
+    text-align: center;
 }
 
 #firstTable td:nth-child(2) {
-    width: 10px;
+    width: 50px;
+    text-align: center;
 }
 
 #firstTable td:nth-child(3) {
-    width: 330px;
+    width: 270px;
 }
 
 #firstTable td:nth-child(4) {
-    width: 400px;
+    width: 320px;
 }
 
 #firstTable td:nth-child(5) {
-    width: 200px;
+    width: 160px;
 }
 
 /* 두 번째 테이블 스타일 */
 #secondTable {
-    width: 100%; /* 컨테이너 너비에 맞게 테이블 너비 조정 */
+    border-collapse: collapse;
+    font-size: 80%;
+    text-align: center;
+}
+
+#secondTable th, #secondTable td{
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#secondTable th{
+    background-color: #f2f2f2;
+}
+#secondTable td:nth-child(1) {
+    width: 400px;
+}
+
+#secondTable td:nth-child(2) {
+    width: 400px;
+}
+
+#secondTable td:nth-child(3) {
+    width: 140px;
+}
+/* 세 번째 테이블 스타일 */
+#thirdTable {
     border-collapse: collapse;
     font-size: 80%;
 }
-
-#secondTable th, #secondTable td {
+#thirdTable th, #thirdTable td {
     border: 1px solid #ddd;
     padding: 8px;
-    text-align: left;
+    text-align: center;
+}
+#thirdTable th {
+    background-color: #f2f2f2;
+}
+#thirdTable td:nth-child(1) {
+    width: 190px;
 }
 
-#secondTable th {
+#thirdTable td:nth-child(2) {
+    width: 310px;
+}
+
+#thirdTable td:nth-child(3) {
+    width: 310px;
+}
+
+#thirdTable td:nth-child(4) {
+    width: 130px;
+}
+/* 네 번째 테이블 스타일 */
+#fourthTable {
+    border-collapse: collapse;
+    font-size: 80%;
+    text-align: center;
+}
+
+#fourthTable th, #fourthTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#fourthTable th {
     background-color: #f2f2f2;
+}
+#fourthTable td:nth-child(1) {
+    width: 250px;
+}
+
+#fourthTable td:nth-child(2) {
+    width: 690px;
 }

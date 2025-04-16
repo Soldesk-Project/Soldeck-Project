@@ -30,7 +30,7 @@
     
     
     <%@ include file="../layout/footer.jsp" %>
-
-    <script src="resources/js/loginPage.js"></script>
+	
+	<script type="text/javascript" src="/resources/js/loginPage.js"></script>
 </body>
 </html>

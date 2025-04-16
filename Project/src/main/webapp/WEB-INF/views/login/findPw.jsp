@@ -25,6 +25,6 @@
     
         <%@ include file="../layout/footer.jsp" %>
     
-    <script src="resources/js/findPw.js"></script>
+	<script type="text/javascript" src="/resources/js/findPw.js"></script>
 </body>
 </html>

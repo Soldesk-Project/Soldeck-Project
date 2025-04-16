@@ -65,6 +65,6 @@
 
     <%@ include file="../layout/footer.jsp" %>
 
-    <script src="resources/js/signUpPage.js"></script>
+	<script type="text/javascript" src="/resources/js/signUpPage.js"></script>
 </body>
 </html>

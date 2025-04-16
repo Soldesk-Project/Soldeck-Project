@@ -26,6 +26,6 @@
         </div>
     </div>
     <%@ include file="../layout/footer.jsp" %>
-    <script src="resources/js/findId.js"></script>
+	<script type="text/javascript" src="/resources/js/findId.js"></script>
 </body>
 </html>

@@ -1,0 +1,22 @@
+.faq-container {
+    width: 80%;
+    margin: 20px auto;
+    overflow-y: auto; /* 전체 스크롤 */
+    max-height: 500px; /* 최대 높이 설정 (선택 사항) */
+}
+
+.faq-item {
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+
+.faq-title {
+    padding: 10px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
+.faq-content {
+    padding: 10px;
+    display: none; /* 초기에는 내용 숨김 */
+}

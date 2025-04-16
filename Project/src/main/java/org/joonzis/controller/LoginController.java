@@ -50,4 +50,14 @@ public class LoginController {
     public String privacyPolicy() {
         return "login/privacyPolicy";
     }
+    
+    @RequestMapping("/frequentQuestion")
+    public String frequentQuestion() {
+        return "login/frequentQuestion";
+    }
+    
+    @RequestMapping("/announcement")
+    public String announcement() {
+        return "login/announcement";
+    }
 }
