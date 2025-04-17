@@ -32,4 +32,14 @@ public class myPageController {
 		log.info("review...");
 		return "/mypage/review";
 	}
+	@GetMapping("/club")
+	public String club() {
+		log.info("club...");
+		return "/mypage/club";
+	}
+	@GetMapping("/event")
+	public String event() {
+		log.info("event...");
+		return "/mypage/event";
+	}
 }
