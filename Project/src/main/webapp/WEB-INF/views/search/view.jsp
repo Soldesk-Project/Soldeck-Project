@@ -17,7 +17,7 @@
                     <div class="slide">
                         <img src="https://img1.kakaocdn.net/cthumb/local/C544x408.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flocalfiy%2F9D96CE0AF47646C48E7B41BF852F0E5E" alt="이미지 1">
                     </div>
-                    <div class="slide">
+                    <!-- <div class="slide">
                         <img src="https://img1.kakaocdn.net/cthumb/local/C264x196.q50/?fname=http%3A%2F%2Ft1.kakaocdn.net%2Ffiy_reboot%2Fplace%2F42F0E8B92BBD4145B7B7F3A8C66092AD" alt="이미지 2">
                     </div>
                     <div class="slide">
@@ -31,7 +31,7 @@
                     </div>
                     <div class="slide">
                         <img src="https://img1.kakaocdn.net/cthumb/local/C544x408.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flocal%2FkakaomapPhoto%2Freview%2F7ef2638e4b26750a2e18c779ba9b04e9a6bab298%3Foriginal" alt="이미지 6">
-                    </div>
+                    </div> -->
                 </div>
                 <a class="prev" onclick="moveSlide(-1)">❮</a>
                 <a class="next" onclick="moveSlide(1)">❯</a>
@@ -152,6 +152,20 @@
              </div>
         </div>
     </div>
+	<!-- 모달 창 (더보기) -->
+	<div class="modal_view" id="viewModal">
+		<div class="modal_view-content">
+			<div class="image-view">
+                <img src="https://img1.kakaocdn.net/cthumb/local/C544x408.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flocalfiy%2F9D96CE0AF47646C48E7B41BF852F0E5E" alt="이미지 1">
+                <img src="https://img1.kakaocdn.net/cthumb/local/C264x196.q50/?fname=http%3A%2F%2Ft1.kakaocdn.net%2Ffiy_reboot%2Fplace%2F42F0E8B92BBD4145B7B7F3A8C66092AD" alt="이미지 2">
+                <img src="https://img1.kakaocdn.net/cthumb/local/C640x960.q50/?fname=http%3A%2F%2Ft1.kakaocdn.net%2Ffiy_reboot%2Fplace%2FF5F4393C6D35419B9545F2F230E5D334" alt="이미지 3">
+                <img src="https://img1.kakaocdn.net/cthumb/local/C640x960.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flocal%2FkakaomapPhoto%2Freview%2Fcf3b48884e2c3bf3f7b9bec246ac3f3925e3f921%3Foriginal" alt="이미지 4">
+                <img src="https://img1.kakaocdn.net/cthumb/local/C264x196.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flocal%2FkakaomapPhoto%2Freview%2F4e6288d57f8db53b1136c87e78715a4e2f4634f2%3Foriginal" alt="이미지 5">
+            	<img src="https://img1.kakaocdn.net/cthumb/local/C544x408.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flocal%2FkakaomapPhoto%2Freview%2F7ef2638e4b26750a2e18c779ba9b04e9a6bab298%3Foriginal" alt="이미지 6">
+			</div>
+		</div>
+	</div>
+
 	
 	<!-- 모달 창 -->
 <div class="modal" id="reservationModal">

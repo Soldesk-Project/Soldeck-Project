@@ -1,0 +1,16 @@
+package org.joonzis.service;
+
+import java.util.List;
+
+import org.joonzis.domain.RestVO;
+
+public interface RestService {
+	// 전체 가게 목록
+	public List<RestVO> getList();
+
+	// 특정 가게 목록
+	public List<RestVO> getFindList(String region, String category);
+	
+	// 가게 찾기
+	public RestVO get(int rest_no);
+}

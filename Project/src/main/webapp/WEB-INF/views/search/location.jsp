@@ -13,14 +13,14 @@
 		<div class="location-select">
 			<select>
 				<option value="">지역 선택</option>
-				<option value="seoul">서울</option>
-				<option value="busan">부산</option>
-				<option value="daejeon">대전</option>
-				<option value="daegu">대구</option>
-				<option value="ulsan">울산</option>
-				<option value="gwangju">광주</option>
-				<option value="incheon">인천</option>
-				<option value="jeju">제주</option>
+				<option value="서울">서울</option>
+				<option value="부산">부산</option>
+				<option value="대전">대전</option>
+				<option value="대구">대구</option>
+				<option value="울산">울산</option>
+				<option value="광주">광주</option>
+				<option value="인천">인천</option>
+				<option value="제주">제주</option>
 			</select>
 	    </div>
    </div>
@@ -38,86 +38,20 @@
    </div>
    
 	<div class="panel-footer">
-	  <div class="chat-body">
-	    <div class="image-con">
-	      <!-- 이미지 컨테이너 -->
-	      <div class="image-row">
-	        <div class="image">
-	          <img src="https://img1.kakaocdn.net/cthumb/local/C544x408.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flocalfiy%2F9D96CE0AF47646C48E7B41BF852F0E5E" alt="이미지 1">
-	        </div>
-	        <div class="image">
-	          <img src="https://img1.kakaocdn.net/cthumb/local/C264x196.q50/?fname=http%3A%2F%2Ft1.kakaocdn.net%2Ffiy_reboot%2Fplace%2F42F0E8B92BBD4145B7B7F3A8C66092AD" alt="이미지 2">
-	        </div>
-	        <div class="image">
-	          <img src="https://img1.kakaocdn.net/cthumb/local/C640x960.q50/?fname=http%3A%2F%2Ft1.kakaocdn.net%2Ffiy_reboot%2Fplace%2FF5F4393C6D35419B9545F2F230E5D334" alt="이미지 3">
-	        </div>
-	      </div>
-	      <!-- 가게 이름 컨테이너 -->
-	      <div class="name-row">
-	        <div class="name">
-	          <p>가게 이름</p>
-	        </div>
-	        <div class="name">
-	          <p>가게 이름</p>
-	        </div>
-	        <div class="name">
-	          <p>가게 이름</p>
-	        </div>
-	      </div>
-	      <!-- 두 번째 줄: 이미지 -->
-	      <div class="image-row">
-	        <div class="image">
-	          <img src="https://img1.kakaocdn.net/cthumb/local/C544x408.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flocalfiy%2F9D96CE0AF47646C48E7B41BF852F0E5E" alt="이미지 4">
-	        </div>
-	        <div class="image">
-	          <img src="https://img1.kakaocdn.net/cthumb/local/C264x196.q50/?fname=http%3A%2F%2Ft1.kakaocdn.net%2Ffiy_reboot%2Fplace%2F42F0E8B92BBD4145B7B7F3A8C66092AD" alt="이미지 5">
-	        </div>
-	        <div class="image">
-	          <img src="https://img1.kakaocdn.net/cthumb/local/C640x960.q50/?fname=http%3A%2F%2Ft1.kakaocdn.net%2Ffiy_reboot%2Fplace%2FF5F4393C6D35419B9545F2F230E5D334" alt="이미지 6">
-	        </div>
-	      </div>
-	      <!-- 두 번째 줄: 가게 이름 -->
-	      <div class="name-row">
-	        <div class="name">
-	          <p>가게 이름</p>
-	        </div>
-	        <div class="name">
-	          <p>가게 이름</p>
-	        </div>
-	        <div class="name">
-	          <p>가게 이름</p>
-	        </div>
-	      </div>
-	      <!-- 세 번째 줄: 이미지 -->
-	      <div class="image-row">
-	        <div class="image">
-	          <img src="https://img1.kakaocdn.net/cthumb/local/C544x408.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flocalfiy%2F9D96CE0AF47646C48E7B41BF852F0E5E" alt="이미지 4">
-	        </div>
-	        <div class="image">
-	          <img src="https://img1.kakaocdn.net/cthumb/local/C264x196.q50/?fname=http%3A%2F%2Ft1.kakaocdn.net%2Ffiy_reboot%2Fplace%2F42F0E8B92BBD4145B7B7F3A8C66092AD" alt="이미지 5">
-	        </div>
-	        <div class="image">
-	          <img src="https://img1.kakaocdn.net/cthumb/local/C640x960.q50/?fname=http%3A%2F%2Ft1.kakaocdn.net%2Ffiy_reboot%2Fplace%2FF5F4393C6D35419B9545F2F230E5D334" alt="이미지 6">
-	        </div>
-	      </div>
-	      <!-- 세 번째 줄: 가게 이름 -->
-	      <div class="name-row">
-	        <div class="name">
-	          <p>가게 이름</p>
-	        </div>
-	        <div class="name">
-	          <p>가게 이름</p>
-	        </div>
-	        <div class="name">
-	          <p>가게 이름</p>
-	        </div>
-	      </div>
-	    </div>
-	  </div>
+		<div class="chat-body">
+			<div class="image-con">
+		      <!-- 이미지와 가게 이름 세트 -->
+		      <div class="item-set">
+		        <div class="image">
+		          <img src="https://img1.kakaocdn.net/cthumb/local/C544x408.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flocalfiy%2F9D96CE0AF47646C48E7B41BF852F0E5E" alt="이미지 1">
+		        </div>
+		        <div class="name">
+		          <p>가게 이름test</p>
+		        </div>
+		      </div>
+			</div>
+		</div>
 	</div>
-	
-	
-	
 	<jsp:include page="../layout/footer.jsp"/>
 	<script type="text/javascript" src="/resources/js/location.js"></script> 
 </body>

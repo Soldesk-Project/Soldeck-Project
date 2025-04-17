@@ -8,7 +8,69 @@ linkEle.href = CSS_FILE_PATH;
 // 3. head 태그에 link 엘리먼트 추가
 document.head.appendChild(linkEle);
 
-//모달 창 열기
+showViewList();
+function showViewList(){
+	const imageUL = document.querySelector(".slides-wrapper");
+	let msg = '';
+	msg +=`<div class="slide">`
+	msg +=`<img src="https://img1.kakaocdn.net/cthumb/local/C544x408.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flocalfiy%2F9D96CE0AF47646C48E7B41BF852F0E5E" alt="이미지 1">`
+	msg +=`</div>`
+	msg +=`<div class="slide">`
+	msg +=`<img src="https://img1.kakaocdn.net/cthumb/local/C264x196.q50/?fname=http%3A%2F%2Ft1.kakaocdn.net%2Ffiy_reboot%2Fplace%2F42F0E8B92BBD4145B7B7F3A8C66092AD" alt="이미지 1">`
+	msg +=`</div>`
+	msg +=`<div class="slide">`
+	msg +=`<img src="https://img1.kakaocdn.net/cthumb/local/C640x960.q50/?fname=http%3A%2F%2Ft1.kakaocdn.net%2Ffiy_reboot%2Fplace%2FF5F4393C6D35419B9545F2F230E5D334" alt="이미지 1">`
+	msg +=`</div>`
+	msg +=`<div class="slide">`
+	msg +=`<img src="https://img1.kakaocdn.net/cthumb/local/C640x960.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flocal%2FkakaomapPhoto%2Freview%2Fcf3b48884e2c3bf3f7b9bec246ac3f3925e3f921%3Foriginal" alt="이미지 1">`
+	msg +=`</div>`
+			imageUL.innerHTML = msg;
+}
+
+let currentIndex = 0;
+const slidesWrapper = document.querySelector('.slides-wrapper');
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+const visibleSlides = 4;
+
+function moveSlide(direction) {
+    currentIndex += direction;
+    if (currentIndex < 0) {
+        currentIndex = 0;
+    } else if (currentIndex > totalSlides - visibleSlides) {
+        currentIndex = totalSlides - visibleSlides;
+    }
+    const offset = currentIndex * (100 / visibleSlides);
+    slidesWrapper.style.transform = `translateX(-${offset}%)`;
+}
+
+//모달 창 열기 (더보기)
+const viewBtn = document.getElementById('viewBtn');
+const viewModal = document.getElementById('viewModal');
+
+viewBtn.addEventListener('click', () => {
+	viewModal.style.display = 'flex';
+	});
+
+document.addEventListener('DOMContentLoaded', function () {
+    const modal = document.getElementById('viewModal');
+
+    // 모달창 외부 클릭 감지
+    modal.addEventListener('click', function (event) {
+        // 클릭된 요소가 모달창 외부인지 확인
+        if (event.target === modal) {
+        	viewModal.style.display = 'none';
+            console.log(1);
+        }
+    });
+
+    // 예시: 모달창을 여는 함수 (필요 시 호출)
+    function openModal() {
+        modal.classList.add('show');
+    }
+});
+
+//모달 창 열기 (예약)
 const uploadBtn = document.getElementById('uploadBtn');
 const reservationModal = document.getElementById('reservationModal');
 const closeModalBtn = document.getElementById('closeModalBtn');
