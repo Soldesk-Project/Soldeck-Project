@@ -4,10 +4,21 @@
 
 <mapper namespace="org.joonzis.mapper.RestMapper">
 	<select id="findAll" resultType="org.joonzis.domain.RestVO">
-		SELECT * FROM TBL_REST
+		SELECT * FROM RESTAURANT
+	</select>
+    
+    <select id="filteredAll" resultType="org.joonzis.domain.RestVO" parameterType="Map">
+	    SELECT * FROM RESTAURANT
+	    WHERE 1=1
+	    <if test="region != null">
+	        AND rest_loc LIKE #{region}
+	    </if>
+	    <if test="category != null">
+	        AND rest_cate = #{category}
+	    </if>
 	</select>
 	
 	<select id="findByNo" resultType="org.joonzis.domain.RestVO">
-		SELECT * FROM TBL_REST WHERE REST_NO = #{rest_no}
+		SELECT * FROM RESTAURANT WHERE REST_NO = #{rest_no}
 	</select>
 </mapper>
