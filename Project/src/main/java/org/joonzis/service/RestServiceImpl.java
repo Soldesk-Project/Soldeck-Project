@@ -1,6 +1,8 @@
 package org.joonzis.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.joonzis.domain.RestVO;
 import org.joonzis.mapper.RestMapper;
@@ -23,11 +25,17 @@ public class RestServiceImpl implements RestService{
 	}
 	
 	@Override
-	public List<RestVO> getFindList(String region, String category) {
-		log.info("getFindList..." + region + category);
-		return mapper.getFindAll(region, category);
+	public List<RestVO> getFilteredList(String region, String category) {
+		log.info("getFilteredList... region: " + region + ", category: " + category);
+		Map<String, Object> params = new HashMap<>();
+	    if (region != null && !region.isEmpty()) {
+	        params.put("region", "%" + region + "%");
+	    }
+	    if (category != null && !category.isEmpty()) {
+	        params.put("category", category);
+	    }
+		return mapper.filteredAll(params);
 	}
-	
 	@Override
 	public RestVO get(int rest_no) {
 		log.info("get...");

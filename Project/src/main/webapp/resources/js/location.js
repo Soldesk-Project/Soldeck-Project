@@ -65,19 +65,27 @@ categoryButtons.forEach(button => {
 });
 
 function getList(callback) {
-	const params = new URLSearchParams();
+    const params = new URLSearchParams();
     if (selectedRegion) params.append('region', selectedRegion);
     if (selectedCategory) params.append('category', selectedCategory);
     const url = `/search/location/data${params.toString() ? '?' + params.toString() : ''}`;
+    console.log("Fetching URL:", url);
     fetch(url, {
         headers: {
             'Accept': 'application/json'
         }
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
     .then(data => {
-        console.log(data);
+        console.log("Received data:", data);
         callback(data);
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+        console.error("Fetch error:", err.message);
+    });
 }

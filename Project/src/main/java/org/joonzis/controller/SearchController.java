@@ -48,7 +48,7 @@ public class SearchController {
 	public ResponseEntity<List<RestVO>> locationData(@RequestParam(value = "region", required = false) String region,
 														@RequestParam(value = "category", required = false) String category) {
 		log.info("locationData..." + " region : " + region + " category : " + category);
-		return new ResponseEntity<List<RestVO>>(service.getFindList(region, category), HttpStatus.OK);
+		return new ResponseEntity<List<RestVO>>(service.getFilteredList(region, category), HttpStatus.OK);
 	}
 	// 상세 페이지
 	@GetMapping("/view")
