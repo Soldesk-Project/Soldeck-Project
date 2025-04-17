@@ -11,15 +11,15 @@
 }
 .main-menu{
 	width: 80%;
-	height: 95%;
+	height: 90%;
 	float: right;
 	font-size: 20px;
-	overflow: auto;
 }
 .club-main{
+	overflow: auto;
 	box-sizing: border-box;
-	width: 100%;
-	height: auto;
+	width: 101%;
+	height: 100%;
 	border: 1px dashed;
 	font-size: 20px;
 	margin-bottom: 20px;
