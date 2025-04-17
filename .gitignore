@@ -79,6 +79,7 @@ local.properties
 # Maven 관련
 # ------------------------------
 **/target/
+build/
 
 # ------------------------------
 # 기타
@@ -86,3 +87,5 @@ local.properties
 # IntelliJ 관련 (사용 시)
 /.idea/
 /*.iml
+
+###
