@@ -11,7 +11,7 @@
   
   <div class="container">
 	<div class="side-menu">
-  		<jsp:include page="../layout/sideMenu.jsp"/>
+  		<jsp:include page="../layout/sideMenu_info.jsp"/>
 	</div>
 	<div class="main-menu">
       <form method="POST">

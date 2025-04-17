@@ -9,11 +9,13 @@
 <link rel="stylesheet" type="text/css" href="/resources/css/footer.css">
 </head>
 <body>
+	<div class="footer_container">
  	<ul class="footer">
 	    <li><a href="#"> | 공지사항 |</a></li>
 	    <li><a href="#"> | 개인정보보호처리방침 | </a></li>
 	    <li><a href="#"> | 자주물어보는질문 | </a></li>
 	    <li><a href="#"> | 이용약관 | </a></li>
 	</ul>
+	</div>
 </body>
 </html>
