@@ -23,6 +23,7 @@
 }
 .list-title span{
 	font-size: 20px;
+	margin: 10px;
 }
 .list-content{
 	overflow: auto;
@@ -67,7 +68,7 @@
     position: fixed;
     padding: 0;
     width: 182px;
-    height: 50%;
+    height: 40%;
     padding: 15px;
     margin: 0;
 }

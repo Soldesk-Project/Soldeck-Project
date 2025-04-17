@@ -24,7 +24,7 @@
       <div id="caption"></div>
     </div>
     <div class="nav-right1">
-      <a href="#" id="login">login</a>
+      <a href="/login/loginPage" id="login">login</a>
     </div>
   </div>
 </body>
