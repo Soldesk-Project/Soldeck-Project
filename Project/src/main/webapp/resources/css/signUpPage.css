@@ -1,43 +1,57 @@
-.signup-container {
-    width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+body {
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
 }
 
-.signup-container h2 {
+/* 컨테이너 스타일 (폼 영역) */
+.container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 400px; /* 필요에 따라 조절 */
+    margin: 20px auto; /* 상하 마진 추가 및 중앙 정렬 */
+}
+
+h1 {
     text-align: center;
     margin-bottom: 20px;
+    color: #333;
 }
 
-.form-group {
+.formGroup {
     margin-bottom: 15px;
 }
 
-.form-group label {
+label {
     display: block;
     margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
 }
 
-.form-group input[type="text"],
-.form-group input[type="password"],
-.form-group input[type="email"],
-.form-group input[type="tel"],
-.birth-date input {
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"] {
     width: calc(100% - 12px);
     padding: 8px;
     border: 1px solid #ccc;
-    border-radius: 3px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
 }
 
-.birth-date {
+.birthDate {
     display: flex;
-    justify-content: space-between;
+    gap: 10px;
 }
 
-.birth-date input {
-    width: 30%;
+.birthCate input[type="text"] {
+    width: calc(33.33% - 7px);
 }
 
 .gender {
@@ -46,7 +60,7 @@
     align-items: center;
 }
 
-.gender-option {
+.genderOption {
     display: flex;
     align-items: center;
     border: 1px solid #ccc;
@@ -56,11 +70,11 @@
     width: 120px;
 }
 
-.gender-option label {
+.genderOption label {
     margin-right: 5px;
 }
 
-.gender-option input[type="radio"] {
+.genderOption input[type="radio"] {
     appearance: none;
     width: 40px;
     height: 25px;
@@ -70,12 +84,12 @@
     margin-left: 5px;
 }
 
-.gender-option input[type="radio"]:checked {
+.genderOption input[type="radio"]:checked {
     background-color: #007bff;
     position: relative; /* 체크 표시 위치 설정 */
 }
 
-.gender-option input[type="radio"]:checked::after {
+.genderOption input[type="radio"]:checked::after {
     content: '✓'; /* 체크 표시 */
     position: absolute; /* 체크 표시 위치 설정 */
     top: 50%;
@@ -85,14 +99,14 @@
     font-size: 14px;
 }
 
-.gender-option {
+.genderOption {
     border: none;
     padding: 0;
     margin-right: 15px;
     width: 120px;
 }
 
-.gender-option label {
+.genderOption label {
     margin-right: 5px;
     padding: 5px 10px;
     border: 1px solid #ccc; 
@@ -101,14 +115,44 @@
     text-align: center;
 }
 
-button[type="submit"] {
-    width: 50%;
-    padding: 10px;
+.interests {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-left: 15px;
+}
+
+.interestOption {
+    display: flex;
+    align-items: center;
+}
+
+.interestOption input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.interestOption label {
+    font-weight: normal;
+    color: #555;
+}
+
+.submit {
     background-color: #007bff;
     color: white;
+    padding: 10px 15px;
     border: none;
-    border-radius: 3px;
+    border-radius: 4px;
     cursor: pointer;
-    margin: 20px auto 0;
-    display: block;
+    font-size: 16px;
+    width: 100%;
+}
+
+.submit:hover {
+    background-color: #0056b3;
+}
+
+.message {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
 }

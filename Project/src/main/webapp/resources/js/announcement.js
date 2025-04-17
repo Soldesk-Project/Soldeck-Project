@@ -1,15 +1,15 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const faqItems = document.querySelectorAll('.faq-item');
+    const faqTitles = document.querySelectorAll('.noticeTitle');
 
-    faqItems.forEach(item => {
-        const title = item.querySelector('.faq-title');
-        const content = item.querySelector('.faq-content');
-
-        title.addEventListener('click', () => {
-            if (content.style.display === 'block') {
-                content.style.display = 'none';
-            } else {
-                content.style.display = 'block';
+    faqTitles.forEach(title => {
+        title.addEventListener('click', function() {
+            const content = this.nextElementSibling;
+            if (content) {
+                if (content.style.display === 'none') {
+                    content.style.display = 'block';
+                } else {
+                    content.style.display = 'none';
+                }
             }
         });
     });

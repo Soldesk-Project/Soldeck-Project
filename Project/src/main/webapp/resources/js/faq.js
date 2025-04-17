@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const faqTitles = document.querySelectorAll('.faq-title');
+    const faqTitles = document.querySelectorAll('.faqTitle');
 
     faqTitles.forEach(title => {
         title.addEventListener('click', function() {

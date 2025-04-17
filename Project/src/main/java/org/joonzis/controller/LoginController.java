@@ -1,5 +1,6 @@
 package org.joonzis.controller;
 
+import java.util.List;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -33,7 +34,7 @@ public class LoginController {
     
     @RequestMapping("/findPw")
     public String findPw() {
-        return "/login/findPw";
+        return "login/findPw";
     }
     
     @RequestMapping("/signUpPage")
@@ -51,9 +52,9 @@ public class LoginController {
         return "login/privacyPolicy";
     }
     
-    @RequestMapping("/frequentQuestion")
-    public String frequentQuestion() {
-        return "login/frequentQuestion";
+    @RequestMapping("/faq")
+    public String faq() {
+        return "login/faq";
     }
     
     @RequestMapping("/announcement")
