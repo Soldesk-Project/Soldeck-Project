@@ -21,9 +21,9 @@
        
       <!-- log4jdbc --> 
       <property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
-      <property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"></property>
-      <property name="username" value="scott"></property>
-      <property name="password" value="tiger"></property>
+      <property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@192.168.0.128:1521:XE"></property>
+      <property name="username" value="project"></property>
+      <property name="password" value="1234"></property>
 	</bean>
 	
 	<!-- HikariCP configuration -->
