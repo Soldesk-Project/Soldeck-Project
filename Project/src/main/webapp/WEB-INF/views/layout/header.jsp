@@ -10,10 +10,10 @@
 <body>
   <div class="nav">
     <div class="nav-left">
-      <a href="#"><img src="/resources/images/profile.png" alt="logo" style="width: 50px;"></a>
+      <a href="#"><img src="/resources/images/profile.png" alt="logo" style="width: 70px;"></a>
     </div>
     <div class="nav-center">
-      <input type="search" placeholder="검색어를 입력하세요...." onChange={handleSearchKeywordChange} id="search">
+      <input type="search" placeholder="검색어를 입력하세요" onChange={handleSearchKeywordChange} id="search">
     </div>
     <div class="nav-right">
       <input type="image" src="../resources/images/profile.png" alt="profile" id="proFile" style="width: 70px; cursor: pointer;"><br>
