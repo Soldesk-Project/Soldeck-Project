@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="../resources/css/index.css">
 </head>
 <body>
-    <%@ include file="../layout/header.jsp" %>
+    <%@ include file="../views/layout/header.jsp" %>
 
     <div class="content">
         <div class="image-section">
@@ -39,11 +39,11 @@
 
 		<div class="category-buttons-container">
     		<div class="category-buttons">
-        		<button class="category-button"></button>
-        		<button class="category-button"></button>
-        		<button class="category-button"></button>
-        		<button class="category-button"></button>
-        		<button class="category-button"></button>
+        		<button class="category-button">한식</button>
+        		<button class="category-button">중식</button>
+        		<button class="category-button">일식</button>
+        		<button class="category-button">양식</button>
+        		<button class="category-button">베트남요리</button>
     		</div>
 		</div>
 
@@ -96,7 +96,7 @@
         </div>
     </div>
 
-    <%@ include file="../layout/footer.jsp" %>
+    <%@ include file="../views/layout/footer.jsp" %>
 
 	<script type="text/javascript" src="/resources/js/index.js"></script>
 </body>
