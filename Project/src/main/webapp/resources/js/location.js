@@ -63,7 +63,7 @@ categoryButtons.forEach(button => {
         showList();
     });
 });
-
+///////
 function getList(callback) {
     const params = new URLSearchParams();
     if (selectedRegion) params.append('region', selectedRegion);
