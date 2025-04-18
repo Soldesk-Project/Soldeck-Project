@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.joonzis.mapper.MemberMapper">
+
+    <insert id="insertMember">
+        INSERT INTO member (mem_name, mem_birth, mem_id, mem_pw, mem_nickname, mem_email, mem_phone)
+        VALUES (#{mem_name}, #{mem_birth}, #{mem_id}, #{mem_pw}, #{mem_nickname}, #{mem_email}, #{mem_phone})
+    </insert>
+
+    <select id="selectMemNoById" resultType="java.lang.Integer">
+        SELECT mem_no
+        FROM member
+        WHERE mem_id = #{mem_id}
+    </select>
+
+    <insert id="insertMemberKate">
+        INSERT INTO member_kate (mem_no, food_no)
+        VALUES (#{mem_no}, #{food_no})
+    </insert>
+
+</mapper>
