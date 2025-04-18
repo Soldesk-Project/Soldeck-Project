@@ -21,11 +21,8 @@
 		<!-- for문 / 내용수정 / 내용 넘어가면 자동 스크롤 -->
 		<div class="booking-list">
 			<div class="sec-1">
-				<div class="booking-date">
-					<span>yyyy-MM-dd</span>
-				</div>
 				<div class="booking-img">
-					<img src="./images/profile.png" alt="가게 사진">
+					<img src="/resources/images/index_slide_image_2.png" alt="가게 사진" class="booking-res-image">
 				</div>
 				<div class="category">
 					<span> 예약 일정</span>
@@ -35,131 +32,29 @@
 				</div>
 			</div>
 			<div class="sec-2">
-				<div class="btn"><button type="button" id="bookingCancel">예약취소</button></div>
 				<div class="booking-info">
-					<div><img src="./images/profile.png" alt="즐겨찾기" class="bookmark-img"></div>
-					<div class="info-text">가게 이름</div>
-					<div class="info-text">가게 업종</div>
-					<div class="info-text">영업 시간</div>
-					<div class="info-text">가게 주소</div>
+					<div><button type="button" class="bookmark" id="bookmarkBtn">★</button></div>
+                    <div class="info-text">
+	                    <a href="#" draggable="false"><input type="text" class="res-name" value="가게 이름" readonly="readonly"></a>
+	                    <span class="input-size" id="input-size"></span>
+	                    <input type="text" class="res-industry" value="가게 업종" readonly="readonly">
+	                    <input type="text" class="res-time" value="영업 시간" readonly="readonly">
+	                    <input type="text" class="res-addr" value="가게 주소" readonly="readonly">
+                    </div>
 				</div>
 				<div class="booking-schedule">
-					<input type="text" class="booking-schedule" name="bookingDate" value="yyyy-MM-dd">
-				</div>
-				<div class="booking-schedule">
-					<input type="text" class="booking-schedule" name="bookingDateTime" value="hh-mm">
+					<input type="text" class="booking-date" name="bookingDate" value="yyyy-MM-dd" readonly="readonly">
+					<input type="text" class="booking-date" name="bookingDateTime" value="hh-mm" readonly="readonly">
+					<button type="button" class="booking-cancel-btn" id="bookingCancel">예약취소</button>
 				</div>
 				<div>
 					<input type="text" class="memo" name="memo" value="-----//">
+					<button type="button" class="memo-btn" id="saveMemo">저장</button>
 				</div>
 			</div>
 		</div>
 		<!-- 여기까지가 원문 -->
-		<div class="booking-list">
-			<div class="sec-1">
-				<div class="booking-date">
-					<span>yyyy-MM-dd</span>
-				</div>
-				<div class="booking-img">
-					<img src="./images/profile.png" alt="가게 사진">
-				</div>
-				<div class="category">
-					<span> 예약 일정</span>
-				</div>
-				<div class="category">
-					<span> 특이 사항</span>
-				</div>
-			</div>
-			<div class="sec-2">
-				<div class="btn"><button type="button" id="bookingCancel">예약취소</button></div>
-				<div class="booking-info">
-					<div><img src="./images/profile.png" alt="즐겨찾기" class="bookmark-img"></div>
-					<div class="info-text">가게 이름</div>
-					<div class="info-text">가게 업종</div>
-					<div class="info-text">영업 시간</div>
-					<div class="info-text">가게 주소</div>
-				</div>
-				<div class="booking-schedule">
-					<input type="text" class="booking-schedule" name="bookingDate" value="yyyy-MM-dd">
-				</div>
-				<div class="booking-schedule">
-					<input type="text" class="booking-schedule" name="bookingDateTime" value="hh-mm">
-				</div>
-				<div>
-					<input type="text" class="memo" name="memo" value="-----//">
-				</div>
-			</div>
-		</div>
-		<div class="booking-list">
-			<div class="sec-1">
-				<div class="booking-date">
-					<span>yyyy-MM-dd</span>
-				</div>
-				<div class="booking-img">
-					<img src="./images/profile.png" alt="가게 사진">
-				</div>
-				<div class="category">
-					<span> 예약 일정</span>
-				</div>
-				<div class="category">
-					<span> 특이 사항</span>
-				</div>
-			</div>
-			<div class="sec-2">
-				<div class="btn"><button type="button" id="bookingCancel">예약취소</button></div>
-				<div class="booking-info">
-					<div><img src="./images/profile.png" alt="즐겨찾기" class="bookmark-img"></div>
-					<div class="info-text">가게 이름</div>
-					<div class="info-text">가게 업종</div>
-					<div class="info-text">영업 시간</div>
-					<div class="info-text">가게 주소</div>
-				</div>
-				<div class="booking-schedule">
-					<input type="text" class="booking-schedule" name="bookingDate" value="yyyy-MM-dd">
-				</div>
-				<div class="booking-schedule">
-					<input type="text" class="booking-schedule" name="bookingDateTime" value="hh-mm">
-				</div>
-				<div>
-					<input type="text" class="memo" name="memo" value="-----//">
-				</div>
-			</div>
-		</div>
-		<div class="booking-list">
-			<div class="sec-1">
-				<div class="booking-date">
-					<span>yyyy-MM-dd</span>
-				</div>
-				<div class="booking-img">
-					<img src="./images/profile.png" alt="가게 사진">
-				</div>
-				<div class="category">
-					<span> 예약 일정</span>
-				</div>
-				<div class="category">
-					<span> 특이 사항</span>
-				</div>
-			</div>
-			<div class="sec-2">
-				<div class="btn"><button type="button" id="bookingCancel">예약취소</button></div>
-				<div class="booking-info">
-					<div><img src="./images/profile.png" alt="즐겨찾기" class="bookmark-img"></div>
-					<div class="info-text">가게 이름</div>
-					<div class="info-text">가게 업종</div>
-					<div class="info-text">영업 시간</div>
-					<div class="info-text">가게 주소</div>
-				</div>
-				<div class="booking-schedule">
-					<input type="text" class="booking-schedule" name="bookingDate" value="yyyy-MM-dd">
-				</div>
-				<div class="booking-schedule">
-					<input type="text" class="booking-schedule" name="bookingDateTime" value="hh-mm">
-				</div>
-				<div>
-					<input type="text" class="memo" name="memo" value="-----//">
-				</div>
-			</div>
-		</div>
+
 
 
 	</div>

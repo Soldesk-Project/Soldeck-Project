@@ -22,7 +22,7 @@
           </div>
           <div class="info-content">
             <input type="text" class="info-name" name="name" value="NAME" readonly="readonly">
-            <input type="image" class="info-profile" name="name" readonly="readonly">
+            <img type="image" class="info-profile" src="/resources/images/user_profile.png" alt="유저 프로필">
           </div>
       
           <div class="info-title">

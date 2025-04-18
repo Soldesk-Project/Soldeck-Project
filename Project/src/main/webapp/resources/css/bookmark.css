@@ -39,50 +39,105 @@
 	margin: 20px;
 	border: 1px solid black;
 }
+.view-res-image{
+	margin: auto;
+	height: 100%;
+	width: 100%;
+}
 .view-info{
 	float: right;
-	width: 600px;
+	width: 630px;
 	height: 150px;
 	border: 1px dashed;
-	font-size: 20px;
 	margin: 20px ;
 }
 .info-text{
-	margin: 5px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
-.bookmark-img{
+.info-text input{
+	outline: none;
+	border: none;
+	font-size: 1.1rem;
+	display: inline-block;
+	margin: 5px;
+	height: 25px;
+}
+.info-text a{
+	text-decoration: none;
+	display: inline-block;
+	width: fit-content;
+	max-width: 100%;
+}
+.input-size {
+	position: absolute;
+	visibility: hidden;
+	height: 0;
+	white-space: pre;
+	font-size: 1.1rem;
+	padding: 0 4px;
+	box-sizing: content-box;
+}
+.bookmark{
 	float: right;
-	font-size: 10px;
-	margin: 10px;
+	margin: 0 10px;
 	width: 40px;
 	height: 40px;
-	border: 1px solid black;
+	background: none;
+	border: none;
+	cursor: pointer;
+	font-size: 2rem;
+	color: #FFD700;
+	transition: color 0.2s;
 }
-
-
+.bookmark.active{
+	transition: color 0.2s;
+	color: #bbb;
+}
+.bookmark:hover {
+  	color: #FFD700;
+}
 /*------------------ 사이드 메뉴 css -------------------------*/
 
 .side{
     border: 1px dashed;
     list-style-type: none;
     position: fixed;
-    padding: 0;
     width: 182px;
-    height: 40%;
     padding: 15px;
     margin: 0;
+    border-radius: 20px;
+}
+.side a{
+	display: block;
+    width: 100%;
+    height: 100%;
+    color: #FF7D00;
+    padding: 20px;
+    text-decoration: none;
+    box-sizing: border-box;
 }
 .side li{
-    border: 1px solid black;
+	box-sizing: border-box;
+    border: 2px solid #FF7D00;
     display: block;
-	width: 140px;
 	text-align: center;
 	text-decoration: none;
 	color: white;
-	padding: 20px;
+	margin-top: -2px;
 }
+.side-myinfo{
+	border-radius: 15px 15px 0 0;
+}
+.side-event{
+	border-radius: 0 0 15px 15px;
+}
+
 .side li:hover{
-	color: blueviolet;
-	background-color: gray;
+	background-color: #FF7D00;
 	font-weight: bold;
+}
+.side a:hover{
+	color: white;
 }
