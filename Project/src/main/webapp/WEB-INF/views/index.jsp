@@ -112,7 +112,7 @@
 
         <div class="popup" id="popup">
             <div class="popup-content">
-                <span class="close" id="close">&times;</span>
+                <span class="popup-close" id="popup-close">&times;</span>
                 <img alt="pop-up" src="/resources/images/popup.png" class="pop-up_image">
             </div>
         </div>

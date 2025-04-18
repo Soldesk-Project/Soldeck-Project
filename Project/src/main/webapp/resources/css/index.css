@@ -169,7 +169,7 @@ body {
     position: relative;
 }
 
-.close {
+.popup-close {
     position: absolute;
     top: -5px;
     right: -5px;
