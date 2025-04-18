@@ -1,13 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     var popup = document.getElementById('popup');
-    var popupCloseBtn = document.getElementById('popupClose');
-    var slides = document.querySelectorAll('.slideContainer');
-    var dots = document.querySelectorAll('.dot');
-    var locationSelect = document.querySelector('.locationSelect select');
-    var categoryBtns = document.querySelectorAll('.categoryBtn');
-    var selectedLocation = ''; // 선택된 지역 정보를 저장할 변수
-    var selectedCategory = ''; // 선택된 카테고리 정보를 저장할 변수
-    var defaultLocationText = '지역 선택'; // 기본 지역 선택 옵션 텍스트
+    var closeBtn = document.getElementById('close');
 
     // 팝업 표시 (예시: 페이지 로드 후 1초 뒤에 표시)
     setTimeout(function() {
@@ -15,54 +8,90 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 1000);
 
     // 팝업 닫기
-    popupCloseBtn.addEventListener('click', function() {
+    closeBtn.addEventListener('click', function() {
         popup.style.display = 'none';
     });
+});
 
-    // dot 클릭 이벤트 리스너 추가
-    dots.forEach(function(dot, index) {
-        dot.addEventListener('click', function() {
-            // 모든 슬라이드 숨기기
-            slides.forEach(function(slide) {
-                slide.style.display = 'none';
-            });
+//dot의 기능 추가 이미지 변경
+function goToSlide(index) {
+    const slides = document.getElementById('slides');
+    const dots = document.querySelectorAll('.dot');
 
-            // 클릭된 dot에 해당하는 슬라이드 보이기
-            slides[index].style.display = 'block';
+    // 슬라이드 이동
+    const slideWidth = slides.offsetWidth;
+    slides.style.transform = `translateX(-${index * slideWidth}px)`;
 
-            // 모든 dot에서 'active' 클래스 제거
-            dots.forEach(function(d) {
-                d.classList.remove('active');
-            });
+    // Dot active 클래스 관리
+    dots.forEach(dot => dot.classList.remove('active'));
+    dots[index].classList.add('active');
+}
 
-            // 클릭된 dot에 'active' 클래스 추가
-            this.classList.add('active');
-        });
-    });
+// 메인 페이지 슬라이더 형식 
+const slides = document.getElementById("slides");
 
-    // 초기 슬라이드 설정 (첫 번째 슬라이드만 보이도록)
-    if (slides.length > 0) {
-        slides[0].style.display = 'block';
+let isDragging = false;
+let startX = 0;
+let currentTranslate = 0;
+let prevTranslate = 0;
+let animationID;
+let currentSlideIndex = 0;
+
+slides.addEventListener("mousedown", startDrag);
+slides.addEventListener("mouseup", endDrag);
+slides.addEventListener("mouseleave", endDrag);
+slides.addEventListener("mousemove", drag);
+
+function startDrag(e) {
+    isDragging = true;
+    startX = e.pageX;
+    animationID = requestAnimationFrame(animation);
+}
+
+function drag(e) {
+    if (!isDragging) return;
+    const currentPosition = e.pageX;
+    const diff = currentPosition - startX;
+    let tentativeTranslate = prevTranslate + diff;
+
+    //최대/최소 이동 거리 제한
+    const maxTranslate = 0;
+    const minTranslate = -((slides.children.length - 1) * slides.offsetWidth);
+
+    if (tentativeTranslate > maxTranslate) {
+        currentTranslate = maxTranslate;
+    } else if (tentativeTranslate < minTranslate) {
+        currentTranslate = minTranslate;
+    } else {
+        currentTranslate = tentativeTranslate;
+    }
+}
+
+function endDrag() {
+    cancelAnimationFrame(animationID);
+    isDragging = false;
+    const movedBy = currentTranslate - prevTranslate;
+
+    if (movedBy < -100 && currentSlideIndex < slides.children.length - 1) {
+        currentSlideIndex++;
+    } else if (movedBy > 100 && currentSlideIndex > 0) {
+        currentSlideIndex--;
     }
 
-    // 지역 선택 이벤트 리스너
-    locationSelect.addEventListener('change', function() {
-        selectedLocation = this.value;
-        if (selectedLocation && selectedLocation !== defaultLocationText && selectedCategory) {
-            window.location.href = `../search/location?region=${selectedLocation}&category=${selectedCategory}`;
-        } else if (selectedLocation && selectedLocation !== defaultLocationText && !selectedCategory) {
-        } else {
-            selectedLocation = '';
-        }
-    });
+    setPositionByIndex();
+}
 
-    // 카테고리 버튼 클릭 이벤트 리스너
-    categoryBtns.forEach(function(button) {
-        button.addEventListener('click', function() {
-            selectedCategory = this.textContent;
-            if (selectedLocation && selectedLocation !== defaultLocationText && selectedCategory) {
-                window.location.href = `../search/location?region=${selectedLocation}&category=${selectedCategory}`;
-            }
-        });
-    });
-});
+function animation() {
+    setSliderPosition();
+    if (isDragging) requestAnimationFrame(animation);
+}
+
+function setSliderPosition() {
+    slides.style.transform = `translateX(${currentTranslate}px)`;
+}
+
+function setPositionByIndex() {
+    currentTranslate = -currentSlideIndex * slides.offsetWidth;
+    prevTranslate = currentTranslate;
+    setSliderPosition();
+}
