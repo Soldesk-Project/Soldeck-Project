@@ -95,3 +95,18 @@ function setPositionByIndex() {
     prevTranslate = currentTranslate;
     setSliderPosition();
 }
+
+// pick 화면 옆으로 넘기기 기능
+let currentIndex = 0;
+
+function moveSlide(direction) {
+    const slideTrack = document.getElementById("slide-track");
+    const itemWidth = 300 + 20; // 이미지 너비 + padding
+    const maxIndex = 3; // (6개 아이템 / 3개씩 보임) - 1 = 1
+    
+    currentIndex += direction;
+    if (currentIndex < 0) currentIndex = 0;
+    if (currentIndex > maxIndex) currentIndex = maxIndex;
+
+    slideTrack.style.transform = `translateX(-${currentIndex * itemWidth * 3}px)`;
+}

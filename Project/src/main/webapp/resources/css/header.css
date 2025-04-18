@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   background-color: white;
-  width: 1200px; /* 레이아웃의 너비를 고정 */
+  width: 1240px; /* 레이아웃의 너비를 고정 */
   height: 100px; /* 고정 높이 설정 */
   margin: 0 auto; /* 화면 가운데 정렬 */
 }
@@ -24,7 +24,7 @@
   padding: 8px 12px;
 }
 #search {
-  border: 4px solid black;
+  border: 4px solid #FF7D00;
   border-radius: 25px;
   padding: 6px 40px;
   text-align: left;
@@ -38,18 +38,25 @@ input[type="search"]::-webkit-search-cancel-button {
   margin-right: 40px;
 }
 #login {
-  border: 2px solid black;
+  /*border: 2px solid #FF7D00;*/
   border-radius: 16px;
-  padding: 4px 12px;
-  margin-left: 10px;
+  padding: px 12px;
+  background-color: #FF7D00;
+  color: white;
 }
 #login:hover{
-  font-weight: bold;
-  color: black;
+  background-color: #e96c00;
 }
 .nav-left {
   justify-content: flex-start;
-  padding-left: 30px;
+  padding-left: 100px;
+}
+.nav-right{
+	margin-right: 40px;
+}
+.nav-right1 {
+  justify-content: flex-start;
+  margin-right: 30px;
 }
 /* Modal 스타일 */
 .modal {

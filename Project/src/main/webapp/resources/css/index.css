@@ -11,6 +11,7 @@ body {
     padding: 20px;
     text-align: center;
     flex: 1;
+    background-color: rgb();
 }
 
 /* 슬라이드 쇼 스타일 */
@@ -19,6 +20,7 @@ body {
     overflow: hidden;
     width: 100%;
     height: 400px;
+    border-radius: 15px;
 }
 
 .slides {
@@ -41,16 +43,28 @@ body {
     user-select: none;
     pointer-events: none;
 }
+/* 박스 */
+.main2{
+	width: 1200px;
+	height: 250px;
+	border: 1px solid #EBEBEB;
+	border-radius: 10px;
+	margin : 15px 0px;  
+}
 /* 지역 선택 버튼 스타일 */
 .locationOption{
 	appearance: none; /* 기본 style 제거 -> v 표시만 사라짐*/
 	padding: 10px 40px 10px 15px;
-    border: 3px solid black;
+    border: 3px solid #FF7D00;
     border-radius: 25px;
     font-size: 16px;
     text-align : center;
     color: black; 
-	
+    outline: none;
+}
+.locationOption:focus {
+    border-color: #FF7D00;
+    box-shadow: 0 0 5px rgba(255, 125, 0, 0.5); /* 선택사항: 부드러운 외곽 강조 */
 }
 
 /* 카테고리 버튼 스타일 */
@@ -102,8 +116,13 @@ body {
     width: 200px;
 }
 
+/* 메인 추천 화면*/
+
 .recommendations {
     margin-top: 30px;
+    border: 1px solid #EBEBEB;
+	border-radius: 10px;
+	margin : 15px 0px; 
 }
 
 .recommendation-grid {
@@ -123,6 +142,7 @@ body {
     text-align: center;
     height: 300px;
     overflow: hidden;
+    border-radius: 15px;
 }
 .recommendation-item img {
     width: 100%;
