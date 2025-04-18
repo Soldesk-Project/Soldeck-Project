@@ -1,15 +1,24 @@
 package org.joonzis.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Controller
@@ -33,7 +42,7 @@ public class LoginController {
 	
 	@RequestMapping("/findId")
 	public String findId() {
-		return "login/findId"; // findId.jsp 파일 이름 반환
+		return "login/findId";
 	}
     
 	@RequestMapping("/findPw")
@@ -45,4 +54,6 @@ public class LoginController {
 	public String signUpPage() {
 		return "login/signUpPage";
 	}
+	
+	
 }
