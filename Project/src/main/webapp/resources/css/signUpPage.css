@@ -1,158 +1,158 @@
 body {
-    font-family: sans-serif;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    margin: 0;
+	font-family: sans-serif;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	margin: 0;
 }
 
 /* 컨테이너 스타일 (폼 영역) */
 .container {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    width: 400px; /* 필요에 따라 조절 */
-    margin: 20px auto; /* 상하 마진 추가 및 중앙 정렬 */
+	background-color: #fff;
+	padding: 30px;
+	border-radius: 8px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	width: 400px;
+	margin: 20px auto;
 }
 
 h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
+	text-align: center;
+	margin-bottom: 20px;
+	color: #333;
 }
 
 .formGroup {
-    margin-bottom: 15px;
+	margin-bottom: 15px;
 }
 
 label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #555;
+	display: block;
+	margin-bottom: 5px;
+	font-weight: bold;
+	color: #555;
 }
 
 input[type="text"],
 input[type="password"],
 input[type="email"],
 input[type="tel"] {
-    width: calc(100% - 12px);
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 16px;
+	width: calc(100% - 12px);
+	padding: 8px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	font-size: 16px;
 }
 
 .birthDate {
-    display: flex;
-    gap: 10px;
+	display: flex;
+	gap: 10px;
 }
 
 .birthCate input[type="text"] {
-    width: calc(33.33% - 7px);
+	width: calc(33.33% - 7px);
 }
 
 .gender {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .genderOption {
-    display: flex;
-    align-items: center;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 5px 10px;
-    margin-right: 10px;
-    width: 120px;
+	display: flex;
+	align-items: center;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	padding: 5px 10px;
+	margin-right: 10px;
+	width: 120px;
 }
 
 .genderOption label {
-    margin-right: 5px;
+	margin-right: 5px;
 }
 
 .genderOption input[type="radio"] {
-    appearance: none;
-    width: 40px;
-    height: 25px;
-    border: 1px solid #ccc;
-    outline: none;
-    margin: 0;
-    margin-left: 5px;
+	appearance: none;
+	width: 40px;
+	height: 25px;
+	border: 1px solid #ccc;
+	outline: none;
+	margin: 0;
+	margin-left: 5px;
 }
 
 .genderOption input[type="radio"]:checked {
-    background-color: #007bff;
-    position: relative; /* 체크 표시 위치 설정 */
+	background-color: #007bff;
+	position: relative; /* 체크 표시 위치 설정 */
 }
 
 .genderOption input[type="radio"]:checked::after {
-    content: '✓'; /* 체크 표시 */
-    position: absolute; /* 체크 표시 위치 설정 */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-size: 14px;
+	content: '✓'; /* 체크 표시 */
+	position: absolute; /* 체크 표시 위치 설정 */
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: white;
+	font-size: 14px;
 }
 
 .genderOption {
-    border: none;
-    padding: 0;
-    margin-right: 15px;
-    width: 120px;
+	border: none;
+	padding: 0;
+	margin-right: 15px;
+	width: 120px;
 }
 
 .genderOption label {
-    margin-right: 5px;
-    padding: 5px 10px;
-    border: 1px solid #ccc; 
-    border-radius: 5px;
-    width: 100%;
-    text-align: center;
+	margin-right: 5px;
+	padding: 5px 10px;
+	border: 1px solid #ccc; 
+	border-radius: 5px;
+	width: 100%;
+	text-align: center;
 }
 
 .interests {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding-left: 15px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	padding-left: 15px;
 }
 
 .interestOption {
-    display: flex;
-    align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 .interestOption input[type="checkbox"] {
-    margin-right: 5px;
+	margin-right: 5px;
 }
 
 .interestOption label {
-    font-weight: normal;
-    color: #555;
+	font-weight: normal;
+	color: #555;
 }
 
 .submit {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    width: 100%;
+	background-color: #007bff;
+	color: white;
+	padding: 10px 15px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 16px;
+	width: 100%;
 }
 
 .submit:hover {
-    background-color: #0056b3;
+	background-color: #0056b3;
 }
 
 .message {
-    color: red;
-    font-size: 0.9em;
-    margin-top: 5px;
+	color: red;
+	font-size: 0.9em;
+	margin-top: 5px;
 }

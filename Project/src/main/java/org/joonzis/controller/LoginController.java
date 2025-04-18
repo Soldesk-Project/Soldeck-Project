@@ -20,10 +20,10 @@ public class LoginController {
 
 	@Bean
 	public InternalResourceViewResolver viewResolver() {
-	    InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-	    resolver.setPrefix("/WEB-INF/views/");
-	    resolver.setSuffix(".jsp");
-	    return resolver;
+		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+		resolver.setPrefix("/WEB-INF/views/");
+		resolver.setSuffix(".jsp");
+		return resolver;
 	}
 	
 	@RequestMapping(value = "/loginPage", method = RequestMethod.GET)
@@ -31,18 +31,18 @@ public class LoginController {
 		return "login/loginPage";
 	}
 	
-    @RequestMapping("/findId")
-    public String findId() {
-        return "login/findId"; // findId.jsp 파일 이름 반환
-    }
+	@RequestMapping("/findId")
+	public String findId() {
+		return "login/findId"; // findId.jsp 파일 이름 반환
+	}
     
-    @RequestMapping("/findPw")
-    public String findPw() {
-        return "login/findPw";
-    }
+	@RequestMapping("/findPw")
+	public String findPw() {
+		return "login/findPw";
+	}
     
-    @RequestMapping("/signUpPage")
-    public String signUpPage() {
-        return "login/signUpPage";
-    }
+	@RequestMapping("/signUpPage")
+	public String signUpPage() {
+		return "login/signUpPage";
+	}
 }
