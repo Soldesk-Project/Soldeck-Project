@@ -6,6 +6,8 @@ body {
     min-height: 100vh;
 }
 .content {
+	margin : auto;
+	width : 1200px;
     padding: 20px;
     text-align: center;
     flex: 1;
@@ -39,6 +41,18 @@ body {
     user-select: none;
     pointer-events: none;
 }
+/* 지역 선택 버튼 스타일 */
+.locationOption{
+	appearance: none; /* 기본 style 제거 -> v 표시만 사라짐*/
+	padding: 10px 40px 10px 15px;
+    border: 3px solid black;
+    border-radius: 25px;
+    font-size: 16px;
+    text-align : center;
+    color: black; 
+	
+}
+
 /* 카테고리 버튼 스타일 */
 .category-buttons-container {
     display: flex;
@@ -115,18 +129,40 @@ body {
     height: 100%;
     object-fit: cover;
 }
+/* 메인 슬라이드 이미지 안에 dot 스타일 */
+.dots {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    z-index: 10;
+}
+.dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    background-color: #ccc;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.dot.active {
+    background-color: #333;
+}
 
 /*팝업창 */
 .popup {
     position: fixed;
     bottom: 80px;
     right: 20px;
-    background-color: white;
     padding: 15px;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     display: none;
     z-index: 999;
+}
+.pop-up_image{
+	width: 70px;
+	height: 70px;
 }
 
 .popup-content {
@@ -139,10 +175,8 @@ body {
     right: -5px;
     font-size: 16px;
     cursor: pointer;
-    background-color: #f0f0f0;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
+    width : 20px;
+    height : 20px;
     text-align: center;
     line-height: 20px;
 }

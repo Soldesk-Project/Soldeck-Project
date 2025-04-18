@@ -21,16 +21,17 @@
 		        <div class="slide-container">
 		            <img src="resources/images/index_slide_image_1.png" alt="슬라이드 이미지 3" class="slide">
 		        </div>
+			        <div class="dots">
+	        		<span class="dot active" onclick="goToSlide(0)"></span>
+	        		<span class="dot" onclick="goToSlide(1)"></span>
+	        		<span class="dot" onclick="goToSlide(0)"></span>
+	    			</div>
     		</div>
-    		<div class="dots">
-        		<span class="dot active"></span>
-        		<span class="dot"></span>
-        		<span class="dot"></span>
-    		</div>
+    		
 		</div>
 
         <div class="location-select">
-            <select>
+            <select class="locationOption">
                 <option value="">지역 선택</option>
                 <option value="seoul">서울</option>
                 <option value="busan">경기</option>
@@ -112,7 +113,7 @@
         <div class="popup" id="popup">
             <div class="popup-content">
                 <span class="close" id="close">&times;</span>
-                <p>팝업 내용</p>
+                <img alt="pop-up" src="/resources/images/popup.png" class="pop-up_image">
             </div>
         </div>
     </div>

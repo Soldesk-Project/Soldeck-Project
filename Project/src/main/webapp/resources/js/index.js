@@ -13,6 +13,20 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+//dot의 기능 추가 이미지 변경
+function goToSlide(index) {
+    const slides = document.getElementById('slides');
+    const dots = document.querySelectorAll('.dot');
+
+    // 슬라이드 이동
+    const slideWidth = slides.offsetWidth;
+    slides.style.transform = `translateX(-${index * slideWidth}px)`;
+
+    // Dot active 클래스 관리
+    dots.forEach(dot => dot.classList.remove('active'));
+    dots[index].classList.add('active');
+}
+
 // 메인 페이지 슬라이더 형식 
 const slides = document.getElementById("slides");
 
@@ -38,7 +52,19 @@ function drag(e) {
     if (!isDragging) return;
     const currentPosition = e.pageX;
     const diff = currentPosition - startX;
-    currentTranslate = prevTranslate + diff;
+    let tentativeTranslate = prevTranslate + diff;
+
+    //최대/최소 이동 거리 제한
+    const maxTranslate = 0;
+    const minTranslate = -((slides.children.length - 1) * slides.offsetWidth);
+
+    if (tentativeTranslate > maxTranslate) {
+        currentTranslate = maxTranslate;
+    } else if (tentativeTranslate < minTranslate) {
+        currentTranslate = minTranslate;
+    } else {
+        currentTranslate = tentativeTranslate;
+    }
 }
 
 function endDrag() {
