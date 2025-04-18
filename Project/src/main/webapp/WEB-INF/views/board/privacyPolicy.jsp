@@ -2,34 +2,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>개인정보 처리방침</title>
-    <link rel="stylesheet" href="../resources/css/privacyPolicy.css">
+<meta charset="UTF-8">
+<title>개인정보 처리방침</title>
+<link rel="stylesheet" href="../resources/css/privacyPolicy.css">
 </head>
 <body>
-<%@ include file="../layout/header.jsp" %>
+	<jsp:include page="../layout/header.jsp"/>
 
-    <div id="privacy-policy-container">
-        <h1>개인정보 처리방침</h1>
-        <p>홈페이지를 방문해 주셔서 감사합니다.</p>
-        <div id="privacy-policy-navigation">
-            <a href="#section1">01 개인 정보 수집 / 이용 <span class="arrow">▼</span></a>
-            <a href="#section2">02 개인 정보의 3자 제공 <span class="arrow">▼</span></a>
-            <a href="#section3">03 개인 정보의 처리위탁 <span class="arrow">▼</span></a>
-            <a href="#section4">04 개인 정보의 파기 절차 및 방법 <span class="arrow">▼</span></a>
-            <a href="#section5">05 이용자 및 법정 대리인의 권리와 그 행사방법 <span class="arrow">▼</span></a>
-            <a href="#section6">06 개인정보 자동수집장치의 설치/운영 및 거부에 관한 사항 <span class="arrow">▼</span></a>
-            <a href="#section7">07 개인정보의 기술적/관리적 보호대책 <span class="arrow">▼</span></a>
-            <a href="#section8">08 개인정보보호책임자 <span class="arrow">▼</span></a>
-            <a href="#section9">09 개인위치정보의 처리 <span class="arrow">▼</span></a>
-            <a href="#section10">10. 고지의 의무 <span class="arrow">▼</span></a>
-        </div>
-        <div id="privacy-policy-content">
-            <div id="section1" class="section">
-                <h2>01 개인 정보 수집 / 이용</h2>
-               	<p>회사는 회원 관리, 서비스 제공 · 개선, 신규 서비스 개발 등을 위해 아래와 같이 최소한의 개인 정보를 수집 · 이용하고 있습니다.</p>
-                <p>
-                <table id="firstTable">
+	<div id="privacyPolicyContainer">
+		<h1>개인정보 처리방침</h1>
+		<p>홈페이지를 방문해 주셔서 감사합니다.</p>
+		<div id="privacyPolicyNavigation">
+			<a href="#section1">01 개인 정보 수집 / 이용 <span class="arrow">▼</span></a>
+			<a href="#section2">02 개인 정보의 3자 제공 <span class="arrow">▼</span></a>
+			<a href="#section3">03 개인 정보의 처리위탁 <span class="arrow">▼</span></a>
+			<a href="#section4">04 개인 정보의 파기 절차 및 방법 <span class="arrow">▼</span></a>
+			<a href="#section5">05 이용자 및 법정 대리인의 권리와 그 행사방법 <span class="arrow">▼</span></a>
+			<a href="#section6">06 개인정보 자동수집장치의 설치/운영 및 거부에 관한 사항 <span class="arrow">▼</span></a>
+			<a href="#section7">07 개인정보의 기술적/관리적 보호대책 <span class="arrow">▼</span></a>
+			<a href="#section8">08 개인정보보호책임자 <span class="arrow">▼</span></a>
+			<a href="#section9">09 개인위치정보의 처리 <span class="arrow">▼</span></a>
+			<a href="#section10">10. 고지의 의무 <span class="arrow">▼</span></a>
+		</div>
+		<div id="privacyPolicyContent">
+			<div id="section1" class="section">
+				<h2>01 개인 정보 수집 / 이용</h2>
+				<p>회사는 회원 관리, 서비스 제공 · 개선, 신규 서비스 개발 등을 위해 아래와 같이 최소한의 개인 정보를 수집 · 이용하고 있습니다.</p>
+				<p>
+				<table id="firstTable">
 					<thead>
 						<tr>
 							<th colspan="2">구분</th>
@@ -282,7 +282,7 @@
         </div>
     </div>
     
-    <%@ include file="../layout/footer.jsp" %>
-	<script type="text/javascript" src="/resources/js/privacyPolicy.js"></script>
+	<jsp:include page="../layout/footer.jsp"/>
+<script type="text/javascript" src="/resources/js/privacyPolicy.js"></script>
 </body>
 </html>

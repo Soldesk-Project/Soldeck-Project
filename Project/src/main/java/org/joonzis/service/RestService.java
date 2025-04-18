@@ -10,6 +10,7 @@ public interface RestService {
 
 	// 특정 가게 목록
 	public List<RestVO> getFilteredList(String region, String category);
+	
 	// 가게 찾기
 	public RestVO get(int rest_no);
 }

@@ -1,99 +1,97 @@
 body {
-    font-family: sans-serif;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+	font-family: sans-serif;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
 }
 
 .container {
-    text-align: center;
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 80vh;
+	text-align: center;
+	width: 100%;
+	max-width: 400px;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-height: 80vh;
 }
 
 .logo {
-    display: block;
-    margin: 0 auto 20px auto;
-    max-width: 200px;
+	display: block;
+	margin: 0 auto 20px auto;
+	max-width: 200px;
 }
 
-.login-box {
-    background-color: white;
-    padding: 50px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 400px;
-    margin-top: 50px;
+.loginBox {
+	background-color: white;
+	padding: 50px;
+	border-radius: 8px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	width: 400px;
+	margin-top: 50px;
 }
 
-.input-group {
-    margin-bottom: 20px;
-    text-align: left;
+.inputGroup {
+	margin-bottom: 20px;
+	text-align: left;
 }
 
 label {
-    display: block;
-    margin-bottom: 5px;
+	display: block;
+	margin-bottom: 5px;
 }
 
 input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	box-sizing: border-box;
 }
 
-.login-btn {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 100%;
+.loginBtn {
+	background-color: #007bff;
+	color: white;
+	padding: 10px 15px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	width: 100%;
 }
 
-.find-links {
-    margin-top: 20px;
+.findLinks {
+	margin-top: 20px;
 }
 
-.find-links button {
-    background: none;
-    border: none;
-    padding: 0;
-    font-size: 16px;
-    color: #007bff;
-    margin: 0 10px;
-    cursor: pointer;
-    text-decoration: none;
+.findLinks button {
+	background: none;
+	border: none;
+	padding: 0;
+	font-size: 16px;
+	color: #007bff;
+	margin: 0 10px;
+	cursor: pointer;
+	text-decoration: none;
 }
 
-.find-links button:hover {
-    text-decoration: underline;
+.findLinks button:hover {
+	text-decoration: underline;
 }
-
-/* ... (기존 스타일 유지) ... */
 
 .footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    padding: 10px 0;
-    padding-bottom: 10px; /* 푸터 위치 조정 */
-    background-color: #f0f0f0;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	text-align: center;
+	padding: 10px 0;
+	padding-bottom: 10px; /* 푸터 위치 조정 */
+	background-color: #f0f0f0;
 }
 
 .footer a {
-    margin: 0 10px;
-    text-decoration: none;
-    color: #333;
+	margin: 0 10px;
+	text-decoration: none;
+	color: #333;
 }
