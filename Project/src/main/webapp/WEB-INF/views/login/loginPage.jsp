@@ -13,13 +13,13 @@
 		<div class="loginBox">
 			<div class="inputGroup">
 				<label for="id">ID</label>
-				<input type="text" id="id" placeholder="아이디를 입력하세요.">
+				<input type="text" id="userId" placeholder="아이디를 입력하세요.">
 			</div>
 			<div class="inputGroup">
 				<label for="password">PASSWORD</label>
 				<input type="password" id="password" placeholder="비밀번호를 입력하세요.">
 			</div>
-			<button class="loginBtn">로그인</button>
+			<button type="button" class="loginBtn" id="loginBtn">로그인</button>
 		</div>
 		<div class="findLinks">
 			<button type="button" class="btn btn-fir" id="findIdBtn"> 아이디 찾기</button>

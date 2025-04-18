@@ -10,6 +10,8 @@ document.querySelectorAll('button').forEach( btn => {
 			location.href = 'findPw';
 		}else if(type === 'registerMemberBtn'){
 			location.href = 'registerMember';
+		}else if(type === 'loginBtn'){
+			login();
 		}
 	});
 });
@@ -17,6 +19,7 @@ document.querySelectorAll('button').forEach( btn => {
 const LOGIN_FAIL_MSG = "아이디 또는 비밀번호가 일치하지 않습니다.";
 
 function login() {
+	console.log(1);
     let userId = document.getElementById('userId').value;
     let password = document.getElementById('password').value;
 
