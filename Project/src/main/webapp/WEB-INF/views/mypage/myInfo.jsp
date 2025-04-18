@@ -89,8 +89,8 @@
             </fieldset>
           </div>
           
-          <div>
-            <button type="button" class="btn" id="modifyBtn">수정</button>
+          <div class="btn-div">
+            <button type="button" class="bodify-btn" id="modifyBtn">수정</button>
           </div>
         </div>
       </form>

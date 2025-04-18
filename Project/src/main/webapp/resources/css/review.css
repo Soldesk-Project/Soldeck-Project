@@ -144,11 +144,12 @@ input{
 .side-event{
 	border-radius: 0 0 15px 15px;
 }
-
-.side li:hover{
-	background-color: #FF7D00;
-	font-weight: bold;
+.side li:hover,
+.side-review.active {
+    background-color: #FF7D00;
+    font-weight: bold;
 }
-.side a:hover{
-	color: white;
+.side a:hover,
+.side-review.active a {
+    color: white !important;
 }

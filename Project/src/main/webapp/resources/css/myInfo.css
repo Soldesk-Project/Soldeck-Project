@@ -13,9 +13,11 @@
 	border: 1px dashed;
 	width: 80%;
 	float: right;
+	border-radius: 20px;
 }
 form{
 	border: 1px solid black;
+	border-radius: 15px;
 	text-align: center;
 	margin: 15px;
 	padding: 5px;
@@ -65,14 +67,25 @@ form{
 	height: 100px;
 	margin: 5px 62px 5px 5px;
 }
-
 fieldset{
 	width: 610px;
 	margin: 0;
 }
-.btn{
-	text-align: center;
-	margin: 0 auto;
+.btn-div{
+	width: 100%;
+	display: flex;
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center; 
+}
+.bodify-btn{
+	background-color: #FF7D00;
+	color: white;
+	padding: 10px 15px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	width: 100px;
+	height: 40px;
 }
 
 /*------------------ 사이드 메뉴 css -------------------------*/
@@ -110,10 +123,12 @@ fieldset{
 .side-event{
 	border-radius: 0 0 15px 15px;
 }
-.side li:hover{
-	background-color: #FF7D00;
-	font-weight: bold;
+.side li:hover,
+.side-myinfo.active {
+    background-color: #FF7D00;
+    font-weight: bold;
 }
-.side a:hover{
-	color: white;
+.side a:hover,
+.side-myinfo.active a {
+    color: white !important;
 }
