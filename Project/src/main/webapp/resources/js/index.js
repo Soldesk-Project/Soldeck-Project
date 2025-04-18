@@ -13,26 +13,22 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-//dot의 기능 추가 이미지 변경
-function goToSlide(index) {
-    const slides = document.getElementById('slides');
-    const dots = document.querySelectorAll('.dot');
-
-    // 슬라이드 이동
-    const slideWidth = slides.offsetWidth;
-    slides.style.transform = `translateX(-${index * slideWidth}px)`;
-
-    // Dot active 클래스 관리
-    dots.forEach(dot => dot.classList.remove('active'));
-    dots[index].classList.add('active');
-}
-
 // 메인 페이지 슬라이더 형식 
 const slides = document.getElementById("slides");
 
 let isDragging = false;
 let startX = 0;
 let currentTranslate = 0;
+
+//3초마다 이미지 넘어가는 기능
+setInterval(() => {
+    currentSlideIndex++;
+    if (currentSlideIndex >= slides.children.length) {
+        currentSlideIndex = 0;
+    }
+    setPositionByIndex();
+}, 3000);
+
 let prevTranslate = 0;
 let animationID;
 let currentSlideIndex = 0;
@@ -96,17 +92,26 @@ function setPositionByIndex() {
     setSliderPosition();
 }
 
-// pick 화면 옆으로 넘기기 기능
-let currentIndex = 0;
 
-function moveSlide(direction) {
-    const slideTrack = document.getElementById("slide-track");
-    const itemWidth = 300 + 20; // 이미지 너비 + padding
-    const maxIndex = 3; // (6개 아이템 / 3개씩 보임) - 1 = 1
-    
-    currentIndex += direction;
-    if (currentIndex < 0) currentIndex = 0;
-    if (currentIndex > maxIndex) currentIndex = maxIndex;
+// pick 화면 3개씩 이동
+const sliderIndexes = {
+	    today: 0,
+	    preference: 0,
+	    friend: 0
+	};
 
-    slideTrack.style.transform = `translateX(-${currentIndex * itemWidth * 3}px)`;
+function moveSlider(name, direction) {
+    const track = document.getElementById(`${name}-slider`);
+    const items = track.children.length;
+    const itemsPerPage = 3;
+    const itemWidth = 340; // 320px + 20px margin
+
+    const maxIndex = Math.ceil(items / itemsPerPage) - 1;
+
+    sliderIndexes[name] += direction;
+    if (sliderIndexes[name] < 0) sliderIndexes[name] = 0;
+    if (sliderIndexes[name] > maxIndex) sliderIndexes[name] = maxIndex;
+
+    const translateX = -sliderIndexes[name] * itemWidth * itemsPerPage;
+    track.style.transform = `translateX(${translateX}px)`;
 }
