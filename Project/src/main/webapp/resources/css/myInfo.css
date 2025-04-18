@@ -81,23 +81,39 @@ fieldset{
     border: 1px dashed;
     list-style-type: none;
     position: fixed;
-    padding: 0;
     width: 182px;
-    height: 40%;
     padding: 15px;
     margin: 0;
+    border-radius: 20px;
+}
+.side a{
+	display: block;
+    width: 100%;
+    height: 100%;
+    color: #FF7D00;
+    padding: 20px;
+    text-decoration: none;
+    box-sizing: border-box;
 }
 .side li{
-    border: 1px solid black;
+	box-sizing: border-box;
+    border: 2px solid #FF7D00;
     display: block;
-	width: 140px;
 	text-align: center;
 	text-decoration: none;
 	color: white;
-	padding: 20px;
+	margin-top: -2px;
+}
+.side-myinfo{
+	border-radius: 15px 15px 0 0;
+}
+.side-event{
+	border-radius: 0 0 15px 15px;
 }
 .side li:hover{
-	color: blueviolet;
-	background-color: gray;
+	background-color: #FF7D00;
 	font-weight: bold;
+}
+.side a:hover{
+	color: white;
 }
