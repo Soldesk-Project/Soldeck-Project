@@ -5,6 +5,7 @@
 	<meta charset="UTF-8">
 	<title>아이디 찾기</title>
 	<link rel="stylesheet" href="../resources/css/findId.css">
+	<link rel="stylesheet" href="../resources/css/footer.css">
 </head>
 <body>
 	<div class="container">
@@ -25,7 +26,7 @@
 			</div>
 		</div>
 	</div>
-	<%@ include file="../layout/footer.jsp" %>
 	<script type="text/javascript" src="/resources/js/findId.js"></script>
 </body>
+	<%@ include file="../layout/footer.jsp" %>
 </html>
