@@ -15,6 +15,12 @@ function showList() {
     let msg = '';
     
     getList(jsonArray => {
+        if (!jsonArray || !Array.isArray(jsonArray) || jsonArray.length === 0) {
+            console.warn("No valid data to display");
+            imageUL.innerHTML = "<p>데이터가 없습니다.</p>";
+            return;
+        }
+        
         // 데이터를 랜덤으로 섞기 (Fisher-Yates Shuffle)
         for (let i = jsonArray.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -23,12 +29,12 @@ function showList() {
 
         // 30개로 제한
         const limitedArray = jsonArray.slice(0, 30);
-
+        
         // 데이터로 아이템 생성
         limitedArray.forEach(json => {
             msg += `<div class="item-set">`
             msg += 	`<div class="image">`
-            msg += 		`<img src="${json.sumnail}" alt="이미지 1">`
+            msg += 		`<img src="${json.rest_img_name}" alt="이미지 X">`
             msg += 	`</div>`
             msg += 	`<div class="name">`
             msg += 		`<p>${json.rest_name}</p>`
@@ -82,10 +88,11 @@ function getList(callback) {
         return response.json();
     })
     .then(data => {
-        console.log("Received data:", data);
+        console.log("Received data:", data); // 데이터 구조 확인
         callback(data);
     })
     .catch(err => {
-        console.error("Fetch error:", err.message);
+    	console.error("Fetch error:", err.message);
+    	callback([]); // 에러 시 빈 배열 반환
     });
 }
