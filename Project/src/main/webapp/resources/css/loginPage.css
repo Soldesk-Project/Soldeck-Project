@@ -1,9 +1,11 @@
 body {
 	font-family: sans-serif;
-	margin: 0;
+	margin: 0px;
+	padding : 0px;
 	display: flex;
-	flex-direction: column;
+	flex-wrap : wrap; //
 	min-height: 100vh;
+	align-items: flex-end;
 }
 
 .container {
@@ -18,12 +20,10 @@ body {
 	min-height: 80vh;
 }
 
-.logo {
-	display: block;
-	margin: 0 auto 20px auto;
-	max-width: 200px;
+.loginLogo{
+	width : 200px;
+	height : 200px; 
 }
-
 .loginBox {
 	background-color: white;
 	padding: 50px;
@@ -79,19 +79,6 @@ input {
 .findLinks button:hover {
 	text-decoration: underline;
 }
-
-.footer {
-	position: fixed;
-	bottom: 0;
-	width: 100%;
-	text-align: center;
-	padding: 10px 0;
-	padding-bottom: 10px; /* 푸터 위치 조정 */
-	background-color: #f0f0f0;
-}
-
-.footer a {
-	margin: 0 10px;
-	text-decoration: none;
-	color: #333;
+#loginBtn{
+	background-color:  #FF7D00;
 }

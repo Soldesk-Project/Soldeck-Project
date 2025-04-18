@@ -8,8 +8,8 @@ document.querySelectorAll('button').forEach( btn => {
 			location.href = 'findId';
 		}else if(type === 'findPwBtn'){
 			location.href = 'findPw';
-		}else if(type === 'registerMemberBtn'){
-			location.href = 'registerMember';
+		}else if(type === 'signUpPageBtn'){
+			location.href = 'signUpPage';
 		}else if(type === 'loginBtn'){
 			login();
 		}

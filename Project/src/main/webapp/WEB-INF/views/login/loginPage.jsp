@@ -1,15 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>로그인 페이지</title>
-<link rel="stylesheet" href="../resources/css/loginPage.css">
 </head>
+<link rel="stylesheet" href="../resources/css/loginPage.css">
+<link rel="stylesheet" href="../resources/css/footer.css">
 <body>
 	<div class="container">
-		<img src="resources/images/logo.png" alt="로고">
+		<img src="../resources/images/logo.png" alt="로고" class="loginLogo">
 		<div class="loginBox">
 			<div class="inputGroup">
 				<label for="id">ID</label>
@@ -24,12 +24,11 @@
 		<div class="findLinks">
 			<button type="button" class="btn btn-fir" id="findIdBtn"> 아이디 찾기</button>
 			<button type="button" class="btn btn-fir" id="findPwBtn"> 비밀번호 찾기</button>
-			<button type="button" class="btn btn-fir" id="registerMemberBtn"> 회원가입</button>	
+			<button type="button" class="btn btn-fir" id="signUpPageBtn"> 회원가입</button>	
 		</div>
    </div>
 
-	<%@ include file="../layout/footer.jsp" %>
-	
 	<script type="text/javascript" src="/resources/js/loginPage.js"></script>
+	<%@ include file="../layout/footer.jsp" %>
 </body>
 </html>
