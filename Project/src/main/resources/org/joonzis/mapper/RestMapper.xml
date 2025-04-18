@@ -8,15 +8,37 @@
 	</select>
     
     <select id="filteredAll" resultType="org.joonzis.domain.RestVO" parameterType="Map">
-	    SELECT * FROM RESTAURANT
-	    WHERE 1=1
-	    <if test="region != null">
-	        AND rest_loc LIKE #{region}
-	    </if>
-	    <if test="category != null">
-	        AND rest_cate = #{category}
-	    </if>
-	</select>
+    WITH numbered_images AS (
+        SELECT 
+            i.*,
+            ROW_NUMBER() OVER (PARTITION BY REST_NO ORDER BY ROWNUM) AS seq_no
+        FROM REST_IMG i
+    )
+	    SELECT 
+		    r.REST_NO,
+		    r.REST_NAME,
+		    r.REST_PHONE,
+		    r.REST_ADR,
+		    r.REST_BH,
+		    r.REST_LOC,
+		    r.REST_CATE,
+		    i.REST_IMG_NAME,
+		    i.seq_no
+		FROM 
+    		RESTAURANT r
+		LEFT JOIN 
+    		numbered_images i ON r.REST_NO = i.REST_NO
+		WHERE 1=1
+		    <if test="region != null">
+		        AND r.rest_loc LIKE #{region}
+		    </if>
+		    <if test="category != null">
+		        AND r.rest_cate = #{category}
+		    </if>
+		    <if test="category != null">
+		        AND i.seq_no = 1
+		    </if>
+		</select>
 	
 	<select id="findByNo" resultType="org.joonzis.domain.RestVO">
 		SELECT * FROM RESTAURANT WHERE REST_NO = #{rest_no}
