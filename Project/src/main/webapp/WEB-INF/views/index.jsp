@@ -111,9 +111,6 @@
                 </div>
             </div>
         </div>
-
-
-
 		<div class="popup" id="popup">
 	            <div class="popup-content">
 	                <span class="popup-close" id="popup-close">&times;</span>

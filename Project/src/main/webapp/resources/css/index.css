@@ -51,7 +51,7 @@ body {
 	border-radius: 10px;
 	margin : 15px 0px;  
 }
-/* 지역 선택 버튼 스타일 */
+/* 지역 선택 버튼 스타일 */////////
 .locationOption{
 	appearance: none; /* 기본 style 제거 -> v 표시만 사라짐*/
 	padding: 10px 40px 10px 15px;
