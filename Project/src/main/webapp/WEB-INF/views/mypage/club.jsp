@@ -35,7 +35,7 @@
 							</div>
 						</div>
 						<div class="club-memo">
-							<textarea class="memo-area">메모</textarea>
+							<textarea rows="7" cols="75" class="memo-area"></textarea>
 							<button type="button" class="memo-btn" id="saveMemoBtn">저장</button>
 						</div>
 					</div>
@@ -43,7 +43,7 @@
 				<!-- 여기까지~~~~~~!!! -->
 				<div class="club-list">
 					<div>
-						<img src="/resources/images/2.png" alt="클럽사진" class="club-img">
+						<img src="" alt="클럽사진" class="club-img">
 					</div>
 					<div class="club-content">
 						<div class="club-info">
@@ -56,14 +56,14 @@
 							</div>
 						</div>
 						<div class="club-memo">
-							<textarea class="memo-area">메모</textarea>
+							<textarea rows="7" cols="75" class="memo-area"></textarea>
 							<button type="button" class="memo-btn" id="saveMemoBtn">저장</button>
 						</div>
 					</div>
 				</div>
 				<div class="club-list">
 					<div>
-						<img src="/resources/images/2.png" alt="클럽사진" class="club-img">
+						<img src="" alt="클럽사진" class="club-img">
 					</div>
 					<div class="club-content">
 						<div class="club-info">
@@ -76,14 +76,13 @@
 							</div>
 						</div>
 						<div class="club-memo">
-							<textarea class="memo-area">메모</textarea>
-							<button type="button" class="memo-btn" id="saveMemoBtn">저장</button>
+							<textarea rows="7" cols="75" class="memo-area"></textarea>
 						</div>
 					</div>
 				</div>
 				<div class="club-list">
 					<div>
-						<img src="/resources/images/2.png" alt="클럽사진" class="club-img">
+						<img src="" alt="클럽사진" class="club-img">
 					</div>
 					<div class="club-content">
 						<div class="club-info">
@@ -96,14 +95,13 @@
 							</div>
 						</div>
 						<div class="club-memo">
-							<textarea class="memo-area">메모</textarea>
-							<button type="button" class="memo-btn" id="saveMemoBtn">저장</button>
+							<textarea rows="7" cols="75" class="memo-area"></textarea>
 						</div>
 					</div>
 				</div>
 				<div class="club-list">
 					<div>
-						<img src="/resources/images/2.png" alt="클럽사진" class="club-img">
+						<img src="" alt="클럽사진" class="club-img">
 					</div>
 					<div class="club-content">
 						<div class="club-info">
@@ -116,14 +114,13 @@
 							</div>
 						</div>
 						<div class="club-memo">
-							<textarea class="memo-area">메모</textarea>
-							<button type="button" class="memo-btn" id="saveMemoBtn">저장</button>
+							<textarea rows="7" cols="75" class="memo-area"></textarea>
 						</div>
 					</div>
 				</div>
 				<div class="club-list">
 					<div>
-						<img src="/resources/images/2.png" alt="클럽사진" class="club-img">
+						<img src="" alt="클럽사진" class="club-img">
 					</div>
 					<div class="club-content">
 						<div class="club-info">
@@ -136,14 +133,10 @@
 							</div>
 						</div>
 						<div class="club-memo">
-							<textarea class="memo-area">메모</textarea>
-							<button type="button" class="memo-btn" id="saveMemoBtn">저장</button>
+							<textarea rows="7" cols="75" class="memo-area"></textarea>
 						</div>
 					</div>
 				</div>
-				
-				
-				
 			</div>
 		</div>
 	</div>

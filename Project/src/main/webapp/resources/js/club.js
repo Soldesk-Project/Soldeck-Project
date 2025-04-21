@@ -16,31 +16,9 @@ let linkEle3 = document.createElement('link');
 linkEle3.rel = 'stylesheet';
 linkEle3.href = CSS_FILE_PATH3;
 document.head.appendChild(linkEle3);
-//-----즐겨찾기 버튼-------------------------------------------
-let bookmarkBtn=document.querySelectorAll(".bookmark");
-bookmarkBtn.forEach(btn=>{
-	btn.addEventListener('click',function(){
-		if (!btn.classList.contains('active')) {
-			// 즐겨찾기 on (default)
-			if (confirm("즐겨찾기를 해제하시겠습니까?")) {
-				this.classList.add('active');
-				// 자바로 가게 번호 날려서 db에서 bookmark 테이블 update
-			}
-		} else {
-			// 즐겨찾기 off
-			if (confirm("즐겨찾기로 등록하시겠습니까?")) {
-				this.classList.remove('active');
-				// 자바로 가게 번호 날려서 db에서 bookmark 테이블 update
-			}
-		}
-	})
-})
-// 모달 관련 스크립트
-const modal = document.querySelector('#modal');
-const clubTilte = document.querySelector("input[name='club-title']");
-const clubDesc = document.querySelector("textarea[name='club-desc']");
+
 // 버튼 클릭 이벤트
-document.querySelectorAll('button').forEach(btn => {
+document.querySelectorAll('button').forEach((btn, idx) => {
   btn.addEventListener('click', () => {
     let type = btn.getAttribute("id");
 
@@ -50,9 +28,58 @@ document.querySelectorAll('button').forEach(btn => {
       closeModal();
     }else if(type == 'createBtn'){
       createClub();
+    }else if(type == 'bookmarkBtn'){
+      bookmark(btn);
+    }else if(type == 'saveMemoBtn'){
+      saveMemo(btn, idx);
     }
   });
 });
+
+//-----메모 저장----------------------------------
+function saveMemo(btn){
+	const idx = btn.dataset.idx;
+  const memoArea = document.querySelector(`.memo-area[data-idx="${idx}"]`);
+  const memo=memoArea.value;
+  localStorage.setItem('memo'+idx, memo);
+  console.log('수정됨');
+  console.log(idx);
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.memo-area').forEach((area, idx) => {
+    area.dataset.idx = idx;
+  });
+  document.querySelectorAll('.memo-btn').forEach((btn, idx) => {
+    btn.dataset.idx = idx;
+  });
+
+  // 저장된 메모 불러오기
+  document.querySelectorAll('.memo-area').forEach((area, idx) => {
+    const saveMemo = localStorage.getItem('memo' + idx);
+    area.value = saveMemo ? saveMemo : "메모";
+  });
+});
+
+//-----즐겨찾기 버튼-------------------------------------------
+function bookmark(btn){
+  if (!btn.classList.contains('active')) {
+    if (confirm("즐겨찾기를 해제하시겠습니까?")) {
+      btn.classList.add('active');
+      // 서버로 즐겨찾기 해제 요청
+    }
+  } else {
+    if (confirm("즐겨찾기로 등록하시겠습니까?")) {
+      btn.classList.remove('active');
+      // 서버로 즐겨찾기 등록 요청
+    }
+  }
+}
+
+// 모달 관련 스크립트
+const modal = document.querySelector('#modal');
+const clubTilte = document.querySelector("input[name='club-title']");
+const clubDesc = document.querySelector("textarea[name='club-desc']");
 
 function openModal(){
   modal.style.display = 'block';
@@ -75,22 +102,6 @@ function createClub(){
     return;
   }
 }
-//-----메모 저장----------------------------------
-let saveMemoBtn=document.querySelectorAll(".memo-btn");
-saveMemoBtn.forEach((btn,idx)=>{
-	btn.addEventListener('click',()=>{
-		const memoArea = btn.closest('div').querySelector('.memo-area');
-		const memo=memoArea.value;
-		localStorage.setItem('memo'+idx, memo);
-		console.log('수정됨');
-	})
-})
-window.addEventListener('DOMContentLoaded', () => {
-	document.querySelectorAll('.memo-area').forEach((area, idx) => {
-		const saveMemo=localStorage.getItem('memo'+idx);
-		area.value=saveMemo?saveMemo:"메모";
-	});
-});
 
 
 
