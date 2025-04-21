@@ -137,6 +137,77 @@
 		</div>
 	</div>
   </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<div id = "modal">
+		<div class = "modal-content">
+			<div class = "modal-title">
+				<a>새 모임방 등록</a>
+				<div class = "modal-body">
+					<ul>
+						<li>
+							<input type="image">
+						</li>
+						<li>
+							<input type="text" placeholder="모임방 이름">
+						</li>
+						<li>
+							<input type="textarea" placeholder="모임 소개">
+						</li>
+					</ul>
+				</div>
+				<div class = "modal-footer">
+					<button type="button" id="closeModalBtn">취소</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<jsp:include page="../layout/footer.jsp"/>
 <script type="text/javascript" src="/resources/js/club.js"></script>
 </body>

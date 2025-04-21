@@ -17,3 +17,25 @@ linkEle3.rel = 'stylesheet';
 linkEle3.href = CSS_FILE_PATH3;
 document.head.appendChild(linkEle3);
 
+// 모달 관련 스크립트
+const modal = document.querySelector('#modal');
+// 버튼 클릭 이벤트
+document.querySelectorAll('button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    let type = btn.getAttribute("id");
+
+    if(type == 'createClubBtn'){
+      openModal();
+    }else if(type == 'closeModalBtn'){
+      closeModal();
+    }
+  });
+});
+
+function openModal(){
+  modal.style.display = 'block';
+}
+
+function closeModal(){
+  modal.style.display = 'none';
+}
