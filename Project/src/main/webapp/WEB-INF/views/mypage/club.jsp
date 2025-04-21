@@ -22,13 +22,13 @@
 				<!-- 여기서부터~~~~~ -->
 				<div class="club-list">
 					<div>
-						<img src="" alt="클럽사진" class="club-img">
+						<img src="/resources/images/2.png" alt="클럽사진" class="club-img">
 					</div>
 					<div class="club-content">
 						<div class="club-info">
 							<div>
 								<input type="text" name="name" class="club-name" value="모임 명" readonly="readonly">
-								<img src="" alt="즐겨찾기" class="bookmark-img">
+								<button type="button" class="bookmark" id="bookmarkBtn">★</button>
 							</div>
 							<div>
 								<input type="text" name="oc" class="club-oc" value="공개 모임" readonly="readonly">
@@ -36,6 +36,7 @@
 						</div>
 						<div class="club-memo">
 							<textarea rows="7" cols="75" class="memo-area">메모</textarea>
+							<button type="button" class="memo-btn" id="saveMemoBtn">저장</button>
 						</div>
 					</div>
 				</div>
@@ -48,7 +49,7 @@
 						<div class="club-info">
 							<div>
 								<input type="text" name="name" class="club-name" value="모임 명" readonly="readonly">
-								<img src="" alt="즐겨찾기" class="bookmark-img">
+								<button type="button" class="bookmark" id="bookmarkBtn">★</button>
 							</div>
 							<div>
 								<input type="text" name="oc" class="club-oc" value="공개 모임" readonly="readonly">
@@ -67,7 +68,7 @@
 						<div class="club-info">
 							<div>
 								<input type="text" name="name" class="club-name" value="모임 명" readonly="readonly">
-								<img src="" alt="즐겨찾기" class="bookmark-img">
+								<button type="button" class="bookmark" id="bookmarkBtn">★</button>
 							</div>
 							<div>
 								<input type="text" name="oc" class="club-oc" value="공개 모임" readonly="readonly">
@@ -86,7 +87,7 @@
 						<div class="club-info">
 							<div>
 								<input type="text" name="name" class="club-name" value="모임 명" readonly="readonly">
-								<img src="" alt="즐겨찾기" class="bookmark-img">
+								<button type="button" class="bookmark" id="bookmarkBtn">★</button>
 							</div>
 							<div>
 								<input type="text" name="oc" class="club-oc" value="공개 모임" readonly="readonly">
@@ -105,7 +106,7 @@
 						<div class="club-info">
 							<div>
 								<input type="text" name="name" class="club-name" value="모임 명" readonly="readonly">
-								<img src="" alt="즐겨찾기" class="bookmark-img">
+								<button type="button" class="bookmark" id="bookmarkBtn">★</button>
 							</div>
 							<div>
 								<input type="text" name="oc" class="club-oc" value="공개 모임" readonly="readonly">
@@ -124,7 +125,7 @@
 						<div class="club-info">
 							<div>
 								<input type="text" name="name" class="club-name" value="모임 명" readonly="readonly">
-								<img src="" alt="즐겨찾기" class="bookmark-img">
+								<button type="button" class="bookmark" id="bookmarkBtn">★</button>
 							</div>
 							<div>
 								<input type="text" name="oc" class="club-oc" value="공개 모임" readonly="readonly">

@@ -21,6 +21,7 @@
 	  	<span>공개 리스트</span>
 	  </div>
 	  <div class="list-content">
+	  	<div class="inner-content">
 	  	<!-- for문 / DB에서 값 가져와서 수정 -->
             <div class="view">
                 <div class="view-img">
@@ -38,11 +39,14 @@
                 </div>
             </div>
            <!--  -->
+
+	  	</div>
 	  </div>
 	  <div class="list-title">
 	  	<span>나만의 작은 리스트</span>
 	  </div>
 	  <div class="list-content">
+	  	<div class="inner-content">
 	  	<!-- for문 / DB에서 값 가져와서 수정 / 내용 넘치면 스크롤 생성-->
             <div class="view">
                 <div class="view-img">
@@ -59,7 +63,7 @@
                     </div>
                 </div>
             </div>
-	
+	  	</div>
 	  </div>
 	</div>
   </div>

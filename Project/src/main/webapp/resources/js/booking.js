@@ -56,9 +56,9 @@ document.querySelectorAll("button").forEach(btn=>{
 	btn.addEventListener('click',e=>{
 		let type=btn.getAttribute('id');
 		
-		if (type==='bookingCancel') {
+		if (type==='bookingCancelBtn') {
 			console.log('예약 취소 버튼');
-		}else if(type==='saveMemo'){
+		}else if(type==='saveMemoBtn'){
 			console.log("메모 저장 버튼");
 		}
 	});
