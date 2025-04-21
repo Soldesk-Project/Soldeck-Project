@@ -20,6 +20,7 @@
   	border: 1px dashed;
   	align-items: center;
 	display: flex;
+	border-radius: 20px;
 }
 .list-title span{
 	font-size: 20px;
@@ -31,6 +32,7 @@
 	height: 600px; 
   	border: 1px dashed;
 	margin: 15px 0;
+	border-radius: 20px;
 }
 .view-img{
 	display: inline-block;
