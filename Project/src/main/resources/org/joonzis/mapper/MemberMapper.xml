@@ -18,4 +18,14 @@
         VALUES (#{mem_no}, #{food_no})
     </insert>
 
+	<select id="findIdByNameBirth" resultType="java.lang.String">
+		SELECT mem_id FROM member WHERE mem_name = #{mem_name} AND SUBSTR(mem_birth, 1, 8) = #{mem_birth}
+	</select>
+	
+	<select id="findPwByIdBirth" resultType="java.lang.String">
+    	SELECT mem_pw
+    	FROM member
+    	WHERE mem_id = #{mem_id}
+    	AND SUBSTR(mem_birth, 1, 8) = #{mem_birth}
+	</select>
 </mapper>

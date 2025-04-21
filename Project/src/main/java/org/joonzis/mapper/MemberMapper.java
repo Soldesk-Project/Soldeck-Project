@@ -16,4 +16,14 @@ public interface MemberMapper {
 
     void insertFoodKate(@Param("mem_no") Integer mem_no, @Param("food_no") Integer food);
 
+    
+    String findIdByNameBirth(
+            @Param("mem_name") String mem_name,
+            @Param("mem_birth") String mem_birth
+    );
+
+	String findPwByIdBirth(
+			@Param("mem_id") String mem_id,
+			@Param("mem_birth") String mem_birth
+		);
 }

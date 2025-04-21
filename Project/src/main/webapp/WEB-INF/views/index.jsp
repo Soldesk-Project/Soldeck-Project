@@ -24,48 +24,36 @@
 		            <img src="resources/images/index_slide_image_1.png" alt="슬라이드 이미지 3" class="slide">
 		        </div>
     		</div>
-    		
 		</div>
-		<div class="main2">
-	        <div class="location-select">
-	            <select class="locationOption">
-	                <option value="">지역 선택</option>
-	                <option value="seoul">서울</option>
-	                <option value="busan">경기</option>
-	                <option value="busan">인천</option>
-	                <option value="busan">대구</option>
-	                <option value="busan">울산</option>
-	                <option value="busan">광주</option>
-	                <option value="busan">대전</option>
-	                <option value="busan">제주</option>
-	                </select>
-	        </div>
-	
-			<div class="category-buttons-container">
-	    		<div class="category-buttons">
-	    			<div class="koreaFood" onclick="showKoreafood()">
-		        		<img src="#"class="category-button">
-		        		<p class="foodText">한식</p>
-	        		</div>
-	        		<div class="chinaFood" onclick="showChinafood()">
-	        			<img src="#"class="category-button">
-	        			<p class="foodText">중식</p>
-	        		</div>
-	        		<div class="japanFood" onclick="showJapanfood()">
-	        			<img src="#"class="category-button">
-	        			<p class="foodText">일식</p>
-	        		</div>
-	        		<div class="westurnFood" onclick="showWesturnfood()">
-	        			<img src="#"class="category-button">
-	        			<p class="foodText">양식</p>
-	        		</div>
-	        		<div class="vietnamFood" onclick="showVietfood()">
-	        			<img src="#"class="category-button">
-	        			<p class="foodText">베트남요리</p>
-	        		</div>
-	    		</div>
-			</div>
-		</div>
+		
+		<div class="page-header">
+		<div class="location-select">
+			<select>
+				<option value="">지역 선택</option>
+				<option value="서울">서울</option>
+				<option value="부산">부산</option>
+				<option value="대전">대전</option>
+				<option value="대구">대구</option>
+				<option value="울산">울산</option>
+				<option value="광주">광주</option>
+				<option value="인천">인천</option>
+				<option value="제주">제주</option>
+			</select>
+	    </div>
+   </div>
+   
+   <div class="panel-body">
+   		<div class="kategorie-container">
+		    <ul class="kategorie-list">
+		    	<li><button type="button" class="btn btn-fir" id="korBtn">한식</button></li>
+		    	<li><button type="button" class="btn btn-fir" id="chnBtn">중식</button></li>
+		    	<li><button type="button" class="btn btn-fir" id="japBtn">일식</button></li>
+		    	<li><button type="button" class="btn btn-fir" id="wesBtn">양식</button></li>
+		    	<li><button type="button" class="btn btn-fir" id="vietBtn">베트남</button></li>
+		    </ul>
+   		</div>
+   </div>
+		
         <div class="recommendations">
             <h2 class="indexTitle"># 오늘의 추천 pick</h2>
 			<div class="recommendation-slider-wrapper">

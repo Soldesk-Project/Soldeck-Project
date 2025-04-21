@@ -18,7 +18,8 @@
 			<input type="text" id="contact" placeholder="연락처를 입력하세요.">
 			<button id="findPwBtn">조회</button>
 			<div class="resultContainer" id="resultContainer" style="display: none;">
-			<div id="result">비밀번호 조회 결과</div>
+				<p>비밀번호 조회 결과:</p>
+				<div id="result"></div>
 			</div>
 		</div>
 	</div>

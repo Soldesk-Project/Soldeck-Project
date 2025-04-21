@@ -28,4 +28,16 @@ public class MemberServiceImpl implements MemberService{
             }
         }
     }
+
+	@Override
+	public String findId(String mem_name, String mem_birth) {
+        return mapper.findIdByNameBirth(mem_name, mem_birth);
+	}
+
+	@Override
+	public String findPw(String mem_id, String mem_birth) {
+		return mapper.findPwByIdBirth(mem_id, mem_birth);
+	}
+    
+    
 }

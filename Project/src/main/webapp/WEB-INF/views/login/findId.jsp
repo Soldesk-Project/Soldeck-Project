@@ -22,7 +22,8 @@
 				<button id="findPwPageBtn">비밀번호 찾기</button>
 			</div>
 			<div class="resultContainer" id="resultContainer" style="display: none;">
-				<div id="result">아이디 조회 결과</div>
+				<p>아이디 조회 결과:</p>
+				<div id="result"></div>
 			</div>
 		</div>
 	</div>

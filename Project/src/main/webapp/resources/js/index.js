@@ -115,3 +115,69 @@ function moveSlider(name, direction) {
     const translateX = -sliderIndexes[name] * itemWidth * itemsPerPage;
     track.style.transform = `translateX(${translateX}px)`;
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+	  const locationSelect = document.querySelector('.location-select select');
+	  const categoryButtons = document.querySelectorAll('.kategorie-list button');
+
+	  locationSelect.addEventListener('change', handleFilter);
+	  categoryButtons.forEach(button => {
+	    button.addEventListener('click', handleFilter);
+	  });
+
+	  function handleFilter() {
+	    const selectedRegion = locationSelect.value;
+	    let selectedCategory = '';
+
+	    categoryButtons.forEach(button => {
+	      if (button.classList.contains('active')) {
+	        selectedCategory = button.id.slice(0, -3).toLowerCase();
+	      }
+	    });
+
+	    // 카테고리 버튼 클릭 시 활성화/비활성화 처리
+	    if (this.classList.contains('btn')) {
+	      categoryButtons.forEach(btn => btn.classList.remove('active'));
+	      this.classList.add('active');
+	      selectedCategory = this.id.slice(0, -3).toLowerCase();
+	    } else if (this === locationSelect) {
+	      // 지역 선택 변경 시 카테고리 활성화 상태 유지
+	      const currentlyActive = document.querySelector('.kategorie-list button.active');
+	      if (currentlyActive) {
+	        selectedCategory = currentlyActive.id.slice(0, -3).toLowerCase();
+	      } else {
+	        selectedCategory = ''; // 지역만 변경되었고 활성화된 카테고리가 없으면 초기화
+	      }
+	    }
+
+	    // 지역과 카테고리 모두 선택되었을 때만 fetchData 호출 및 페이지 이동
+	    if (selectedRegion && selectedCategory) {
+	      fetchData(selectedRegion, selectedCategory);
+	    } else {
+	      console.log('지역과 카테고리를 모두 선택해주세요.');
+	      // 필요에 따라 사용자에게 알림 메시지를 표시할 수 있습니다.
+	    }
+	  }
+
+	  function fetchData(region, category) {
+	    const url = `/search/location/data?region=${region}&category=${category}`;
+	    console.log(url);
+	    fetch(url)
+	      .then(response => {
+	        if (!response.ok) {
+	          throw new Error(`HTTP error! status: ${response.status}`);
+	        }
+	        return response.json();
+	      })
+	      .then(data => {
+	        console.log('받아온 데이터:', data);
+	        let params = new URLSearchParams();
+	        params.append('region', region);
+	        params.append('category', category);
+	        window.location.href = `/search/location?${params.toString()}`;
+	      })
+	      .catch(error => {
+	        console.error('데이터를 가져오는 중 오류 발생:', error);
+	      });
+	  }
+	});

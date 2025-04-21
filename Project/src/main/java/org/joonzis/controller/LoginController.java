@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
@@ -45,12 +46,34 @@ public class LoginController {
     public String findId() {
         return "login/findId";
     }
-
+    
+    @PostMapping("/findIdProcess")
+    @ResponseBody
+    public String findIdProcess(@RequestParam("name") String mem_name, @RequestParam("birthDate") String mem_birth) {
+        String foundId = memberservice.findId(mem_name, mem_birth);
+        if (foundId != null) {
+            return foundId;
+        } else {
+            return "아이디를 찾을 수 없습니다.";
+        }
+    }
+    
     @RequestMapping("/findPw")
     public String findPw() {
         return "login/findPw";
     }
-
+    
+    @PostMapping("/findPwProcess")
+    @ResponseBody
+    public String findPwProcess(@RequestParam("Id") String mem_id, @RequestParam("birthDate") String mem_birth) {
+    	String foundPw = memberservice.findPw(mem_id, mem_birth);
+    	if (foundPw != null) {
+    		return foundPw;
+    	} else {
+    		return "비밀번호를 찾을 수 없습니다";
+    	}
+    }
+    
     @RequestMapping("/signUpPage")
     public String signUpPage() {
         return "login/signUpPage";

@@ -43,77 +43,77 @@ body {
     user-select: none;
     pointer-events: none;
 }
-/* 박스 */
-.main2{
-	width: 1200px;
-	height: 250px;
-	border: 1px solid #EBEBEB;
-	border-radius: 10px;
-	margin : 15px 0px;  
-}
-/* 지역 선택 버튼 스타일 */
-.locationOption{
-	appearance: none; /* 기본 style 제거 -> v 표시만 사라짐*/
-	padding: 10px 40px 10px 15px;
-    border: 3px solid #FF7D00;
-    border-radius: 25px;
-    font-size: 16px;
-    text-align : center;
-    color: black; 
-    outline: none;
-}
-.locationOption:focus {
-    border-color: #FF7D00;
-    box-shadow: 0 0 5px rgba(255, 125, 0, 0.5); /* 선택사항: 부드러운 외곽 강조 */
+.page-header{
+	margin-top : 15px;
+	text-align: center;
 }
 
-/* 카테고리 버튼 스타일 */
-.category-buttons-container {
-    display: flex;
-    justify-content: center;
-    padding: 10px 5px;
-    /*border: 1px solid black;*/
-    margin: 20px auto;
-    width: 1000px;
-    height: 90px;
-    border-radius: 15px;
+/* location-select 스타일 */
+.location-select {
+	padding: 10px;
 }
 
-.category-buttons {
-    display: flex;
-    align-items: center;
-}
-.koreaFood,
-.chinaFood,
-.japanFood,
-.westurnFood{
-	width: 160px;
-	height: 90px;
-}
-.foodText{
-	margin: 0px 40px;
-}
-
-.category-button {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: none;
-    font-size: 20px;
-    background-color: #ddd;
-    cursor: pointer;
-    justify-content: center;
-    align-items: center;
-}
-
-.category-button:hover {
-    background-color: #ddd;
-}
-
+/* select 요소 스타일 (선택 사항) */
 .location-select select {
-    margin-top: 20px;
-    padding: 10px;
-    width: 200px;
+	padding: 8px 15px;
+	font-size: 16px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	background-color: white;
+	cursor: pointer;
+}
+
+.panel-body{
+	margin-top : 15px;
+	width: 1200px;
+	margin: auto;
+}
+
+/* 전체 컨테이너 스타일 */
+.kategorie-container {
+  padding: 5px; /* 내부 여백 조정 */
+  border: 1px solid #ddd; /* 테두리 스타일: 점선, 두께 2px, 색상 회색 */
+  max-width: 70%; /* 컨테이너 최대 너비 설정 */
+  margin: 0 auto; /* 컨테이너 자체를 가운데 정렬 */
+  margin-top : 15px;
+}
+
+/* 리스트 스타일 */
+.kategorie-list {
+  display: flex; /* 가로 배치 */
+  justify-content: center; /* 수평 가운데 정렬 */
+  list-style: none; /* 기본 리스트 스타일 제거 */
+  padding: 0;
+  margin: 0;
+  gap: 25px; /* 버튼 간 간격 조정 */
+}
+
+/* 각 리스트 아이템 스타일 */
+.kategorie-list li {
+  display: flex;
+  justify-content: center; /* 버튼을 가운데 정렬 */
+  align-items: center;
+}
+
+/* 버튼 스타일 */
+.btn-fir {
+  width: 60px; /* 버튼의 너비 */
+  height: 60px; /* 버튼의 높이 */
+  background-color: #f0f0f0; /* 배경색 (회색) */
+  border: none; /* 테두리 제거 */
+  border-radius: 50%; /* 원형으로 만들기 */
+  font-size: 16px; /* 텍스트 크기 */
+  color: #333; /* 텍스트 색상 */
+  cursor: pointer; /* 클릭 가능 표시 */
+  display: flex;
+  justify-content: center; /* 텍스트 수평 가운데 */
+  align-items: center; /* 텍스트 수직 가운데 */
+  transition: background-color 0.3s; /* 호버 효과를 위한 전환 */
+}
+
+/* 호버 효과 */
+.btn-fir:hover {
+  background-color: #e0e0e0; /* 호버 시 더 어두운 회색 */
 }
 
 /* 메인 추천 화면*/
