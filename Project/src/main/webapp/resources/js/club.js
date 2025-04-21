@@ -37,6 +37,8 @@ bookmarkBtn.forEach(function(btn){
 })
 // 모달 관련 스크립트
 const modal = document.querySelector('#modal');
+const clubTilte = document.querySelector("input[name='club-title']");
+const clubDesc = document.querySelector("textarea[name='club-desc']");
 // 버튼 클릭 이벤트
 document.querySelectorAll('button').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -46,14 +48,30 @@ document.querySelectorAll('button').forEach(btn => {
       openModal();
     }else if(type == 'closeModalBtn'){
       closeModal();
+    }else if(type == 'createBtn'){
+      createClub();
     }
   });
 });
 
 function openModal(){
   modal.style.display = 'block';
+  document.body.style.overflow = 'hidden';
 }
 
 function closeModal(){
   modal.style.display = 'none';
+  document.body.style.overflow = 'auto';
+}
+
+function createClub(){
+  if(!clubTilte.value){
+    alert("모임 이름을 입력해 주세요");
+    return;
+  }
+
+  if(!clubDesc.value){
+    alert("모임 소개를 입력해 주세요");
+    return;
+  }
 }

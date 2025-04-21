@@ -139,78 +139,51 @@
 			</div>
 		</div>
 	</div>
-  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	<div id = "modal">
-		<div class = "modal-content">
-			<div class = "modal-title">
-				<a>새 모임방 등록</a>
-				<div class = "modal-body">
-					<ul>
-						<li>
-							<input type="image">
-						</li>
-						<li>
-							<input type="text" placeholder="모임방 이름">
-						</li>
-						<li>
-							<input type="textarea" placeholder="모임 소개">
-						</li>
-					</ul>
-				</div>
-				<div class = "modal-footer">
-					<button type="button" id="closeModalBtn">취소</button>
-				</div>
-			</div>
+</div>
+<!-- 모임 등록 모달 -->
+<div id="modal">
+	<div class="modal-content">
+		<div class="modal-title">
+			<a>새 모임방 등록</a>
+		</div>
+		<div class="modal-body">
+			<ul>
+				<li class="image-container">
+					<div class="image-placeholder">이미지</div>
+				</li>
+				<li>
+					<input type="text" name="club-title" placeholder="모임방 이름" class="input-text">
+				</li>
+				<li>
+					<textarea placeholder="모임 소개" name="club-desc" class="input-textarea"></textarea>
+				</li>
+				<li>
+					<label class="input-label">나이 제한</label>
+					<div class="age-range-container">
+						<input type="number" value="20" class="input-number">
+						<span>~</span>
+						<input type="number" value="40" class="input-number">
+					</div>
+				</li>
+				<li>
+					<label class="input-label">성별</label>
+					<div class="gender-container">
+						<label><input type="radio" name="gender" value="male" class="gender-radio"> 남성</label>
+						<label><input type="radio" name="gender" value="female" class="gender-radio"> 여성</label>
+					</div>
+				</li>
+				<li>
+					<label class="input-label">공개 여부</label>
+					<input type="checkbox" class="public-checkbox"> 공개
+				</li>
+			</ul>
+		</div>
+		<div class="modal-footer">
+			<button type="button" id="closeModalBtn" class="btn-cancel">취소</button>
+			<button type="button" id="createBtn" class="btn-create">생성</button>
 		</div>
 	</div>
+</div>
 	<jsp:include page="../layout/footer.jsp"/>
 <script type="text/javascript" src="/resources/js/club.js"></script>
 </body>
