@@ -10,7 +10,7 @@
 	<jsp:include page="../layout/header.jsp"/>
 
 	<div class="container">
-		<form id="registrationForm" action="registerProcess.jsp" method="post">
+		<form id="registrationForm" action="/login/signUpProcess" method="post">
 			<div class="form-group">
 				<label for="name">이름</label>
 				<input type="text" id="name" name="name" placeholder="NAME" required>
