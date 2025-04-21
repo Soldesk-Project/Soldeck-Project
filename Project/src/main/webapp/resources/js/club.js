@@ -18,7 +18,7 @@ linkEle3.href = CSS_FILE_PATH3;
 document.head.appendChild(linkEle3);
 //-----즐겨찾기 버튼-------------------------------------------
 let bookmarkBtn=document.querySelectorAll(".bookmark");
-bookmarkBtn.forEach(function(btn){
+bookmarkBtn.forEach(btn=>{
 	btn.addEventListener('click',function(){
 		if (!btn.classList.contains('active')) {
 			// 즐겨찾기 on (default)
@@ -75,3 +75,25 @@ function createClub(){
     return;
   }
 }
+//-----메모 저장----------------------------------
+let saveMemoBtn=document.querySelectorAll(".memo-btn");
+saveMemoBtn.forEach((btn,idx)=>{
+	btn.addEventListener('click',()=>{
+		const memoArea = btn.closest('div').querySelector('.memo-area');
+		const memo=memoArea.value;
+		localStorage.setItem('memo'+idx, memo);
+		console.log('수정됨');
+	})
+})
+window.addEventListener('DOMContentLoaded', () => {
+	document.querySelectorAll('.memo-area').forEach((area, idx) => {
+		const saveMemo=localStorage.getItem('memo'+idx);
+		area.value=saveMemo?saveMemo:"메모";
+	});
+});
+
+
+
+
+
+

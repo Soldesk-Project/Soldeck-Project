@@ -156,15 +156,15 @@ body{
 .booking-cancel-btn{
 	margin: 11px 20px;
 }
-.memo{
+.booking-memo{
 	height: 40px;
 	width: 468px;
 	margin: 0 10px;
 }
-.memo-btn{
+.booking-memo-btn{
 	margin: 0 20px;
 }
-.memo-btn,
+.booking-memo-btn,
 .booking-cancel-btn{
 	float: right;
 	background-color: #FF7D00;

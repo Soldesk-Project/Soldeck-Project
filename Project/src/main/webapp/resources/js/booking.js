@@ -51,6 +51,22 @@ size.textContent = input.value;
 input.style.width = size.offsetWidth + 30 + 'px';
 }
 inputSize();
+//-----메모 저장----------------------------------
+let saveMemoBtn=document.querySelectorAll(".booking-memo-btn");
+saveMemoBtn.forEach((btn,idx)=>{
+	btn.addEventListener('click',()=>{
+		const memoArea = btn.closest('div').querySelector('.booking-memo');
+		const memo=memoArea.value;
+		localStorage.setItem('bookingMemo'+idx, memo);
+		console.log('수정됨');
+	})
+})
+window.addEventListener('DOMContentLoaded', () => {
+	document.querySelectorAll('.booking-memo').forEach((area, idx) => {
+		const saveMemo=localStorage.getItem('bookingMemo'+idx);
+		area.value=saveMemo?saveMemo:"-----//";
+	});
+});
 //-----버튼들 클릭 이벤트-------------------------------------------
 document.querySelectorAll("button").forEach(btn=>{
 	btn.addEventListener('click',e=>{
@@ -58,17 +74,11 @@ document.querySelectorAll("button").forEach(btn=>{
 		
 		if (type==='bookingCancelBtn') {
 			console.log('예약 취소 버튼');
-		}else if(type==='saveMemoBtn'){
-			console.log("메모 저장 버튼");
 		}
 	});
 });
 //-----예약 취소 함수--------
 function bookingCancel() {
-	
-}
-//-----메모 저장-----------
-function saveMemo() {
 	
 }
 

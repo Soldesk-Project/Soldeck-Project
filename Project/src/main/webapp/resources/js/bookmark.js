@@ -18,7 +18,7 @@ linkEle3.href = CSS_FILE_PATH3;
 document.head.appendChild(linkEle3);
 //-----즐겨찾기 버튼-------------------------------------------
 let bookmarkBtn=document.querySelectorAll(".bookmark");
-bookmarkBtn.forEach(function(btn){
+bookmarkBtn.forEach(btn=>{
 	btn.addEventListener('click',function(){
 		if (!btn.classList.contains('active')) {
 			// 즐겨찾기 on (default)
