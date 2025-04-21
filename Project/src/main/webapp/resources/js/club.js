@@ -18,7 +18,7 @@ linkEle3.href = CSS_FILE_PATH3;
 document.head.appendChild(linkEle3);
 
 // 버튼 클릭 이벤트
-document.querySelectorAll('button').forEach((btn, idx) => {
+document.querySelectorAll('button').forEach(btn => {
   btn.addEventListener('click', () => {
     let type = btn.getAttribute("id");
 

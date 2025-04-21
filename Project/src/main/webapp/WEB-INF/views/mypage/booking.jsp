@@ -50,7 +50,7 @@
 							<button type="button" class="booking-cancel-btn" id="bookingCancelBtn">예약취소</button>
 						</div>
 						<div>
-							<input type="text" class="booking-memo" name="memo" value="-----//">
+							<input type="text" class="booking-memo">
 							<button type="button" class="booking-memo-btn" id="saveMemoBtn">저장</button>
 						</div>
 					</div>
