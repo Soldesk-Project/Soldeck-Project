@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.joonzis.mapper.GroupMapper">
+	<insert id="createGroup" parameterType="org.joonzis.domain.GroupVO">
+		INSERT INTO "GROUP" (
+			GROUP_NO, 
+			MEM_NO, 
+			CHAT_TITLE, 
+			REG_DATE,
+			MAX_MEM, 
+			LIM_GENDER, 
+			IS_PUBLIC,
+			GROUP_MEMO,
+			MIN_AGE,
+			MAX_AGE
+			)
+		VALUES(
+			GROUP_SEQ.NEXTVAL,
+			#{memNo},
+			#{chatTitle},
+			sysdate,
+			#{maxMem},
+			#{limGender},
+			#{isPublic, jdbcType=CHAR},
+			#{groupMemo},
+			#{minAge},
+			#{maxAge}
+		)
+	</insert>
+</mapper>

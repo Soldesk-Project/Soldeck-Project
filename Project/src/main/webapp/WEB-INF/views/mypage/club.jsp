@@ -161,9 +161,9 @@
 				<li>
 					<label class="input-label">나이 제한</label>
 					<div class="age-range-container">
-						<input type="number" value="20" class="input-number">
+						<input type="number" value="20" name="min-age" class="input-number">
 						<span>~</span>
-						<input type="number" value="40" class="input-number">
+						<input type="number" value="40" name="max-age" class="input-number">
 					</div>
 				</li>
 				<li>

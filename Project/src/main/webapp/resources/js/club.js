@@ -31,7 +31,7 @@ document.querySelectorAll('button').forEach((btn, idx) => {
     }else if(type == 'bookmarkBtn'){
       bookmark(btn);
     }else if(type == 'saveMemoBtn'){
-      saveMemo(btn, idx);
+      saveMemo(btn);
     }
   });
 });
@@ -42,8 +42,6 @@ function saveMemo(btn){
   const memoArea = document.querySelector(`.memo-area[data-idx="${idx}"]`);
   const memo=memoArea.value;
   localStorage.setItem('memo'+idx, memo);
-  console.log('수정됨');
-  console.log(idx);
 }
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -80,6 +78,9 @@ function bookmark(btn){
 const modal = document.querySelector('#modal');
 const clubTilte = document.querySelector("input[name='club-title']");
 const clubDesc = document.querySelector("textarea[name='club-desc']");
+const minAge = document.querySelector("input[name='min-age']");
+const maxAge = document.querySelector("input[name='max-age']");
+const isPublic = document.querySelector(".public-checkbox").checked ? 'Y' : 'N';
 
 function openModal(){
   modal.style.display = 'block';
@@ -92,6 +93,7 @@ function closeModal(){
 }
 
 function createClub(){
+  const gender = document.querySelector("input[name='gender']:checked");
   if(!clubTilte.value){
     alert("모임 이름을 입력해 주세요");
     return;
@@ -101,6 +103,31 @@ function createClub(){
     alert("모임 소개를 입력해 주세요");
     return;
   }
+
+  const data = {
+    chatTitle : clubTilte.value,
+    groupMemo : clubDesc.value,
+    minAge : minAge.value,
+    maxAge : maxAge.value,
+    limGender : gender.value,
+    isPublic: isPublic ? 'Y' : 'N'
+  }
+
+  console.log(data);
+
+  fetch(`/mypage/createGroup`, {
+    method : 'post',
+    body : JSON.stringify(data),
+    headers : {
+      'content-type' : 'application/json; charset=utf-8'
+    }
+  })
+    .then(response => response.json())
+    .then(result => {
+      console.log(result);
+      window.location.href = result.redirect;
+    })
+    .catch(err => console.log(err));
 }
 
 
