@@ -11,66 +11,60 @@
 	
 	
 	<div class="container">
-        <div class="page-header">
+        <div class="page-header" data-rest-no="${rest_no}">
             <div class="slideshow-container">
                 <div class="slides-wrapper">
                     <div class="slide">
                         <img src="https://img1.kakaocdn.net/cthumb/local/C544x408.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flocalfiy%2F9D96CE0AF47646C48E7B41BF852F0E5E" alt="이미지 1">
                     </div>
-                    <!-- <div class="slide">
-                        <img src="https://img1.kakaocdn.net/cthumb/local/C264x196.q50/?fname=http%3A%2F%2Ft1.kakaocdn.net%2Ffiy_reboot%2Fplace%2F42F0E8B92BBD4145B7B7F3A8C66092AD" alt="이미지 2">
-                    </div>
-                    <div class="slide">
-                        <img src="https://img1.kakaocdn.net/cthumb/local/C640x960.q50/?fname=http%3A%2F%2Ft1.kakaocdn.net%2Ffiy_reboot%2Fplace%2FF5F4393C6D35419B9545F2F230E5D334" alt="이미지 3">
-                    </div>
-                    <div class="slide">
-                        <img src="https://img1.kakaocdn.net/cthumb/local/C640x960.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flocal%2FkakaomapPhoto%2Freview%2Fcf3b48884e2c3bf3f7b9bec246ac3f3925e3f921%3Foriginal" alt="이미지 4">
-                    </div>
-                    <div class="slide">
-                        <img src="https://img1.kakaocdn.net/cthumb/local/C264x196.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flocal%2FkakaomapPhoto%2Freview%2F4e6288d57f8db53b1136c87e78715a4e2f4634f2%3Foriginal" alt="이미지 5">
-                    </div>
-                    <div class="slide">
-                        <img src="https://img1.kakaocdn.net/cthumb/local/C544x408.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flocal%2FkakaomapPhoto%2Freview%2F7ef2638e4b26750a2e18c779ba9b04e9a6bab298%3Foriginal" alt="이미지 6">
-                    </div> -->
                 </div>
                 <a class="prev" onclick="moveSlide(-1)">❮</a>
                 <a class="next" onclick="moveSlide(1)">❯</a>
             </div>
 
             <div class="content">
-                <div class="store-list">
-                    <div class="store-item">
-                        <span class="name">가게 총 평점</span>
-                        <span class="rating">★ 4.0 (100개)</span>
-                    </div>
-                    <div class="store-item">
-                         <span class="name"><연령별 평점></span>
-                    </div>
-                    <div class="store-item">
-                        <span class="name">10대</span>
-                        <span class="rating">★ 3.0 (30개)</span>
-                    </div>
-                    <div class="store-item">
-                        <span class="name">20대</span>
-                        <span class="rating">★ 4.0 (40개)</span>
-                    </div>
-                    <div class="store-item">
-                        <span class="name">30대</span>
-                        <span class="rating">★ 5.0 (40개)</span>
-                    </div>
-                    <div class="store-item">
-                        <span class="name">40대</span>
-                        <span class="rating">★ 5.0 (40개)</span>
-                    </div>
-                    <div class="store-item">
-                        <span class="name">친구들 평점</span>
-                        <span class="rating">★ 3.0 (40개)</span>
-                    </div>
-                </div>
+			    <div class="store-list">
+			        <div class="store-item">
+			            <span class="name">가게 총 평점</span>
+			            <span class="rating">로딩 중...</span>
+			        </div>
+			        <div class="store-item">
+			            <span class="name"><연령별 평점></span>
+			        </div>
+			        <div class="store-item">
+			            <span class="name">10대</span>
+			            <span class="rating">로딩 중...</span>
+			        </div>
+			        <div class="store-item">
+			            <span class="name">20대</span>
+			            <span class="rating">로딩 중...</span>
+			        </div>
+			        <div class="store-item">
+			            <span class="name">30대</span>
+			            <span class="rating">로딩 중...</span>
+			        </div>
+			        <div class="store-item">
+			            <span class="name">40대</span>
+			            <span class="rating">로딩 중...</span>
+			        </div>
+			        <div class="store-item">
+			            <span class="name">친구들 평점</span>
+			            <span class="rating">로딩 중...</span>
+			        </div>
+			    </div>
+			    <div class="store-details">
+			        <table class="store-table">
+			            <tbody>
+			                <tr>
+			                    <td colspan="2">로딩 중...</td>
+			                </tr>
+			            </tbody>
+			        </table>
+			    </div>
                 <div class="store-details">
                     <table class="store-table">
                         <tbody>
-                            <button class="favorite-btn">즐겨찾기</button>
+                            <!-- <button class="favorite-btn">즐겨찾기</button> -->
                             <tr>
                                 <td>가게 이름 : </td>
                                 <td>몽탄</td>

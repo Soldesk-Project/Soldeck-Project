@@ -13,6 +13,10 @@ public interface RestMapper {
 	// 특정 가게 목록
 	public List<RestVO> filteredAll(Map<String, Object> params);
 	
+	// 특정 가게 검색
+//	public List<RestVO> search(String rest_name);
+	public List<RestVO> search(Map<String, Object> params);
+	
 	// 가게 찾기
-	public RestVO findByNo(int rest_no);
+	public List<RestVO> findByNo(int rest_no);
 }

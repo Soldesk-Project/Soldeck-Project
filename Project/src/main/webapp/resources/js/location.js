@@ -4,6 +4,35 @@ linkEle.rel = 'stylesheet';
 linkEle.href = CSS_FILE_PATH;
 document.head.appendChild(linkEle);
 
+//상위 요소(image-con)에서 이벤트 위임
+const imageCon = document.querySelector('.image-con');
+
+imageCon.addEventListener('click', (event) => {
+    // 클릭된 요소가 이미지 또는 가게 이름인지 확인
+    if (event.target.tagName === 'IMG' || (event.target.tagName === 'P' && event.target.parentElement.classList.contains('name'))) {
+        // 이미지 클릭 시
+        if (event.target.tagName === 'IMG') {
+            const imageSrc = event.target.src;
+            console.log('이미지 클릭됨:', imageSrc);
+        }
+        // 가게 이름 클릭 시
+        if (event.target.tagName === 'P') {
+            const storeName = event.target.textContent;
+            console.log('클릭한 가게 이름 :', storeName);
+        }
+
+        // 상위 .item-set에서 data-rest-no 가져오기
+        const itemSet = event.target.closest('.item-set');
+        if (itemSet) {
+            const restNo = itemSet.dataset.restNo || '1';
+            console.log('클릭한 가게 번호:', restNo);
+            window.location.href = `/search/view?rest_no=${restNo}`;
+        } else {
+            console.error('item-set 요소를 찾을 수 없습니다.');
+        }
+    }
+});
+
 //현재 선택된 지역과 카테고리 상태 관리
 let selectedRegion = '';
 let selectedCategory = '';
@@ -26,9 +55,9 @@ function showList() {
 
         // 데이터로 아이템 생성
         limitedArray.forEach(json => {
-            msg += `<div class="item-set">`
+            msg += `<div class="item-set" data-rest-no=${json.rest_no}>`
             msg += 	`<div class="image">`
-            msg += 		`<img src="${json.sumnail}" alt="이미지 1">`
+            msg += `<img src="${json.rest_img_name || ''}" alt="이미지 없음" draggable="false" onerror="this.src='/resources/images/noImage.png';">`;
             msg += 	`</div>`
             msg += 	`<div class="name">`
             msg += 		`<p>${json.rest_name}</p>`
@@ -38,13 +67,15 @@ function showList() {
         imageUL.innerHTML = msg;
     });
 }
-
+// 지역 선택
 const locationSelect = document.querySelector('.location-select select');
 locationSelect.addEventListener('change', function() {
     selectedRegion = this.value;
     console.log(selectedRegion);
     showList();
 });
+
+// 카테고리 선택
 const categoryButtons = document.querySelectorAll('.kategorie-list button');
 categoryButtons.forEach(button => {
     button.addEventListener('click', function() {
@@ -56,14 +87,14 @@ categoryButtons.forEach(button => {
             chnBtn: '중식',
             japBtn: '일식',
             wesBtn: '양식',
-            vietBtn: '베트남'
+            vietBtn: '베트남식'
         };
         selectedCategory = categoryMap[this.id] || '';
         console.log(selectedCategory);
         showList();
     });
 });
-///////
+
 function getList(callback) {
     const params = new URLSearchParams();
     if (selectedRegion) params.append('region', selectedRegion);

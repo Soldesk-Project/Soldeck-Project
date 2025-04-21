@@ -126,9 +126,11 @@
     height: 100%;
     object-fit: inherit;
     /* object-fit: cover; */
+    cursor: pointer;
 }
 .slides-wrapper p {
 	text-align: center;
+	cursor: pointer;
 }
 .prev, .next {
     cursor: pointer;
@@ -188,6 +190,7 @@
   height: 200px; /* 고정 높이 */
   object-fit: cover;
   display: block;
+  cursor: pointer;
 }
 
 /* 가게 정보 */
@@ -202,6 +205,7 @@
   font-size: 18px;
   font-weight: bold;
   color: #333;
+  cursor: pointer;
 }
 
 .store-info .store-type,

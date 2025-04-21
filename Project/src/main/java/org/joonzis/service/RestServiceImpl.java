@@ -36,9 +36,25 @@ public class RestServiceImpl implements RestService{
 	    }
 		return mapper.filteredAll(params);
 	}
+	
+//	@Override
+//	public List<RestVO> getSearchList(String rest_name) {
+//		log.info("getSearchList... rest_name: " + rest_name);
+//		return mapper.search(rest_name);
+//	}
 	@Override
-	public RestVO get(int rest_no) {
-		log.info("get...");
+    public List<RestVO> getSearchList(String keyword, String region, String category) {
+        log.info("getSearchList... keyword: " + keyword + ", region: " + region + ", category: " + category);
+        Map<String, Object> params = new HashMap<>();
+        params.put("keyword", keyword);
+        params.put("region", region);
+        params.put("category", category);
+        return mapper.search(params);
+    }
+	
+	@Override
+	public List<RestVO> get(int rest_no) {
+		log.info("get..." + rest_no);
 		return mapper.findByNo(rest_no);
 	}
 }

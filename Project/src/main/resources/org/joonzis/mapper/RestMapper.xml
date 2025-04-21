@@ -8,17 +8,83 @@
 	</select>
     
     <select id="filteredAll" resultType="org.joonzis.domain.RestVO" parameterType="Map">
-	    SELECT * FROM RESTAURANT
-	    WHERE 1=1
+	    SELECT 
+		    r.REST_NO,
+		    r.REST_NAME,
+		    r.REST_PHONE,
+		    r.REST_ADR,
+		    r.REST_BH,
+		    r.REST_LOC,
+		    r.REST_CATE,
+		    i.REST_IMG_NAME,
+		    i.REST_IMG_NO
+		FROM 
+    		RESTAURANT r
+		LEFT JOIN 
+    		REST_IMG i ON r.REST_NO = i.REST_NO
+		WHERE 1=1
 	    <if test="region != null">
-	        AND rest_loc LIKE #{region}
+	        AND r.rest_loc LIKE #{region}
 	    </if>
 	    <if test="category != null">
-	        AND rest_cate = #{category}
+	        AND r.rest_cate = #{category}
 	    </if>
 	</select>
 	
+	<select id="search" resultType="org.joonzis.domain.RestVO" parameterType="Map">
+    SELECT 
+        r.REST_NO,
+        r.REST_NAME,
+        r.REST_PHONE,
+        r.REST_ADR,
+        r.REST_BH,
+        r.REST_LOC,
+        r.REST_CATE,
+        i.REST_IMG_NAME,
+        i.REST_IMG_NO
+    FROM 
+        RESTAURANT r
+    LEFT JOIN 
+        REST_IMG i ON r.REST_NO = i.REST_NO
+    <where>
+        <if test="keyword != null and keyword != ''">
+            AND (
+                UPPER(r.rest_name) LIKE '%' || UPPER(#{keyword}) || '%'
+            )
+        </if>
+        <if test="region != null and region != ''">
+            AND r.rest_loc LIKE #{region}
+        </if>
+        <if test="category != null and category != ''">
+            AND r.rest_cate = #{category}
+        </if>
+    </where>
+    <if test="keyword != null and keyword != ''">
+        ORDER BY 
+            CASE 
+                WHEN UPPER(r.rest_name) = UPPER(#{keyword}) THEN 0 
+                ELSE 1 
+            END,
+            r.rest_name ASC
+    </if>
+</select>
+	
 	<select id="findByNo" resultType="org.joonzis.domain.RestVO">
-		SELECT * FROM RESTAURANT WHERE REST_NO = #{rest_no}
+		SELECT 
+        r.REST_NO,
+        r.REST_NAME,
+        r.REST_PHONE,
+        r.REST_ADR,
+        r.REST_BH,
+        r.REST_LOC,
+        r.REST_CATE,
+        i.REST_IMG_NAME,
+        i.REST_IMG_NO
+    FROM 
+        RESTAURANT r
+    LEFT JOIN 
+        REST_IMG i ON r.REST_NO = i.REST_NO
+    WHERE 
+        r.REST_NO = #{rest_no}
 	</select>
 </mapper>

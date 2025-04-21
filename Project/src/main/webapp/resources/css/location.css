@@ -143,6 +143,7 @@
   height: 100%; /* 부모 높이에 맞춤 */
   object-fit: cover; /* 이미지가 영역에 맞게 잘림 */
   display: block; /* 공백 제거 */
+  cursor: pointer;
 }
 
 /* 가게 이름 컨테이너 */
@@ -161,4 +162,5 @@
   margin: 0; /* 기본 마진 제거 */
   font-size: 14px;
   color: #333;
+  cursor: pointer;
 }
