@@ -246,7 +246,7 @@ if (viewBtn) {
 }
 
 // 모달 창 열기 (예약)
-const uploadBtn = document.getElementById('uploadBtn');
+const reservationBtn = document.getElementById('reservationBtn');
 const reservationModal = document.getElementById('reservationModal');
 const closeModalBtn = document.getElementById('closeModalBtn');
 const confirmReservationBtn = document.getElementById('confirmReservationBtn');
@@ -257,8 +257,8 @@ let selectedDate = null;
 let selectedTime = null;
 let selectedMonth = 4;
 
-if (uploadBtn) {
-    uploadBtn.addEventListener('click', () => {
+if (reservationBtn) {
+	reservationBtn.addEventListener('click', () => {
         reservationModal.style.display = 'flex';
         renderCalendar(selectedMonth);
     });
@@ -420,10 +420,10 @@ function fetchComments() {
         let msg = '';
         data.forEach(comment => {
             msg += `
-                <li data-rno="${comment.com_no}">
+                <li data-com_no="${comment.com_no}">
                     <div class="chat-full">
                         <div class="chat-header">
-                            <strong>작성자</strong>
+                            <strong>${comment.mem_no}</strong>
                             <small class="pull-right">${formatDate(comment.com_date)}</small>
                         </div>
                         <div class="chat-body">
@@ -449,7 +449,7 @@ function getComments(callback) {
         return;
     }
 
-    const url = `/comments/${restNo}`;
+    const url = `/comment/pages/${restNo}`;
     console.log("Fetching comments URL:", url);
     fetch(url, {
         headers: {
@@ -474,7 +474,7 @@ function getComments(callback) {
 
 // 코멘트 등록
 function uploadComment() {
-    const commentInput = document.querySelector("#COMMENT");
+    const commentInput = document.querySelector("#comment");
     if (!commentInput) {
         console.error("코멘트 입력 필드(#COMMENT)를 찾을 수 없습니다.");
         return;
@@ -495,13 +495,13 @@ function uploadComment() {
     const commentData = {
         rest_no: restNo,
         com_con: commentContent,
-        com_date: new Date().toISOString() // 서버에서 처리하는 것이 좋지만, 프론트에서 임시로 설정
+        mem_no: 1
     };
 
-    fetch('/comments/add', {
+    fetch('/comment/add', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json; charset=utf-8',
             'Accept': 'application/json'
         },
         body: JSON.stringify(commentData)
@@ -514,9 +514,9 @@ function uploadComment() {
     })
     .then(data => {
         console.log("Comment uploaded:", data);
-        alert("코멘트가 등록되었습니다.");
-        commentInput.value = ''; // 입력 필드 초기화
         fetchComments(); // 코멘트 목록 갱신
+        commentInput.value = ''; // 입력 필드 초기화
+        alert("코멘트가 등록되었습니다.");
     })
     .catch(err => {
         console.error("Upload error:", err.message);
@@ -584,8 +584,8 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // 업로드 버튼 이벤트 리스너
-    const uploadBtn = document.querySelector("#uploadBtn");
-    if (uploadBtn) {
-        uploadBtn.addEventListener('click', uploadComment);
+    const commentBtn = document.querySelector("#commentBtn");
+    if (commentBtn) {
+    	commentBtn.addEventListener('click', uploadComment);
     }
 });

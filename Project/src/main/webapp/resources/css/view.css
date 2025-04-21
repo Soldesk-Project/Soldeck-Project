@@ -200,7 +200,7 @@ th, td{
     color: black;
   }
   
-  .btn-reply {
+  .btn-comment {
     display: flex;
     flex-direction: column; /* 버튼과 텍스트를 세로로 배치 */
     align-items: flex-end; /* 오른쪽 정렬 */
@@ -208,7 +208,7 @@ th, td{
     padding-top: 62px;
   }
   
-  .btn-reply .btn-sec {
+  .btn-comment .btn-sec {
     background-color: white; /* 배경색 (선택 사항) */
     color: black;
     border: 1px solid #ddd;

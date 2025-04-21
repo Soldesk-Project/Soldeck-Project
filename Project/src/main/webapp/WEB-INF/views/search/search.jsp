@@ -50,7 +50,7 @@
     		<div class="chat-body2">
         		<div class="store-con">
 		            <!-- 첫 번째 가게 블록 -->
-		            <div class="store-block" data-rest-no='1'>
+		            <!-- div class="store-block" data-rest-no='1'>
 		                <div class="store-image">
 		                    <img src="https://img1.kakaocdn.net/cthumb/local/C544x408.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flocalfiy%2F9D96CE0AF47646C48E7B41BF852F0E5E" alt="가게 이미지 1">
 		                </div>
@@ -59,7 +59,7 @@
 		                    <p class="store-type">가게 종류</p>
 		                    <p class="store-hours">영업 시간</p>
 		                </div>
-		            </div>
+		            </div> -->
         		</div>
     		</div>
 		</div>

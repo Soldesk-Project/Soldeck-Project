@@ -64,33 +64,15 @@
                 <div class="store-details">
                     <table class="store-table">
                         <tbody>
-                            <!-- <button class="favorite-btn">즐겨찾기</button> -->
                             <tr>
-                                <td>가게 이름 : </td>
-                                <td>몽탄</td>
-                            </tr>
-                            <tr>
-                                <td>가게 종류 : </td>
-                                <td>한식</td>
-                            </tr>
-                            <tr>
-                                <td>가게 시간 : </td>
-                                <td>11:00~20:00</td>
-                            </tr>
-                            <tr>
-                                <td>가게 주소 : </td>
-                                <td>서울시</td>
-                            </tr>
-                            <tr>
-                                <td>가게 연락처 : </td>
-                                <td>02-</td>
+                                <td colspan="2">로딩 중...</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="store-reserve">
-            	<button type="button" class="btn btn-fir" id="uploadBtn">예약</button>
+            	<button type="button" class="btn btn-fir" id="reservationBtn">예약</button>
             </div>
         </div>
             
@@ -102,17 +84,17 @@
             <div class="panel-footer-header">
                 <div class="panle-footer-input">
                     <div class="textarea-wrapper">
-                        <textarea rows="15" cols="100" class="text_comm" name="COMMENT" id="COMMENT"></textarea>
+                        <textarea rows="15" cols="100" class="text_comm" name="comment" id="comment"></textarea>
                         <button type="button" class="btn btn-sec" id="uploadBtn">UPLOAD</button>
                     </div>
-                    <div class="btn-reply">
-                        <button type="button" class="btn btn-sec" id="replyBtn">댓글 달기</button>
+                    <div class="btn-comment">
+                        <button type="button" class="btn btn-sec" id="commentBtn">댓글 달기</button>
                     </div>
                 </div>
              </div>
              <div class="panel-footer-body">
                 <ul class="chat">
-                   <li data-rno="10">
+                   <li data-com_no="1">
                       <div class="chat-full">
                          <div class="chat-header">
                             <strong>작성자</strong>
@@ -138,7 +120,7 @@
                             </div>
                          </div>
                          <div class="chat-footer" id="chat_abc">
-                           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl tincidunt eget nullam non. Quis hendrerit dolor magna eget est lorem ipsum dolor sit. Volutpat odio facilisis mauris sit amet massa. Commodo odio aenean sed adipiscing diam donec adipiscing tristique. Mi eget mauris pharetra et. Non tellus orci ac auctor augue. Elit at imperdiet dui accumsan sit. Ornare arcu dui vivamus arcu felis. Egestas integer eget aliquet nibh praesent. In hac habitasse platea dictumst quisque sagittis purus. Pulvinar elementum integer enim neque volutpat ac.</p> 
+                           <p>umst quisque sagittis purus. Pulvinar elementum integer enim neque volutpat ac.</p> 
                          </div>
                       </div>
                    </li>
