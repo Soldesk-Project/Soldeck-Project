@@ -1,12 +1,19 @@
 package org.joonzis.mapper;
 
+import org.apache.ibatis.annotations.Param;
+
 public interface MemberMapper {
 
-	void insertMember(String mem_name, String mem_birth, String mem_id, String mem_pw, String mem_nickname,
-			String mem_email, String mem_phone);
+    void insertMember(
+        @Param("mem_name") String mem_name,
+        @Param("mem_birth") String mem_birth,
+        @Param("mem_id") String mem_id,
+        @Param("mem_pw") String mem_pw,
+        @Param("mem_nick") String mem_nick
+    );
 
-	Integer selectMemNoById(String mem_id);
+    Integer selectMemNoById(@Param("mem_id") String mem_id);
 
-	void insertMemberKate(Integer mem_no, Integer food);
+    void insertFoodKate(@Param("mem_no") Integer mem_no, @Param("food_no") Integer food);
 
 }
