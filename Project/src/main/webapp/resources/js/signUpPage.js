@@ -178,7 +178,24 @@ document.addEventListener('DOMContentLoaded', function() {
             return true;
         }
     }
+    
+    // 관심분야 선택 제한 함수
+    function limitInterestSelection() {
+        let checkedCount = 0;
+        interestCheckboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                checkedCount++;
+            }
+        });
 
+        if (checkedCount > 3) {
+            this.checked = false; // 현재 체크된 체크박스 해제
+            interestErrorMessage.textContent = '관심분야는 최대 3개까지 선택 가능합니다.';
+        } else {
+            interestErrorMessage.textContent = ''; // 3개 이하 선택 시 에러 메시지 초기화
+        }
+    }
+    
     // 이벤트 리스너 추가 (실시간 유효성 검사 - 생년월일 관련 리스너 제거)
     idInput.addEventListener('input', validateId);
     passwordInput.addEventListener('input', validatePassword);
@@ -188,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function() {
     phone2Input.addEventListener('input', validatePhone);
     phone3Input.addEventListener('input', validatePhone);
     interestCheckboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', validateInterest);
+        checkbox.addEventListener('change', limitInterestSelection);
     });
 
     // 폼 제출 이벤트 리스너 (AJAX 방식 - multipart/form-data)
@@ -206,6 +223,23 @@ document.addEventListener('DOMContentLoaded', function() {
             const isPhoneValid = validatePhone();
             const isInterestValid = validateInterest();
 
+            let checkedCount = 0;
+            interestCheckboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    checkedCount++;
+                }
+            });
+
+            if (checkedCount === 0) {
+                interestErrorMessage.textContent = '관심분야를 최소 1개 선택해주세요.';
+                return;
+            } else if (checkedCount > 3) {
+                interestErrorMessage.textContent = '관심분야는 최대 3개까지 선택 가능합니다.';
+                return;
+            } else {
+                interestErrorMessage.textContent = '';
+            }
+            
             if (!isNameValid || !isBirthDateValid || !isGenderValid ||
                 !isIdValid || !isPasswordValid || !isNicknameValid ||
                 !isEmailValid || !isPhoneValid || !isInterestValid) {
