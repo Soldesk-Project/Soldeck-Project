@@ -14,7 +14,7 @@
 	
 		<div class="select_box">
 			<div class="page-header">
-					<div class="location-select_box">
+				<div class="location-select_box">
 					<select class="location-select_select">
 						<option value="">지역 선택</option>
 						<option value="서울">서울</option>

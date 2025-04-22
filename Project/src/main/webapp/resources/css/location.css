@@ -1,51 +1,94 @@
-.main{
-	width: 100%;
-	margin: auto;
-	text-align: center;
+/* 
+*{
+  outline: 1px solid rgba(255, 0, 0, 0.2);
+} 
+*/
+html{
+  margin: 0;
 }
 
-
-/* --------------- 지역 선택창 ---------------  */
+body {
+    font-family: sans-serif;
+    margin: 0;
+    display: flex; 
+    flex-direction: column;
+    min-height: 100vh;
+}
+.layout{
+	flex-grow : 1;
+	margin : auto;
+	width : 1200px;
+    padding: 20px;
+    background-color: rgb();
+}
+/* header 아래 지역 및 대분류 선택 창 스타일 */
 .page-header{
+	margin-top : 15px;
 	text-align: center;
 }
+
+.select_box {
+    border: 1px solid #EBEBEB;
+	border-radius: 10px;
+	margin : 15px 0px;  
+}
+
+/* 지역선택창 + 카테고리 */
+/* --------------- 지역 선택창 ---------------  */
+
+/* location-select 스타일 */
 .location-select {
+	appearance: none;
 	padding: 10px;
 }
-.location-select select {
-	padding: 8px 15px;
-	font-size: 16px;
-	border: 1px solid #ddd;
-	border-radius: 5px;
+
+/* location-select_select 스타일 */
+.location-select_select {
+	border: 2px solid #FF7D00;
+	border-radius: 25px;
 	background-color: white;
-	cursor: pointer;
+	appearance: none;
+	font-size: 16px;
+	background-image: url("../images/arrow.svg");
+	background-size : 7px 7px;
+	background-repeat: no-repeat;
+	background-position: right 8px center;
+	padding: 10px 20px;
 }
 
 /* --------------- 카테고리 --------------- */
 .panel-body{
-	width: 1200px;
-	margin: auto;
+	margin-top : 15px;
+	margin: 20px 122px 0px 122px;
 }
+
+/* 전체 컨테이너 스타일 */
 .kategorie-container {
   padding: 5px;
-  border: 1px solid #ddd;
-  max-width: 70%;
+  /*border: 2px solid #EBEBEB;*/
+  border-radius : 20px;
+  max-width: 40%; 
   margin: 0 auto;
   margin-top : 15px;
 }
+
+/* 리스트 스타일 */
 .kategorie-list {
   display: flex; /* 가로 배치 */
   justify-content: center; /* 수평 가운데 정렬 */
   list-style: none; /* 기본 리스트 스타일 제거 */
   padding: 0;
   margin: 0;
-  gap: 25px; /* 버튼 간 간격 조정 */
+  gap: 35px; /* 버튼 간 간격 조정 */
 }
 .kategorie-list li {
   display: flex;
   justify-content: center; /* 버튼을 가운데 정렬 */
   align-items: center;
+  flex-wrap: wrap;
 }
+
+/* 버튼 스타일 */
 .btn-fir {
   width: 60px; /* 버튼의 너비 */
   height: 60px; /* 버튼의 높이 */
@@ -71,21 +114,24 @@
 }
 
 /* --------------- 가게들 --------------- */
+/* panel-footer와 footer 간 간격 확보 */
 .panel-footer {
-  margin: auto;
-  margin-top: 20px;
-  margin-bottom: 20px; 
-  width: 1200px;
+	width: 1200px;
+	margin: auto;
+	margin-bottom: 30px; /* footer와의 간격 확보 */
+	border: 1px solid #EBEBEB;
+	border-radius: 10px;
 }
 .rest-body {
-  width: 100%;
-  padding: 20px;
+  padding: 20px 0px;
 }
 .image-con {
   display: flex;
   flex-wrap: wrap; /* 3개 초과 시 다음 줄로 */
   gap: 20px; /* 세트 간 간격 */
   justify-content: center; /* 가로 가운데 정렬 */
+  padding: 10px;
+  background-color: white;
 }
 .item-set {
   flex: 1 1 calc(33.3% - 20px); /* 3개씩 배치 (간격 고려) */
@@ -95,12 +141,15 @@
   flex-direction: column; /* 세로로 배치 */
   align-items: center; /* 가운데 정렬 */
   box-sizing: border-box;
+  padding: 10px 0px;
 }
 .image {
   width: 100%;
   height: 250px; /* 이미지 높이 */
-  border: 1px solid #000000;
   box-sizing: border-box;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.2);
 }
 .image img {
   width: 100%;
@@ -112,15 +161,16 @@
 .name {
   width: 100%;
   height: 50px; /* 이름 영역 높이 */
-  border: 1px solid #000000;
   box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top: 20px;
 }
 .name p {
   margin: 0; /* 기본 마진 제거 */
-  font-size: 14px;
+  font-size: 17px;
   color: #333;
   cursor: pointer;
+  font-weight: 500;
 }
