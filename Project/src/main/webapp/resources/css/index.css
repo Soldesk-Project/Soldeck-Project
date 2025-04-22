@@ -1,3 +1,4 @@
+
 body {
     font-family: sans-serif;
     margin: 0;
@@ -48,33 +49,46 @@ body {
 	text-align: center;
 }
 
-/* location-select 스타일 */
-.location-select {
-	padding: 10px;
+/* select_box 스타일 */
+.select_box{
+    border: 1px solid #EBEBEB;
+	border-radius: 10px;
+	margin : 15px 0px; 
 }
 
-/* select 요소 스타일 (선택 사항) */
-.location-select select {
-	padding: 8px 15px;
-	font-size: 16px;
-	border: 1px solid #ddd;
-	border-radius: 5px;
+/* location-select_click 스타일 */
+.location-select_select{
+	appearance: none;
+	border: 2px solid #FF7D00;
+	border-radius: 25px;
 	background-color: white;
-	cursor: pointer;
+	font-size: 15px;
+	background-image: url("../images/arrow.svg");
+	background-size : 7px 7px;
+	background-repeat: no-repeat;
+	background-position: right 8px center;
+	padding: 10px 20px;
 }
-
+/* hover, active 적용 안됨 (해결법 찾는 중) */
+/*.location_select_box:hover{
+	border: 2px solid #FF7D00;
+	border-radius: 25px;
+}
+.location-select_select:active{
+	border: 2px solid #FF7D00;
+	border-radius: 25px;
+}*/
 .panel-body{
-	margin-top : 15px;
-	width: 1200px;
-	margin: auto;
+	margin: 20px 122px 0px 122px;
 }
 
 /* 전체 컨테이너 스타일 */
 .kategorie-container {
-  padding: 5px; /* 내부 여백 조정 */
-  border: 1px solid #ddd; /* 테두리 스타일: 점선, 두께 2px, 색상 회색 */
-  max-width: 70%; /* 컨테이너 최대 너비 설정 */
-  margin: 0 auto; /* 컨테이너 자체를 가운데 정렬 */
+  padding: 5px;
+  /*border: 2px solid #EBEBEB;*/
+  border-radius : 20px;
+  max-width: 40%; 
+  margin: 0 auto;
   margin-top : 15px;
 }
 
@@ -85,15 +99,20 @@ body {
   list-style: none; /* 기본 리스트 스타일 제거 */
   padding: 0;
   margin: 0;
-  gap: 25px; /* 버튼 간 간격 조정 */
+  gap: 35px; /* 버튼 간 간격 조정 */
 }
 
+.kategorie-list_text li{
+	padding: 5px 25px;
+}
 /* 각 리스트 아이템 스타일 */
 .kategorie-list li {
   display: flex;
   justify-content: center; /* 버튼을 가운데 정렬 */
   align-items: center;
+  flex-wrap: wrap;
 }
+
 
 /* 버튼 스타일 */
 .btn-fir {

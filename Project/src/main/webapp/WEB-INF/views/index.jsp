@@ -26,33 +26,50 @@
     		</div>
 		</div>
 		
+	<div class="select_box">
 		<div class="page-header">
-		<div class="location-select">
-			<select>
-				<option value="">지역 선택</option>
-				<option value="서울">서울</option>
-				<option value="부산">부산</option>
-				<option value="대전">대전</option>
-				<option value="대구">대구</option>
-				<option value="울산">울산</option>
-				<option value="광주">광주</option>
-				<option value="인천">인천</option>
-				<option value="제주">제주</option>
-			</select>
-	    </div>
-   </div>
-   
-   <div class="panel-body">
-   		<div class="kategorie-container">
-		    <ul class="kategorie-list">
-		    	<li><button type="button" class="btn btn-fir" id="korBtn">한식</button></li>
-		    	<li><button type="button" class="btn btn-fir" id="chnBtn">중식</button></li>
-		    	<li><button type="button" class="btn btn-fir" id="japBtn">일식</button></li>
-		    	<li><button type="button" class="btn btn-fir" id="wesBtn">양식</button></li>
-		    	<li><button type="button" class="btn btn-fir" id="vietBtn">베트남</button></li>
-		    </ul>
-   		</div>
-   </div>
+			<div class="location-select">
+				<select class="location-select_select">
+					<option value="">지역 선택</option>
+					<option value="서울">서울</option>
+					<option value="부산">부산</option>
+					<option value="대전">대전</option>
+					<option value="대구">대구</option>
+					<option value="울산">울산</option>
+					<option value="광주">광주</option>
+					<option value="인천">인천</option>
+					<option value="제주">제주</option>
+				</select>
+		    </div>
+	  	</div>
+	   
+	   <div class="panel-body">
+	   		<div class="kategorie-container">
+			    <ul class="kategorie-list">
+			    	<li>
+			    		<button type="button" class="btn btn-fir" id="korBtn"></button>
+			    		<p>한식</p>
+			    	</li>
+			    	<li>
+			    		<button type="button" class="btn btn-fir" id="chnBtn"></button>
+			    		<p>중식</p>
+			    	</li>
+			    	<li>
+				    	<button type="button" class="btn btn-fir" id="japBtn"></button>
+				    	<p>일식</p>
+			    	</li>
+			    	<li>
+				    	<button type="button" class="btn btn-fir" id="wesBtn"></button>
+				    	<p>양식</p>
+			    	</li>
+			    	<li>
+				    	<button type="button" class="btn btn-fir" id="vietBtn"></button>
+				    	<p>베트남</p>
+			    	</li>
+			    </ul>
+	   		</div>
+	   </div>
+	</div>
 		
         <div class="recommendations">
             <h2 class="indexTitle"># 오늘의 추천 pick</h2>
