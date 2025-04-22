@@ -21,4 +21,8 @@ public interface MemberMapper {
 			@Param("mem_id") String mem_id,
 			@Param("mem_birth") String mem_birth
 		);
+	
+	public MemberVO getMemberInfo(@Param("mem_no") int mem_no);
+	public int[] getFoodKateInfo(@Param("mem_no") int mem_no);
+	
 }

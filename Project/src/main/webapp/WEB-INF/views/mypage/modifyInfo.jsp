@@ -56,37 +56,37 @@
             <b>아이디</b>	
           </div>
           <div class="info-content">
-            <input type="text" class="info-rest" name="id" value="${member.mem_id}" readonly="readonly">
+            <input type="text" class="info-rest" name="id" value="${member.mem_id}">
           </div>
       
           <div class="info-title">
             <b>비밀번호</b>	
           </div>
           <div class="info-content">
-            <input type="password" class="info-rest" name="pw" value="${member.mem_pw}" readonly="readonly">
+            <input type="password" class="info-rest" name="pw" value="${member.mem_pw}">
           </div>
       
           <div class="info-title">
             <b>별명</b>	
           </div>
           <div class="info-content">
-            <input type="text" class="info-rest" name="nickName" value="${member.mem_nick}" readonly="readonly">
+            <input type="text" class="info-rest" name="nickName" value="${member.mem_nick}">
           </div>
       
           <div class="info-title">
             <b>이메일</b>	
           </div>
           <div class="info-content">
-            <input type="text" class="info-rest" name="email" value="${member.mem_email}" readonly="readonly">
+            <input type="text" class="info-rest" name="email" value="${member.mem_email}">
           </div>
       
           <div class="info-title">
             <b>연락처</b>	
           </div>
           <div class="info-content">
-            <input type="text" class="info-phone" name="phoneNumber" value="${fn:substring(member.mem_phone, 0, 3)}" readonly="readonly"><span>-</span>
-            <input type="text" class="info-phone" name="phoneNumber" value="${fn:substring(member.mem_phone, 3, 7)}" readonly="readonly"><span>-</span>
-            <input type="text" class="info-phone" name="phoneNumber" value="${fn:substring(member.mem_phone, 7, 11)}" readonly="readonly">
+            <input type="text" class="info-phone" name="phoneNumber" value="${fn:substring(member.mem_phone, 0, 3)}"><span>-</span>
+            <input type="text" class="info-phone" name="phoneNumber" value="${fn:substring(member.mem_phone, 3, 7)}"><span>-</span>
+            <input type="text" class="info-phone" name="phoneNumber" value="${fn:substring(member.mem_phone, 7, 11)}">
           </div>
           
           <div class="info-title">
@@ -94,16 +94,16 @@
           </div>
           <div class="info-content">
             <fieldset>
-              <input type="checkbox" class="foods" name="food" value="한식"  <c:if test="${fn:contains(foodList, '한식')}">checked</c:if> onClick="return false;">한식
-              <input type="checkbox" class="foods" name="food" value="중식" <c:if test="${fn:contains(foodList, '중식')}">checked</c:if> onClick="return false;">중식
-              <input type="checkbox" class="foods" name="food" value="일식" <c:if test="${fn:contains(foodList, '일식')}">checked</c:if> onClick="return false;">일식
-              <input type="checkbox" class="foods" name="food" value="양식" <c:if test="${fn:contains(foodList, '양식')}">checked</c:if> onClick="return false;">양식
-              <input type="checkbox" class="foods" name="food" value="베트남음식" <c:if test="${fn:contains(foodList, '베트남음식')}">checked</c:if> onClick="return false;">베트남음식
+              <input type="checkbox" class="foods" name="food" value="한식"  <c:if test="${fn:contains(foodList, '한식')}">checked</c:if>>한식
+              <input type="checkbox" class="foods" name="food" value="중식" <c:if test="${fn:contains(foodList, '중식')}">checked</c:if>>중식
+              <input type="checkbox" class="foods" name="food" value="일식" <c:if test="${fn:contains(foodList, '일식')}">checked</c:if>>일식
+              <input type="checkbox" class="foods" name="food" value="양식" <c:if test="${fn:contains(foodList, '양식')}">checked</c:if>>양식
+              <input type="checkbox" class="foods" name="food" value="베트남음식" <c:if test="${fn:contains(foodList, '베트남음식')}">checked</c:if>>베트남음식
             </fieldset>
           </div>
-          <input type="hidden" name="mno" value="${member.mem_no}">
+          <input type="hidden" value="${member.mem_no}">
           <div class="btn-div">
-            <button type="button" class="modify-btn" id="modifyBtn">수정</button>
+            <button type="button" class="modify-btn" id="modifyBtn">수정 완료</button>
           </div>
         </div>
       </form>

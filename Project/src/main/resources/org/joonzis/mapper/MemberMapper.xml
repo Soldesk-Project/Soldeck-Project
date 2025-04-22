@@ -28,4 +28,12 @@
     	WHERE mem_id = #{mem_id}
     	AND SUBSTR(mem_birth, 1, 8) = #{mem_birth}
 	</select>
+	
+	<select id="getMemberInfo" resultType="org.joonzis.domain.MemberVO">
+		SELECT * FROM MEMBER WHERE mem_no=#{mem_no}
+	</select>
+	
+	<select id="getFoodKateInfo" resultType="int">
+		SELECT FOOD_NO FROM FOOD_KATE WHERE mem_no=#{mem_no}
+	</select>
 </mapper>

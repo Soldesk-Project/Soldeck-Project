@@ -40,5 +40,17 @@ public class MemberServiceImpl implements MemberService{
 		return mapper.findPwByIdBirth(mem_id, mem_birth);
 	}
     
+	
+	//mypage
+	@Override
+	public MemberVO getMemberInfo(int mem_no) {
+		return mapper.getMemberInfo(mem_no);
+	}
+	@Override
+	public int[] getFoodKateInfo(int mem_no) {
+		return mapper.getFoodKateInfo(mem_no);
+	}
+	
+	
     
 }
