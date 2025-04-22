@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -60,13 +59,6 @@ public class SearchController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 	
-	/*
-	 * @GetMapping(value = "/search/data", produces =
-	 * MediaType.APPLICATION_JSON_VALUE) public ResponseEntity<List<RestVO>>
-	 * searchData() { log.info("searchData..."); return new
-	 * ResponseEntity<List<RestVO>>(service.getList(), HttpStatus.OK); }
-	 */
-	
 	// 지역 페이지
 	@GetMapping("/location")
 	public String location() {
@@ -80,14 +72,14 @@ public class SearchController {
 		log.info("locationData..." + " region : " + region + " category : " + category);
 		return new ResponseEntity<List<RestVO>>(service.getFilteredList(region, category), HttpStatus.OK);
 	}
-	// 상세 페이지
+	// 상세 페이지 이동
 	@GetMapping(value = "/view", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String view(@RequestParam(value = "rest_no") int rest_no, Model model) {
 		log.info("view..." + rest_no);
 		model.addAttribute("rest_no", rest_no);
 		return "/search/view";
 	}
-	// 상세 페이지
+	// 상세 페이지 데이터 가져오기
 	@GetMapping(value = "/view/{rest_no}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<RestVO>> getview(@PathVariable(value = "rest_no") int rest_no) {
 		log.info("getview..." + rest_no);

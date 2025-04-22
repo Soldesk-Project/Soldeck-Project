@@ -6,12 +6,10 @@
     border-color: #000000;
 }
 
-/* 가게 정보단 */
+/* --------------- 가게 정보단 --------------- */
 .page-header {
     margin: 30px;
 }
-
-/* 이미지 슬라이드 */
 .slideshow-container{
     width: 100%;
     height: 300px;
@@ -19,76 +17,66 @@
     overflow: hidden;
     margin-bottom: 20px;
 }
-
 .slides-wrapper{
     display: flex;
     height: 100%;
-    transition: transform 0.5s ease-in-out;
+    /* transition: transform 0.5s ease-in-out; */
 }
-
 .slide {
     flex: 0 0 25%;
     height: 100%;
     border: 1px solid;
     border-color: #000000;
 }
-
 .slide img {
     width: 100%;
     height: 100%;
     object-fit: inherit;
-    /* object-fit: cover; */
 }
-
 .prev, .next {
-            cursor: pointer;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            padding: 10px;
-            color: white;
-            font-weight: bold;
-            font-size: 24px;
-            background-color: rgba(0, 0, 0, 0.5);
-            user-select: none;
-        }
-
-        .next {
-            right: 0;
-        }
-
-        .prev:hover, .next:hover {
-            background-color: rgba(0, 0, 0, 0.8);
-        }
-
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 24px;
+    background-color: rgba(0, 0, 0, 0.5);
+    user-select: none;
+}
+.next {
+    right: 0;
+}
+.prev:hover, .next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
 .content {
     display: flex;
     gap: 20px;
     width: 100%;
 }
-
-/* 평점 목록 */
 .store-list {
     flex: 3; /* 3:7 비율의 3 */
     border: 1px solid #ddd;
     border-radius: 4px;
     box-sizing: border-box;
 }
-
 .store-item {
     display: flex;
     justify-content: space-between;
     padding: 10px 10px 10px 30px;
 }
-
 .store-item .name {
     font-weight: bold;
 }
-
+#age_rate{
+	justify-content: center;
+	padding: 10px 10px 10px 15px;
+}
 .store-item .rating {
     color: orange;
 }
-/* 가게 정보 */
 .store-details {
     flex: 7; /* 나머지 공간 채우기 */
     border: 1px solid #ddd;
@@ -96,28 +84,20 @@
     padding: 20px;
     box-sizing: border-box; /* 패딩 포함 너비 계산 */
 }
-
-.favorite-btn {
-    margin-bottom: 10px;
-}
-
 .store-details table {
     border-collapse : collapse;
 	border-radius: 5px;
 	text-align: left;
-    /* width: 100%;  */
+    width: 100%;
 }
 th, td{
     padding-bottom: 30px;
 }
-
 /* 예약 버튼 스타일 */
 .store-reserve {
     margin-top: 20px; /* 위 요소와 20px 간격 */
     text-align: right; /* 오른쪽 정렬 */
 }
-
-/* 예약 버튼 스타일 */
 .btn.btn-fir {
   background-color: #fff;
   border: 1px solid #ddd;
@@ -129,12 +109,9 @@ th, td{
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-
 .btn.btn-fir:hover {
   background-color: #f0f0f0;
 }
-
-/* 예약 버튼 스타일 */
 .store-COMMENT {
     margin-top: 10px; /* 위 요소와 20px 간격 */
     margin-left: 30px;
@@ -150,35 +127,33 @@ th, td{
     border: 1px dotted #ddd;
     
 }
-
-/* .panel-footer {
+/* --------------- 댓글단 --------------- */
+.panel-footer {
     margin: 30px;
     border: 1px solid #ddd;
 }
 
+/* 댓글 입력 */
 .panel-footer-header {
     padding: 10px;
     display: flex;
     justify-content: center;
-  }
-  
-  .panle-footer-input {
+}
+.panle-footer-input {
     width: 100%;
     display: flex;
-    flex-direction: row; 가로 배치
-    align-items: flex-start; 상단 정렬
-    gap: 10px; 두 div 사이 간격
-  }
-  
-  .textarea-wrapper {
-    position: relative; 업로드 버튼을 절대 위치로 배치하기 위해 상대 위치 설정
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 10px;
+}
+.textarea-wrapper {
+    position: relative; /* 자식 요소의 절대 위치를 위해 상대 위치 설정 */
     flex: 1;
     display: flex;
-      flex-direction: column;
-      gap: 10px;
-  }
-  
-  .text_comm {
+    flex-direction: column;
+    gap: 10px;
+}
+.text_comm {
     width: 100%;
     height: 100px;
     padding: 10px;
@@ -187,225 +162,146 @@ th, td{
     resize: unset;
     font-size: 14px;
     box-sizing: border-box;
-  }
-  .star-rating {
-            display: flex;
-            gap: 5px;
-            margin: 10px 0;
-  }
-  .star {
-      width: 30px;
-      height: 30px;
-      cursor: pointer;
-      background: url('/resources/images/gray_star.png') no-repeat center;
-      background-size: contain;
-  }
-  .star.filled {
-      background: url('/resources/images/yellow_star.png') no-repeat center;
-      background-size: contain;
-  }
-  .textarea-wrapper .btn-sec {
+}
+.star-rating {
     position: absolute;
-    bottom: 10px;
-    right: 10px; 텍스트 영역 안쪽 오른쪽 아래에 배치
+    top: 10px; /* textarea 내부 오른쪽 위 */
+    right: 10px;
+    display: flex;
+    gap: 5px;
+}
+.star-rating .star {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    background: url('/resources/images/gray_star.png') no-repeat center;
+    background-size: contain;
+}
+.star-rating .star.filled {
+    background: url('/resources/images/yellow_star.png') no-repeat center;
+    background-size: contain;
+}
+.textarea-wrapper .btn-sec {
+    position: absolute;
+    bottom: 10px; /* textarea 내부 오른쪽 아래 */
+    right: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
     padding: 8px 15px;
     font-size: 14px;
     cursor: pointer;
     transition: background-color 0.3s;
-    background-color: white; 배경색 (선택 사항)
+    background-color: white;
     color: black;
-  }
-  
-  .btn-comment {
+}
+.btn-comment {
     display: flex;
-    flex-direction: column; 버튼과 텍스트를 세로로 배치
-    align-items: flex-end; 오른쪽 정렬
+    flex-direction: column;
+    align-items: flex-end;
     gap: 5px;
     padding-top: 62px;
-  }
-  
-  .btn-comment .btn-sec {
-    background-color: white; 배경색 (선택 사항)
-    color: black;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 8px 15px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  } */
-.panel-footer {
-            margin: 30px;
-            border: 1px solid #ddd;
-        }
-
-        .panel-footer-header {
-            padding: 10px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .panle-footer-input {
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            align-items: flex-start;
-            gap: 10px;
-        }
-
-        .textarea-wrapper {
-            position: relative; /* 자식 요소의 절대 위치를 위해 상대 위치 설정 */
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .text_comm {
-            width: 100%;
-            height: 100px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            resize: unset;
-            font-size: 14px;
-            box-sizing: border-box;
-        }
-
-        .star-rating {
-            position: absolute;
-            top: 10px; /* textarea 내부 오른쪽 위 */
-            right: 10px;
-            display: flex;
-            gap: 5px;
-        }
-
-        .star {
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-            background: url('/resources/images/gray_star.png') no-repeat center;
-            background-size: contain;
-        }
-
-        .star.filled {
-            background: url('/resources/images/yellow_star.png') no-repeat center;
-            background-size: contain;
-        }
-
-        .textarea-wrapper .btn-sec {
-            position: absolute;
-            bottom: 10px; /* textarea 내부 오른쪽 아래 */
-            right: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 8px 15px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            background-color: white;
-            color: black;
-        }
-
-        .btn-comment {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 5px;
-            padding-top: 62px;
-        }
-
-        .btn-comment .btn-sec {
-            background-color: white;
-            color: black;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 8px 15px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-  .panel-footer-body{
-    margin: 5px 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-
-  .chat{
-    list-style-type: none;
-    padding: 10px;
-    margin: 0;
-    text-align: left;
- }
-
- .chat li div div{
-    margin-bottom: 15px;
- }
-
- /* 채팅 영역 */
-.chat-body {
-    width: 100%;
-    height: 100px;
-    display: flex; /* flex로 가로 배치 */
-    align-items: center; /* 세로 중앙 정렬 */
-    gap: 10px; /* 이미지와 버튼 간 간격 */
-  }
-  
-  /* 이미지 컨테이너 */
-  .image-con {
-    display: flex;
-    flex: 1; /* 남은 공간을 채우도록 설정 */
-    height: 100%;
-    gap: 5px; /* 이미지 간 간격 */
-  }
-  
-  /* 개별 이미지 */
-  .image {
-    flex: 0 0 25%; /* 4개 이미지가 동일한 너비로 나뉨 (100% / 4 = 25%) */
-    height: 100%;
-    border: 1px solid #000000;
-    box-sizing: border-box; /* 테두리 포함 크기 계산 */
-  }
-  
-  /* 이미지 스타일 */
-  .image img {
-    width: 100%;
-    height: 100%;
-    object-fit: inherit;
-    /* object-fit: cover; 이미지가 영역에 맞게 잘림 */
-  }
-  
-  /* 더보기 버튼 컨테이너 */
-  .btn-com {
-    display: flex;
-    align-items: center;
-  }
-  
-  /* 더보기 버튼 */
-  .btn-com .btn {
+}
+.btn-comment .btn-sec {
     background-color: white;
     color: black;
     border: 1px solid #ddd;
     border-radius: 5px;
-    margin-left: 30px;
-    margin-right: 10px;
     padding: 8px 15px;
     font-size: 14px;
     cursor: pointer;
     transition: background-color 0.3s;
-  }
-  
-  .btn-com .btn:hover {
-    background-color: #f0f0f0;
-  }
+}
 
-  .chat-footer{
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
+/* 댓글 보기 */
+.panel-footer-body{
+  margin: 5px 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+.chat{
+   list-style-type: none;
+   padding: 10px;
+   margin: 0;
+   text-align: left;
+}
+.chat-header {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 날짜와 별점 사이 간격 */
+}
+.pull-right {
+    float: none; /* 기존 float 속성 제거 */
+    order: 1; /* 날짜가 먼저 오도록 설정 */
+}
+.comment-rating {
+    display: flex;
+    gap: 5px; /* 별들 사이 간격 */
+    order: 2; /* 별점이 날짜 오른쪽에 오도록 설정 */
+}
+.star {
+    width: 20px;
+    height: 20px;
+    background: url('/resources/images/gray_star.png') no-repeat center;
+    background-size: contain;
+}
+.star.filled {
+    background: url('/resources/images/yellow_star.png') no-repeat center;
+    background-size: contain;
+}
+
+ /* 이미지 영역 */
+.chat-body {
+  width: 100%;
+  height: 100px;
+  display: flex; /* flex로 가로 배치 */
+  align-items: center; /* 세로 중앙 정렬 */
+  gap: 10px; /* 이미지와 버튼 간 간격 */
+}
+.image-con {
+  display: flex;
+  flex: 1; /* 남은 공간을 채우도록 설정 */
+  height: 100%;
+  gap: 5px; /* 이미지 간 간격 */
+}
+.image {
+  flex: 0 0 25%; /* 4개 이미지가 동일한 너비로 나뉨 (100% / 4 = 25%) */
+  height: 100%;
+  border: 1px solid #000000;
+  box-sizing: border-box; /* 테두리 포함 크기 계산 */
+}
+.image img {
+  width: 100%;
+  height: 100%;
+  object-fit: inherit;
+}
+.btn-com {
+  display: flex;
+  align-items: center;
+}
+.btn-com .btn {
+  background-color: white;
+  color: black;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-left: 30px;
+  margin-right: 10px;
+  padding: 8px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.btn-com .btn:hover {
+  background-color: #f0f0f0;
+}
+.chat-footer{
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
   
 /* 모달 창 스타일 (더보기)*/
 .modal_view {
@@ -421,7 +317,6 @@ th, td{
   align-items: center;
   overflow: hidden; /* 모달 바깥 스크롤 방지 */
 }
-
 .modal_view-content {
   background-color: #fff;
   width: 90%;
@@ -437,14 +332,12 @@ th, td{
   overflow-y: auto; /* 콘텐츠가 많아지면 세로 스크롤 활성화 */
   box-sizing: border-box;
 }
-
 .image-view {
   display: flex;
   flex-wrap: wrap; /* 3개 초과 시 다음 줄로 */
   gap: 15px; /* 이미지 간 간격 */
   justify-content: flex-start; /* 왼쪽 정렬 */
 }
-
 .image-view img {
   height: 250px; /* 이미지 높이 고정 */
   width: auto; /* 비율 유지 */
@@ -467,7 +360,6 @@ th, td{
   justify-content: center;
   align-items: center;
 }
-
 .modal-content {
   background-color: #fff;
   width: 90%;
@@ -479,25 +371,21 @@ th, td{
   flex-direction: column;
   gap: 20px;
 }
-
 .modal-content h2 {
   margin: 0;
   font-size: 20px;
   text-align: center;
 }
-
 /* 캘린더 스타일 */
 .calendar {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-
 .calendar-header {
   display: flex;
   justify-content: center;
 }
-
 #monthSelect {
   padding: 5px;
   font-size: 16px;
@@ -505,14 +393,12 @@ th, td{
   border: 1px solid #ddd;
   cursor: pointer;
 }
-
 .calendar-days {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 5px;
   justify-items: center;
 }
-
 .day {
   width: 40px;
   height: 40px;
@@ -524,43 +410,36 @@ th, td{
   cursor: pointer;
   font-size: 14px;
 }
-
 .day.disabled {
   background-color: #f0f0f0;
   color: #999;
   cursor: not-allowed;
 }
-
 .day:hover:not(.disabled) {
   background-color: #e0e0e0;
 }
-
 .day.selected {
   background-color: #007bff;
   color: #fff;
   border-color: #007bff;
 }
-
 /* 시간 선택 스타일 */
 .time-selection {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-
 .time-selection h3 {
   margin: 0;
   font-size: 16px;
   text-align: center;
 }
-
 .time-options {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   justify-content: center;
 }
-
 .time-btn {
   padding: 8px 15px;
   border: 1px solid #ddd;
@@ -569,24 +448,20 @@ th, td{
   cursor: pointer;
   font-size: 14px;
 }
-
 .time-btn:hover {
   background-color: #e0e0e0;
 }
-
 .time-btn.selected {
   background-color: #007bff;
   color: #fff;
   border-color: #007bff;
 }
-
 /* 모달 버튼 스타일 */
 .modal-buttons {
   display: flex;
   justify-content: space-between;
   gap: 10px;
 }
-
 .btn.btn-close,
 .btn.btn-confirm {
   flex: 1;
@@ -596,21 +471,17 @@ th, td{
   cursor: pointer;
   border: none;
 }
-
 .btn.btn-close {
   background-color: #f0f0f0;
   color: #333;
 }
-
 .btn.btn-close:hover {
   background-color: #e0e0e0;
 }
-
 .btn.btn-confirm {
   background-color: #007bff;
   color: #fff;
 }
-
 .btn.btn-confirm:hover {
   background-color: #0056b3;
 }

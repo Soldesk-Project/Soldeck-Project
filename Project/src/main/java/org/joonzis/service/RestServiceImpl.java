@@ -18,12 +18,14 @@ public class RestServiceImpl implements RestService{
 	@Autowired
 	private RestMapper mapper;
 	
+	// 전체 가게 목록
 	@Override
 	public List<RestVO> getList() {
 		log.info("getList...");
 		return mapper.findAll();
 	}
 	
+	// 특정 가게 목록
 	@Override
 	public List<RestVO> getFilteredList(String region, String category) {
 		log.info("getFilteredList... region: " + region + ", category: " + category);
@@ -37,11 +39,7 @@ public class RestServiceImpl implements RestService{
 		return mapper.filteredAll(params);
 	}
 	
-//	@Override
-//	public List<RestVO> getSearchList(String rest_name) {
-//		log.info("getSearchList... rest_name: " + rest_name);
-//		return mapper.search(rest_name);
-//	}
+	// 특정 가게 검색
 	@Override
     public List<RestVO> getSearchList(String keyword, String region, String category) {
         log.info("getSearchList... keyword: " + keyword + ", region: " + region + ", category: " + category);
@@ -52,6 +50,7 @@ public class RestServiceImpl implements RestService{
         return mapper.search(params);
     }
 	
+	// 가게 찾기
 	@Override
 	public List<RestVO> get(int rest_no) {
 		log.info("get..." + rest_no);

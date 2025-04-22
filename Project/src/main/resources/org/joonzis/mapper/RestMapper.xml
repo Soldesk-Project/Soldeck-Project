@@ -21,16 +21,14 @@
 		FROM 
     		RESTAURANT r
 		LEFT JOIN (
-    SELECT 
-        REST_NO,
-        REST_IMG_NAME,
-        REST_IMG_NO,
-        ROW_NUMBER() OVER (PARTITION BY REST_NO ORDER BY REST_IMG_NO) AS rn
-    FROM 
-        REST_IMG
-) i ON r.REST_NO = i.REST_NO AND i.rn = 1
-    	<!-- LEFT JOIN 
-    	REST_IMG i ON r.REST_NO = i.REST_NO -->
+		    SELECT 
+		        REST_NO,
+		        REST_IMG_NAME,
+		        REST_IMG_NO,
+		        ROW_NUMBER() OVER (PARTITION BY REST_NO ORDER BY REST_IMG_NO) AS rn
+		    FROM 
+		        REST_IMG
+		) i ON r.REST_NO = i.REST_NO AND i.rn = 1
 		WHERE 1=1
 	    <if test="region != null">
 	        AND r.rest_loc LIKE #{region}
@@ -42,26 +40,26 @@
 	
 	<select id="search" resultType="org.joonzis.domain.RestVO" parameterType="Map">
     SELECT 
-    r.REST_NO,
-    r.REST_NAME,
-    r.REST_PHONE,
-    r.REST_ADR,
-    r.REST_BH,
-    r.REST_LOC,
-    r.REST_CATE,
-    i.REST_IMG_NAME,
-    i.REST_IMG_NO
-FROM 
-    RESTAURANT r
-LEFT JOIN (
-    SELECT 
-        REST_NO,
-        REST_IMG_NAME,
-        REST_IMG_NO,
-        ROW_NUMBER() OVER (PARTITION BY REST_NO ORDER BY REST_IMG_NO) AS rn
-    FROM 
-        REST_IMG
-) i ON r.REST_NO = i.REST_NO AND i.rn = 1
+	    r.REST_NO,
+	    r.REST_NAME,
+	    r.REST_PHONE,
+	    r.REST_ADR,
+	    r.REST_BH,
+	    r.REST_LOC,
+	    r.REST_CATE,
+	    i.REST_IMG_NAME,
+	    i.REST_IMG_NO
+	FROM 
+	    RESTAURANT r
+	LEFT JOIN (
+	    SELECT 
+	        REST_NO,
+	        REST_IMG_NAME,
+	        REST_IMG_NO,
+	        ROW_NUMBER() OVER (PARTITION BY REST_NO ORDER BY REST_IMG_NO) AS rn
+	    FROM 
+	        REST_IMG
+	) i ON r.REST_NO = i.REST_NO AND i.rn = 1
     <where>
         <if test="keyword != null and keyword != ''">
             AND (
@@ -75,34 +73,6 @@ LEFT JOIN (
             AND r.rest_cate = #{category}
         </if>
     </where>
-<!-- 	<select id="search" resultType="org.joonzis.domain.RestVO" parameterType="Map">
-    SELECT 
-        r.REST_NO,
-        r.REST_NAME,
-        r.REST_PHONE,
-        r.REST_ADR,
-        r.REST_BH,
-        r.REST_LOC,
-        r.REST_CATE,
-        i.REST_IMG_NAME,
-        i.REST_IMG_NO
-    FROM 
-        RESTAURANT r
-    LEFT JOIN 
-        REST_IMG i ON r.REST_NO = i.REST_NO
-    <where>
-        <if test="keyword != null and keyword != ''">
-            AND (
-                UPPER(r.rest_name) LIKE '%' || UPPER(#{keyword}) || '%'
-            )
-        </if>
-        <if test="region != null and region != ''">
-            AND r.rest_loc LIKE #{region}
-        </if>
-        <if test="category != null and category != ''">
-            AND r.rest_cate = #{category}
-        </if>
-    </where> -->
     <if test="keyword != null and keyword != ''">
         ORDER BY 
             CASE 
@@ -111,7 +81,7 @@ LEFT JOIN (
             END,
             r.rest_name ASC
     </if>
-</select>
+	</select>
 	
 	<select id="findByNo" resultType="org.joonzis.domain.RestVO">
 		SELECT 

@@ -4,31 +4,14 @@
 	text-align: center;
 }
 
-/* 지역 선택창 */
-.page-header{
-	margin-top : 15px;
-	text-align: center;
-}
 
+/* --------------- 지역 선택창 ---------------  */
 .page-header{
-	margin-top : 15px;
 	text-align: center;
 }
-.page-header{
-	margin-top : 15px;
-	text-align: center;
-}
-.page-header{
-	margin-top : 15px;
-	text-align: center;
-}
-
-/* location-select 스타일 */
 .location-select {
 	padding: 10px;
 }
-
-/* select 요소 스타일 (선택 사항) */
 .location-select select {
 	padding: 8px 15px;
 	font-size: 16px;
@@ -38,23 +21,18 @@
 	cursor: pointer;
 }
 
-/* 카테고리 */
+/* --------------- 카테고리 --------------- */
 .panel-body{
-	margin-top : 15px;
 	width: 1200px;
 	margin: auto;
 }
-
-/* 전체 컨테이너 스타일 */
 .kategorie-container {
-  padding: 5px; /* 내부 여백 조정 */
-  border: 1px solid #ddd; /* 테두리 스타일: 점선, 두께 2px, 색상 회색 */
-  max-width: 70%; /* 컨테이너 최대 너비 설정 */
-  margin: 0 auto; /* 컨테이너 자체를 가운데 정렬 */
+  padding: 5px;
+  border: 1px solid #ddd;
+  max-width: 70%;
+  margin: 0 auto;
   margin-top : 15px;
 }
-
-/* 리스트 스타일 */
 .kategorie-list {
   display: flex; /* 가로 배치 */
   justify-content: center; /* 수평 가운데 정렬 */
@@ -63,15 +41,11 @@
   margin: 0;
   gap: 25px; /* 버튼 간 간격 조정 */
 }
-
-/* 각 리스트 아이템 스타일 */
 .kategorie-list li {
   display: flex;
   justify-content: center; /* 버튼을 가운데 정렬 */
   align-items: center;
 }
-
-/* 버튼 스타일 */
 .btn-fir {
   width: 60px; /* 버튼의 너비 */
   height: 60px; /* 버튼의 높이 */
@@ -96,29 +70,23 @@
   background-color: #e0e0e0; /* 호버 시 더 어두운 회색 */
 }
 
-/* panel-footer와 footer 간 간격 확보 */
+/* --------------- 가게들 --------------- */
 .panel-footer {
   margin: auto;
-  margin-top: 35px;
-  margin-bottom: 50px; /* footer와의 간격 확보 */
+  margin-top: 20px;
+  margin-bottom: 20px; 
   width: 1200px;
 }
-
-/* 채팅 영역 */
-.chat-body {
+.rest-body {
   width: 100%;
   padding: 20px;
 }
-
-/* 이미지 컨테이너 */
 .image-con {
   display: flex;
   flex-wrap: wrap; /* 3개 초과 시 다음 줄로 */
   gap: 20px; /* 세트 간 간격 */
   justify-content: center; /* 가로 가운데 정렬 */
 }
-
-/* 이미지와 이름 세트 */
 .item-set {
   flex: 1 1 calc(33.3% - 20px); /* 3개씩 배치 (간격 고려) */
   max-width: calc(33.3% - 20px); /* 최대 너비 설정 */
@@ -128,16 +96,12 @@
   align-items: center; /* 가운데 정렬 */
   box-sizing: border-box;
 }
-
-/* 개별 이미지 컨테이너 */
 .image {
   width: 100%;
   height: 250px; /* 이미지 높이 */
   border: 1px solid #000000;
   box-sizing: border-box;
 }
-
-/* 이미지 스타일 */
 .image img {
   width: 100%;
   height: 100%; /* 부모 높이에 맞춤 */
@@ -145,8 +109,6 @@
   display: block; /* 공백 제거 */
   cursor: pointer;
 }
-
-/* 가게 이름 컨테이너 */
 .name {
   width: 100%;
   height: 50px; /* 이름 영역 높이 */
@@ -156,8 +118,6 @@
   justify-content: center;
   align-items: center;
 }
-
-/* 가게 이름 스타일 */
 .name p {
   margin: 0; /* 기본 마진 제거 */
   font-size: 14px;

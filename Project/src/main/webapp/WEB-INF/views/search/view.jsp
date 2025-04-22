@@ -5,33 +5,28 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="/resources/css/header.css">
+<link rel="stylesheet" href="/resources/css/footer.css">
 </head>
 <body>
 	<jsp:include page="../layout/header.jsp"/>
 	
-	
 	<div class="container">
         <div class="page-header" data-rest-no="${rest_no}">
+        	<!-- 이미지 -->
             <div class="slideshow-container">
-                <div class="slides-wrapper">
-                    <div class="slide">
-                        <img src="https://img1.kakaocdn.net/cthumb/local/C544x408.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flocalfiy%2F9D96CE0AF47646C48E7B41BF852F0E5E" alt="이미지 1">
-                    </div>
-                    <!-- <div class="slide">
-                        <img src="https://img1.kakaocdn.net/cthumb/local/C264x196.q50/?fname=http%3A%2F%2Ft1.kakaocdn.net%2Ffiy_reboot%2Fplace%2F42F0E8B92BBD4145B7B7F3A8C66092AD" alt="이미지 2">
-                    </div> -->
-                </div>
+                <div class="slides-wrapper"></div>
                 <a class="prev" onclick="moveSlide(-1)">❮</a>
                 <a class="next" onclick="moveSlide(1)">❯</a>
             </div>
-
+			<!-- 가게 내용 -->
             <div class="content">
 			    <div class="store-list">
 			        <div class="store-item">
 			            <span class="name">가게 총 평점</span>
 			            <span class="rating">로딩 중...</span>
 			        </div>
-			        <div class="store-item">
+			        <div class="store-item" id="age_rate">
 			            <span class="name">&lt;연령별 평점&gt;</span>
 			        </div>
 			        <div class="store-item">
@@ -64,15 +59,6 @@
 			            </tbody>
 			        </table>
 			    </div>
-                <div class="store-details">
-                    <table class="store-table">
-                        <tbody>
-                            <tr>
-                                <td colspan="2">로딩 중...</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
             </div>
             <div class="store-reserve">
             	<button type="button" class="btn btn-fir" id="reservationBtn">예약</button>
@@ -81,8 +67,8 @@
             
         <div class="panel-body">
             <div class="store-COMMENT">COMMENT</div>
-            
         </div>
+        
         <div class="panel-footer">
             <div class="panel-footer-header">
                 <div class="panle-footer-input">
@@ -95,7 +81,10 @@
 		                    <div class="star" data-value="4"></div>
 		                    <div class="star" data-value="5"></div>
 		                </div>
-                        <button type="button" class="btn btn-sec" id="uploadBtn">UPLOAD</button>
+		                <!-- input type="file"은 숨김 -->
+		                <input type="file" id="imageUpload" multiple accept="image/*" style="display: none;">
+		                <!-- 커스텀 버튼으로 label 사용 -->
+		                <label for="imageUpload" class="btn btn-sec">UPLOAD</label>
                     </div>
                     <div class="btn-comment">
                         <button type="button" class="btn btn-sec" id="commentBtn">댓글 달기</button>
@@ -138,6 +127,7 @@
              </div>
         </div>
     </div>
+    
 	<!-- 모달 창 (더보기) -->
 	<div class="modal_view" id="viewModal">
 		<div class="modal_view-content">
@@ -152,58 +142,58 @@
 		</div>
 	</div>
 
-	
-	<!-- 모달 창 -->
-<div class="modal" id="reservationModal">
-  <div class="modal-content">
-    <!-- 캘린더 -->
-    <div class="calendar">
-      <div class="calendar-header">
-        <select id="monthSelect">
-          <option value="1">1월</option>
-          <option value="2">2월</option>
-          <option value="3">3월</option>
-          <option value="4">4월</option>
-          <option value="5">5월</option>
-          <option value="6">6월</option>
-          <option value="7">7월</option>
-          <option value="8">8월</option>
-          <option value="9">9월</option>
-          <option value="10">10월</option>
-          <option value="11">11월</option>
-          <option value="12">12월</option>
-        </select>
-      </div>
-      <div class="calendar-days" id="calendarDays"></div>
-    </div>
-    <!-- 시간 선택 -->
-    <div class="time-selection">
-      <h3>시간 선택</h3>
-      <div class="time-options">
-        <button class="time-btn">10:00</button>
-        <button class="time-btn">10:30</button>
-        <button class="time-btn">11:00</button>
-        <button class="time-btn">11:30</button>
-        <button class="time-btn">12:00</button>
-        <button class="time-btn">14:00</button>
-        <button class="time-btn">15:00</button>
-        <button class="time-btn">16:00</button>
-        <button class="time-btn">17:00</button>
-        <button class="time-btn">18:00</button>
-        <button class="time-btn">19:00</button>
-        <button class="time-btn">20:00</button>
-        <button class="time-btn">21:00</button>
-      </div>
-    </div>
-    <!-- 모달 버튼 -->
-    <div class="modal-buttons">
-      <button type="button" class="btn btn-close" id="closeModalBtn">예약 닫기</button>
-      <button type="button" class="btn btn-confirm" id="confirmReservationBtn">예약</button>
-    </div>
-  </div>
-</div>
+	<!-- 모달 창 (예약) -->
+	<div class="modal" id="reservationModal">
+	  <div class="modal-content">
+	    <!-- 캘린더 -->
+	    <div class="calendar">
+	      <div class="calendar-header">
+	        <select id="monthSelect">
+	          <option value="1">1월</option>
+	          <option value="2">2월</option>
+	          <option value="3">3월</option>
+	          <option value="4">4월</option>
+	          <option value="5">5월</option>
+	          <option value="6">6월</option>
+	          <option value="7">7월</option>
+	          <option value="8">8월</option>
+	          <option value="9">9월</option>
+	          <option value="10">10월</option>
+	          <option value="11">11월</option>
+	          <option value="12">12월</option>
+	        </select>
+	      </div>
+	      <div class="calendar-days" id="calendarDays"></div>
+	    </div>
+	    <!-- 시간 선택 -->
+	    <div class="time-selection">
+	      <h3>시간 선택</h3>
+	      <div class="time-options">
+	        <button class="time-btn">10:00</button>
+	        <button class="time-btn">10:30</button>
+	        <button class="time-btn">11:00</button>
+	        <button class="time-btn">11:30</button>
+	        <button class="time-btn">12:00</button>
+	        <button class="time-btn">14:00</button>
+	        <button class="time-btn">15:00</button>
+	        <button class="time-btn">16:00</button>
+	        <button class="time-btn">17:00</button>
+	        <button class="time-btn">18:00</button>
+	        <button class="time-btn">19:00</button>
+	        <button class="time-btn">20:00</button>
+	        <button class="time-btn">21:00</button>
+	      </div>
+	    </div>
+	    <!-- 모달 버튼 -->
+	    <div class="modal-buttons">
+	      <button type="button" class="btn btn-close" id="closeModalBtn">예약 닫기</button>
+	      <button type="button" class="btn btn-confirm" id="confirmReservationBtn">예약</button>
+	    </div>
+	  </div>
+	</div>
 	
 	<jsp:include page="../layout/footer.jsp"/>
 	<script type="text/javascript" src="/resources/js/view.js"></script>
+	
 </body>
 </html>

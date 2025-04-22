@@ -16,12 +16,14 @@ public class CommentServiceImpl implements CommentService {
 	@Autowired
 	private CommentMapper mapper;
 	
+	// 코멘트 조회
 	@Override
 	public List<CommentVO> getCommentsByRestNo(int rest_no) {
 		log.info("getCommentsByRestNo... " + rest_no);
 		return mapper.getCommentsByRestNo(rest_no);
 	}
 	
+	// 코멘트 추가
 	@Override
 	public int addComment(CommentVO vo) {
 		log.info("addComment... " + vo);
