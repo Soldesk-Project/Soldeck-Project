@@ -17,6 +17,9 @@
                     <div class="slide">
                         <img src="https://img1.kakaocdn.net/cthumb/local/C544x408.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flocalfiy%2F9D96CE0AF47646C48E7B41BF852F0E5E" alt="이미지 1">
                     </div>
+                    <!-- <div class="slide">
+                        <img src="https://img1.kakaocdn.net/cthumb/local/C264x196.q50/?fname=http%3A%2F%2Ft1.kakaocdn.net%2Ffiy_reboot%2Fplace%2F42F0E8B92BBD4145B7B7F3A8C66092AD" alt="이미지 2">
+                    </div> -->
                 </div>
                 <a class="prev" onclick="moveSlide(-1)">❮</a>
                 <a class="next" onclick="moveSlide(1)">❯</a>
@@ -29,7 +32,7 @@
 			            <span class="rating">로딩 중...</span>
 			        </div>
 			        <div class="store-item">
-			            <span class="name"><연령별 평점></span>
+			            <span class="name">&lt;연령별 평점&gt;</span>
 			        </div>
 			        <div class="store-item">
 			            <span class="name">10대</span>
@@ -85,6 +88,13 @@
                 <div class="panle-footer-input">
                     <div class="textarea-wrapper">
                         <textarea rows="15" cols="100" class="text_comm" name="comment" id="comment"></textarea>
+                        <div class="star-rating" id="starRating">
+		                    <div class="star" data-value="1"></div>
+		                    <div class="star" data-value="2"></div>
+		                    <div class="star" data-value="3"></div>
+		                    <div class="star" data-value="4"></div>
+		                    <div class="star" data-value="5"></div>
+		                </div>
                         <button type="button" class="btn btn-sec" id="uploadBtn">UPLOAD</button>
                     </div>
                     <div class="btn-comment">

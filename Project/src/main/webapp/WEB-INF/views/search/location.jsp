@@ -46,6 +46,9 @@
 		      <!-- <div class="item-set" data-rest-no="1">
 		        <div class="image">
 		          로딩 중...
+		      <div class="item-set">
+		        <div class="image">
+		          <img src="https://img1.kakaocdn.net/cthumb/local/C544x408.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flocalfiy%2F9D96CE0AF47646C48E7B41BF852F0E5E" alt="이미지 1">
 		        </div>
 		        <div class="name">
 		          <p>가게 이름test</p>

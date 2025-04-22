@@ -151,7 +151,7 @@ th, td{
     
 }
 
-.panel-footer {
+/* .panel-footer {
     margin: 30px;
     border: 1px solid #ddd;
 }
@@ -165,14 +165,17 @@ th, td{
   .panle-footer-input {
     width: 100%;
     display: flex;
-    flex-direction: row; /* 가로 배치 */
-    align-items: flex-start; /* 상단 정렬 */
-    gap: 10px; /* 두 div 사이 간격 */
+    flex-direction: row; 가로 배치
+    align-items: flex-start; 상단 정렬
+    gap: 10px; 두 div 사이 간격
   }
   
   .textarea-wrapper {
-    position: relative; /* 업로드 버튼을 절대 위치로 배치하기 위해 상대 위치 설정 */
+    position: relative; 업로드 버튼을 절대 위치로 배치하기 위해 상대 위치 설정
     flex: 1;
+    display: flex;
+      flex-direction: column;
+      gap: 10px;
   }
   
   .text_comm {
@@ -185,31 +188,46 @@ th, td{
     font-size: 14px;
     box-sizing: border-box;
   }
-  
+  .star-rating {
+            display: flex;
+            gap: 5px;
+            margin: 10px 0;
+  }
+  .star {
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      background: url('/resources/images/gray_star.png') no-repeat center;
+      background-size: contain;
+  }
+  .star.filled {
+      background: url('/resources/images/yellow_star.png') no-repeat center;
+      background-size: contain;
+  }
   .textarea-wrapper .btn-sec {
     position: absolute;
     bottom: 10px;
-    right: 10px; /* 텍스트 영역 안쪽 오른쪽 아래에 배치 */
+    right: 10px; 텍스트 영역 안쪽 오른쪽 아래에 배치
     border: 1px solid #ddd;
     border-radius: 5px;
     padding: 8px 15px;
     font-size: 14px;
     cursor: pointer;
     transition: background-color 0.3s;
-    background-color: white; /* 배경색 (선택 사항) */
+    background-color: white; 배경색 (선택 사항)
     color: black;
   }
   
   .btn-comment {
     display: flex;
-    flex-direction: column; /* 버튼과 텍스트를 세로로 배치 */
-    align-items: flex-end; /* 오른쪽 정렬 */
+    flex-direction: column; 버튼과 텍스트를 세로로 배치
+    align-items: flex-end; 오른쪽 정렬
     gap: 5px;
     padding-top: 62px;
   }
   
   .btn-comment .btn-sec {
-    background-color: white; /* 배경색 (선택 사항) */
+    background-color: white; 배경색 (선택 사항)
     color: black;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -217,8 +235,98 @@ th, td{
     font-size: 14px;
     cursor: pointer;
     transition: background-color 0.3s;
-  }
+  } */
+.panel-footer {
+            margin: 30px;
+            border: 1px solid #ddd;
+        }
 
+        .panel-footer-header {
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .panle-footer-input {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .textarea-wrapper {
+            position: relative; /* 자식 요소의 절대 위치를 위해 상대 위치 설정 */
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .text_comm {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: unset;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .star-rating {
+            position: absolute;
+            top: 10px; /* textarea 내부 오른쪽 위 */
+            right: 10px;
+            display: flex;
+            gap: 5px;
+        }
+
+        .star {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            background: url('/resources/images/gray_star.png') no-repeat center;
+            background-size: contain;
+        }
+
+        .star.filled {
+            background: url('/resources/images/yellow_star.png') no-repeat center;
+            background-size: contain;
+        }
+
+        .textarea-wrapper .btn-sec {
+            position: absolute;
+            bottom: 10px; /* textarea 내부 오른쪽 아래 */
+            right: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 8px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            background-color: white;
+            color: black;
+        }
+
+        .btn-comment {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 5px;
+            padding-top: 62px;
+        }
+
+        .btn-comment .btn-sec {
+            background-color: white;
+            color: black;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 8px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
   .panel-footer-body{
     margin: 5px 10px;
     border: 1px solid #ddd;

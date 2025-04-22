@@ -20,8 +20,17 @@
 		    i.REST_IMG_NO
 		FROM 
     		RESTAURANT r
-		LEFT JOIN 
-    		REST_IMG i ON r.REST_NO = i.REST_NO
+		LEFT JOIN (
+    SELECT 
+        REST_NO,
+        REST_IMG_NAME,
+        REST_IMG_NO,
+        ROW_NUMBER() OVER (PARTITION BY REST_NO ORDER BY REST_IMG_NO) AS rn
+    FROM 
+        REST_IMG
+) i ON r.REST_NO = i.REST_NO AND i.rn = 1
+    	<!-- LEFT JOIN 
+    	REST_IMG i ON r.REST_NO = i.REST_NO -->
 		WHERE 1=1
 	    <if test="region != null">
 	        AND r.rest_loc LIKE #{region}

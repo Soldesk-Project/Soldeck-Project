@@ -57,7 +57,7 @@ function showList() {
         limitedArray.forEach(json => {
             msg += `<div class="item-set" data-rest-no=${json.rest_no}>`
             msg += 	`<div class="image">`
-            msg += `<img src="${json.rest_img_name || ''}" alt="이미지 없음" draggable="false" onerror="this.src='/resources/images/noImage.png';">`;
+            msg += 		`<img src="${json.rest_img_name || ''}" alt="이미지 없음" draggable="false" onerror="this.src='/resources/images/noImage.png';">`;
             msg += 	`</div>`
             msg += 	`<div class="name">`
             msg += 		`<p>${json.rest_name}</p>`
@@ -68,6 +68,7 @@ function showList() {
     });
 }
 // 지역 선택
+
 const locationSelect = document.querySelector('.location-select select');
 locationSelect.addEventListener('change', function() {
     selectedRegion = this.value;
@@ -101,6 +102,7 @@ function getList(callback) {
     if (selectedCategory) params.append('category', selectedCategory);
     const url = `/search/location/data${params.toString() ? '?' + params.toString() : ''}`;
     console.log("Fetching URL:", url);
+    
     fetch(url, {
         headers: {
             'Accept': 'application/json'

@@ -41,7 +41,11 @@
     	<div class="image-header"># 오늘의 추천 pick</div>
     	<div class="chat-body">
     		<div class="slideshow-container">
-                <div class="slides-wrapper" >
+                <div class="slides-wrapper">
+                    <!-- <div class="slide">
+                        <img src="https://img1.kakaocdn.net/cthumb/local/C544x408.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flocalfiy%2F9D96CE0AF47646C48E7B41BF852F0E5E" alt="이미지 1">
+                        <p>가게 이름</p>
+                    </div> -->
                 </div>
                 <a class="prev" onclick="moveSlide(-1)">❮</a>
                 <a class="next" onclick="moveSlide(1)">❯</a>

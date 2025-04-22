@@ -26,13 +26,12 @@ public class SearchController {
 	@Autowired
 	private RestService service;
 	
-	// JSP 페이지 렌더링
 	@GetMapping(value = "/search")
 	public String searchPage() {
 		log.info("search...");
 		return "/search/search";
 	}
-	// JSON 데이터 반환 (AJAX 요청용)
+	// search페이지 필터기능
 	@GetMapping(value = "/search/filterData", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<RestVO>> filterData(@RequestParam(value = "region", required = false) String region,
 			@RequestParam(value = "category", required = false) String category) {
@@ -40,12 +39,7 @@ public class SearchController {
 		return new ResponseEntity<List<RestVO>>(service.getFilteredList(region, category), HttpStatus.OK);
 	}
 	
-//	// JSON 데이터 반환 (AJAX 요청용)
-//	@GetMapping(value = "/search/searchData/{rest_name}", produces = MediaType.APPLICATION_JSON_VALUE)
-//	public ResponseEntity<List<RestVO>> searchData(@PathVariable("rest_name") String rest_name) {
-//		log.info("searchData..." + " rest_name : " + rest_name);
-//		return new ResponseEntity<List<RestVO>>(service.getSearchList(rest_name), HttpStatus.OK);
-//	}
+	// search페이지 검색기능
 	@GetMapping(value = "/search/searchData", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<RestVO>> searchData(
             @RequestParam(value = "keyword", required = false) String keyword,
@@ -65,6 +59,13 @@ public class SearchController {
         log.info("Returning data: " + list.size() + " items");
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
+	
+	/*
+	 * @GetMapping(value = "/search/data", produces =
+	 * MediaType.APPLICATION_JSON_VALUE) public ResponseEntity<List<RestVO>>
+	 * searchData() { log.info("searchData..."); return new
+	 * ResponseEntity<List<RestVO>>(service.getList(), HttpStatus.OK); }
+	 */
 	
 	// 지역 페이지
 	@GetMapping("/location")

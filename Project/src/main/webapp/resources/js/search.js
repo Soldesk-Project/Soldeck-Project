@@ -57,7 +57,15 @@ function showList() {
 
     let msg = '';
     getList(jsonArray => {
-        console.log('getList 반환 데이터:', jsonArray);
+    	if (!Array.isArray(jsonArray)) {
+            console.error('jsonArray가 배열이 아닙니다:', jsonArray);
+            return;
+        }
+        if (jsonArray.length > 0) {
+            console.log('getList 반환 데이터:', jsonArray.length);
+        } else {
+            console.log('jsonArray에 데이터가 없습니다.');
+        }
 
         for (let i = jsonArray.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -65,7 +73,6 @@ function showList() {
         }
 
         const limitedArray = jsonArray.slice(0, 30);
-        console.log('제한된 데이터:', limitedArray);
 
         if (limitedArray.length === 0) {
             imageUL.innerHTML = '<div class="no-data">표시할 데이터가 없습니다.</div>';
@@ -115,7 +122,7 @@ categoryButtons.forEach(button => {
 });
 
 function getList(callback) {
-    const params = new URLSearchParams();
+	const params = new URLSearchParams();
     if (selectedRegion) params.append('region', selectedRegion);
     if (selectedCategory) params.append('category', selectedCategory);
     const url = `/search/search/filterData${params.toString() ? '?' + params.toString() : ''}`;
@@ -141,7 +148,7 @@ function getList(callback) {
         });
 }
 
-// 슬라이드 관련 변수
+// 슬라이드 관련 변수 초기화 함수
 let currentIndex = 0;
 let slidesWrapper;
 let slides;
@@ -256,6 +263,17 @@ function moveSlide(direction) {
         console.warn("No slides available to move.");
         return;
     }
+
+    // 슬라이드 이동 로직 초기화
+    if (totalSlides > 0) {
+        slidesWrapper.style.transform = `translateX(0%)`;
+    }
+}
+
+function moveSlide(direction) {
+    // 최신 슬라이드 상태 반영
+    slides = document.querySelectorAll('.slide');
+    totalSlides = slides.length;
 
     currentIndex += direction;
     if (currentIndex < 0) {
@@ -473,4 +491,6 @@ function getSearch(callback) {
             console.error("Fetch error:", err.message);
             callback([]);
         });
+    const offset = currentIndex * (100 / visibleSlides);
+    slidesWrapper.style.transform = `translateX(-${offset}%)`;
 }
