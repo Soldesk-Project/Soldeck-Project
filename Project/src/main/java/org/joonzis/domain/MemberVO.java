@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class MemberVO {
-	private int mem_no;
-	private String mem_id, mem_pw, mem_name, mem_nick, mem_birth, mem_img;
+	private int mem_no, mem_phone;
+	private String mem_id, mem_pw, mem_name, mem_nick, mem_birth, mem_img, mem_email;
 	private Date mem_date;
 }

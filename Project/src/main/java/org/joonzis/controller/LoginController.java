@@ -86,14 +86,28 @@ public class LoginController {
     @ResponseBody
     public String signUpProcess(
             @ModelAttribute MemberVO member,
+            @RequestParam("id") String mem_id,
+            @RequestParam("password") String mem_pw,
+            @RequestParam("name") String mem_name,
+            @RequestParam("nickname") String mem_nick,
             @RequestParam("yyyy") String birthYear,
             @RequestParam("mm") String birthMonth,
             @RequestParam("dd") String birthDay,
             @RequestParam("gender") String gender,
+            @RequestParam("email") String mem_email,
+            @RequestParam("phone") int mem_phone,
             @RequestParam(value = "interest", required = false) List<String> interests,
             @RequestParam("profileImage") MultipartFile profileImage) {
 
-        logger.info("signUpProcess 호출 - ID: {}", member.getMem_id());
+        logger.info("signUpProcess 호출 - ID: {}", mem_id);
+
+        // MemberVO에 각 필드 값 명시적으로 설정
+        member.setMem_id(mem_id);
+        member.setMem_pw(mem_pw);
+        member.setMem_name(mem_name);
+        member.setMem_nick(mem_nick);
+        member.setMem_email(mem_email);
+        member.setMem_phone(mem_phone);
 
         // 생년월일 조합 (MemberVO에 직접 설정)
         String mem_birth = birthYear + birthMonth + birthDay;
@@ -138,7 +152,7 @@ public class LoginController {
 
         memberservice.signUpProcess(member, food_no);
 
-        return "회원가입 성공";
+        return "redirect:/login/loginPage";
     }
 
     // 관심분야 문자열을 food_no로 변환하는 Helper 메서드

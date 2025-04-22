@@ -25,7 +25,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="form-group">
 				<label for="name">이름</label>
 				<input type="text" id="name" name="name" placeholder="NAME" required>
@@ -38,6 +38,7 @@
 					<input type="text" id="mm" name="mm" placeholder="mm" maxlength="2" required>
 					<input type="text" id="dd" name="dd" placeholder="dd" maxlength="2" required>
 				</div>
+				<div id="birthDateErrorMessage" class="message error"></div>
 			</div>
 
 			<div class="formGroup">
@@ -56,29 +57,31 @@
 			<div class="formGroup">
 				<label for="id">아이디</label>
 				<input type="text" id="id" name="id" placeholder="ID" required>
-				<div id="idCheckMessage" class="message"></div>
+				<div id="idCheckMessage" class="message error"></div>
 			</div>
 
 			<div class="formGroup">
 				<label for="password">비밀번호</label>
 				<input type="password" id="password" name="password" placeholder="PASSWORD" required>
+				<div id="passwordErrorMessage" class="message error"></div>
 			</div>
 
 			<div class="formGroup">
 				<label for="nickname">별명</label>
 				<input type="text" id="nickname" name="nickname" placeholder="NICKNAME" required>
-				<div id="nicknameCheckMessage" class="message"></div>
+				<div id="nicknameCheckMessage" class="message error"></div>
 			</div>
 
 			<div class="formGroup">
 				<label for="email">이메일 주소</label>
 				<input type="email" id="email" name="email" placeholder="EMAIL" required>
-				<div id="emailCheckMessage" class="message"></div>
+				<div id="emailCheckMessage" class="message error"></div>
 			</div>
 
 			<div class="formGroup">
-				<label for="phone">연락처</label>
-				<input type="tel" id="phone" name="phone" placeholder="PHONE NUMBER" required>
+    			<label for="phone">연락처</label>
+    			<input type="tel" id="phone" name="phone" placeholder="PHONE NUMBER" required>
+    			<div id="phoneErrorMessage" class="message error"></div>
 			</div>
 
 			<div class="formGroup">
@@ -105,13 +108,13 @@
 						<label for="vietnamese">베트남요리</label>
 					</div>
 				</div>
-				<div id="interestErrorMessage" class="message"></div>
+				<div id="interestErrorMessage" class="message error"></div>
 			</div>
 
 			<button type="submit" class="submit">회원 가입</button>
 		</form>
 	</div>
-	
+
 	<jsp:include page="../layout/footer.jsp"/>
 <script type="text/javascript" src="/resources/js/signUpPage.js"></script>
 </body>

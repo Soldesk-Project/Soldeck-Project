@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const registrationForm = document.getElementById('registrationForm');
     const nameInput = document.getElementById('name');
-    const yyyyInput = document.getElementById('yyyy');
+    const yyyyInput = document.getElementById('yyyy'); // 오타 수정
     const mmInput = document.getElementById('mm');
     const ddInput = document.getElementById('dd');
     const idInput = document.getElementById('id');
@@ -12,23 +12,43 @@ document.addEventListener('DOMContentLoaded', function() {
     const idCheckMessage = document.getElementById('idCheckMessage');
     const nicknameCheckMessage = document.getElementById('nicknameCheckMessage');
     const emailCheckMessage = document.getElementById('emailCheckMessage');
+    const passwordErrorMessage = document.getElementById('passwordErrorMessage');
     const femaleRadio = document.getElementById('female');
     const maleRadio = document.getElementById('male');
     const interestCheckboxes = document.querySelectorAll('input[name="interest"]');
     const interestErrorMessage = document.getElementById('interestErrorMessage');
     const profileImageInput = document.getElementById('profileImage');
     const previewImage = document.getElementById('previewImage');
+    const fileUploadSpan = document.querySelector('.file-upload .file-name');
+    const birthDateErrorMessage = document.getElementById('birthDateErrorMessage'); // 추가
 
     // 정규식
     const regId = /^[0-9a-z]{8,16}$/;
     const regPw = /^[0-9a-zA-Z]{8,16}$/;
     const regName = /^[가-힣]{2,6}$/;
     const regEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    const regPhone = /^\d{2,3}\d{3,4}\d{4}$/; // 숫자만 입력하는 형식으로 변경
 
+    profileImageInput.addEventListener('change', function() {
+		const file = this.files[0];
+		if (file) {
+			const reader = new FileReader();
+			reader.onload = function(e) {
+				previewImage.src = e.target.result;
+			};
+			reader.readAsDataURL(file);
+			fileUploadSpan.textContent = file.name; // 선택된 파일 이름 표시
+		} else {
+			previewImage.src = '#'; // 미리보기 초기화
+			fileUploadSpan.textContent = '선택된 파일 없음';
+		}
+	});
+    
     // 유효성 검사 함수
     function validateName() {
         const nameValue = nameInput.value.trim();
         if (!regName.test(nameValue)) {
+            // 이름 필드 옆에 에러 메시지를 표시할 div가 필요할 수 있습니다.
             alert('이름은 2~6자의 한글로 입력해주세요.');
             nameInput.focus();
             return false;
@@ -40,72 +60,81 @@ document.addEventListener('DOMContentLoaded', function() {
         const yyyyValue = yyyyInput.value.trim();
         const mmValue = mmInput.value.trim();
         const ddValue = ddInput.value.trim();
+        let errorMessage = '';
 
-        if (!/^\d{4}$/.test(yyyyValue) || !/^\d{2}$/.test(mmValue) || !/^\d{2}$/.test(ddValue)) {
-            alert('생년월일을 yyyy, mm, dd 형식에 맞춰 입력해주세요.');
-            yyyyInput.focus();
-            return false;
+        if (!/^\d{4}$/.test(yyyyValue)) {
+        	errorMessage += '올바른 연도 형식을 입력해주세요.<br>';
         }
 
-        const month = parseInt(mmValue, 10);
-        const day = parseInt(ddValue, 10);
-        const lastDayOfMonth = new Date(parseInt(yyyyValue, 10), month, 0).getDate();
-
-        if (month < 1 || month > 12 || day < 1 || day > lastDayOfMonth) {
-            alert('올바른 생년월일을 입력해주세요.');
-            mmInput.focus();
-            return false;
+        if (!/^\d{2}$/.test(mmValue)) {
+            errorMessage += '올바른 월 형식을 입력해주세요.<br>';
+        } else if (parseInt(mmValue, 10) < 1 || parseInt(mmValue, 10) > 12) {
+            errorMessage += '올바른 월을 입력해주세요 (1-12).<br>';
         }
-        return true;
+
+        if (!/^\d{2}$/.test(ddValue)) {
+            errorMessage += '올바른 일 형식을 입력해주세요 (DD).<br>';
+        } else {
+            const year = parseInt(yyyyValue, 10);
+            const month = parseInt(mmValue, 10);
+            const day = parseInt(ddValue, 10);
+            const lastDayOfMonth = new Date(year, month, 0).getDate();
+            if (day < 1 || day > lastDayOfMonth) {
+            	errorMessage += '올바른 일을 입력해주세요 (' + lastDayOfMonth + '일 까지).<br>';
+            }
+        }
+
+        if (errorMessage) {
+            birthDateErrorMessage.innerHTML = errorMessage;
+            return false;
+        } else {
+            birthDateErrorMessage.innerHTML = '';
+            return true;
+        }
     }
 
     function validateId() {
         const idValue = idInput.value.trim();
         if (!regId.test(idValue)) {
             idCheckMessage.textContent = '아이디는 8~16자의 영문 소문자와 숫자로만 입력해주세요.';
-            idInput.focus();
             return false;
         } else {
             idCheckMessage.textContent = '';
-            // TODO: 아이디 중복 확인 (AJAX) 로직 추가 (선택 사항)
+            return true;
         }
-        return true;
     }
 
     function validatePassword() {
         const passwordValue = passwordInput.value.trim();
         if (!regPw.test(passwordValue)) {
-            alert('비밀번호는 8~16자의 영문 대/소문자와 숫자로만 입력해주세요.');
-            passwordInput.focus();
+            passwordErrorMessage.textContent = '비밀번호는 8~16자의 영문 대/소문자와 숫자로만 입력해주세요.';
             return false;
+        } else {
+            passwordErrorMessage.textContent = '';
+            return true;
         }
-        return true;
     }
 
     function validateNickname() {
         const nicknameValue = nicknameInput.value.trim();
         if (nicknameValue.length < 2) {
             nicknameCheckMessage.textContent = '별명은 최소 2자 이상 입력해주세요.';
-            nicknameInput.focus();
             return false;
         } else {
             nicknameCheckMessage.textContent = '';
-            // TODO: 닉네임 중복 확인 (AJAX) 로직 추가 (선택 사항)
+            return true;
         }
-        return true;
     }
 
     function validateEmail() {
         const emailValue = emailInput.value.trim();
         if (!regEmail.test(emailValue)) {
             emailCheckMessage.textContent = '올바른 이메일 주소 형식이 아닙니다.';
-            emailInput.focus();
             return false;
         } else {
             emailCheckMessage.textContent = '';
-            // TODO: 이메일 중복 확인 (AJAX) 로직 추가 (선택 사항)
+            return true;
         }
-        return true;
     }
 
     function validateGender() {
@@ -133,38 +162,58 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // 폼 제출 이벤트 리스너 (AJAX 방식)
+    function validatePhone() {
+        const phoneValue = phoneInput.value.trim();
+        const phoneErrorMessage = document.getElementById('phoneErrorMessage'); // 추가
+
+        if (!/^\d{2,3}\d{3,4}\d{4}$/.test(phoneValue)) {
+            phoneErrorMessage.textContent = '올바른 전화번호 형식이 아닙니다. (예: 01012345678)';
+            phoneInput.focus();
+            return false;
+        } else {
+            phoneErrorMessage.textContent = '';
+            return true;
+        }
+    }
+
+    // 이벤트 리스너 추가 (실시간 유효성 검사 - 생년월일 관련 리스너 제거)
+    idInput.addEventListener('input', validateId);
+    passwordInput.addEventListener('input', validatePassword);
+    nicknameInput.addEventListener('input', validateNickname);
+    emailInput.addEventListener('input', validateEmail);
+    phoneInput.addEventListener('input', validatePhone);
+    interestCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', validateInterest);
+    });
+
+    // 폼 제출 이벤트 리스너 (AJAX 방식 - multipart/form-data)
     if (registrationForm) {
         registrationForm.addEventListener('submit', function(event) {
             event.preventDefault(); // 기본 폼 제출 막기
 
-            if (!validateName() || !validateBirthDate() || !validateGender() ||
-                !validateId() || !validatePassword() || !validateNickname() ||
-                !validateEmail() || !validateInterest()) {
-                return; // 유효성 검사 실패 시 제출 중단
+            const isNameValid = validateName();
+            const isBirthDateValid = validateBirthDate();       
+            const isGenderValid = validateGender();
+            const isIdValid = validateId();
+            const isPasswordValid = validatePassword();
+            const isNicknameValid = validateNickname();
+            const isEmailValid = validateEmail();
+            const isPhoneValid = validatePhone();
+            const isInterestValid = validateInterest();
+
+            if (!isNameValid || !isBirthDateValid || !isGenderValid ||
+                !isIdValid || !isPasswordValid || !isNicknameValid ||
+                !isEmailValid || !isPhoneValid || !isInterestValid) {
+                return; // 유효성 검사 실패 시 제출 중단 (에러 메시지는 이미 표시됨)
             }
 
             const formData = new FormData(registrationForm);
-            const data = {};
-            formData.forEach((value, key) => {
-                if (key === 'interest') {
-                    if (!data[key]) {
-                        data[key] = [];
-                    }
-                    data[key].push(value);
-                } else {
-                    data[key] = value;
-                }
-            });
 
-            console.log('Sending JSON:', JSON.stringify(data)); // 콘솔에 JSON 데이터 확인
+            console.log('Sending FormData:', formData); // 콘솔에 FormData 객체 확인
 
             fetch('/login/signUpProcess', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
+                body: formData
             })
             .then(response => {
                 if (!response.ok) {
@@ -181,39 +230,37 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(error => {
                 console.error('회원가입 실패:', error.message);
                 alert(error.message); // 사용자에게 오류 알림 (선택 사항)
-                // 오류 처리 로직 추가 (예: 에러 메시지 표시)
             });
         });
     }
 
-    // 아이디 입력 필드 focusout 이벤트에 유효성 검사 함수 연결
-    if (idInput) {
-        idInput.addEventListener('focusout', validateId);
-    }
+    // 포커스 시 에러 메시지 초기화
+    const errorElements = {
+        idInput: idCheckMessage,
+        passwordInput: passwordErrorMessage,
+        nicknameInput: nicknameCheckMessage,
+        emailInput: emailCheckMessage,
+        interestCheckboxes: interestErrorMessage,
+        yyyyInput: birthDateErrorMessage, // 추가
+        mmInput: birthDateErrorMessage,   // 추가
+        ddInput: birthDateErrorMessage    // 추가
+    };
 
-    // 닉네임 입력 필드 focusout 이벤트에 유효성 검사 함수 연결
-    if (nicknameInput) {
-        nicknameInput.addEventListener('focusout', validateNickname);
-    }
-
-    // 이메일 입력 필드 focusout 이벤트에 유효성 검사 함수 연결
-    if (emailInput) {
-        emailInput.addEventListener('focusout', validateEmail);
-    }
-
-    // 이미지 미리보기 관련 JavaScript
-    if (profileImageInput && previewImage) {
-        profileImageInput.addEventListener('change', function() {
-            const file = this.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    previewImage.src = e.target.result;
-                }
-                reader.readAsDataURL(file);
+    for (const inputElement in errorElements) {
+        if (errorElements.hasOwnProperty(inputElement) && document.getElementById(inputElement)) {
+            const element = document.getElementById(inputElement);
+            if (inputElement === 'interestCheckboxes') {
+                const checkboxes = document.querySelectorAll('input[name="interest"]');
+                checkboxes.forEach(item => {
+                    item.addEventListener('focusin', () => {
+                        errorElements[inputElement].textContent = '';
+                    });
+                });
             } else {
-                previewImage.src = "#"; // 기본 이미지로 초기화 (선택 사항)
+                element.addEventListener('focusin', () => {
+                    errorElements[inputElement].textContent = '';
+                });
             }
-        });
+        }
     }
 });
