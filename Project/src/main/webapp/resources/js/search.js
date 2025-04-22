@@ -94,7 +94,7 @@ function showList() {
     });
 }
 
-const locationSelect = document.querySelector('.location-select select');
+const locationSelect = document.querySelector('.location-select_select');
 locationSelect.addEventListener('change', function () {
     selectedRegion = this.value;
     console.log(selectedRegion);

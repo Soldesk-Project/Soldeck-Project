@@ -138,6 +138,7 @@ th, td{
     padding: 10px;
     display: flex;
     justify-content: center;
+    flex-direction: column; /* 세로 방향으로 변경 */
 }
 .panle-footer-input {
     width: 100%;
@@ -211,6 +212,31 @@ th, td{
     cursor: pointer;
     transition: background-color 0.3s;
 }
+/* uploadResult 스타일링 */
+.uploadResult {
+    width: 100%;
+    margin-top: 10px; /* 입력 섹션과의 간격 */
+}
+
+.uploadResult ul {
+    display: flex; /* 가로로 배치 */
+    flex-direction: row;
+    gap: 10px; /* 이미지 간 간격 */
+    padding: 0;
+    list-style: none;
+    overflow-x: auto; /* 가로 스크롤 가능 */
+}
+
+/* 업로드된 이미지 스타일링 (필요 시 추가) */
+.uploadResult ul li {
+    flex: 0 0 auto; /* 크기 고정 */
+}
+
+.uploadResult ul li img {
+    max-height: 100px; /* 이미지 높이 제한 */
+    object-fit: cover;
+}
+
 
 /* 댓글 보기 */
 .panel-footer-body{

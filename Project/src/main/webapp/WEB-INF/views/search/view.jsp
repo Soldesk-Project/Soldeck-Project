@@ -82,7 +82,7 @@
 		                    <div class="star" data-value="5"></div>
 		                </div>
 		                <!-- input type="file"은 숨김 -->
-		                <input type="file" id="imageUpload" multiple accept="image/*" style="display: none;">
+		                <input type="file" id="imageUpload" multiple="multiple" style="display: none;">
 		                <!-- 커스텀 버튼으로 label 사용 -->
 		                <label for="imageUpload" class="btn btn-sec">UPLOAD</label>
                     </div>
@@ -90,6 +90,9 @@
                         <button type="button" class="btn btn-sec" id="commentBtn">댓글 달기</button>
                     </div>
                 </div>
+                    <div class="uploadResult">
+						<ul></ul>
+					</div>
              </div>
              <div class="panel-footer-body">
                 <ul class="chat">
@@ -194,6 +197,7 @@
 	
 	<jsp:include page="../layout/footer.jsp"/>
 	<script type="text/javascript" src="/resources/js/view.js"></script>
+	<script type="text/javascript" src="/resources/js/upload.js"></script>
 	
 </body>
 </html>

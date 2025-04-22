@@ -7,7 +7,7 @@ document.head.appendChild(linkEle);
 let selectedRegion = '';
 let selectedCategory = '';
 const imageCon = document.querySelector('.image-con');
-const locationSelect = document.querySelector('.location-select select');
+const locationSelect = document.querySelector('.location-select_select');
 const categoryButtons = document.querySelectorAll('.kategorie-list button');
 
 showList();
