@@ -120,6 +120,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	  const locationSelect = document.querySelector('.location-select select');
 	  const categoryButtons = document.querySelectorAll('.kategorie-list button');
 
+	  // 페이지 로드 시 카테고리 버튼 활성화 상태 초기화
+	  categoryButtons.forEach(btn => btn.classList.remove('active'));
+	  
 	  locationSelect.addEventListener('change', handleFilter);
 	  categoryButtons.forEach(button => {
 	    button.addEventListener('click', handleFilter);
@@ -129,27 +132,22 @@ document.addEventListener('DOMContentLoaded', () => {
 	    const selectedRegion = locationSelect.value;
 	    let selectedCategory = '';
 
-	    categoryButtons.forEach(button => {
-	      if (button.classList.contains('active')) {
-	        selectedCategory = button.id.slice(0, -3).toLowerCase();
-	      }
-	    });
-
-	    // 카테고리 버튼 클릭 시 활성화/비활성화 처리
+	    // 카테고리 버튼 처리
 	    if (this.classList.contains('btn')) {
 	      categoryButtons.forEach(btn => btn.classList.remove('active'));
 	      this.classList.add('active');
 	      selectedCategory = this.id.slice(0, -3).toLowerCase();
 	    } else if (this === locationSelect) {
-	      // 지역 선택 변경 시 카테고리 활성화 상태 유지
-	      const currentlyActive = document.querySelector('.kategorie-list button.active');
-	      if (currentlyActive) {
-	        selectedCategory = currentlyActive.id.slice(0, -3).toLowerCase();
-	      } else {
-	        selectedCategory = ''; // 지역만 변경되었고 활성화된 카테고리가 없으면 초기화
+	      // 지역 선택 변경 시 카테고리 선택 초기화
+	      categoryButtons.forEach(btn => btn.classList.remove('active'));
+	      selectedCategory = '';
+	    } else {
+	      // 이미 활성화된 카테고리 찾기 (지역 변경 없이 다른 동작으로 handleFilter가 호출될 경우 대비)
+	      const activeCategoryButton = document.querySelector('.kategorie-list button.active');
+	      if (activeCategoryButton) {
+	        selectedCategory = activeCategoryButton.id.slice(0, -3).toLowerCase();
 	      }
 	    }
-
 	    // 지역과 카테고리 모두 선택되었을 때만 fetchData 호출 및 페이지 이동
 	    if (selectedRegion && selectedCategory) {
 	      fetchData(selectedRegion, selectedCategory);

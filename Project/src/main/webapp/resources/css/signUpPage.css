@@ -45,6 +45,24 @@ input[type="tel"] {
 	font-size: 16px;
 }
 
+/* 전화번호 입력 필드들을 한 줄로 배치 */
+.phone-inputs {
+	display: flex; /* flex 컨테이너로 설정 */
+	gap: 5px; /* 입력 필드 사이 간격 조절 */
+	align-items: center; /* 세로 방향 가운데 정렬 (하이픈과 input 높이 맞춤) */
+}
+
+.phone-inputs input[type="tel"] {
+	width: auto; /* 내용에 맞춰 너비 자동 조절 */
+	flex-grow: 1; /* 남는 공간을 각 input이 동일하게 나눠 갖도록 함 */
+	min-width: 0; /* flex-grow 시 min-width 설정으로 내용이 잘리지 않게 함 */
+}
+
+.phone-inputs span {
+	margin: 0 5px; /* 하이픈 주변 간격 조절 */
+	color: #555;
+}
+
 .birthDate {
 	display: flex;
 	gap: 10px;

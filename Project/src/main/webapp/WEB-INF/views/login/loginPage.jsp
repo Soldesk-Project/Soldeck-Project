@@ -10,7 +10,9 @@
 <link rel="stylesheet" href="../resources/css/footer.css">
 <body>
 	<div class="container">
-		<img src="../resources/images/logo.png" alt="로고" class="loginLogo">
+		<a href="/">
+			<img src="../resources/images/logo.png" alt="로고" class="loginLogo">
+		</a>
 		<div class="loginBox">
 			<div class="inputGroup">
 				<label for="id">ID</label>

@@ -3,7 +3,7 @@
 
   <div class="nav">
     <div class="nav-left">
-      <a href="#"><img src="/resources/images/logo.png" alt="logo" style="width: 70px;"></a>
+      <a href="/"><img src="/resources/images/logo.png" alt="logo" style="width: 70px;"></a>
     </div>
     <div class="nav-center">
       <input type="search" placeholder="검색어를 입력하세요." onChange={handleSearchKeywordChange} id="search">

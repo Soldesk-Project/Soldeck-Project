@@ -9,7 +9,9 @@
 </head>
 <body>
 	<div class="container">
-		<img src="resources/images/logo.png" alt="로고" class="logo">
+		<a href="/">
+			<img src="../resources/images/logo.png" alt="로고" class="logo">
+		</a>
 		<div class="formWrapper">
 			<label for="name">이름</label>
 			<input type="text" id="name" placeholder="이름을 입력하세요.">
