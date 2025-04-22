@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const registrationForm = document.getElementById('registrationForm');
     const nameInput = document.getElementById('name');
-    const yyyyInput = document.getElementById('yyyy'); // <ctrl3348> 대신 yyyyInput
+    const yyyyInput = document.getElementById('yyyy');
     const mmInput = document.getElementById('mm');
     const ddInput = document.getElementById('dd');
     const idInput = document.getElementById('id');
@@ -16,6 +16,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const maleRadio = document.getElementById('male');
     const interestCheckboxes = document.querySelectorAll('input[name="interest"]');
     const interestErrorMessage = document.getElementById('interestErrorMessage');
+    const profileImageInput = document.getElementById('profileImage');
+    const previewImage = document.getElementById('previewImage');
 
     // 정규식
     const regId = /^[0-9a-z]{8,16}$/;
@@ -35,13 +37,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function validateBirthDate() {
-        const yyyyValue = yyyyInput.value.trim(); // <ctrl3348> 대신 yyyyValue
+        const yyyyValue = yyyyInput.value.trim();
         const mmValue = mmInput.value.trim();
         const ddValue = ddInput.value.trim();
 
         if (!/^\d{4}$/.test(yyyyValue) || !/^\d{2}$/.test(mmValue) || !/^\d{2}$/.test(ddValue)) {
-            alert('생년월일을yyyy, mm, dd 형식에 맞춰 입력해주세요.'); // <ctrl3348> 제거
-            yyyyInput.focus(); // <ctrl3348> 대신 yyyyInput
+            alert('생년월일을 yyyy, mm, dd 형식에 맞춰 입력해주세요.');
+            yyyyInput.focus();
             return false;
         }
 
@@ -197,5 +199,21 @@ document.addEventListener('DOMContentLoaded', function() {
     // 이메일 입력 필드 focusout 이벤트에 유효성 검사 함수 연결
     if (emailInput) {
         emailInput.addEventListener('focusout', validateEmail);
+    }
+
+    // 이미지 미리보기 관련 JavaScript
+    if (profileImageInput && previewImage) {
+        profileImageInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            } else {
+                previewImage.src = "#"; // 기본 이미지로 초기화 (선택 사항)
+            }
+        });
     }
 });

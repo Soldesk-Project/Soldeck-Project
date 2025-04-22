@@ -1,8 +1,10 @@
 package org.joonzis.service;
 
+import org.joonzis.domain.MemberVO;
+
 public interface MemberService {
 
-    void signUpProcess(String mem_name, String mem_birth, String mem_id, String mem_pw, String mem_nick, Integer[] food_no);
+    void signUpProcess(MemberVO member, Integer[] food_no);
     
     String findId(String mem_name, String mem_birth);
     

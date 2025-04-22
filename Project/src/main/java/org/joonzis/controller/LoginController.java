@@ -1,5 +1,6 @@
 package org.joonzis.controller;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -9,12 +10,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import org.joonzis.service.MemberService;
@@ -81,30 +84,50 @@ public class LoginController {
 
     @PostMapping("/signUpProcess")
     @ResponseBody
-    public String signUpProcess(@RequestBody Map<String, Object> requestMap) {
-        String mem_name = (String) requestMap.get("name");
-        String yyyy = (String) requestMap.get("yyyy");
-        String mm = (String) requestMap.get("mm");
-        String dd = (String) requestMap.get("dd");
-        String gender = (String) requestMap.get("gender");
-        String mem_id = (String) requestMap.get("id");
-        String mem_pw = (String) requestMap.get("password");
-        String mem_nick = (String) requestMap.get("nickname");
-        String mem_email = (String) requestMap.get("email");
-        String mem_phone = (String) requestMap.get("phone");
-        List<String> interests = (List<String>) requestMap.get("interest"); // JavaScript에서 배열로 보내므로 List로 받음
+    public String signUpProcess(
+            @ModelAttribute MemberVO member,
+            @RequestParam("yyyy") String birthYear,
+            @RequestParam("mm") String birthMonth,
+            @RequestParam("dd") String birthDay,
+            @RequestParam("gender") String gender,
+            @RequestParam(value = "interest", required = false) List<String> interests,
+            @RequestParam("profileImage") MultipartFile profileImage) {
 
-    	System.out.println("MemberService.signUpProcess - mem_id: " + mem_id);
-        
-        // 생년월일과 성별 조합
-        String mem_birth = yyyy + mm + dd;
+        logger.info("signUpProcess 호출 - ID: {}", member.getMem_id());
+
+        // 생년월일 조합 (MemberVO에 직접 설정)
+        String mem_birth = birthYear + birthMonth + birthDay;
+        member.setMem_birth(mem_birth);
+
+        // 성별 설정 (MemberVO에 직접 설정)
         if (gender.equals("male")) {
-            mem_birth += "1";
+            member.setMem_birth(member.getMem_birth() + "1");
         } else if (gender.equals("female")) {
-            mem_birth += "2";
+            member.setMem_birth(member.getMem_birth() + "2");
         }
 
-        // 관심분야 처리 (food_no로 변환)
+        String mem_img = null;
+        if (!profileImage.isEmpty()) {
+            try {
+                // 이미지 저장 경로 설정
+                String uploadDir = "C:/upload";
+                File uploadPath = new File(uploadDir);
+                if (!uploadPath.exists()) {
+                    uploadPath.mkdirs();
+                }
+                String originalFilename = profileImage.getOriginalFilename();
+                String storedFilename = member.getMem_id() + "_" + System.currentTimeMillis() + "_" + originalFilename;
+                File destFile = new File(uploadPath + "/" + storedFilename);
+                profileImage.transferTo(destFile);
+                mem_img = storedFilename;
+                member.setMem_img(mem_img); // MemberVO에 이미지 파일명 설정
+                logger.info("이미지 저장 성공: {}", destFile.getAbsolutePath());
+            } catch (Exception e) {
+                logger.error("이미지 저장 실패: {}", e.getMessage());
+                return "회원가입 실패 - 이미지 저장 오류";
+            }
+        }
+
         Integer[] food_no = null;
         if (interests != null && !interests.isEmpty()) {
             food_no = interests.stream()
@@ -113,7 +136,7 @@ public class LoginController {
                     .toArray(Integer[]::new);
         }
 
-        memberservice.signUpProcess(mem_name, mem_birth, mem_id, mem_pw, mem_nick, food_no);
+        memberservice.signUpProcess(member, food_no);
 
         return "회원가입 성공";
     }

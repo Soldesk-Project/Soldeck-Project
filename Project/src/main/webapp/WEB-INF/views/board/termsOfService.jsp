@@ -3,6 +3,8 @@
 <html>
 <head>
 <title>이용약관</title>
+<link rel="stylesheet" href="../resources/css/header.css">
+<link rel="stylesheet" href="../resources/css/footer.css">
 </head>
 <body>
 	<jsp:include page="../layout/header.jsp"/>

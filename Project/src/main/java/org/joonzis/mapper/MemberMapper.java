@@ -1,16 +1,11 @@
 package org.joonzis.mapper;
 
 import org.apache.ibatis.annotations.Param;
+import org.joonzis.domain.MemberVO;
 
 public interface MemberMapper {
 
-    void insertMember(
-        @Param("mem_name") String mem_name,
-        @Param("mem_birth") String mem_birth,
-        @Param("mem_id") String mem_id,
-        @Param("mem_pw") String mem_pw,
-        @Param("mem_nick") String mem_nick
-    );
+	void insertMember(MemberVO member);
 
     Integer selectMemNoById(@Param("mem_id") String mem_id);
 

@@ -4,13 +4,28 @@
 <head>
 <meta charset="UTF-8">
 <title>회원 가입</title>
+<link rel="stylesheet" href="../resources/css/header.css">
 <link rel="stylesheet" href="../resources/css/signUpPage.css">
+<link rel="stylesheet" href="../resources/css/footer.css">
 </head>
 <body>
 	<jsp:include page="../layout/header.jsp"/>
 
 	<div class="container">
-		<form id="registrationForm" action="/login/signUpProcess" method="post">
+		<form id="registrationForm" action="/login/signUpProcess" method="post" enctype="multipart/form-data">
+			<div class="image-upload-container">
+				<div class="image-upload-area">
+					<div class="image-preview">
+						<img id="previewImage" src="#" alt="미리보기">
+					</div>
+					<div class="file-upload">
+						<label for="profileImage">파일 선택</label>
+						<input type="file" id="profileImage" name="profileImage" accept="image/*">
+						<span class="file-name">선택된 파일 없음</span>
+					</div>
+				</div>
+			</div>
+			
 			<div class="form-group">
 				<label for="name">이름</label>
 				<input type="text" id="name" name="name" placeholder="NAME" required>

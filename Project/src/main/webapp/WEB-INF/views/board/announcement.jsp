@@ -5,7 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>공지사항</title>
+<link rel="stylesheet" href="../resources/css/header.css">
 <link rel="stylesheet" href="../resources/css/announcement.css">
+<link rel="stylesheet" href="../resources/css/footer.css">
 </head>
 <body>
 	<jsp:include page="../layout/header.jsp"/>

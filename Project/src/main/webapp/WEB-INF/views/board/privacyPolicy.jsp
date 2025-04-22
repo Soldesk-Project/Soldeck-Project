@@ -4,7 +4,9 @@
 <head>
 <meta charset="UTF-8">
 <title>개인정보 처리방침</title>
+<link rel="stylesheet" href="../resources/css/header.css">
 <link rel="stylesheet" href="../resources/css/privacyPolicy.css">
+<link rel="stylesheet" href="../resources/css/footer.css">
 </head>
 <body>
 	<jsp:include page="../layout/header.jsp"/>

@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <title>로그인 페이지</title>
 </head>
+<link rel="stylesheet" href="../resources/css/header.css">
 <link rel="stylesheet" href="../resources/css/loginPage.css">
 <link rel="stylesheet" href="../resources/css/footer.css">
 <body>
