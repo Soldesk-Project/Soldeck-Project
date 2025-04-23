@@ -34,16 +34,16 @@
 <script>
 //모달 관련 스크립트
 const head_modal = document.getElementById("myModal");
-const openModalBtn = document.getElementById("proFile");
-const closeModal = document.getElementsByClassName("close")[0];
+const head_openModalBtn = document.getElementById("proFile");
+const head_closeModal = document.getElementsByClassName("close")[0];
 
 // 프로필 버튼 클릭 시 모달창 열기
-openModalBtn.onclick = function() {
+head_openModalBtn.onclick = function() {
 		head_modal.style.display = "block";
 }
 
 // 닫기 버튼 클릭 시 모달창 닫기
-closeModal.onclick = function() {
+head_closeModal.onclick = function() {
 		head_modal.style.display = "none";
 }
 

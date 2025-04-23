@@ -53,7 +53,7 @@
 
   <!-- 현재 로그인한 사용자 이름을 JavaScript 변수로 전달 -->
   <script>
-    const currentUser = "${fn:escapeXml(name)}";
+    const currentUser = "${currentUser}";
     console.log("현재 사용자:", currentUser);
   </script>
 

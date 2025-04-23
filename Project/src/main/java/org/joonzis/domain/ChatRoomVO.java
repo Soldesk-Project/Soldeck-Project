@@ -12,8 +12,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ChatRoomVO {
-	private int roomNo, memNo;
-    private int groupNo;
-    private String chatTitle;
-    private Date regDate;
+	private int groupNo;      // 그룹 번호 (GROUP_NO)
+    private Date regDate;     // 등록일 (REG_DATE)
 }

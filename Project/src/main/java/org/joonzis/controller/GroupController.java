@@ -22,19 +22,23 @@ public class GroupController {
 	@Autowired
 	private GroupService service;
 	
+	// 그룹 생성 및 채팅방 생성
 	@ResponseBody
-	@PostMapping(value = "/createGroup" )
-	public  ResponseEntity<String> createGroup(@RequestBody GroupVO vo, Model model) {
-		log.info("create..." + vo);
-		vo.setMemNo(100);
-		vo.setMaxMem(10);
-		int result = service.createGroup(vo);
-		if(result > 0) {
-			return ResponseEntity.ok().body("{\"redirect\":\"/mypage/club\"}");			
-		}else {
-			model.addAttribute("msg", "그룹 생성 실패");
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\":\"그룹 생성 실패\"}");
-		}
+	@PostMapping("/createGroup")
+	public ResponseEntity<String> createGroup(@RequestBody GroupVO vo, Model model) {
+	    log.info("create..." + vo);
+
+	    vo.setMemNo(100);  // 회원 번호 설정
+	    vo.setMaxMem(10);  // 최대 인원 설정
+
+	    int result = service.createGroupAndChatRoom(vo);  // 그룹과 채팅방을 함께 생성
+
+	    if (result > 0) {
+	        return ResponseEntity.ok().body("{\"redirect\":\"/mypage/club\"}");
+	    } else {
+	        model.addAttribute("msg", "그룹 생성 실패");
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\":\"그룹 생성 실패\"}");
+	    }
 	}
 
 }

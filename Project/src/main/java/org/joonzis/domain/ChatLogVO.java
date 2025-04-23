@@ -12,11 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChatLogVO {
-	private int chatNo;
-    private int lineNo;
-    private int memNo;
-    private String chatLog;
-    private String chatType;
-    private Timestamp chatTime;
-    private String chatRead;
+	private int chatNo, groupNo, memNo;
+	private String chatLog, chatType, chatRead;
+	private Timestamp chatTime;
 }

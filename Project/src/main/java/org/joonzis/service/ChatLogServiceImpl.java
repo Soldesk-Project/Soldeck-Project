@@ -1,0 +1,22 @@
+package org.joonzis.service;
+
+import org.joonzis.domain.ChatLogVO;
+import org.joonzis.mapper.ChatLogMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class ChatLogServiceImpl implements ChatLogService {
+	@Autowired
+	private ChatLogMapper chatLogMapper;
+
+	@Override
+	public void saveChat(String message, int groupNo, int memNo) {
+		
+		ChatLogVO chat = new ChatLogVO();
+		chat.setGroupNo(groupNo);
+		chat.setMemNo(memNo);
+		chat.setChatLog(message);
+		chat.setChatType("text");  // 기본은 텍스트로 가정
+		
+		chatLogMapper.insertChat(chat);
+	}
+}

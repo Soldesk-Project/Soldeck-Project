@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,123 +8,50 @@
 <title>Insert title here</title>
 </head>
 <body>
-  <jsp:include page="../layout/header.jsp"/>
-  
-  <div class="container">
-	<div class="side-menu">
-  		<jsp:include page="../layout/sideMenu.jsp"/>
-	</div>
-	<div class="button-div">
-		<button type="button" class="create-club-btn" id="createClubBtn">모임만들기</button>
-	</div>		
-	<div class="main-menu">
-		<div class="club-main">
-			<div class="inner-main">
-				<!-- 여기서부터~~~~~ -->
-				<div class="club-list">
-					<div>
-						<img src="/resources/images/2.png" alt="클럽사진" class="club-img">
-					</div>
-					<div class="club-content">
-						<div class="club-info">
-							<div>
-								<input type="text" name="name" class="club-name" value="모임 명" readonly="readonly">
-								<button type="button" class="bookmark" id="bookmarkBtn">★</button>
-							</div>
-							<div>
-								<input type="text" name="oc" class="club-oc" value="공개 모임" readonly="readonly">
-							</div>
-						</div>
-						<div class="club-memo">
-							<textarea class="memo-area"></textarea>
-							<button type="button" class="memo-btn" id="saveMemoBtn">저장</button>
-						</div>
-					</div>
-				</div>
-				<!-- 여기까지~~~~~~!!! -->
-				<div class="club-list">
-					<div>
-						<img src="/resources/images/2.png" alt="클럽사진" class="club-img">
-					</div>
-					<div class="club-content">
-						<div class="club-info">
-							<div>
-								<input type="text" name="name" class="club-name" value="모임 명" readonly="readonly">
-								<button type="button" class="bookmark" id="bookmarkBtn">★</button>
-							</div>
-							<div>
-								<input type="text" name="oc" class="club-oc" value="공개 모임" readonly="readonly">
-							</div>
-						</div>
-						<div class="club-memo">
-							<textarea class="memo-area"></textarea>
-							<button type="button" class="memo-btn" id="saveMemoBtn">저장</button>
-						</div>
-					</div>
-				</div><div class="club-list">
-					<div>
-						<img src="/resources/images/2.png" alt="클럽사진" class="club-img">
-					</div>
-					<div class="club-content">
-						<div class="club-info">
-							<div>
-								<input type="text" name="name" class="club-name" value="모임 명" readonly="readonly">
-								<button type="button" class="bookmark" id="bookmarkBtn">★</button>
-							</div>
-							<div>
-								<input type="text" name="oc" class="club-oc" value="공개 모임" readonly="readonly">
-							</div>
-						</div>
-						<div class="club-memo">
-							<textarea class="memo-area"></textarea>
-							<button type="button" class="memo-btn" id="saveMemoBtn">저장</button>
-						</div>
-					</div>
-				</div><div class="club-list">
-					<div>
-						<img src="/resources/images/2.png" alt="클럽사진" class="club-img">
-					</div>
-					<div class="club-content">
-						<div class="club-info">
-							<div>
-								<input type="text" name="name" class="club-name" value="모임 명" readonly="readonly">
-								<button type="button" class="bookmark" id="bookmarkBtn">★</button>
-							</div>
-							<div>
-								<input type="text" name="oc" class="club-oc" value="공개 모임" readonly="readonly">
-							</div>
-						</div>
-						<div class="club-memo">
-							<textarea class="memo-area"></textarea>
-							<button type="button" class="memo-btn" id="saveMemoBtn">저장</button>
-						</div>
-					</div>
-				</div><div class="club-list">
-					<div>
-						<img src="/resources/images/2.png" alt="클럽사진" class="club-img">
-					</div>
-					<div class="club-content">
-						<div class="club-info">
-							<div>
-								<input type="text" name="name" class="club-name" value="모임 명" readonly="readonly">
-								<button type="button" class="bookmark" id="bookmarkBtn">★</button>
-							</div>
-							<div>
-								<input type="text" name="oc" class="club-oc" value="공개 모임" readonly="readonly">
-							</div>
-						</div>
-						<div class="club-memo">
-							<textarea class="memo-area"></textarea>
-							<button type="button" class="memo-btn" id="saveMemoBtn">저장</button>
-						</div>
-					</div>
-				</div>
+	<jsp:include page="../layout/header.jsp" />
 
+<div class="container">
+  <div class="side-menu">
+    <jsp:include page="../layout/sideMenu.jsp" />
+  </div>
 
-			</div>
-		</div>
-	</div>
+  <div class="button-div">
+    <button type="button" class="create-club-btn" id="createClubBtn">모임만들기</button>
+  </div>
+
+  <div class="main-menu">
+    <div class="club-main">
+      <div class="inner-main">
+        <!-- 여기서부터~~~~~ -->
+        <c:forEach var="group" items="${groupList}">
+          <div class="club-list">
+            <div>
+              <img src="/resources/images/2.png" alt="클럽사진" class="club-img" />
+            </div>
+            <div class="club-content">
+              <div class="club-info">
+                <div>
+                  <input type="text" name="name" class="club-name" value="${group.chatTitle}" readonly="readonly" />
+                  <input type="hidden" id="groupNo" value="${group.groupNo}" />
+                  <button type="button" class="bookmark" id="bookmarkBtn">★</button>
+                </div>
+                <div>
+                  <input type="text" name="oc" class="club-oc" value="공개 모임" readonly="readonly" />
+                </div>
+              </div>
+              <div class="club-memo">
+                <textarea class="memo-area"></textarea>
+                <button type="button" class="memo-btn" id="saveMemoBtn">저장</button>
+              </div>
+            </div>
+          </div>
+        </c:forEach>
+        <!-- 여기까지~~~~~~!!! -->
+      </div>
+    </div>
+  </div>
 </div>
+
 <!-- 모임 등록 모달 -->
 <div id="modal">
 	<div class="group-modal-content">

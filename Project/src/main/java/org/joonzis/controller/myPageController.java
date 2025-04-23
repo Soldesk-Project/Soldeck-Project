@@ -3,6 +3,8 @@ package org.joonzis.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joonzis.domain.GroupVO;
+import org.joonzis.service.GroupService;
 import org.joonzis.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,9 @@ public class myPageController {
 
 	@Autowired
 	private MemberService service;
+	
+	@Autowired
+	private GroupService groupService;
 	
 	@GetMapping("/myInfo")
 	public String myInfo(Model model) {
@@ -62,6 +67,7 @@ public class myPageController {
 	
 	
 	
+	
 	@GetMapping("/bookmark")
 	public String bookmark() {
 		log.info("bookmark...");
@@ -79,8 +85,10 @@ public class myPageController {
 		return "/mypage/review";
 	}
 	@GetMapping("/club")
-	public String club() {
+	public String club(Model model) {
 		log.info("club...");
+		List<GroupVO> groups = groupService.getAllGroups();
+		model.addAttribute("groupList", groups);
 		return "/mypage/club";
 	}
 	@GetMapping("/event")

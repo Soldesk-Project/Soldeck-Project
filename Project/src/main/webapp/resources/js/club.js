@@ -75,10 +75,14 @@ function bookmark(btn){
 }
 
 // 가게 이름 클릭 시 채팅방으로 이동
-let moveChatRoom = document.querySelector(".club-name");
-moveChatRoom.addEventListener('click',e=>{
-	e.preventDefault();
-	location.href="../chat/chat";
+
+document.querySelectorAll(".club-name").forEach(moveChatRoom => {
+	moveChatRoom.addEventListener('click',e=>{
+		e.preventDefault();
+		// 현재 input 기준으로 가장 가까운 div에서 groupNo를 찾기
+		const groupNo = moveChatRoom.closest(".club-list").querySelector("#groupNo").value;
+		location.href="../chat/chatRoom/" + groupNo;
+	});
 })
 
 // 모달 관련 스크립트
@@ -132,6 +136,7 @@ function createClub(){
     .then(response => response.json())
     .then(result => {
       console.log(result);
+      alert('그룹 및 채팅방 생성 성공');
       window.location.href = result.redirect;
     })
     .catch(err => console.log(err));

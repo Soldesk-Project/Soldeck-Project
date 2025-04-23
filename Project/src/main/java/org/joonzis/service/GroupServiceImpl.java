@@ -1,8 +1,9 @@
 package org.joonzis.service;
 
+import java.util.List;
+
 import org.joonzis.domain.ChatRoomVO;
 import org.joonzis.domain.GroupVO;
-import org.joonzis.mapper.ChatRoomMapper;
 import org.joonzis.mapper.GroupMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,23 +14,35 @@ import lombok.extern.log4j.Log4j;
 @Service
 public class GroupServiceImpl implements GroupService {
 
-	@Autowired
-	GroupMapper mapper;
-	
-	@Autowired 
-	ChatRoomMapper chatRoomMapper;
-	
+    @Autowired
+    private GroupMapper mapper;
+
+    @Override
+    public int createGroupAndChatRoom(GroupVO vo) {
+        // 1. 그룹 생성
+        int result = mapper.createGroup(vo);
+        if(result > 0) {
+            log.info("Group created successfully: " + vo);
+            
+            // 2. 그룹 번호가 생성되면, 해당 그룹 번호로 채팅방 생성
+            int groupNo = vo.getGroupNo();  // 그룹 번호를 받아옵니다.
+
+            ChatRoomVO chatRoomVO = new ChatRoomVO();
+            chatRoomVO.setGroupNo(groupNo);
+            result = mapper.createChatRoom(chatRoomVO);
+            
+            if(result > 0) {
+                log.info("Chat room created successfully for group number: " + groupNo);
+            }
+        } else {
+            log.error("Group creation failed: " + vo);
+        }
+        
+        return result;
+    }
+
 	@Override
-	public int createGroup(GroupVO vo) {
-		int result = mapper.createGroup(vo);
-		if(result > 0) {
-			ChatRoomVO chatRoom = new ChatRoomVO();
-			chatRoom.setGroupNo(vo.getGroupNo());
-			chatRoom.setChatTitle(vo.getChatTitle());
-			chatRoomMapper.createChatRoom(chatRoom);
-		}
-		log.info("createGroup..." + vo);
-		return result;
+	public List<GroupVO> getAllGroups() {
+		return mapper.getAllGroups();
 	}
-	
 }
