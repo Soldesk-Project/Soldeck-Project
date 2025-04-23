@@ -3,6 +3,7 @@ package org.joonzis.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joonzis.domain.BookMarkVO;
 import org.joonzis.domain.GroupVO;
 import org.joonzis.service.GroupService;
 import org.joonzis.domain.MemberVO;
@@ -107,15 +108,25 @@ public class myPageController {
 		log.info("bookmark..."+mem_no);
 		
 		
-		List<Integer> rest_no=service.getBookMarkRestNo(mem_no);
+//		List<Integer> rest_no=service.getBookMarkRestNo(mem_no);
+
+		List<BookMarkVO> bookmarkList = service.getBookMark(mem_no);
+		for (BookMarkVO bm : bookmarkList) {
+//		    bm.setRest(rservice.getRestList(bm.getRest_no()));
+		    RestVO rest = rservice.getRest(bm.getRest_no());
+	        bm.setRest(rest);
+		}
+		model.addAttribute("bookmarkList", bookmarkList);
 
 		
-		List<RestVO> restList=new ArrayList<RestVO>();
-		for (int i : rest_no) {
-			restList.add(rservice.getRestList(i));
-		}
-		model.addAttribute("restList", restList);
-		model.addAttribute("bookmark",service.getBookMark(mem_no));
+		
+//		List<RestVO> restList=new ArrayList<RestVO>();
+//		for (int i : rest_no) {
+//			restList.add(rservice.getRestList(i));
+//		}
+//		model.addAttribute("rest", restList);
+//		model.addAttribute("bookmarkList",service.getBookMark(mem_no));
+		log.info("is_public"+service.getBookMark(mem_no));
 		
 		return "/mypage/bookmark";
 	}

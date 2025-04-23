@@ -102,7 +102,7 @@
         r.REST_NO = #{rest_no}
 	</select>
 	
-	<select id="getRestList" resultType="org.joonzis.domain.RestVO">
+	<select id="getRest" resultType="org.joonzis.domain.RestVO">
 		SELECT * FROM RESTAURANT WHERE REST_NO=#{rest_no}
 	</select>
 	

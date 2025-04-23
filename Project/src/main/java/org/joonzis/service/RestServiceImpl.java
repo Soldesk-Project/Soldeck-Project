@@ -58,8 +58,8 @@ public class RestServiceImpl implements RestService{
 	}
 	
 	@Override
-	public RestVO getRestList(int rest_no) {
-		return mapper.getRestList(rest_no);
+	public RestVO getRest(int rest_no) {
+		return mapper.getRest(rest_no);
 	}
 	
 	
