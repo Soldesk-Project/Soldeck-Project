@@ -105,10 +105,12 @@ fieldset{
 	margin: 0;
 }
 .btn-div{
-	width: 100%;
+	margin: auto;
+	width: 50%;
 	display: flex;
     justify-content: center; /* 수평 중앙 정렬 */
     align-items: center; 
+    margin-bottom: 20px;
 }
 .modify-btn{
 	background-color: #FF7D00;
@@ -119,7 +121,47 @@ fieldset{
 	cursor: pointer;
 	width: 100px;
 	height: 40px;
+	margin: auto;
 }
+.remove-btn{
+	background-color: #e53935;
+	color: white;
+	padding: 10px 15px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	width: 100px;
+	height: 40px;
+	margin: auto;
+}
+.previewImage{
+	display: none;
+}
+.profile-upload{
+	background-color: #FF7D00;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	width: 70px;
+	float: right;
+    margin: 212px 118px;
+    position: absolute;
+}
+input[readonly] {
+  background-color: #f0f0f0;
+  color: #888;
+  border: 1px solid #ccc;
+}
+.message {
+	color: red;
+	font-size: 0.9em;
+	float: left;
+}
+.phone-error{
+	margin: 55px -493px
+}
+
 /*------------------ 사이드 메뉴 css -------------------------*/
 
 .side{
@@ -156,11 +198,11 @@ fieldset{
 	border-radius: 0 0 15px 15px;
 }
 .side li:hover,
-.side-myinfo.active {
+.side-modifyinfo.active {
     background-color: #FF7D00;
     font-weight: bold;
 }
 .side a:hover,
-.side-myinfo.active a {
+.side-modifyinfo.active a {
     color: white !important;
 }

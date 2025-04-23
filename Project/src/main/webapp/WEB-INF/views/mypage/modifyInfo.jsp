@@ -16,7 +16,7 @@
   		<jsp:include page="../layout/sideMenu.jsp"/>
 	</div>
 	<div class="main-menu">
-      <form method="POST">
+      <form method="POST" id="modifyInfoForm" enctype="multipart/form-data">
 
         <div class="info">
           <div class="info-title">
@@ -25,8 +25,10 @@
           <div class="info-content">
             <input type="text" class="info-name" name="name" value="${member.mem_name}" readonly="readonly">
 			<div class="info-profile-div">
-	            <img class="info-profile" src="${member.mem_img}" alt="유저 프로필" onerror="this.src='/resources/images/profile.png'">
-			</div>            
+	            <img class="info-profile" id="profileImage" src="${member.mem_img}" alt="유저 프로필" onerror="this.src='/resources/images/profile.png'">
+	            <input type="file" id="profileImageInput" class="previewImage" accept="image/*">
+			</div>       
+            <button type="button" class="profile-upload" id="profileUploadBtn">업로드</button>
           </div>
       
           <div class="info-title">
@@ -56,37 +58,43 @@
             <b>아이디</b>	
           </div>
           <div class="info-content">
-            <input type="text" class="info-rest" name="id" value="${member.mem_id}">
+            <input type="text" class="info-rest" id="id" name="id" value="${member.mem_id}" readonly="readonly">
           </div>
       
           <div class="info-title">
             <b>비밀번호</b>	
           </div>
           <div class="info-content">
-            <input type="password" class="info-rest" name="pw" value="${member.mem_pw}">
+            <input type="password" class="info-rest" id="password" name="mem_pw" value="${member.mem_pw}">
+            <div id="passwordErrorMessage" class="message error"></div>
           </div>
       
           <div class="info-title">
             <b>별명</b>	
           </div>
           <div class="info-content">
-            <input type="text" class="info-rest" name="nickName" value="${member.mem_nick}">
+            <input type="text" class="info-rest" id="nickName" name="mem_nick" value="${member.mem_nick}">
+            <div id="nicknameCheckMessage" class="message error"></div>
           </div>
       
           <div class="info-title">
             <b>이메일</b>	
           </div>
           <div class="info-content">
-            <input type="text" class="info-rest" name="email" value="${member.mem_email}">
+            <input type="text" class="info-rest" id="email" name="mem_email" value="${member.mem_email}">
+            <div id="emailCheckMessage" class="message error"></div>
           </div>
       
           <div class="info-title">
             <b>연락처</b>	
           </div>
           <div class="info-content">
-            <input type="text" class="info-phone" name="phoneNumber" value="${fn:substring(member.mem_phone, 0, 3)}"><span>-</span>
-            <input type="text" class="info-phone" name="phoneNumber" value="${fn:substring(member.mem_phone, 3, 7)}"><span>-</span>
-            <input type="text" class="info-phone" name="phoneNumber" value="${fn:substring(member.mem_phone, 7, 11)}">
+	          <div>
+	            <input type="text" class="info-phone" id="phone1" name="phoneNumber" value="0${fn:substring(member.mem_phone, 0, 2)}"><span>-</span>
+	            <input type="text" class="info-phone" id="phone2" name="phoneNumber" value="${fn:substring(member.mem_phone, 2, 6)}"><span>-</span>
+	            <input type="text" class="info-phone" id="phone3" name="phoneNumber" value="${fn:substring(member.mem_phone, 6, 10)}">
+	          </div>
+              <div id="phoneErrorMessage" class="message error phone-error"></div>
           </div>
           
           <div class="info-title">
@@ -94,16 +102,23 @@
           </div>
           <div class="info-content">
             <fieldset>
-              <input type="checkbox" class="foods" name="food" value="한식"  <c:if test="${fn:contains(foodList, '한식')}">checked</c:if>>한식
-              <input type="checkbox" class="foods" name="food" value="중식" <c:if test="${fn:contains(foodList, '중식')}">checked</c:if>>중식
-              <input type="checkbox" class="foods" name="food" value="일식" <c:if test="${fn:contains(foodList, '일식')}">checked</c:if>>일식
-              <input type="checkbox" class="foods" name="food" value="양식" <c:if test="${fn:contains(foodList, '양식')}">checked</c:if>>양식
-              <input type="checkbox" class="foods" name="food" value="베트남음식" <c:if test="${fn:contains(foodList, '베트남음식')}">checked</c:if>>베트남음식
+              <input type="checkbox" class="foods" id="korean" name="food" value="1"  <c:if test="${fn:contains(foodList, '한식')}">checked</c:if>>
+              <label for="korean">한식</label>
+              <input type="checkbox" class="foods" id="japanese" name="food" value="2" <c:if test="${fn:contains(foodList, '중식')}">checked</c:if>>
+              <label for="japanese">일식</label>
+              <input type="checkbox" class="foods" id="chinese" name="food" value="3" <c:if test="${fn:contains(foodList, '일식')}">checked</c:if>>
+              <label for="chinese">중식</label>
+              <input type="checkbox" class="foods" id="western" name="food" value="4" <c:if test="${fn:contains(foodList, '양식')}">checked</c:if>>
+              <label for="western">양식</label>
+              <input type="checkbox" class="foods" id="viet" name="food" value="5" <c:if test="${fn:contains(foodList, '베트남음식')}">checked</c:if>>
+              <label for="viet">베트남요리</label>
             </fieldset>
-            <p class="food-error-message" style="color: red;"></p>
+            <div id="interestErrorMessage" class="message error"></div>
           </div>
+          <input type="hidden" name="mem_no" value="${member.mem_no}">
           <div class="btn-div">
             <button type="button" class="modify-btn" id="modifyBtn">수정 완료</button>
+            <button type="button" class="remove-btn" id="removeBtn">회원 탈퇴</button>
           </div>
         </div>
       </form>
@@ -111,6 +126,6 @@
   </div>
   
 	<jsp:include page="../layout/footer.jsp"/>
-<script type="text/javascript" src="/resources/js/myInfo.js"></script>
+<script type="text/javascript" src="/resources/js/modifyInfo.js"></script>
 </body>
 </html>

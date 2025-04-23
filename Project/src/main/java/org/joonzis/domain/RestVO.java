@@ -1,4 +1,4 @@
-package org.joonzis.domain;
+	package org.joonzis.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
