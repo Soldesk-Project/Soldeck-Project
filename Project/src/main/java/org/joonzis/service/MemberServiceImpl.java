@@ -50,7 +50,11 @@ public class MemberServiceImpl implements MemberService{
 	public int[] getFoodKateInfo(int mem_no) {
 		return mapper.getFoodKateInfo(mem_no);
 	}
+
+	@Override
+	public boolean isIdAvailable(String mem_id) {
+		return mapper.countById(mem_id) == 0;
+	}
 	
 	
-    
 }

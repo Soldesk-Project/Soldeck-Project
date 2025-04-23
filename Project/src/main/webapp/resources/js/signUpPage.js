@@ -95,15 +95,51 @@ document.addEventListener('DOMContentLoaded', function() {
             return true;
         }
     }
-
+    
+    let isIdChecked = false;
+    
     function validateId() {
         const idValue = idInput.value.trim();
         if (!regId.test(idValue)) {
             idCheckMessage.textContent = '아이디는 8~16자의 영문 소문자와 숫자로만 입력해주세요.';
+            isIdChecked = false; // 유효성 검사 실패 시 중복 확인 안됨으로 설정
             return false;
         } else {
-            idCheckMessage.textContent = '';
-            return true;
+            idCheckMessage.textContent = '아이디 중복 확인 중...';
+            isIdChecked = false; // 다시 입력했으므로 중복 확인 필요
+
+            // 서버에 ID 중복 확인 요청 (AJAX)
+            fetch('/login/checkId', { // 서버의 ID 중복 확인 API 엔드포인트
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `id=${idValue}`
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('ID 중복 확인 실패');
+                }
+                return response.text();
+            })
+            .then(data => {
+                if (data === 'available') {
+                    idCheckMessage.textContent = '사용 가능한 아이디입니다.';
+                    isIdChecked = true;
+                } else if (data === 'unavailable') {
+                    idCheckMessage.textContent = '이미 사용 중인 아이디입니다.';
+                    isIdChecked = false;
+                } else {
+                    idCheckMessage.textContent = 'ID 중복 확인 오류';
+                    isIdChecked = false;
+                }
+            })
+            .catch(error => {
+                console.error('ID 중복 확인 에러:', error);
+                idCheckMessage.textContent = 'ID 중복 확인에 실패했습니다.';
+                isIdChecked = false;
+            });
+            return true; // 유효성 형식은 통과했음을 일단 반환
         }
     }
 
@@ -205,7 +241,7 @@ document.addEventListener('DOMContentLoaded', function() {
     phone2Input.addEventListener('input', validatePhone);
     phone3Input.addEventListener('input', validatePhone);
     interestCheckboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', limitInterestSelection);
+    	checkbox.addEventListener('change', limitInterestSelection);
     });
 
     // 폼 제출 이벤트 리스너 (AJAX 방식 - multipart/form-data)
@@ -216,7 +252,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const isNameValid = validateName();
             const isBirthDateValid = validateBirthDate();       
             const isGenderValid = validateGender();
-            const isIdValid = validateId();
+            const isIdFormatValid = validateId();
             const isPasswordValid = validatePassword();
             const isNicknameValid = validateNickname();
             const isEmailValid = validateEmail();
@@ -241,10 +277,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             if (!isNameValid || !isBirthDateValid || !isGenderValid ||
-                !isIdValid || !isPasswordValid || !isNicknameValid ||
-                !isEmailValid || !isPhoneValid || !isInterestValid) {
-                return; // 유효성 검사 실패 시 제출 중단 (에러 메시지는 이미 표시됨)
-            }
+                    !isIdFormatValid || !isPasswordValid || !isNicknameValid ||
+                    !isEmailValid || !isPhoneValid || !isInterestValid || !isIdChecked) {
+                    if (!isIdChecked && regId.test(idInput.value.trim())) {
+                        alert('아이디 중복 확인을 해주세요.');
+                    }
+                    return; // 유효성 검사 실패 또는 ID 중복 확인 안됨 시 제출 중단
+                }
 
             const formData = new FormData(registrationForm);
 
@@ -271,8 +310,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 window.location.href = '/login/loginPage'; // 성공 후 리다이렉트
             })
             .catch(error => {
-                console.error('회원가입 실패:', error.message);
-                alert(error.message); // 사용자에게 오류 알림 (선택 사항)
+                console.error(error.message);
+                alert('회원가입 실패:'); // 사용자에게 오류 알림 (선택 사항)
             });
         });
     }

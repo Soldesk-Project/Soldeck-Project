@@ -13,6 +13,8 @@ public interface MemberService {
     //mypage
     public MemberVO getMemberInfo(int mem_no);
     public int[] getFoodKateInfo(int mem_no);
+
+	boolean isIdAvailable(String mem_id);
     
-    
+	
 }

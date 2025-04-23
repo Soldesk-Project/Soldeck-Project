@@ -82,6 +82,18 @@ public class LoginController {
         return "login/signUpPage";
     }
 
+    // ID 중복 확인 요청 처리
+    @PostMapping("/checkId")
+    @ResponseBody
+    public String checkId(@RequestParam("id") String mem_id) {
+        boolean isIdAvailable = memberservice.isIdAvailable(mem_id);
+        if (isIdAvailable) {
+            return "available";
+        } else {
+            return "unavailable";
+        }
+    }
+    
     @PostMapping("/signUpProcess")
     @ResponseBody
     public String signUpProcess(

@@ -24,5 +24,7 @@ public interface MemberMapper {
 	
 	public MemberVO getMemberInfo(@Param("mem_no") int mem_no);
 	public int[] getFoodKateInfo(@Param("mem_no") int mem_no);
+
+	int countById(String mem_id);
 	
 }

@@ -4,7 +4,7 @@
 
 <insert id="insertMember">
     INSERT INTO MEMBER (MEM_NO, MEM_ID, MEM_PW, MEM_NAME, MEM_NICK, MEM_BIRTH, MEM_DATE, MEM_IMG, MEM_EMAIL, MEM_PHONE)
-    VALUES (member_seq.NEXTVAL, #{mem_id}, #{mem_pw}, #{mem_name}, #{mem_nick}, #{mem_birth}, SYSDATE, #{mem_img}, #{mem_email}, #{mem_phone})
+    VALUES (member_seq.NEXTVAL, #{mem_id}, #{mem_pw}, #{mem_name}, #{mem_nick}, #{mem_birth}, SYSDATE, #{mem_img, jdbcType=VARCHAR}, #{mem_email}, #{mem_phone})
 </insert>
 
     <select id="selectMemNoById" resultType="java.lang.Integer">
@@ -36,4 +36,10 @@
 	<select id="getFoodKateInfo" resultType="int">
 		SELECT FOOD_NO FROM FOOD_KATE WHERE mem_no=#{mem_no}
 	</select>
+	
+	<select id="countById" parameterType="string" resultType="int">
+        SELECT COUNT(*)
+        FROM member
+        WHERE mem_id = #{mem_id}
+    </select>
 </mapper>
