@@ -100,8 +100,8 @@
               <input type="checkbox" class="foods" name="food" value="양식" <c:if test="${fn:contains(foodList, '양식')}">checked</c:if>>양식
               <input type="checkbox" class="foods" name="food" value="베트남음식" <c:if test="${fn:contains(foodList, '베트남음식')}">checked</c:if>>베트남음식
             </fieldset>
+            <p class="food-error-message" style="color: red;"></p>
           </div>
-          <input type="hidden" value="${member.mem_no}">
           <div class="btn-div">
             <button type="button" class="modify-btn" id="modifyBtn">수정 완료</button>
           </div>

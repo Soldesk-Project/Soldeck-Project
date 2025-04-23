@@ -49,7 +49,7 @@ closeModal.onclick = function() {
 
 // 모달창 바깥 클릭 시 닫기
 window.onclick = function(event) {
-		if (event.target == modal) {
+		if (event.target == head_modal) {
 				head_modal.style.display = "none";
 		}
 }

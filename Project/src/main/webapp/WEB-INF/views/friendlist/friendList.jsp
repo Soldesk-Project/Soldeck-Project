@@ -4,8 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>	
-<link rel="stylesheet" href="../resources/css/friendList.css">
+<title>Insert title here</title>
+	<link rel="stylesheet" href="../resources/css/header.css">	
+	<link rel="stylesheet" href="../resources/css/friendList.css">
+	<link rel="stylesheet" href="../resources/css/footer.css">
 </head>
 <body style="overflow-y: scroll;">
 	<jsp:include page="../layout/header.jsp"/> 

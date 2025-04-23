@@ -6,7 +6,7 @@
     flex-direction: column;
     align-items: center;
     width: 1200px;
-    height : 1000px;
+    /*height : 1000px;*/
 	margin: 30px auto;
 } 
 .chat-pick {
@@ -18,14 +18,15 @@
     height: 200px;
 }
 .friendList{
-	height: auto;
+    width: 100%;
+    margin-top: 20px;
 }
 .firend_layout{
 	width: 100%;
     margin: 5px 0px;
     display: flex;
     flex-direction: column;
-    height: 600px;
+    /*height: 600px;*/
 }
 .friend_box{
 	height: 100px;
@@ -58,32 +59,39 @@ h1,h2,h3,h4,h5,h6{
     align-items: center;
     border: 1px solid black; /*임시 레이아웃*/
     border-radius: 10px;
+     margin-bottom: 20px;
+    padding-bottom: 10px;
+    box-sizing: border-box;
 }
 .friendLayout{
 	margin-top: 10px;
+	width: 95%
 }
 .pickLayout,
 .friendLayout {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
-    gap: 0px;
+    gap: 10px;
 }
 #proFile_img,
 #chat_image,
 #f_proFile_img {
 	width: 80px;
 	height: 80px;
+	border-radius: 50%;
+	object-fit: cover;
 }
 .profile_nick,
 .chat_title{
 	width: 120px;
-	height: 20px;
+	height: auto;
 }
 .profile_image{
 	text-decoration: none;
 	overflow: hidden;
+	border-radius: 50%;
 }
 /* miniProfile 가운데 정렬 */
 .miniProfile {
@@ -93,11 +101,17 @@ h1,h2,h3,h4,h5,h6{
 }
 
 .friend_info {
-	width : 95%;
+	width : 100%;
     display: flex;
     align-items: center;
     gap: 15px;
     justify-content: flex-start;
+    padding: 10px 0;
+    box-sizing: border-box;
+    border-bottom: 1px solid #eee;
+}
+.friend_info:last-child {
+    border-bottom: none;
 }
 .pro_image{
 	margin: 0;

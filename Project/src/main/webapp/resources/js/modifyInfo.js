@@ -25,13 +25,12 @@ document.querySelectorAll('button').forEach(btn => {
     let mem_no=f.mno.value
 
     if(type == 'modifyBtn'){
-    	modify();
+      modify();
     }
-//    location.href='/mypage/modifyInfo?mem_no='+mem_no;
+    //location.href='/mypage/modifyInfo?mem_no='+mem_no;
   });
 });
 
 function modify() {
-	//회원가입 검증 코드 가져오기
+  //회원가입 검증 코드 가져오기
 }
-
