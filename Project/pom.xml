@@ -220,6 +220,22 @@
 		    <artifactId>spring-security-core</artifactId>
 		    <version>5.0.6.RELEASE</version>
 		</dependency>
+		<!-- 웹소켓 관련 의존성 -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-websocket</artifactId>
+		    <version>5.0.7.RELEASE</version> <!-- 사용하는 Spring 버전에 맞게 조절 -->
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-messaging</artifactId>
+		    <version>5.0.7.RELEASE</version>
+		</dependency>
+		 <dependency>
+	        <groupId>javax.websocket</groupId>
+	        <artifactId>javax.websocket-api</artifactId>
+	        <version>1.1</version>
+	    </dependency>
 	</dependencies>
     <build>
         <plugins>

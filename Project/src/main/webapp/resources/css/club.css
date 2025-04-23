@@ -215,7 +215,7 @@ textarea{
   z-index: 1000;
 }
 
-.modal-content {
+.group-modal-content {
   background-color: white;
   margin: 10% auto;
   padding: 20px;

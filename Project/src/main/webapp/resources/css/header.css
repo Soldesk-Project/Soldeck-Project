@@ -71,9 +71,62 @@ input[type="search"]::-webkit-search-cancel-button {
   background-color: rgba(0, 0, 0, 0.8);
 }
 .modal-content {
-  margin: auto;
-  display: block;
-  max-width: 80%;
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 200px;
+    text-align: center;
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.profile-icon {
+    width: 40px;
+    height: 40px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+}
+
+.nickname {
+    flex-grow: 1;
+    text-align: left;
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.close {
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.modal-menu {
+    list-style: none;
+    padding: 0;
+}
+
+.modal-menu li {
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
+}
+
+.modal-menu li:last-child {
+    border-bottom: 1px solid #ddd;
+}
+
+.modal-menu li a {
+    text-decoration: none;
+    color: black;
+    display: block;
+}
+
+.modal-menu li a:hover {
+    background-color: #f0f0f0;
 }
 #caption {
   margin: auto;

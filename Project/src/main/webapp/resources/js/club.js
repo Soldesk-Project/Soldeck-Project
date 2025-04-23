@@ -74,6 +74,13 @@ function bookmark(btn){
   }
 }
 
+// 가게 이름 클릭 시 채팅방으로 이동
+let moveChatRoom = document.querySelector(".club-name");
+moveChatRoom.addEventListener('click',e=>{
+	e.preventDefault();
+	location.href="../chat/chat";
+})
+
 // 모달 관련 스크립트
 const modal = document.querySelector('#modal');
 const clubTilte = document.querySelector("input[name='club-title']");

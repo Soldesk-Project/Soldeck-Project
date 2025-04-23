@@ -12,7 +12,6 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-	
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
       <!-- Old Driver -->
       <!-- 
@@ -44,4 +43,8 @@
 		
 	<mybatis-spring:scan base-package="org.joonzis.mapper"/>
 	<context:component-scan base-package="org.joonzis.service"/>
+	
+	<!-- WebSocket을 위한 ServerEndpointExporter 빈 등록 -->
+	<context:component-scan base-package="org.joonzis.websoket" />
+    <bean class="org.springframework.web.socket.server.standard.ServerEndpointExporter"/>
 </beans>

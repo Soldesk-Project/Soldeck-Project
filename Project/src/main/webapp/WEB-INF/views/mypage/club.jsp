@@ -126,7 +126,7 @@
 </div>
 <!-- 모임 등록 모달 -->
 <div id="modal">
-	<div class="modal-content">
+	<div class="group-modal-content">
 		<div class="modal-title">
 			<a>새 모임방 등록</a>
 		</div>
