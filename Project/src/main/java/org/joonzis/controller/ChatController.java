@@ -3,7 +3,10 @@ package org.joonzis.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.joonzis.domain.GroupVO;
+import org.joonzis.domain.MemberVO;
 import org.joonzis.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,7 +26,7 @@ public class ChatController {
 	GroupService service;
 	
 	@GetMapping("/chatRoom/{groupNo}")
-	public String goChatRoom(@PathVariable("groupNo") int groupNo, Model model) {
+	public String goChatRoom(@PathVariable("groupNo") int groupNo, HttpSession session, Model model) {
 		List<GroupVO> groups = service.getAllGroups();
 		
 		 // groupNo가 존재하는지 체크
@@ -32,8 +35,16 @@ public class ChatController {
 	    if (!exists) {
 	        return "redirect:/error/404";  // 존재하지 않으면 404로
 	    }
-	    // 임시로 사용자 ID 설정
-	    String currentUser = "testUser"; // 로그인 후 사용자 정보로 대체
+	    // 로그인한 사용자 정보 가져오기
+	    MemberVO loginUser = (MemberVO) session.getAttribute("loggedInUser");
+	    
+	    // 로그인한 사용자가 없으면 로그인 페이지로 리다이렉트
+	    if (loginUser == null) {
+	        return "redirect:/login/loginPage";
+	    }
+
+	    // 로그인한 사용자 ID를 currentUser로 설정
+	    String currentUser = loginUser.getMem_id();
 	    model.addAttribute("currentUser", currentUser);
 
 		model.addAttribute("groupNo", groupNo);

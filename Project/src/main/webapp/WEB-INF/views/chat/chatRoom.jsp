@@ -59,7 +59,14 @@
 
   <script>
     // 웹소켓 연결
-    var ws = new WebSocket("wss://4e46-14-52-79-21.ngrok-free.app/chat");
+    // 현재 페이지 URL에서 그룹 번호 파싱
+	const pathParts = window.location.pathname.split('/');
+	const groupNo = pathParts[pathParts.length - 1]; // '21' 추출
+	console.log(groupNo);
+
+	const ws = new WebSocket("wss://3f41-14-52-79-21.ngrok-free.app/chat/" + groupNo);
+	console.log(ws);
+
 
     ws.onopen = function() {
       document.body.insertAdjacentHTML("beforeend", "<div>웹소켓 연결 성공!</div>");
