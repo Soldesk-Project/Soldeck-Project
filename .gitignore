@@ -89,3 +89,6 @@ build/
 /*.iml
 
 ###
+
+# .gitignore
+src/main/resources/application.properties
