@@ -1,99 +1,208 @@
-// 업로드 관련 변수
-const fileInput = document.querySelector('#imageUpload');
-const imageRegex = new RegExp("(.*?)\.(jpg|jpeg|png|gif)$", "i"); // 이미지 파일만 허용
-const MAX_SIZE = 5242880; // 5MB
+(function () {
+    // 업로드 관련 변수
+    const fileInput = document.querySelector('#imageUpload');
+    const uploadResult = document.querySelector('.uploadResult ul');
+    const sliderContainer = document.querySelector('.uploadResult .slider-container');
+    const imageRegex = new RegExp("(.*?)\.(jpg|jpeg|png|gif)$", "i"); // 이미지 파일만 허용
+    const MAX_SIZE = 5242880; // 5MB
+    
+    // 슬라이더 관련 변수
+    let currentIndex = 0;
+    const imagesPerPage = 6;
 
-// 파일 입력 이벤트 리스너
-fileInput.addEventListener('change', () => {
-    const files = fileInput.files;
-    const formData = new FormData();
+    // 파일 입력 이벤트 리스너
+    fileInput.addEventListener('change', () => {
+        const files = fileInput.files;
+        const formData = new FormData();
 
-    // 파일 유효성 검사 및 FormData에 추가
-    for (let i = 0; i < files.length; i++) {
-        if (!checkExtension(files[i].name, files[i].size)) {
+        for (let i = 0; i < files.length; i++) {
+            if (!checkExtension(files[i].name, files[i].size)) {
+                return napraw;
+            }
+            formData.append("uploadFile", files[i]);
+        }
+
+        fetch('/uploadAsyncAction', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            showUploadedFile(data);
+            console.log("Uploaded files:", data);
+            fileInput.value = '';
+            updateArrows(); // 화살표만 업데이트
+        })
+        .catch(err => {
+            console.error("Upload error:", err);
+            alert("파일 업로드에 실패했습니다.");
+        });
+    });
+
+    // 파일 확장자와 크기 검사
+    function checkExtension(fileName, fileSize) {
+        if (fileSize >= MAX_SIZE) {
+            alert("파일 사이즈 초과 (최대 5MB)");
             return false;
         }
-        formData.append("uploadFile", files[i]);
+        if (!imageRegex.test(fileName)) {
+            alert("이미지 파일(jpg, jpeg, png, gif)만 업로드 가능합니다.");
+            return false;
+        }
+        return true;
     }
 
-    // 서버로 파일 업로드
-    fetch(`/uploadAsyncAction`, {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+ // 업로드된 파일 표시 (너비 조정 포함)
+ // 업로드된 파일 표시
+    function showUploadedFile(uploadResultArr) {
+        if (!uploadResultArr || uploadResultArr.length === 0) {
+            console.warn("업로드된 파일 데이터가 없습니다.");
+            return;
         }
-        return response.json();
-    })
-    .then(data => {
-    	showUploadedFile(data);
-        console.log("Uploaded files:", data);
-        fileInput.value = ''; // 파일 입력 초기화
-        // 코멘트 업로드 후 목록 갱신 (view.js와 통합)
-        if (typeof fetchComments === 'function') {
-            fetchComments();
+
+        window.uploadedFiles = window.uploadedFiles || [];
+        window.uploadedFiles.push(...uploadResultArr);
+        console.log("After adding to window.uploadedFiles:", window.uploadedFiles); // 디버깅 로그
+
+        let str = '';
+        uploadResultArr.forEach(file => {
+            const fileName = file.att_uuid + '_' + file.att_name;
+            const imageUrl = file.att_path + '/' + encodeURIComponent(fileName);
+            console.log("Image URL:", imageUrl);
+
+            str += `<li>`;
+            str += `<div class="image-container">`;
+            str += `<img src="${imageUrl}" alt="${file.att_name}" class="uploaded-image">`;
+            str += `<div class="image-info">`;
+            str += `<a href="${imageUrl}" target="_blank">${file.att_name}</a>`;
+            str += `<span class="delete-btn" data-file="${imageUrl}"> X </span>`;
+            str += `</div>`;
+            str += `</div>`;
+            str += `</li>`;
+        });
+
+        uploadResult.innerHTML += str;
+        updateArrows();
+    }
+   /* function showUploadedFile(uploadResultArr) {
+        if (!uploadResultArr || uploadResultArr.length === 0) {
+            return;
         }
-    })
-    .catch(err => {
-        console.error("Upload error:", err);
-        alert("파일 업로드에 실패했습니다.");
+
+        let str = '';
+
+        uploadResultArr.forEach(file => {
+            const fileName = file.att_uuid + '_' + file.att_name;
+            const imageUrl = file.att_path + '/' + encodeURIComponent(fileName);
+            console.log("Image URL:", imageUrl);
+
+            str += `<li>`;
+            str += `<div class="image-container">`;
+            str += `<img src="${imageUrl}" alt="${file.att_name}" class="uploaded-image">`;
+            str += `<div class="image-info">`;
+            str += `<a href="${imageUrl}" target="_blank">${file.att_name}</a>`;
+            str += `<span class="delete-btn" data-file="${imageUrl}"> X </span>`;
+            str += `</div>`;
+            str += `</div>`;
+            str += `</li>`;
+        });
+
+        uploadResult.innerHTML += str; // 기존 이미지에 추가
+
+        // ul의 너비를 이미지 개수에 맞게 동적으로 설정
+        const totalImages = uploadResult.children.length;
+        uploadResult.style.width = `${totalImages * (100 / imagesPerPage)}%`;
+    }*/
+
+    // 슬라이더 이동 함수
+    function moveSlider(direction) {
+        const totalImages = uploadResult.children.length;
+        const maxIndex = Math.max(0, totalImages - imagesPerPage);
+
+        if (direction === 'left') {
+            currentIndex = Math.max(0, currentIndex - imagesPerPage);
+        } else if (direction === 'right') {
+            currentIndex = Math.min(maxIndex, currentIndex + imagesPerPage);
+        }
+
+        // 한 줄(6개) 기준으로 이동
+        const translateX = -(currentIndex * (100 / imagesPerPage));
+        sliderContainer.style.transform = `translateX(${translateX}%)`;
+
+        updateArrows();
+    }
+
+ // 화살표 상태 업데이트
+    function updateArrows() {
+        const totalImages = uploadResult.children.length;
+        const leftArrow = document.querySelector('.arrow.left');
+        const rightArrow = document.querySelector('.arrow.right');
+
+        // 이미지 개수가 6개 이하일 경우 화살표 숨김
+        if (totalImages <= imagesPerPage) {
+            leftArrow.classList.remove('visible');
+            rightArrow.classList.remove('visible');
+        } else {
+            // 이미지 개수가 6개 초과일 경우 화살표 표시
+            leftArrow.classList.add('visible');
+            rightArrow.classList.add('visible');
+
+            // 왼쪽 화살표 비활성화: 첫 페이지일 때
+            if (currentIndex === 0) {
+                leftArrow.classList.add('disabled');
+            } else {
+                leftArrow.classList.remove('disabled');
+            }
+
+            // 오른쪽 화살표 비활성화: 마지막 페이지일 때
+            if (currentIndex >= totalImages - imagesPerPage) {
+                rightArrow.classList.add('disabled');
+            } else {
+                rightArrow.classList.remove('disabled');
+            }
+        }
+    }
+
+ // 삭제 버튼 이벤트 리스너
+    uploadResult.addEventListener('click', function(e) {
+        if (e.target.className === 'delete-btn') {
+            const targetFile = e.target.getAttribute('data-file');
+
+            fetch('/deleteFile', {
+                method: 'POST',
+                body: targetFile,
+                headers: {
+                    'Content-Type': 'text/plain'
+                }
+            })
+            .then(response => response.text())
+            .then(result => {
+                console.log("Delete result:", result);
+                // 해당 요소 삭제
+                const targetLi = e.target.closest('li');
+                targetLi.remove();
+                // 코멘트 목록 갱신 (view.js와 통합)
+                if (typeof fetchComments === 'function') {
+                    fetchComments();
+                }
+                // 슬라이더 위치 조정
+                const totalImages = uploadResult.children.length;
+                if (currentIndex > totalImages - imagesPerPage) {
+                    currentIndex = Math.max(0, totalImages - imagesPerPage);
+                    const translateX = -(currentIndex * (100 / imagesPerPage));
+                    sliderContainer.style.transform = `translateX(${translateX}%)`;
+                }
+                updateArrows();
+            })
+            .catch(err => console.error("Delete error:", err));
+        }
     });
-});
 
-// 파일 확장자와 크기 검사
-function checkExtension(fileName, fileSize) {
-    if (fileSize >= MAX_SIZE) {
-        alert("파일 사이즈 초과 (최대 5MB)");
-        return false;
-    }
-    if (!imageRegex.test(fileName)) {
-        alert("이미지 파일(jpg, jpeg, png, gif)만 업로드 가능합니다.");
-        return false;
-    }
-    return true;
-}
-
-let fileCallPath
-let uploadResult = document.querySelector('.uploadResult ul');
-function showUploadedFile(uploadResultArr){
-	if(!uploadResultArr || uploadResultArr.length==0){
-		return;
-	}
-	let str = '';
-	uploadResultArr.forEach(file => {
-		fileCallPath = encodeURIComponent
-		(file.att_path + "/" + file.att_uuid + "_" + file.att_name);
-		str += `<li path="${file.att_path}" uuid="${file.att_uuid}" fileName="${file.att_name}">`;
-		str += `<a>${file.att_name}</a>`;
-		str += `<span data-file=${fileCallPath}> X </span>`;
-		str += `</li>`;
-	});
-	uploadResult.innerHTML = str;
-}
-
-uploadResult.addEventListener('click', function(e){
-	if(e.target.tagName === 'SPAN'){
-		let targetFile = e.target.getAttribute('data-file');
-		
-		fetch(`/deleteFile`, 
-				{
-					method : 'post',
-					body : targetFile,
-					headers : {
-						'Content-Type' : 'text/plain'
-					}
-		
-				})
-			.then(response => response.text())
-			.then(result => {
-				console.log(result);
-				
-				// 해당 코드 삭제
-				let targetLi = e.target.closest('li');
-				targetLi.remove();
-			})
-			.catch(err => console.log(err));
-	};
-});
+    // 전역 스코프에 `moveSlider` 함수 노출
+    window.moveSlider = moveSlider;
+})();

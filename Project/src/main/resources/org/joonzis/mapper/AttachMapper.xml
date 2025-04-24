@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.joonzis.mapper.AttachMapper">
+	<insert id="insert" parameterType="org.joonzis.domain.AttachVO">
+		INSERT INTO ATTACH VALUES(#{att_uuid}, #{com_no}, #{att_path}, #{att_name})
+	</insert>
+	
+	<delete id="delete" parameterType="String">
+		DELETE FROM ATTACH WHERE ATT_UUID = #{att_uuid} 
+	</delete>
+	
+	<select id="findByCom_no" parameterType="int" resultType="org.joonzis.domain.AttachVO">
+		SELECT * FROM ATTACH WHERE COM_NO = #{com_no}-1
+	</select>
+</mapper>

@@ -214,29 +214,74 @@ th, td{
 }
 /* uploadResult 스타일링 */
 .uploadResult {
+    position: relative;
     width: 100%;
-    margin-top: 10px; /* 입력 섹션과의 간격 */
+    overflow: hidden;
 }
-
+.uploadResult .slider-container {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
+}
 .uploadResult ul {
-    display: flex; /* 가로로 배치 */
-    flex-direction: row;
-    gap: 10px; /* 이미지 간 간격 */
-    padding: 0;
+    display: flex;
     list-style: none;
-    overflow-x: auto; /* 가로 스크롤 가능 */
+    padding: 0;
+    margin: 0;
+    width: 100%; /* 한 페이지 기준 너비 */
 }
-
-/* 업로드된 이미지 스타일링 (필요 시 추가) */
-.uploadResult ul li {
-    flex: 0 0 auto; /* 크기 고정 */
+.uploadResult li {
+    flex: 0 0 calc(100% / 6); /* 항상 1/6의 너비를 가짐 */
+    box-sizing: border-box;
+    padding: 5px;
+    text-align: center;
 }
-
-.uploadResult ul li img {
-    max-height: 100px; /* 이미지 높이 제한 */
-    object-fit: cover;
+.uploadResult .image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-
+.uploadResult .uploaded-image {
+    max-width: 100%;
+    height: 100px;
+}
+.uploadResult .image-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 5px;
+}
+.uploadResult .delete-btn {
+    cursor: pointer;
+    color: red;
+}
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 10px;
+    border-radius: 50%;
+    user-select: none;
+    display: none;
+    z-index: 10;
+}
+.arrow.visible {
+    display: block;
+}
+.arrow.left {
+    left: 0px;
+}
+.arrow.right {
+    right: 0px;
+}
+.arrow.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
 
 /* 댓글 보기 */
 .panel-footer-body{
@@ -250,16 +295,32 @@ th, td{
    margin: 0;
    text-align: left;
 }
-.chat-header {
+.chat-full {
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    .chat-header {
+        display: flex;
+        justify-content: flex-start;
+        gap: 15px;
+        align-items: center;
+    }
+    .header-right {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+/* .chat-header {
     display: flex;
     gap: 15px;
     align-items: center;
-}
-.header-right {
+} */
+/* .header-right {
     display: flex;
     align-items: center;
-    gap: 10px; /* 날짜와 별점 사이 간격 */
-}
+    gap: 10px; 날짜와 별점 사이 간격
+} */
 .pull-right {
     float: none; /* 기존 float 속성 제거 */
     order: 1; /* 날짜가 먼저 오도록 설정 */
@@ -281,13 +342,30 @@ th, td{
 }
 
  /* 이미지 영역 */
-.chat-body {
+ .chat-body {
+        /* margin-top: 10px; */
+    }
+/* .chat-body {
   width: 100%;
   height: 100px;
-  display: flex; /* flex로 가로 배치 */
-  align-items: center; /* 세로 중앙 정렬 */
-  gap: 10px; /* 이미지와 버튼 간 간격 */
-}
+  display: flex; flex로 가로 배치
+  align-items: center; 세로 중앙 정렬
+  gap: 10px; 이미지와 버튼 간 간격
+} */
+.comment-attachments {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        /* margin-top: 10px; */
+    }
+    .comment-image {
+        max-width: 100px;
+        height: auto;
+        border-radius: 5px;
+    }
+    .chat-footer p {
+        margin: 10px;
+    }
 .image-con {
   display: flex;
   flex: 1; /* 남은 공간을 채우도록 설정 */

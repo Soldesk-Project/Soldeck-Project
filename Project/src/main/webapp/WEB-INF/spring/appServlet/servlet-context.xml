@@ -21,6 +21,12 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	<beans:bean id="propertyConfigurer"
+            class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <beans:property name="location" value="classpath:application.properties" />
+    <beans:property name="fileEncoding" value="UTF-8" />
+</beans:bean>
+	
 	<context:component-scan base-package="org.joonzis.controller" />
 	
 	<context:component-scan base-package="org.joonzis.websoket" />

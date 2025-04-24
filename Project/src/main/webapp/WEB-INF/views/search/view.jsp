@@ -90,9 +90,13 @@
                         <button type="button" class="btn btn-sec" id="commentBtn">댓글 달기</button>
                     </div>
                 </div>
-                    <div class="uploadResult">
-						<ul></ul>
-					</div>
+					<div class="uploadResult">
+				        <div class="slider-container">
+				            <ul></ul>
+				        </div>
+				        <span class="arrow left" onclick="moveSlider('left')">&#10094;</span>
+				        <span class="arrow right" onclick="moveSlider('right')">&#10095;</span>
+				    </div>
              </div>
              <div class="panel-footer-body">
                 <ul class="chat">

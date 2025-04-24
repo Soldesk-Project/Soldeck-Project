@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.joonzis.domain.AttachVO;
 import org.joonzis.domain.CommentVO;
 import org.joonzis.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,19 +38,21 @@ public class CommentController {
     // 코멘트 등록
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, String>> addComment(@RequestBody CommentVO vo) {
-        log.info("addComment request received: " + vo);
-        try {
-            int addCount = service.addComment(vo);
-            log.info("Reply Insert Count: " + addCount);
-            Map<String, String> response = new HashMap<>();
-            response.put("status", addCount == 1 ? "success" : "failure");
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch (Exception e) {
-            log.error("Error adding comment: ", e);
-            Map<String, String> response = new HashMap<>();
-            response.put("status", "error");
-            response.put("message", e.getMessage());
-            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    	log.info("addComment request received: " + vo);
+    	log.info("com_attachList: " + vo.getCom_attachList()); // 디버깅 로그
+    	
+    	try {
+    		int addCount = service.addComment(vo);
+    		log.info("Reply Insert Count: " + addCount);
+    		Map<String, String> response = new HashMap<>();
+    		response.put("status", addCount == 1 ? "success" : "failure");
+    		return new ResponseEntity<>(response, HttpStatus.OK);
+    	} catch (Exception e) {
+    		log.error("Error adding comment: ", e);
+    		Map<String, String> response = new HashMap<>();
+    		response.put("status", "error");
+    		response.put("message", e.getMessage());
+    		return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    	}
     }
 }

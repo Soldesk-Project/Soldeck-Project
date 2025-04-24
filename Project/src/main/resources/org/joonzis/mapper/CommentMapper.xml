@@ -4,16 +4,42 @@
 
 <mapper namespace="org.joonzis.mapper.CommentMapper">
 	<!-- 코멘트 목록 조회 -->
-    <select id="getCommentsByRestNo" parameterType="int" resultType="org.joonzis.domain.CommentVO">
+	<select id="getCommentsByRestNo" parameterType="int" resultMap="commentResultMap">
+	    SELECT c.com_no, c.rest_no, c.mem_no, c.com_con, c.com_rate, c.com_date,
+	           a.att_uuid, a.att_path, a.att_name
+	    FROM "COMMENT" c
+	    LEFT JOIN attach a ON c.com_no = a.com_no+1
+	    WHERE c.rest_no = #{rest_no}
+	    ORDER BY c.com_date DESC
+	</select>
+	
+	<resultMap id="commentResultMap" type="org.joonzis.domain.CommentVO">
+	    <id property="com_no" column="com_no"/>
+	    <result property="rest_no" column="rest_no"/>
+	    <result property="mem_no" column="mem_no"/>
+	    <result property="com_con" column="com_con"/>
+	    <result property="com_rate" column="com_rate"/>
+	    <result property="com_date" column="com_date"/>
+	    <collection property="com_attachList" ofType="org.joonzis.domain.AttachVO">
+	        <result property="att_uuid" column="att_uuid"/>
+	        <result property="att_path" column="att_path"/>
+	        <result property="att_name" column="att_name"/>
+	        <result property="com_no" column="com_no"/>
+	    </collection>
+</resultMap>
+    <!-- <select id="getCommentsByRestNo" parameterType="int" resultType="org.joonzis.domain.CommentVO">
         SELECT COM_NO, MEM_NO, REST_NO, COM_CON, COM_DATE, COM_RATE
         FROM "COMMENT"
         WHERE REST_NO = #{rest_no}
         ORDER BY COM_DATE DESC
-    </select>
+    </select> -->
 
     <!-- 코멘트 등록 -->
     <insert id="addComment" parameterType="org.joonzis.domain.CommentVO">
-        INSERT INTO "COMMENT"
-        VALUES (SEQ_COMM.NEXTVAL, #{mem_no}, #{rest_no}, #{com_con}, SYSDATE, #{com_rate})
-    </insert>
+    <selectKey keyProperty="com_no" resultType="int" order="BEFORE">
+        SELECT SEQ_COMM.NEXTVAL FROM DUAL
+    </selectKey>
+    INSERT INTO "COMMENT" (com_no, mem_no, rest_no, com_con, com_date, com_rate)
+    VALUES (#{com_no}, #{mem_no}, #{rest_no}, #{com_con}, SYSDATE, #{com_rate})
+</insert>
 </mapper>

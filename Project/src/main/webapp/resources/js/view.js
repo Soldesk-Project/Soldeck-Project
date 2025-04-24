@@ -397,6 +397,76 @@ function fetchComments() {
     }
 
     getComments(data => {
+        console.log("Received comments data:", data); // 디버깅 로그
+        if (!data || data.length === 0) {
+            commentList.innerHTML = '<li><div class="chat-full">코멘트가 없습니다.</div></li>';
+            return;
+        }
+
+        const seenComNos = new Set();
+        let msg = '';
+        data.forEach(comment => {
+            if (seenComNos.has(comment.com_no)) {
+                return;
+            }
+            seenComNos.add(comment.com_no);
+
+            const rate = parseInt(comment.com_rate) || 0;
+            let starsHtml = '<div class="comment-rating">';
+            for (let i = 1; i <= 5; i++) {
+                const starClass = i <= rate ? 'star filled' : 'star';
+                starsHtml += `<div class="${starClass}"></div>`;
+            }
+            starsHtml += '</div>';
+
+            // 첨부 파일 처리
+            let attachHtml = '';
+            if (comment.com_attachList && comment.com_attachList.length > 0) {
+                attachHtml = '<div class="comment-attachments">';
+                comment.com_attachList.forEach(attach => {
+                    const fileName = `${attach.att_uuid}_${attach.att_name}`;
+                    const imageUrl = `${attach.att_path}/${encodeURIComponent(fileName)}`;
+                    attachHtml += `
+                        <div class="attachment">
+                            <img src="${imageUrl}" alt="${attach.att_name}" class="comment-image" style="max-width: 100px; margin: 5px;">
+                        </div>
+                    `;
+                });
+                attachHtml += '</div>';
+            }
+
+            msg += `
+                <li data-com_no="${comment.com_no}">
+                    <div class="chat-full">
+                        <div class="chat-header">
+                            <strong>${comment.mem_no}</strong>
+                            <div class="header-right">
+                                <small class="pull-right">${formatDate(comment.com_date)}</small>
+                                ${starsHtml}
+                            </div>
+                        </div>
+                        <div class="chat-body">
+                            ${attachHtml}
+                        </div>
+                        <div class="chat-footer">
+                            <p>${comment.com_con || '내용 없음'}</p>
+                        </div>
+                    </div>
+                </li>
+            `;
+        });
+
+        commentList.innerHTML = msg;
+    });
+}
+/*function fetchComments() {
+    const commentList = document.querySelector(".panel-footer-body ul.chat");
+    if (!commentList) {
+        console.error('코멘트 목록 컨테이너(.panel-footer-body ul.chat)를 찾을 수 없습니다.');
+        return;
+    }
+
+    getComments(data => {
         if (!data || data.length === 0) {
             commentList.innerHTML = '<li><div class="chat-full">코멘트가 없습니다.</div></li>';
             return;
@@ -441,9 +511,31 @@ function fetchComments() {
 
         commentList.innerHTML = msg;
     });
-}
+}*/
 
 function getComments(callback) {
+    fetch(`/comment/pages/${restNo}`, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        callback(data);
+    })
+    .catch(err => {
+        console.error("Fetch comments error:", err.message);
+        callback([]);
+    });
+}
+
+/*function getComments(callback) {
     if (!restNo) {
         console.error("restNo가 정의되지 않았습니다.");
         callback([]);
@@ -471,10 +563,22 @@ function getComments(callback) {
         console.error("Fetch error:", err.message);
         callback([]);
     });
+}*/
+function formatDate(dateStr) {
+    const date = new Date(dateStr);
+    return date.toLocaleString('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+    });
 }
 
-// 코멘트 등록
+//코멘트 등록
 function uploadComment() {
+    console.log("Before uploadComment, window.uploadedFiles:", window.uploadedFiles); // 디버깅 로그
     const commentInput = document.querySelector("#comment");
     if (!commentInput) {
         console.error("코멘트 입력 필드(#comment)를 찾을 수 없습니다.");
@@ -493,11 +597,73 @@ function uploadComment() {
         return;
     }
 
+    const attachList = (window.uploadedFiles || []).map(file => ({
+        att_uuid: file.att_uuid,
+        att_path: file.att_path,
+        att_name: file.att_name
+    }));
+    console.log("com_attachList:", attachList);
+
     const commentData = {
         rest_no: restNo,
         com_con: commentContent,
         mem_no: 1,
-        com_rate: ratingValue
+        com_rate: ratingValue,
+        com_attachList: attachList
+    };
+    console.log("commentData:", commentData);
+
+    fetch('/comment/add', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(commentData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log("Comment uploaded:", data);
+        fetchComments();
+        commentInput.value = '';
+        window.uploadedFiles = []; // 초기화
+        document.querySelector('.uploadResult ul').innerHTML = '';
+        alert("코멘트가 등록되었습니다.");
+    })
+    .catch(err => {
+        console.error("Upload error:", err.message);
+        alert("코멘트 등록에 실패했습니다.");
+    });
+}
+/*function uploadComment() {
+    const commentInput = document.querySelector("#comment");
+    if (!commentInput) {
+        console.error("코멘트 입력 필드(#comment)를 찾을 수 없습니다.");
+        return;
+    }
+
+    const commentContent = commentInput.value.trim();
+    if (!commentContent) {
+        alert("코멘트를 입력해주세요.");
+        return;
+    }
+
+    if (!restNo) {
+        console.error("restNo가 정의되지 않았습니다.");
+        alert("가게 정보를 불러올 수 없습니다.");
+        return;
+    }
+    const commentData = {
+        rest_no: restNo,
+        com_con: commentContent,
+        mem_no: 1,
+        com_rate: ratingValue,
+        com_attachList: window.uploadedFiles || [] // 업로드된 파일 목록 추가
     };
 
     fetch('/comment/add', {
@@ -518,13 +684,14 @@ function uploadComment() {
         console.log("Comment uploaded:", data);
         fetchComments();
         commentInput.value = '';
+        window.uploadedFiles = []; // 업로드된 파일 목록 초기화
         alert("코멘트가 등록되었습니다.");
     })
     .catch(err => {
         console.error("Upload error:", err.message);
         alert("코멘트 등록에 실패했습니다.");
     });
-}
+}*/
 
 // 날짜 포맷팅 함수
 function formatDate(dateString) {
