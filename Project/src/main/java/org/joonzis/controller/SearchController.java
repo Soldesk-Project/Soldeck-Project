@@ -26,10 +26,16 @@ public class SearchController {
 	private RestService service;
 	
 	@GetMapping(value = "/search")
-	public String searchPage() {
-		log.info("search...");
+	public String searchPage(@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword, Model model) {
+		log.info("search..." + "keyword : " + keyword);
+		model.addAttribute("keyword", keyword);
 		return "/search/search";
 	}
+//	@GetMapping(value = "/search")
+//	public String searchPage() {
+//		log.info("search...");
+//		return "/search/search";
+//	}
 	// search페이지 필터기능
 	@GetMapping(value = "/search/filterData", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<RestVO>> filterData(@RequestParam(value = "region", required = false) String region,
@@ -61,8 +67,12 @@ public class SearchController {
 	
 	// 지역 페이지
 	@GetMapping("/location")
-	public String location() {
-		log.info("location...");
+	public String location(@RequestParam(value = "region", required = false) String region,
+							@RequestParam(value = "category", required = false) String category,
+							Model model) {
+		log.info("location..." + " region : " + region + " category : " + category);
+		model.addAttribute("category", category);
+		model.addAttribute("region",region);
 		return "/search/location";
 	}
 	// JSON 데이터 반환 (AJAX 요청용)

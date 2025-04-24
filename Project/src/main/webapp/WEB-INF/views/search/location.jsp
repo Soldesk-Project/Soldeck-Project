@@ -59,6 +59,9 @@
 				</div>
 			</div>
 		</div>
+		
+		<!-- Model 속성을 data-* 속성으로 노출 -->
+		<div id="location-data" data-region="${region}" data-category="${category}"></div>
 	</div>
 	
 	<script type="text/javascript" src="/resources/js/location.js"></script> 

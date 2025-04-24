@@ -4,15 +4,18 @@ linkEle.rel = 'stylesheet';
 linkEle.href = CSS_FILE_PATH;
 document.head.appendChild(linkEle);
 
-let selectedRegion = '';
-let selectedCategory = '';
+//Model 속성 읽기
+const locationData = document.getElementById('location-data');
+const initialRegion = locationData.dataset.region || '';
+const initialCategory = locationData.dataset.category || '';
+
+let selectedRegion = initialRegion;
+let selectedCategory = initialCategory;
 const imageCon = document.querySelector('.image-con');
-const locationSelect = document.querySelector('.location-select_select');
-const categoryButtons = document.querySelectorAll('.kategorie-list button');
 
 showList();
 
-// 가게 뿌리기
+// 가게 보여주기
 function showList() {
     const imageUL = document.querySelector(".image-con");
     let msg = '';
@@ -42,12 +45,14 @@ function showList() {
     });
 }
 
+
+// 데이터 가져오기
 function getList(callback) {
     const params = new URLSearchParams();
     if (selectedRegion) params.append('region', selectedRegion);
     if (selectedCategory) params.append('category', selectedCategory);
     const url = `/search/location/data${params.toString() ? '?' + params.toString() : ''}`;
-    console.log("Fetching URL:", url);
+    /*console.log("Fetching URL:", url);*/
     
     fetch(url, {
         headers: {
@@ -61,7 +66,7 @@ function getList(callback) {
         return response.json();
     })
     .then(data => {
-        console.log("Received data:", data);
+        console.log("Location Fetch Data:", data);
         callback(data);
     })
     .catch(err => {
@@ -69,23 +74,24 @@ function getList(callback) {
     });
 }
 
-// 가게 이미지, 이름 이벤트
+
+// 가게 클릭 이동 이벤트
 imageCon.addEventListener('click', (event) => {
     // 클릭된 요소가 이미지 또는 가게 이름인지 확인
     if (event.target.tagName === 'IMG' || (event.target.tagName === 'P' && event.target.parentElement.classList.contains('name'))) {
         if (event.target.tagName === 'IMG') {
             const imageSrc = event.target.src;
-            console.log('이미지 클릭됨:', imageSrc);
+//            console.log('이미지 클릭됨:', imageSrc);
         }
         if (event.target.tagName === 'P') {
             const storeName = event.target.textContent;
-            console.log('클릭한 가게 이름 :', storeName);
+//            console.log('클릭한 가게 이름 :', storeName);
         }
 
         const itemSet = event.target.closest('.item-set');
         if (itemSet) {
             const restNo = itemSet.dataset.restNo || '1';
-            console.log('클릭한 가게 번호:', restNo);
+//            console.log('클릭한 가게 번호:', restNo);
             window.location.href = `/search/view?rest_no=${restNo}`;
         } else {
             console.error('item-set 요소를 찾을 수 없습니다.');
@@ -93,17 +99,34 @@ imageCon.addEventListener('click', (event) => {
     }
 });
 
-// 지역 선택
-locationSelect.addEventListener('change', function() {
+//지역 선택 초기화
+const locationSelect = document.querySelector('.location-select_select');
+if (initialRegion) {
+    locationSelect.value = initialRegion; // 초기 지역 설정
+}
+locationSelect.addEventListener('change', function () {
     selectedRegion = this.value;
-//    console.log(selectedRegion);
+//    console.log('Selected Region:', selectedRegion);
     showList();
 });
 
-// 카테고리 선택
+// 카테고리 선택 초기화
+const categoryButtons = document.querySelectorAll('.kategorie-list button');
+if (initialCategory) {
+    const categoryMap = {
+        '한식': 'korBtn',
+        '중식': 'chnBtn',
+        '일식': 'japBtn',
+        '양식': 'wesBtn',
+        '베트남식': 'vietBtn'
+    };
+    const buttonId = categoryMap[initialCategory];
+    if (buttonId) {
+        document.querySelector(`#${buttonId}`).classList.add('active'); // 초기 카테고리 버튼 활성화
+    }
+}
 categoryButtons.forEach(button => {
-    button.addEventListener('click', function() {
-    	
+    button.addEventListener('click', function () {
         categoryButtons.forEach(btn => btn.classList.remove('active'));
         this.classList.add('active');
         const categoryMap = {
@@ -114,7 +137,7 @@ categoryButtons.forEach(button => {
             vietBtn: '베트남식'
         };
         selectedCategory = categoryMap[this.id] || '';
-//        console.log(selectedCategory);
+//        console.log('Selected Category:', selectedCategory);
         showList();
     });
 });

@@ -8,8 +8,37 @@ document.head.appendChild(linkEle);
 let selectedRegion = '';
 let selectedCategory = '';
 
+// 지역 선택
+const locationSelect = document.querySelector('.location-select_select');
+locationSelect.addEventListener('change', function () {
+    selectedRegion = this.value;
+//    console.log(selectedRegion);
+    showList();
+    showSearchList();
+});
+
+// 카테고리 선택
+const categoryButtons = document.querySelectorAll('.kategorie-list button');
+categoryButtons.forEach(button => {
+    button.addEventListener('click', function () {
+        categoryButtons.forEach(btn => btn.classList.remove('active'));
+        this.classList.add('active');
+        const categoryMap = {
+            korBtn: '한식',
+            chnBtn: '중식',
+            japBtn: '일식',
+            wesBtn: '양식',
+            vietBtn: '베트남식'
+        };
+        selectedCategory = categoryMap[this.id] || '';
+//        console.log(selectedCategory);
+        showList();
+        showSearchList();
+    });
+});
+
+// 오늘의 추천 픽 클릭 이벤트
 function setupEventListeners() {
-//상위 요소(image-con)에서 이벤트 위임
     const imageCon = document.querySelector('.slideshow-container');
     if (!imageCon) {
         console.error('slideshow-container 요소를 찾을 수 없습니다.');
@@ -17,14 +46,20 @@ function setupEventListeners() {
     }
 
     imageCon.addEventListener('click', (event) => {
+    	// 드래그로 판단되면 클릭 이벤트 무시
+        if (Math.abs(dragDistance) > DRAG_THRESHOLD) {
+            console.log('드래그로 판단됨, 클릭 이벤트 무시');
+            return;
+        }
+        
         if (event.target.tagName === 'IMG' || event.target.tagName === 'P') {
             if (event.target.tagName === 'IMG') {
                 const imageSrc = event.target.src;
-                console.log('이미지 클릭됨:', imageSrc);
+//                console.log('이미지 클릭됨:', imageSrc);
             }
             if (event.target.tagName === 'P') {
                 const storeName = event.target.textContent;
-                console.log('클릭한 가게 이름 :', storeName);
+//                console.log('클릭한 가게 이름 :', storeName);
             }
 
             const slide = event.target.closest('.slide');
@@ -40,14 +75,14 @@ function setupEventListeners() {
                 return;
             }
 
-            console.log('클릭한 가게 번호:', restNo);
+//            console.log('클릭한 가게 번호:', restNo);
             window.location.href = `/search/view?rest_no=${restNo}`;
         }
     });
 }
-//오늘의 추천 pick
+
 showList();
-// showList 실행 후 이벤트 리스너 설정
+//오늘의 추천 픽 보여주기
 function showList() {
     const imageUL = document.querySelector(".slides-wrapper");
     if (!imageUL) {
@@ -62,7 +97,7 @@ function showList() {
             return;
         }
         if (jsonArray.length > 0) {
-            console.log('getList 반환 데이터:', jsonArray.length);
+//            console.log('getList 반환 데이터:', jsonArray.length);
         } else {
             console.log('jsonArray에 데이터가 없습니다.');
         }
@@ -72,7 +107,7 @@ function showList() {
             [jsonArray[i], jsonArray[j]] = [jsonArray[j], jsonArray[i]];
         }
 
-        const limitedArray = jsonArray.slice(0, 30);
+        const limitedArray = jsonArray.slice(0, 100);
 
         if (limitedArray.length === 0) {
             imageUL.innerHTML = '<div class="no-data">표시할 데이터가 없습니다.</div>';
@@ -94,39 +129,13 @@ function showList() {
     });
 }
 
-const locationSelect = document.querySelector('.location-select_select');
-locationSelect.addEventListener('change', function () {
-    selectedRegion = this.value;
-    console.log(selectedRegion);
-    showList();
-    showSearchList();
-});
-
-const categoryButtons = document.querySelectorAll('.kategorie-list button');
-categoryButtons.forEach(button => {
-    button.addEventListener('click', function () {
-        categoryButtons.forEach(btn => btn.classList.remove('active'));
-        this.classList.add('active');
-        const categoryMap = {
-            korBtn: '한식',
-            chnBtn: '중식',
-            japBtn: '일식',
-            wesBtn: '양식',
-            vietBtn: '베트남식'
-        };
-        selectedCategory = categoryMap[this.id] || '';
-        console.log(selectedCategory);
-        showList();
-        showSearchList();
-    });
-});
-
+// 오늘의 추천 픽 데이터 가져오기
 function getList(callback) {
 	const params = new URLSearchParams();
     if (selectedRegion) params.append('region', selectedRegion);
     if (selectedCategory) params.append('category', selectedCategory);
     const url = `/search/search/filterData${params.toString() ? '?' + params.toString() : ''}`;
-    console.log("Fetching URL:", url);
+//    console.log("Fetching URL:", url);
     fetch(url, {
         headers: {
             'Accept': 'application/json'
@@ -139,7 +148,7 @@ function getList(callback) {
             return response.json();
         })
         .then(data => {
-            console.log("Received data:", data);
+            console.log("Search Fetch data:", data);
             callback(data || []); // 데이터가 없으면 빈 배열 전달
         })
         .catch(err => {
@@ -159,6 +168,8 @@ let startX = 0;
 let currentTranslate = 0;
 let prevTranslate = 0;
 let animationId = null;
+let dragDistance = 0; // 드래그 이동 거리
+const DRAG_THRESHOLD = 10; // 드래그로 간주할 최소 이동 거리 (픽셀)
 
 function initializeSlides() {
     slidesWrapper = document.querySelector('.slides-wrapper');
@@ -203,6 +214,7 @@ function startDragging(e) {
     isDragging = true;
     startX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
     prevTranslate = currentTranslate;
+    dragDistance = 0; // 드래그 거리 초기화
 
     // 드래그 중 부드러운 이동을 위해 transition 제거
     slidesWrapper.style.transition = 'none';
@@ -217,6 +229,7 @@ function drag(e) {
     const currentX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
     const deltaX = currentX - startX;
     currentTranslate = prevTranslate + deltaX;
+    dragDistance = deltaX; // 드래그 거리 갱신
 
     // 부드러운 이동을 위해 requestAnimationFrame 사용
     cancelAnimationFrame(animationId);
@@ -228,7 +241,7 @@ function drag(e) {
 function stopDragging() {
     if (!isDragging) return;
     isDragging = false;
-
+    
     // 슬라이드가 없으면 스냅 처리 중단
     slides = document.querySelectorAll('.slide');
     totalSlides = slides.length;
@@ -289,16 +302,19 @@ function moveSlide(direction) {
     slidesWrapper.style.transform = `translateX(${currentTranslate}px)`;
 }
 
-let searchKeyword = '';
 
-//onChange 이벤트 핸들러 정의
-function handleSearchKeywordChange(event) {
- searchKeyword = event.target.value; // 입력값을 전역 변수에 저장
- console.log("검색어:", searchKeyword);
- showSearchList(); // 검색어 입력 시 showSearchList 메서드 호출
- setupEventListeners2();
+// 검색 관련 시작
+//Model 속성 읽기 (검색어 포함)
+const locationData = document.getElementById('location-data');
+const initialKeyword = locationData.dataset.keyword || ''; // 검색어 추가
+let searchKeyword = initialKeyword; // 초기 검색어 설정
+
+//페이지 로드 시 검색어 반영
+if (initialKeyword) {
+    showSearchList(); // 초기 검색어로 검색 결과 표시
 }
 
+// 검색 가게 클릭 이벤트
 function setupEventListeners2() {
     const storeCon = document.querySelector('.store-con');
     if (!storeCon) {
@@ -310,11 +326,11 @@ function setupEventListeners2() {
         if (event.target.tagName === 'IMG' || (event.target.tagName === 'P' && event.target.classList.contains('store-name'))) {
             if (event.target.tagName === 'IMG') {
                 const imageSrc = event.target.src;
-                console.log('이미지 클릭됨:', imageSrc);
+//                console.log('이미지 클릭됨:', imageSrc);
             }
             if (event.target.tagName === 'P') {
                 const storeName = event.target.textContent;
-                console.log('클릭한 가게 이름:', storeName);
+//                console.log('클릭한 가게 이름:', storeName);
             }
 
             const storeBlock = event.target.closest('.store-block');
@@ -330,55 +346,13 @@ function setupEventListeners2() {
                 return;
             }
 
-            console.log('클릭한 가게 번호:', restNo);
+//            console.log('클릭한 가게 번호:', restNo);
              window.location.href = `/search/view?rest_no=${restNo}`;
         }
     });
 }
-/*function setupEventListeners2() {
-    const storeCon = document.querySelector('.store-con');
-    if (!storeCon) {
-        console.error('store-con 요소를 찾을 수 없습니다.');
-        return;
-    }
-
-    storeCon.addEventListener('click', (event) => {
-        // 이미지 또는 가게 이름(<p class="store-name">) 클릭인지 확인
-        if (event.target.tagName === 'IMG' || (event.target.tagName === 'P' && event.target.classList.contains('store-name'))) {
-            if (event.target.tagName === 'IMG') {
-                const imageSrc = event.target.src;
-                console.log('이미지 클릭됨:', imageSrc);
-            }
-            if (event.target.tagName === 'P') {
-                const storeName = event.target.textContent;
-                console.log('클릭한 가게 이름:', storeName);
-            }
-
-            const storeBlock = event.target.closest('.store-block');
-            if (!storeBlock) {
-                console.error('store-block 요소를 찾을 수 없습니다.');
-                return;
-            }
-
-            const restNo = storeBlock.dataset.restNo;
-            if (!restNo) {
-                console.error('restNo 값을 찾을 수 없습니다. 기본값 1을 사용합니다.');
-//                window.location.href = `/search/view?rest_no=1`;
-                return;
-            }
-
-            console.log('클릭한 가게 번호:', restNo);
-//            window.location.href = `/search/view?rest_no=${restNo}`;
-        }
-    });
-}*/
-
-//DOM 요소에 이벤트 핸들러 연결
-const searchInput = document.getElementById("search");
-searchInput.addEventListener("change", handleSearchKeywordChange);
-
+showSearchList();
 //검색 결과
-//showSearchList(); // 초기 호출
 function showSearchList() {
     const imageUL = document.querySelector(".store-con");
     if (!imageUL) {
@@ -403,7 +377,7 @@ function showSearchList() {
 
         data.forEach(json => {
             const restNo = json.rest_no || 'default'; // rest_no가 없으면 기본값 설정
-            console.log('검색 결과 데이터:', json); // 디버깅 로그 추가
+//            console.log('검색 결과 데이터:', json); // 디버깅 로그 추가
             msg += `<div class="store-block" data-rest-no="${restNo}">`;
             msg += `<div class="store-image">`;
             msg += `<img src="${json.rest_img_name || '/resources/images/noImage.png'}" alt="가게 이미지 1">`;
@@ -420,42 +394,6 @@ function showSearchList() {
         setupEventListeners2(); // 동적 HTML 생성 후 이벤트 리스너 설정
     });
 }
-/*function showSearchList() {
- const imageUL = document.querySelector(".store-con");
- 
- // getSearch 호출 (콜백으로 데이터 처리)
- getSearch(data => {
-     let msg = '';
-     
-     // 검색어가 없으면 요청 보내지 않음
-     if (!searchKeyword) {
-         imageUL.innerHTML = '<div class="no-data">검색어를 입력해주세요.</div>';
-         return;
-     }
-     
-     // 데이터가 없으면 메시지 표시
-     if (data.length === 0) {
-         imageUL.innerHTML = '<div class="no-data">검색 결과가 없습니다.</div>';
-         return;
-     }
-
-     // 데이터로 아이템 생성
-     data.forEach(json => {
-         msg += `<div class="store-block">`;
-         msg += `<div class="store-image">`;
-         msg += `<img src="${json.rest_img_name || '/resources/images/noImage.png'}" alt="가게 이미지 1">`;
-         msg += `</div>`;
-         msg += `<div class="store-info">`;
-         msg += `<p class="store-name">${json.rest_name}</p>`;
-         msg += `<p class="store-type">${json.rest_cate}</p>`;
-         msg += `<p class="store-hours">${json.rest_bh}</p>`;
-         msg += `</div>`;
-         msg += `</div>`;
-     });
-
-     imageUL.innerHTML = msg;
- });
-}*/
 
 function getSearch(callback) {
     const params = new URLSearchParams();
@@ -471,7 +409,7 @@ function getSearch(callback) {
 
     // 기존 경로 파라미터 방식 대신 쿼리 파라미터 방식으로 변경
     const url = `/search/search/searchData${params.toString() ? '?' + params.toString() : ''}`;
-    console.log("Fetching URL:", url);
+//    console.log("Fetching URL:", url);
     fetch(url, {
         headers: {
             'Accept': 'application/json'
@@ -484,13 +422,11 @@ function getSearch(callback) {
             return response.json();
         })
         .then(data => {
-            console.log("Received data:", data);
+            console.log("Search Received data:", data);
             callback(data || []);
         })
         .catch(err => {
             console.error("Fetch error:", err.message);
             callback([]);
         });
-    const offset = currentIndex * (100 / visibleSlides);
-    slidesWrapper.style.transform = `translateX(-${offset}%)`;
 }

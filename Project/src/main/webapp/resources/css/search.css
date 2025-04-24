@@ -254,7 +254,7 @@ body {
 .store-image img {
   width: 100%;
   height: 200px; /* 고정 높이 */
-  object-fit: cover;
+  object-fit: inherit;
   display: block;
   cursor: pointer;
 }

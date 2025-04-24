@@ -136,7 +136,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	    if (this.classList.contains('btn')) {
 	      categoryButtons.forEach(btn => btn.classList.remove('active'));
 	      this.classList.add('active');
-	      selectedCategory = this.id.slice(0, -3).toLowerCase();
+//	      selectedCategory = this.id.slice(0, -3).toLowerCase();
+	      selectedCategory = this.value;
 	    } else if (this === locationSelect) {
 	      // 지역 선택 변경 시 카테고리 선택 초기화
 	      categoryButtons.forEach(btn => btn.classList.remove('active'));
@@ -145,38 +146,19 @@ document.addEventListener('DOMContentLoaded', () => {
 	      // 이미 활성화된 카테고리 찾기 (지역 변경 없이 다른 동작으로 handleFilter가 호출될 경우 대비)
 	      const activeCategoryButton = document.querySelector('.kategorie-list button.active');
 	      if (activeCategoryButton) {
-	        selectedCategory = activeCategoryButton.id.slice(0, -3).toLowerCase();
+	        selectedCategory = activeCategoryButton.value;
 	      }
 	    }
 	    // 지역과 카테고리 모두 선택되었을 때만 fetchData 호출 및 페이지 이동
 	    if (selectedRegion && selectedCategory) {
-	      fetchData(selectedRegion, selectedCategory);
+	    	let params = new URLSearchParams();
+	        params.append('region', selectedRegion);
+	        params.append('category', selectedCategory);
+	        window.location.href = `/search/location?${params.toString()}`;
 	    } else {
 	      console.log('지역과 카테고리를 모두 선택해주세요.');
 	      // 필요에 따라 사용자에게 알림 메시지를 표시할 수 있습니다.
 	    }
-	  }
-
-	  function fetchData(region, category) {
-	    const url = `/search/location/data?region=${region}&category=${category}`;
-	    console.log(url);
-	    fetch(url)
-	      .then(response => {
-	        if (!response.ok) {
-	          throw new Error(`HTTP error! status: ${response.status}`);
-	        }
-	        return response.json();
-	      })
-	      .then(data => {
-	        console.log('받아온 데이터:', data);
-	        let params = new URLSearchParams();
-	        params.append('region', region);
-	        params.append('category', category);
-	        window.location.href = `/search/location?${params.toString()}`;
-	      })
-	      .catch(error => {
-	        console.error('데이터를 가져오는 중 오류 발생:', error);
-	      });
 	  }
 	});
 

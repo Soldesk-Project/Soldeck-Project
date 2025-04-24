@@ -57,10 +57,6 @@
 	    	<div class="chat-body">
 	    		<div class="slideshow-container">
 	                <div class="slides-wrapper">
-	                    <!-- <div class="slide">
-	                        <img src="https://img1.kakaocdn.net/cthumb/local/C544x408.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flocalfiy%2F9D96CE0AF47646C48E7B41BF852F0E5E" alt="이미지 1">
-	                        <p>가게 이름</p>
-	                    </div> -->
 	                </div>
 	                <a class="prev" onclick="moveSlide(-1)">❮</a>
 	                <a class="next" onclick="moveSlide(1)">❯</a>
@@ -68,21 +64,12 @@
 	    		<div class="image-header">#검색 결과</div>
 	    		<div class="chat-body2">
 	        		<div class="store-con">
-			            <!-- 첫 번째 가게 블록 -->
-			            <!-- div class="store-block" data-rest-no='1'>
-			                <div class="store-image">
-			                    <img src="https://img1.kakaocdn.net/cthumb/local/C544x408.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flocalfiy%2F9D96CE0AF47646C48E7B41BF852F0E5E" alt="가게 이미지 1">
-			                </div>
-			                <div class="store-info">
-			                    <p class="store-name">가게 이름</p>
-			                    <p class="store-type">가게 종류</p>
-			                    <p class="store-hours">영업 시간</p>
-			                </div>
-			            </div> -->
 	        		</div>
 	    		</div>
 			</div>
 		</div>
+		<!-- Model 속성을 data-* 속성으로 노출 -->
+        <div id="location-data" data-keyword="${keyword}"></div>
 	</div>
 	<script type="text/javascript" src="/resources/js/search.js"></script>
 	<jsp:include page="../layout/footer.jsp"/>

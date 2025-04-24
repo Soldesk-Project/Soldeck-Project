@@ -31,7 +31,7 @@ stars.forEach(star => {
     star.addEventListener('click', () => {
         ratingValue = parseInt(star.getAttribute('data-value'));
         updateStars(ratingValue);
-        console.log('선택된 별점:', ratingValue); // 변환된 데이터 확인
+//        console.log('선택된 별점:', ratingValue); // 변환된 데이터 확인
     });
 });
 
@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const pageHeader = document.querySelector(".page-header");
     if (pageHeader) {
         restNo = pageHeader.dataset.restNo;
-        console.log("Rest No: ", restNo);
+//        console.log("Rest No: ", restNo);
     } else {
         console.error("page-header 요소를 찾을 수 없습니다.");
         restNo = null;
@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
         viewModal.addEventListener('click', function (event) {
             if (event.target === viewModal) {
                 viewModal.style.display = 'none';
-                console.log(1);
+//                console.log(1);
             }
         });
     }
@@ -209,7 +209,7 @@ function get(callback) {
     }
 
     const url = `/search/view/${restNo}`;
-    console.log("Fetching URL:", url);
+//    console.log("Fetching URL:", url);
     fetch(url, {
         headers: {
             'Accept': 'application/json'
@@ -222,7 +222,7 @@ function get(callback) {
         return response.json();
     })
     .then(data => {
-        console.log("Received data:", data);
+        console.log("View Fetch data:", data);
         callback(data || {});
     })
     .catch(err => {
@@ -284,7 +284,7 @@ function getList(callback) {
         return response.json();
     })
     .then(data => {
-        console.log("Related stores data:", data);
+        console.log("stores Fetch data:", data);
         callback(data || []);
     })
     .catch(err => {
@@ -459,59 +459,6 @@ function fetchComments() {
         commentList.innerHTML = msg;
     });
 }
-/*function fetchComments() {
-    const commentList = document.querySelector(".panel-footer-body ul.chat");
-    if (!commentList) {
-        console.error('코멘트 목록 컨테이너(.panel-footer-body ul.chat)를 찾을 수 없습니다.');
-        return;
-    }
-
-    getComments(data => {
-        if (!data || data.length === 0) {
-            commentList.innerHTML = '<li><div class="chat-full">코멘트가 없습니다.</div></li>';
-            return;
-        }
-
-        // 중복 com_no를 방지하기 위한 Set
-        const seenComNos = new Set();
-        let msg = '';
-        data.forEach(comment => {
-            if (seenComNos.has(comment.com_no)) {
-                return; // 중복된 com_no는 건너뜀
-            }
-            seenComNos.add(comment.com_no);
-
-            // com_rate를 기반으로 별점 생성 (1~5)
-            const rate = parseInt(comment.com_rate) || 0;
-            let starsHtml = '<div class="comment-rating">';
-            for (let i = 1; i <= 5; i++) {
-                const starClass = i <= rate ? 'star filled' : 'star';
-                starsHtml += `<div class="${starClass}"></div>`;
-            }
-            starsHtml += '</div>';
-
-            msg += `
-                <li data-com_no="${comment.com_no}">
-                    <div class="chat-full">
-                        <div class="chat-header">
-                            <strong>${comment.mem_no}</strong>
-                            <div class="header-right">
-                                <small class="pull-right">${formatDate(comment.com_date)}</small>
-                                ${starsHtml}
-                            </div>
-                        </div>
-                        <div class="chat-body"></div>
-                        <div class="chat-footer">
-                            <p>${comment.com_con || '내용 없음'}</p>
-                        </div>
-                    </div>
-                </li>
-            `;
-        });
-
-        commentList.innerHTML = msg;
-    });
-}*/
 
 function getComments(callback) {
     fetch(`/comment/pages/${restNo}`, {
@@ -535,35 +482,6 @@ function getComments(callback) {
     });
 }
 
-/*function getComments(callback) {
-    if (!restNo) {
-        console.error("restNo가 정의되지 않았습니다.");
-        callback([]);
-        return;
-    }
-
-    const url = `/comment/pages/${restNo}`;
-    console.log("Fetching comments URL:", url);
-    fetch(url, {
-        headers: {
-            'Accept': 'application/json'
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log("Received comments data:", data);
-        callback(data || []);
-    })
-    .catch(err => {
-        console.error("Fetch error:", err.message);
-        callback([]);
-    });
-}*/
 function formatDate(dateStr) {
     const date = new Date(dateStr);
     return date.toLocaleString('ko-KR', {
@@ -640,58 +558,6 @@ function uploadComment() {
         alert("코멘트 등록에 실패했습니다.");
     });
 }
-/*function uploadComment() {
-    const commentInput = document.querySelector("#comment");
-    if (!commentInput) {
-        console.error("코멘트 입력 필드(#comment)를 찾을 수 없습니다.");
-        return;
-    }
-
-    const commentContent = commentInput.value.trim();
-    if (!commentContent) {
-        alert("코멘트를 입력해주세요.");
-        return;
-    }
-
-    if (!restNo) {
-        console.error("restNo가 정의되지 않았습니다.");
-        alert("가게 정보를 불러올 수 없습니다.");
-        return;
-    }
-    const commentData = {
-        rest_no: restNo,
-        com_con: commentContent,
-        mem_no: 1,
-        com_rate: ratingValue,
-        com_attachList: window.uploadedFiles || [] // 업로드된 파일 목록 추가
-    };
-
-    fetch('/comment/add', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json; charset=utf-8',
-            'Accept': 'application/json'
-        },
-        body: JSON.stringify(commentData)
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log("Comment uploaded:", data);
-        fetchComments();
-        commentInput.value = '';
-        window.uploadedFiles = []; // 업로드된 파일 목록 초기화
-        alert("코멘트가 등록되었습니다.");
-    })
-    .catch(err => {
-        console.error("Upload error:", err.message);
-        alert("코멘트 등록에 실패했습니다.");
-    });
-}*/
 
 // 날짜 포맷팅 함수
 function formatDate(dateString) {

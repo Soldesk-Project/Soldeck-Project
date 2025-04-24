@@ -6,7 +6,7 @@
     <a href="/"><img src="/resources/images/logo.png" alt="logo" style="width: 70px;"></a>
 </div>
 <div class="nav-center">
-  <input type="search" placeholder="검색어를 입력하세요." onChange={handleSearchKeywordChange} id="search">
+  <input type="search" placeholder="검색어를 입력하세요." id="search">
 </div>
 <div class="nav-right">
   <input type="image" src="../resources/images/profile.png" alt="profile" id="proFile" style="width: 70px; cursor: pointer;"><br>
@@ -52,6 +52,42 @@ window.onclick = function(event) {
 		if (event.target == head_modal) {
 				head_modal.style.display = "none";
 		}
+}
+
+//검색 관련 스크립트
+let headerSearchKeyword = '';
+
+function handleSearch(event) {
+    headerSearchKeyword = event.target.value.trim();
+    console.log("입력값 (raw):", event.target.value);
+    console.log("검색어 (trim):", headerSearchKeyword);
+    
+    if (headerSearchKeyword) {
+        const encodedKeyword = encodeURIComponent(headerSearchKeyword);
+        console.log("인코딩된 검색어:", encodedKeyword);
+        const searchUrl = "/search/search?keyword=" + encodedKeyword;
+        console.log("전송 URL (조합):", searchUrl);
+        window.location.href = searchUrl; // 주석 해제하여 테스트
+    } else {
+        console.log("검색어가 비어 있습니다.");
+    }
+}
+
+const searchInput = document.getElementById("search");
+if (searchInput) {
+    // 기존 이벤트 핸들러 제거 (충돌 방지)
+    searchInput.removeEventListener("change", handleSearch);
+    searchInput.removeEventListener("keypress", handleSearch);
+
+    // 통합 이벤트 핸들러 추가
+    searchInput.addEventListener("change", handleSearch);
+    searchInput.addEventListener("keypress", function(event) {
+        if (event.key === 'Enter') {
+            handleSearch(event);
+        }
+    });
+} else {
+    console.error("searchInput 요소를 찾을 수 없습니다.");
 }
 </script>
 

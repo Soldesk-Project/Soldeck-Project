@@ -47,23 +47,23 @@
 	   		<div class="kategorie-container">
 			    <ul class="kategorie-list">
 			    	<li>
-			    		<button type="button" class="btn btn-fir" id="korBtn"></button>
+			    		<button type="button" class="btn btn-fir" id="korBtn" value="한식"></button>
 			    		<p>한식</p>
 			    	</li>
 			    	<li>
-			    		<button type="button" class="btn btn-fir" id="chnBtn"></button>
+			    		<button type="button" class="btn btn-fir" id="chnBtn" value="중식"></button>
 			    		<p>중식</p>
 			    	</li>
 			    	<li>
-				    	<button type="button" class="btn btn-fir" id="japBtn"></button>
+				    	<button type="button" class="btn btn-fir" id="japBtn" value="일식"></button>
 				    	<p>일식</p>
 			    	</li>
 			    	<li>
-				    	<button type="button" class="btn btn-fir" id="wesBtn"></button>
+				    	<button type="button" class="btn btn-fir" id="wesBtn" value="양식"></button>
 				    	<p>양식</p>
 			    	</li>
 			    	<li>
-				    	<button type="button" class="btn btn-fir" id="vietBtn"></button>
+				    	<button type="button" class="btn btn-fir" id="vietBtn" value="베트남식"></button>
 				    	<p>베트남</p>
 			    	</li>
 			    </ul>
