@@ -50,10 +50,11 @@
 	<update id="modify" parameterType="org.joonzis.domain.MemberVO">
 		UPDATE MEMBER 
 		SET 
-			MEM_PW=#{mem_pw},
+			MEM_PW = #{mem_pw},
 			MEM_NICK=#{mem_nick},
 			MEM_EMAIL=#{mem_email},
-			MEM_PHONE=#{mem_phone}
+			MEM_PHONE=#{mem_phone},
+			MEM_IMG = #{mem_img, jdbcType=VARCHAR}
 		WHERE
 			MEM_NO=#{mem_no}
 	</update>

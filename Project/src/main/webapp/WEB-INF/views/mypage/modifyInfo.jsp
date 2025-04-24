@@ -25,8 +25,8 @@
           <div class="info-content">
             <input type="text" class="info-name" name="name" value="${member.mem_name}" readonly="readonly">
 			<div class="info-profile-div">
-	            <img class="info-profile" id="profileImage" src="${member.mem_img}" alt="유저 프로필" onerror="this.src='/resources/images/profile.png'">
-	            <input type="file" id="profileImageInput" class="previewImage" accept="image/*">
+    			<img class="info-profile" id="profileImage" src="${member.mem_img}" alt="유저 프로필" onerror="this.src='/resources/images/profile.png'">
+    			<input type="file" id="profileImageInput" class="previewImage" accept="image/*" name="profileImageInput">
 			</div>       
             <button type="button" class="profile-upload" id="profileUploadBtn">업로드</button>
           </div>

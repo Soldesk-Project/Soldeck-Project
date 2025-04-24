@@ -1,7 +1,10 @@
 package org.joonzis.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -97,13 +100,26 @@ public class myPageController {
 							 @RequestParam(value = "food", required = false) List<Integer> interests,
 							 HttpSession session
 							) {
+		
 		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
 		if (loggedInMember == null) {
 			return "redirect:/login/loginPage";
 		}
 		vo.setMem_no(loggedInMember.getMem_no());
 
-		log.info(vo);
+		log.info("수정 요청 데이터: " + vo);
+		
+		if (profileImage != null && !profileImage.isEmpty()) {
+	        String originalFilename = profileImage.getOriginalFilename();
+	        String uuid = UUID.randomUUID().toString();
+	        String storedFilename = uuid + "_" + originalFilename;
+	        vo.setMem_img(storedFilename);
+            log.info("이미지 업로드 후 데이터: " + vo);
+	    } else {
+	        MemberVO currentMemberInfo = service.getMemberInfo(loggedInMember.getMem_no());
+	        vo.setMem_img(currentMemberInfo.getMem_img());
+            log.info("기존 이미지 유지 후 데이터: " + vo);
+	    }
 		
 		// food_kate 테이블 데이터 삭제
 		service.deleteFoodKate(vo.getMem_no());

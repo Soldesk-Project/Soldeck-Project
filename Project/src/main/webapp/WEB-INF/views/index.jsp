@@ -72,7 +72,7 @@
 	   </div>
 	</div>
 		
-        <c:if test="${sessionScope.loggedInUser != null}">
+
         	<div class="recommendations">
             	<h2 class="indexTitle"># 오늘의 추천 pick</h2>
 				<div class="recommendation-slider-wrapper">
@@ -92,6 +92,7 @@
 			    	<button class="slide-btn next" onclick="moveSlider('today', 1)">&#10095;</button>
 				</div>
 
+			<c:if test="${sessionScope.loggedInUser != null}">
             	<h2 class="indexTitle"># 내 취향에 맞게 pick</h2>
 				<div class="recommendation-slider-wrapper">
 			    	<button class="slide-btn prev" onclick="moveSlider('preference', -1)">&#10094;</button>
