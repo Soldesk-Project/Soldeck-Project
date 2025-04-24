@@ -80,7 +80,17 @@ public class MemberServiceImpl implements MemberService{
 	public List<Integer> getBookMarkRestNo(int mem_no) {
 		return mapper.getBookMarkRestNo(mem_no);
 	}
-	
+
+	@Override
+	public MemberVO loginProcess(String mem_id, String mem_pw) {
+		MemberVO member = mapper.loginProcess(mem_id);
+
+		if (member != null && member.getMem_pw().equals(mem_pw)) {
+			return member;
+		}
+
+		return null;
+	}
 	
 	
 	

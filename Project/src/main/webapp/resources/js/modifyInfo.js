@@ -183,6 +183,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     	}
     }
 });
+
 async function modify(mem_no){
 
     const isPasswordValid = validatePassword();

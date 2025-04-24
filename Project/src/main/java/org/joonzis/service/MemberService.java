@@ -24,7 +24,6 @@ public interface MemberService {
     public void insertFoodKate(int mem_no, int food_no);
     public List<BookMarkVO> getBookMark(int mem_no);
     public List<Integer> getBookMarkRestNo(int mem_no);
-
-
-
+    
+	MemberVO loginProcess(String mem_id, String mem_pw);
 }

@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -184,4 +186,22 @@ public class LoginController {
                 return null; // 매칭되는 값이 없으면 null 반환
         }
     }
+    
+    // 로그인 처리
+	@PostMapping("/loginProcess")
+    @ResponseBody
+    public String loginProcess(@RequestBody Map<String, String> loginData, HttpSession session) {
+		String mem_id = loginData.get("userId");
+		String mem_pw = loginData.get("password");
+
+		MemberVO loggedInMember = memberservice.loginProcess(mem_id, mem_pw);
+
+		if (loggedInMember != null) {
+			// 로그인 성공 시 세션에 사용자 정보 저장
+			session.setAttribute("loggedInUser", loggedInMember);
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
 }

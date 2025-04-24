@@ -39,23 +39,25 @@ function login() {
         password: password
     };
 
-    fetch(`login/loginProcess`, {
+    fetch(`/login/loginProcess`, {
         method: 'post',
         body: JSON.stringify(loginData),
         headers: {
             'Content-type': 'application/json; charset=utf-8'
         }
     })
-    .then(response => response.json())
+    .then(response => response.text())
     .then(data => {
-        console.log(data.result);
-        console.log(typeof data.result);
-
-        if (data.result === 'success') {
-            location.href = '/'; // 로그인 성공 시 메인 페이지로 리다이렉트 (루트 경로 가정)
+        console.log(data);
+        
+        if (data === 'success') {
+        	location.href = '/'; // 로그인 성공 시 메인 페이지로 리다이렉트 (루트 경로 가정)
+        } else if (data === 'fail') {
+        	alert(LOGIN_FAIL_MSG);
+            return;
         } else {
-            alert(LOGIN_FAIL_MSG);
-            return;
+            console.error("알 수 없는 응답:", data);
+        	alert("로그인 처리 중 오류가 발생했습니다."); // 예외 처리
         }
     })
     .catch(err => console.log(err));

@@ -27,7 +27,6 @@ public interface MemberMapper {
 	
 	int countById(String mem_id);
 	
-	
 	public MemberVO getMemberInfo(@Param("mem_no") int mem_no);
 	public int[] getFoodKateInfo(@Param("mem_no") int mem_no);
 	public boolean modify(MemberVO vo);
@@ -35,5 +34,5 @@ public interface MemberMapper {
 	public List<BookMarkVO> getBookMark(@Param("mem_no") int mem_no);
 	public List<Integer> getBookMarkRestNo(@Param("mem_no") int mem_no);
 	
-	
+	MemberVO loginProcess(@Param("mem_id") String mem_id);
 }

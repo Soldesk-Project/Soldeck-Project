@@ -76,5 +76,10 @@
 	<select id="getBookMarkRestNo" resultType="int">
 		SELECT REST_NO FROM BOOKMARK WHERE MEM_NO=#{mem_no}
 	</select>
-	
+    
+    <select id="loginProcess" parameterType="java.lang.String" resultType="org.joonzis.domain.MemberVO">
+    	SELECT *
+    	FROM member
+    	WHERE mem_id = #{mem_id}
+	</select>
 </mapper>
