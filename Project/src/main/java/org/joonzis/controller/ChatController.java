@@ -44,8 +44,12 @@ public class ChatController {
 	    }
 
 	    // 로그인한 사용자 ID를 currentUser로 설정
-	    String currentUser = loginUser.getMem_id();
-	    model.addAttribute("currentUser", currentUser);
+	    String currentNick = loginUser.getMem_nick();
+	    model.addAttribute("currentNick", currentNick);
+	    
+	    // 로그인한 사용자 번호
+	    int currentNo = loginUser.getMem_no();
+	    model.addAttribute("currentNo", currentNo);
 
 		model.addAttribute("groupNo", groupNo);
 		return "chat/chatRoom";

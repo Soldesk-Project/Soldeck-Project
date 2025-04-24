@@ -51,13 +51,14 @@
   <input type="text" id="msg" placeholder="메시지 입력" />
   <button onclick="sendMessage()">보내기</button>
 
-  <!-- 현재 로그인한 사용자 이름을 JavaScript 변수로 전달 -->
-  <script>
-    const currentUser = "${currentUser}";
-    console.log("현재 사용자:", currentUser);
-  </script>
 
   <script>
+  <!-- 현재 로그인한 사용자 이름을 JavaScript 변수로 전달 -->
+    const currentNick = "${currentNick}";
+    const mem_no ="${currentNo}";
+    console.log("현재 사용자:", currentNick);
+    console.log("현재 사용자:", mem_no);
+    
     // 웹소켓 연결
     // 현재 페이지 URL에서 그룹 번호 파싱
 	const pathParts = window.location.pathname.split('/');
@@ -65,11 +66,11 @@
 	console.log(groupNo);
 
 	const ws = new WebSocket("wss://3f41-14-52-79-21.ngrok-free.app/chat/" + groupNo);
-	console.log(ws);
 
-
-    ws.onopen = function() {
+    ws.onopen = function(event) {
       document.body.insertAdjacentHTML("beforeend", "<div>웹소켓 연결 성공!</div>");
+      const firstMessage = JSON.stringify({ type: "register", mem_no: mem_no });
+      ws.send(firstMessage)
     };
 
     ws.onerror = function(e) {
@@ -82,45 +83,50 @@
 
     // 메시지 수신 시
     ws.onmessage = function(event) {
-      var chatBox = document.getElementById("chat-box");
-      var message = event.data;
-
-      console.log("받은 메시지 원본:", message);
-
-      if (message.includes(":")) {
-        var [sender, msg] = message.split(":", 2);
-
-        var alignClass = sender === currentUser ? "my-message" : "other-message";
-
-
-        var messageDiv = document.createElement("div");
-        messageDiv.className = alignClass;
-
-        messageDiv.textContent = sender + ": " + msg;
-        console.log(messageDiv);
-        console.log("chatBox 요소:", chatBox);
-        console.log("추가할 messageDiv:", messageDiv.outerHTML);
-        chatBox.appendChild(messageDiv);
-      } else {
-        var messageDiv = document.createElement("div");
-        messageDiv.className = "other-message";
-        messageDiv.textContent = message;
-        chatBox.appendChild(messageDiv);
-      }
-
-      // 스크롤 맨 아래로
-      chatBox.scrollTop = chatBox.scrollHeight;
-    };
-
-    // 메시지 보내기 함수
+	  var chatBox = document.getElementById("chat-box");
+	
+	  try {
+	    const data = JSON.parse(event.data); // 서버에서 JSON으로 보내왔을 때
+	
+	    if (data.type === "chat") {
+	      const sender = data.sender;
+	      const msg = data.msg;
+	
+	      const alignClass = sender === currentNick ? "my-message" : "other-message";
+	      const messageDiv = document.createElement("div");
+	      messageDiv.className = alignClass;
+	      messageDiv.textContent = sender + ": " + msg;
+	      chatBox.appendChild(messageDiv);
+	    }
+	
+	  } catch (e) {
+	    // 만약 그냥 텍스트일 경우 예외 처리
+	    const messageDiv = document.createElement("div");
+	    messageDiv.className = "other-message";
+	    messageDiv.textContent = event.data;
+	    chatBox.appendChild(messageDiv);
+	  }
+	
+	  chatBox.scrollTop = chatBox.scrollHeight;
+	};
+	
+    // 메세지 보내는 함수
     function sendMessage() {
-      var input = document.getElementById("msg");
-      var message = input.value;
-      if (message.trim() !== "") {
-        ws.send(currentUser + ":" + message);
-        input.value = "";
-      }
-    }
+    	  var input = document.getElementById("msg");
+    	  var message = input.value;
+
+    	  if (message.trim() !== "") {
+    	    const chatMessage = JSON.stringify({
+    	      type: "chat",
+    	      sender: currentNick,
+    	      mem_no: mem_no,
+    	      msg: message
+    	    });
+
+    	    ws.send(chatMessage);
+    	    input.value = "";
+    	  }
+    	}
   </script>
 </body>
 </html>

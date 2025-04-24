@@ -14,6 +14,8 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import lombok.extern.log4j.Log4j;
 
 @Log4j
@@ -44,14 +46,21 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         List<WebSocketSession> sessionsInRoom = roomSessions.get(groupNo);
         if (sessionsInRoom != null) {
             for (WebSocketSession s : sessionsInRoom) {
-                s.sendMessage(message);
+                s.sendMessage(message);  // 모든 메시지를 브로드캐스트
             }
         }
 
-        // 실제 로그인 회원 번호에서 가져와야 함 (지금은 테스트용)
-        int memNo = 1;
+        // JSON 파싱
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> msgMap = mapper.readValue(message.getPayload(), Map.class);
 
-        saveChat(message.getPayload(), Integer.parseInt(groupNo), memNo);
+        // 채팅 메시지일 때만 저장
+        if ("chat".equals(msgMap.get("type"))) {
+            int memNo = Integer.parseInt(String.valueOf(msgMap.get("mem_no")));
+            String msg = String.valueOf(msgMap.get("msg"));
+
+            saveChat(msg, Integer.parseInt(groupNo), memNo);
+        }
     }
 
     @Override
