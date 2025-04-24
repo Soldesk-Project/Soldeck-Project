@@ -91,4 +91,4 @@ build/
 ###
 
 # .gitignore
-src/main/resources/application.properties
+Project/src/main/resources/application.properties
