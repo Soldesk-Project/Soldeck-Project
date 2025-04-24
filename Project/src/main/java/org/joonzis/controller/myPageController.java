@@ -3,6 +3,8 @@ package org.joonzis.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.joonzis.domain.BookMarkVO;
 import org.joonzis.domain.GroupVO;
 import org.joonzis.domain.MemberVO;
@@ -37,9 +39,14 @@ public class myPageController {
 	private GroupService groupService;
 	
 	@GetMapping("/myInfo")
-	public String myInfo(Model model) {
+	public String myInfo(Model model, HttpSession session) {
 //	public String myInfo(Model model, @RequestParam("mem_no") int mem_no) {
-		int mem_no=118;
+		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
+		if (loggedInMember == null) {
+			// 로그인되지 않은 경우 처리 (예: 로그인 페이지로 리다이렉트)
+			return "redirect:/login/loginPage";
+		}
+		int mem_no = loggedInMember.getMem_no();
 
 		log.info("myInfo..."+mem_no);
 		int foodKate[]=service.getFoodKateInfo(mem_no);
@@ -64,9 +71,13 @@ public class myPageController {
 	    }
 	}
 	@GetMapping("/modifyInfo")
-	public String modifyInfo(Model model) {
+	public String modifyInfo(Model model, HttpSession session) {
 //	public String modifyInfo(Model model, @RequestParam("mem_no") int mem_no) {
-		int mem_no=118;
+		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
+		if (loggedInMember == null) {
+			return "redirect:/login/loginPage";
+		}
+		int mem_no = loggedInMember.getMem_no();
 		
 		log.info("modifyInfo..."+mem_no);
 		int foodKate[]=service.getFoodKateInfo(mem_no);
@@ -83,8 +94,15 @@ public class myPageController {
 	@PostMapping("modifyInfo")
 	public String modifyInfo(MemberVO vo,RedirectAttributes rttr, 
 							 @RequestParam(value = "profileImageInput", required = false) MultipartFile profileImage,
-							 @RequestParam(value = "food", required = false) List<Integer> interests
+							 @RequestParam(value = "food", required = false) List<Integer> interests,
+							 HttpSession session
 							) {
+		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
+		if (loggedInMember == null) {
+			return "redirect:/login/loginPage";
+		}
+		vo.setMem_no(loggedInMember.getMem_no());
+
 		log.info(vo);
 		
 		// food_kate 테이블 데이터 삭제
