@@ -16,30 +16,35 @@ let linkEle3 = document.createElement('link');
 linkEle3.rel = 'stylesheet';
 linkEle3.href = CSS_FILE_PATH3;
 document.head.appendChild(linkEle3);
-//-----즐겨찾기 버튼-------------------------------------------
-let bookmarkBtn=document.querySelectorAll(".bookmark");
-bookmarkBtn.forEach(btn=>{
-	btn.addEventListener('click',function(){
-		if (!btn.classList.contains('active')) {
-			// 즐겨찾기 on (default)
-			if (confirm("즐겨찾기를 해제하시겠습니까?")) {
-				this.classList.add('active');
-				// 자바로 가게 번호 날려서 db에서 bookmark 테이블 update
-			}
-		} else {
-			// 즐겨찾기 off
-			if (confirm("즐겨찾기로 등록하시겠습니까?")) {
-				this.classList.remove('active');
-				// 자바로 가게 번호 날려서 db에서 bookmark 테이블 update
-			}
-		}
-	})
-})
+//-----버튼 클릭 이벤트---------------------------------------------
+document.querySelectorAll('button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    let type = btn.getAttribute("id");
+
+    if(type == 'bookmarkBtn'){
+    	openModal();
+    }else if(type == 'outBookMarkBtn'){
+    	outBookmark();
+    	closeModal();
+    }else if(type == 'cancelModalBtn'){
+    	closeModal();
+    }
+  });
+});
 //-----가게 이름 이동------------------------------------------
-let a=document.querySelector(".info-text a");
-a.addEventListener('click',e=>{
-	e.preventDefault();
-	location.href="../search/view";
+document.querySelectorAll(".info-text a").forEach(moveRestView => {
+	moveRestView.addEventListener('click',e=>{
+		e.preventDefault();
+		const view = moveRestView.closest(".view").querySelector("#restNo").value;
+		location.href="../search/view?rest_no="+view;
+	});
+})
+document.querySelectorAll(".view-img img").forEach(moveRestView => {
+	moveRestView.addEventListener('click',e=>{
+		e.preventDefault();
+		const view = moveRestView.closest(".view").querySelector("#restNo").value;
+		location.href="../search/view?rest_no="+view;
+	});
 })
 //-----가게 이름 글자수에 맞게 input태그 길이 변경---------------------
 const input = document.querySelector('.res-name');
@@ -50,4 +55,53 @@ function inputSize() {
   input.style.width = size.offsetWidth + 30 + 'px';
 }
 inputSize();
+//-----즐겨찾기 삭제 확인 모달-------------------------------------------
+const modal = document.querySelector('.bookmark-check-modal');
+const params = new URLSearchParams(window.location.search);
+function openModal(){
+  modal.style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(){
+  modal.style.display = 'none';
+  document.body.style.overflow = 'auto';
+}
+
+//-----즐겨찾기 버튼 누를 때 가게 번호 가져오기 ------------------------------
+let restNo;
+document.querySelectorAll(".bookmark").forEach(bookmarkBtn => {
+	bookmarkBtn.addEventListener('click',e=>{
+		e.preventDefault();
+		// 현재 input 기준으로 가장 가까운 div에서 groupNo를 찾기
+		restNo = bookmarkBtn.closest(".view-info").querySelector("#restNo").value;
+	});
+})
+//----- 즐겨찾기 삭제 함수-------------------------------------------------
+function outBookmark() {
+//	let memberNo=params.get("mem_no");
+	let memberNo=118;
+	console.log(restNo);
+	console.log(memberNo);
+
+	fetch('/mypage/bookmark', {
+		  method: 'POST',
+		  headers: {
+		    'Content-Type': 'application/json'
+		  },
+		  body: JSON.stringify({mem_no: memberNo, rest_no: restNo})
+		})
+		  .then(response => response.json())
+		  .then(data=>{
+		  	console.log(data);
+		  	location.reload();
+		  })
+		  .catch(e=>console.log(e));
+}
+
+
+
+
+
+
 

@@ -1,8 +1,6 @@
 package org.joonzis.service;
 
-import java.util.List;
 
-import org.joonzis.domain.BookMarkVO;
 import org.joonzis.domain.MemberVO;
 import org.joonzis.mapper.MemberMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,15 +71,6 @@ public class MemberServiceImpl implements MemberService{
 		mapper.insertFoodKate(mem_no, food_no);
 	}
 	@Override
-	public List<BookMarkVO> getBookMark(int mem_no) {
-		return mapper.getBookMark(mem_no);
-	}
-	@Override
-	public List<Integer> getBookMarkRestNo(int mem_no) {
-		return mapper.getBookMarkRestNo(mem_no);
-	}
-
-	@Override
 	public MemberVO loginProcess(String mem_id, String mem_pw) {
 		MemberVO member = mapper.loginProcess(mem_id);
 
@@ -91,8 +80,6 @@ public class MemberServiceImpl implements MemberService{
 
 		return null;
 	}
-	
-	
 	
 	
 }

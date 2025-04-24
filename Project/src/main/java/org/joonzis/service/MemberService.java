@@ -1,8 +1,6 @@
 package org.joonzis.service;
 
-import java.util.List;
 
-import org.joonzis.domain.BookMarkVO;
 import org.joonzis.domain.MemberVO;
 
 public interface MemberService {
@@ -22,8 +20,5 @@ public interface MemberService {
     public boolean modify(MemberVO vo);
     public int deleteFoodKate(int mem_no);
     public void insertFoodKate(int mem_no, int food_no);
-    public List<BookMarkVO> getBookMark(int mem_no);
-    public List<Integer> getBookMarkRestNo(int mem_no);
-    
 	MemberVO loginProcess(String mem_id, String mem_pw);
 }

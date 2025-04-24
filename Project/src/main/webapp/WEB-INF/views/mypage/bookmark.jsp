@@ -26,7 +26,7 @@
 	  	<c:if test="${bm.is_public eq 'Y'}">
             <div class="view">
                 <div class="view-img">
-                	<img alt="res img" src="/resources/images/index_slide_image_2.png" class="view-res-image">
+                	<img alt="res img" src="${bm.rest.rest_img_name }" class="view-res-image">
                 </div>
                 <div class="view-info">
                     <div><button type="button" class="bookmark" id="bookmarkBtn">★</button></div>
@@ -36,6 +36,7 @@
 	                    <input type="text" class="res-industry" value="${bm.rest.rest_cate }" readonly="readonly">
 	                    <input type="text" class="res-time" value="${bm.rest.rest_bh }" readonly="readonly">
 	                    <input type="text" class="res-addr" value="${bm.rest.rest_adr }" readonly="readonly">
+	                    <input type="hidden" id="restNo" value="${bm.rest.rest_no }">
                     </div>
                 </div>
             </div>
@@ -55,7 +56,7 @@
 	  	<c:if test="${bm.is_public eq 'N'}">
             <div class="view">
                 <div class="view-img">
-                	<img alt="res img" src="/resources/images/index_slide_image_2.png" class="view-res-image">
+                	<img alt="res img" src="${bm.rest.rest_img_name }" class="view-res-image">
                 </div>
                 <div class="view-info">
                     <div><button type="button" class="bookmark" id="bookmarkBtn">★</button></div>
@@ -65,6 +66,7 @@
 	                    <input type="text" class="res-industry" value="${bm.rest.rest_cate }" readonly="readonly">
 	                    <input type="text" class="res-time" value="${bm.rest.rest_bh }" readonly="readonly">
 	                    <input type="text" class="res-addr" value="${bm.rest.rest_adr }" readonly="readonly">
+                        <input type="hidden" id="restNo" value="${bm.rest.rest_no }">
                     </div>
                 </div>
             </div>
@@ -79,6 +81,35 @@
   </div>
 
   <jsp:include page="../layout/footer.jsp"/>
+
+
+
+
+
+	<div id="customConfirm" class="bookmark-check-modal">
+		<div class="inner-modal">
+	    	<p>즐겨찾기를 삭제하시겠습니까?</p>
+			<div class="bookmark-modal-content">
+			    <button class="out-bookmark-btn" id="outBookMarkBtn">예</button>
+				<button class="cancle-modal-btn" id="cancelModalBtn">아니오</button>
+		    </div>
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <script type="text/javascript" src="/resources/js/bookmark.js"></script>
 </body>
 </html>

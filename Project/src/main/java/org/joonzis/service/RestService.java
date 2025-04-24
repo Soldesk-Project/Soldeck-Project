@@ -25,4 +25,10 @@ public interface RestService {
 	
 	// 예약된 시간 목록 조회
     public List<String> getReservedTimes(int rest_no, String res_date);
+    
+    // 멤버별 예약 리스트 확인
+    public List<ReserveVO> getReserveList(int mem_no);
+    
+    
+    
 }

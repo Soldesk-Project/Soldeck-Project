@@ -103,7 +103,22 @@
 	</select>
 	
 	<select id="getRest" resultType="org.joonzis.domain.RestVO">
-		SELECT * FROM RESTAURANT WHERE REST_NO=#{rest_no}
+		SELECT 
+	        r.REST_NO,
+	        r.REST_NAME,
+	        r.REST_PHONE,
+	        r.REST_ADR,
+	        r.REST_BH,
+	        r.REST_LOC,
+	        r.REST_CATE,
+	        i.REST_IMG_NAME,
+	        i.REST_IMG_NO
+	    FROM 
+	        RESTAURANT r
+	    LEFT JOIN 
+	        REST_IMG i ON r.REST_NO = i.REST_NO
+	    WHERE 
+	        r.REST_NO = #{rest_no} and i.rest_img_no=1
 	</select>
 	
 	<insert id="addReserve" parameterType="org.joonzis.domain.ReserveVO">
@@ -129,4 +144,24 @@
 	    WHERE REST_NO = #{rest_no, jdbcType=INTEGER}
 	    AND RES_DATE = TO_DATE(#{res_date, jdbcType=VARCHAR}, 'YYYY-MM-DD')
 	</select>
+	
+	<select id="getReserveList" resultType="org.joonzis.domain.ReserveVO">
+		SELECT * FROM RESERVE WHERE MEM_NO=#{mem_no}
+	</select>
+	
+	<delete id="deleteReserve">
+		
+	</delete>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </mapper>

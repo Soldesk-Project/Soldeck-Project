@@ -12,15 +12,20 @@ import org.joonzis.domain.BookMarkVO;
 import org.joonzis.domain.GroupVO;
 import org.joonzis.domain.MemberVO;
 import org.joonzis.domain.RestVO;
+import org.joonzis.service.BookmarkService;
 import org.joonzis.service.GroupService;
 import org.joonzis.service.MemberService;
 import org.joonzis.service.RestService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,9 +42,13 @@ public class myPageController {
 	private MemberService service;
 	@Autowired
 	private RestService rservice;
-	
+	@Autowired
+	private BookmarkService bservice;
 	@Autowired
 	private GroupService groupService;
+	
+	
+	
 	
 	@GetMapping("/myInfo")
 	public String myInfo(Model model, HttpSession session) {
@@ -140,36 +149,58 @@ public class myPageController {
 		int mem_no=118;
 		
 		log.info("bookmark..."+mem_no);
-		
-		
-//		List<Integer> rest_no=service.getBookMarkRestNo(mem_no);
 
-		List<BookMarkVO> bookmarkList = service.getBookMark(mem_no);
+		List<BookMarkVO> bookmarkList = bservice.getBookMark(mem_no);
 		for (BookMarkVO bm : bookmarkList) {
-//		    bm.setRest(rservice.getRestList(bm.getRest_no()));
 		    RestVO rest = rservice.getRest(bm.getRest_no());
 	        bm.setRest(rest);
 		}
 		model.addAttribute("bookmarkList", bookmarkList);
 
-		
-		
-//		List<RestVO> restList=new ArrayList<RestVO>();
-//		for (int i : rest_no) {
-//			restList.add(rservice.getRestList(i));
-//		}
-//		model.addAttribute("rest", restList);
-//		model.addAttribute("bookmarkList",service.getBookMark(mem_no));
-		log.info("is_public"+service.getBookMark(mem_no));
-		
 		return "/mypage/bookmark";
 	}
+	@PostMapping(value = "/bookmark", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Boolean> delBookmark(@RequestBody BookMarkVO vo) {
+		log.info("delBookmark..."+vo.getMem_no()+","+vo.getRest_no());
+//		bservice.deleteBookmark(mem_no, rest_no);
+		boolean result=bservice.deleteBookmark(vo.getMem_no(),vo.getRest_no());
+		return new ResponseEntity<Boolean>(result,HttpStatus.OK);
+	}
+	
+//	/////
+//	@GetMapping(value = "/view", produces = MediaType.APPLICATION_JSON_VALUE)
+//	public String view(@RequestParam(value = "rest_no") int rest_no, Model model) {
+//		log.info("view..." + rest_no);
+//		model.addAttribute("rest_no", rest_no);
+//		return "/search/view";
+//	}
+//	// 상세 페이지 데이터 가져오기
+//	@GetMapping(value = "/view/{rest_no}", produces = MediaType.APPLICATION_JSON_VALUE)
+//	public ResponseEntity<List<RestVO>> getview(@PathVariable(value = "rest_no") int rest_no) {
+//		log.info("getview..." + rest_no);
+//		return new ResponseEntity<List<RestVO>>(service.get(rest_no), HttpStatus.OK);
+//	}
+//	///////
 	
 	@GetMapping("/booking")
-	public String booking() {
+	public String booking(Model model) {
+//	public String booking(Model model, @RequestParam("mem_no") int mem_no) {
+		int mem_no=118;
+		
 		log.info("booking...");
+		
+		 rservice.getReserveList(mem_no);
+		
+		model.addAttribute("reserveList", rservice.getReserveList(mem_no));
+		
 		return "/mypage/booking";
 	}
+	
+	
+	
+	
+	
+	
 	@GetMapping("/review")
 	public String review() {
 		log.info("review...");

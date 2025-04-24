@@ -95,12 +95,12 @@ const isPublic = document.querySelector(".public-checkbox").checked ? 'Y' : 'N';
 
 function openModal(){
   modal.style.display = 'block';
-  document.body.style.overflow = 'hidden';
+//  document.body.style.overflow = 'hidden';
 }
 
 function closeModal(){
   modal.style.display = 'none';
-  document.body.style.overflow = 'auto';
+//  document.body.style.overflow = 'auto';
 }
 
 function createClub(){

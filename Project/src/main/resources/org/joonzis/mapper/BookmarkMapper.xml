@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.joonzis.mapper.BookmarkMapper">
+	
+	<!-- bookmark 정보 가져오기 -->
+	<select id="getBookMark" resultType="org.joonzis.domain.BookMarkVO">
+		SELECT MEM_NO, REST_NO, IS_PUBLIC FROM BOOKMARK WHERE MEM_NO=#{mem_no}
+	</select>
+	
+	<!-- bookmark된 가게 번호 가져오기 -->
+	<select id="getBookMarkRestNo" resultType="int">
+		SELECT REST_NO FROM BOOKMARK WHERE MEM_NO=#{mem_no}
+	</select>
+	
+	<delete id="deleteBookmark">
+		DELETE FROM BOOKMARK WHERE MEM_NO=#{mem_no} AND REST_NO=#{rest_no}
+	</delete>
+	
+	
+</mapper>

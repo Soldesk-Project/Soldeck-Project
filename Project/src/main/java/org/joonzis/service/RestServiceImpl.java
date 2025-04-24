@@ -95,4 +95,12 @@ public class RestServiceImpl implements RestService{
 		log.info("getReservedTimes..." + rest_no + res_date);
         return mapper.getReservedTimes(rest_no, res_date);
     }
+	
+	
+	@Override
+	public List<ReserveVO> getReserveList(int mem_no) {
+		return mapper.getReserveList(mem_no);
+	}
+	
+	
 }

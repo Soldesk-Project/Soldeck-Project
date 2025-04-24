@@ -20,28 +20,32 @@ body{
 	float: right;
 }
 .list-title{
-	width: 700px;
+	width: 90%;
   	height: 60px;
-  	border: 1px dashed;
+  	/*border: 1px dashed;*/
 	border-radius: 20px;
   	align-items: center;
 	display: flex;
+    color: #FF7D00;
+    
 }
 .list-title span{
-	font-size: 20px;
-	margin: 10px;
+	font-size: 40px;
+	margin: auto;
+	align-items: center;
 }
 .list-content{
 	overflow: hidden;
 	width: 90%;
 	height: 600px; 
-  	border: 1px dashed;
+  	/*border: 1px dashed;*/
 	border-radius: 20px;
 	margin: 15px 0;
 }
 .inner-content{
 	overflow: auto;
 	height: 100%;
+	background-color: #f0f0f0;
 }
 .inner-content::-webkit-scrollbar {
 	display:inline;
@@ -56,7 +60,9 @@ body{
 	width: 150px;
 	height: 150px;
 	margin: 20px;
-	border: 1px dashed;
+	border-radius: 10px;
+	box-shadow: 3px 3px 8px 1px rgba(0, 0, 0, 0.2);
+	overflow: hidden;
 }
 .view-res-image{
 	margin: auto;
@@ -67,7 +73,9 @@ body{
 	float: right;
 	width: 630px;
 	height: 150px;
-	border: 1px dashed;
+	border-radius: 10px;
+	background-color: white;
+	box-shadow: 3px 3px 8px 1px rgba(0, 0, 0, 0.2);
 	margin: 20px 20px 20px 0;
 }
 .info-text{
@@ -117,6 +125,55 @@ body{
 .bookmark:hover {
   	color: #FFD700;
 }
+/*-----------------------모달-------------------------------*/
+.bookmark-check-modal{
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: none;
+    position: fixed;
+    top: 35%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+	background: rgba(0,0,0,0.2);
+  	z-index: 999;
+}
+.inner-modal{
+	text-align: center;
+	background: #fff;
+	padding: 20px 25px;
+	border-radius: 8px;
+	box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+	min-width: 300px;
+}
+.bookmark-modal-content{
+	display: flex;
+	align-items:center;
+	justify-content: center;
+}
+.out-bookmark-btn{
+    background-color: #FF7D00;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100px;
+    height: 40px;
+    margin: auto;
+}
+.cancle-modal-btn{
+	background-color: #e53935;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100px;
+    height: 40px;
+    margin: auto;
+}
+
 /*------------------ 사이드 메뉴 css -------------------------*/
 
 .side{
