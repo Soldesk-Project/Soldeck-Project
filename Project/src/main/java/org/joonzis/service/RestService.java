@@ -1,7 +1,9 @@
 package org.joonzis.service;
 
 import java.util.List;
+import java.util.Map;
 
+import org.joonzis.domain.ReserveVO;
 import org.joonzis.domain.RestVO;
 
 public interface RestService {
@@ -19,5 +21,8 @@ public interface RestService {
 
 	public RestVO getRest(int rest_no);
 
-
+	public void addReserve(ReserveVO reservation);
+	
+	// 예약된 시간 목록 조회
+    public List<String> getReservedTimes(int rest_no, String res_date);
 }

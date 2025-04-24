@@ -8,7 +8,7 @@
 	    SELECT c.com_no, c.rest_no, c.mem_no, c.com_con, c.com_rate, c.com_date,
 	           a.att_uuid, a.att_path, a.att_name
 	    FROM "COMMENT" c
-	    LEFT JOIN attach a ON c.com_no = a.com_no+1
+	    LEFT JOIN attach a ON c.com_no = a.com_no
 	    WHERE c.rest_no = #{rest_no}
 	    ORDER BY c.com_date DESC
 	</select>

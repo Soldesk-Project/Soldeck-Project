@@ -1,17 +1,23 @@
 package org.joonzis.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.joonzis.domain.ReserveVO;
 import org.joonzis.domain.RestVO;
 import org.joonzis.service.RestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -95,4 +101,44 @@ public class SearchController {
 		log.info("getview..." + rest_no);
 		return new ResponseEntity<List<RestVO>>(service.get(rest_no), HttpStatus.OK);
 	}
+	
+	// 예약하기
+	@PostMapping("/reservations/add")
+	public ResponseEntity<Map<String, Object>> addReservation(@RequestBody ReserveVO reservation) {
+	    log.info("addReservation..." + reservation);
+	    try {
+	        service.addReserve(reservation);
+	        Map<String, Object> response = new HashMap<>();
+	        response.put("status", "success");
+	        response.put("message", "예약 성공");
+	        return ResponseEntity.ok(response);
+	    } catch (Exception e) {
+	        log.error("예약 실패: " + e.getMessage());
+	        Map<String, Object> response = new HashMap<>();
+	        response.put("status", "error");
+	        response.put("message", "예약 실패: " + e.getMessage());
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+	    }
+	}
+	
+	//예약한 시간 가져오기
+	@GetMapping("/reservations/times")
+    public ResponseEntity<Map<String, Object>> getReservedTimes(
+            @RequestParam("rest_no") int rest_no,
+            @RequestParam("res_date") String res_date) {
+		log.info("getReservedTimes..." + rest_no + res_date);
+        try {
+            List<String> reservedTimes = service.getReservedTimes(rest_no, res_date);
+            Map<String, Object> response = new HashMap<>();
+            response.put("status", "success");
+            response.put("reservedTimes", reservedTimes);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            log.error("예약된 시간 조회 실패: ", e);
+            Map<String, Object> response = new HashMap<>();
+            response.put("status", "error");
+            response.put("message", "예약된 시간 조회 실패: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
 }

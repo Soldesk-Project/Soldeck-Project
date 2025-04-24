@@ -22,7 +22,11 @@ const monthSelect = document.getElementById('monthSelect');
 const calendarDays = document.getElementById('calendarDays');
 let selectedDate = null;
 let selectedTime = null;
-let selectedMonth = 4;
+let selectedMonth = new Date().getMonth() + 1; // 초기 월을 현재 월로 설정
+
+//JSP에서 시간 슬롯 가져오기
+const timeButtons = document.querySelectorAll('.time-options .time-btn');
+const timeSlots = Array.from(timeButtons).map(button => button.textContent.trim());
 
 const stars = document.querySelectorAll('#starRating .star');
 let ratingValue = 0;
@@ -97,6 +101,8 @@ document.addEventListener("DOMContentLoaded", function () {
     if (reservationBtn) {
         reservationBtn.addEventListener('click', () => {
             reservationModal.style.display = 'flex';
+            selectedMonth = new Date().getMonth() + 1; // 현재 월로 설정
+            if (monthSelect) monthSelect.value = selectedMonth.toString();
             renderCalendar(selectedMonth);
         });
     }
@@ -118,6 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const timeButtons = document.querySelectorAll('.time-btn');
     timeButtons.forEach(btn => {
         btn.addEventListener('click', () => {
+            if (btn.disabled) return; // 비활성화된 버튼은 클릭 무시
             timeButtons.forEach(b => b.classList.remove('selected'));
             btn.classList.add('selected');
             selectedTime = btn.textContent;
@@ -127,13 +134,46 @@ document.addEventListener("DOMContentLoaded", function () {
     // 예약 확인 버튼
     if (confirmReservationBtn) {
         confirmReservationBtn.addEventListener('click', () => {
-            if (!selectedDate || !selectedTime) {
+            if (!selectedDate || !selectedTime || !selectedMonth) {
                 alert('날짜와 시간을 선택해주세요.');
                 return;
             }
-            alert(`예약이 완료되었습니다!\n날짜: 2025년 ${selectedMonth}월 ${selectedDate}일\n시간: ${selectedTime}`);
-            reservationModal.style.display = 'none';
-            resetSelections();
+            const resDate = `2025-${selectedMonth}-${selectedDate}`; // 예: "2025-4-24"
+            // resDate 형식 검증
+            if (!/^\d{4}-\d{1,2}-\d{1,2}$/.test(resDate)) {
+                alert('유효한 날짜 형식이 아닙니다.');
+                return;
+            }
+            const reservationData = {
+                rest_no: restNo,
+                mem_no: 1,
+                res_date: resDate,
+                res_time: selectedTime,
+                res_memo: '예약 메모'
+            };
+            fetch('/search/reservations/add', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(reservationData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(errData => {
+                        throw new Error(errData.message || '서버 오류');
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert(`예약이 완료되었습니다!\n날짜: 2025년 ${selectedMonth}월 ${selectedDate}일\n시간: ${selectedTime}`);
+                reservationModal.style.display = 'none';
+                resetSelections();
+                updateTimeSlots(restNo, resDate); // 시간 슬롯 갱신
+            })
+            .catch(err => alert('예약 실패: ' + err.message));
         });
     }
 
@@ -326,16 +366,66 @@ function moveSlide(direction) {
     slidesWrapper.style.transform = `translateX(-${offset}%)`;
 }
 
-// 달력 및 예약 기능
+// 달력 및 예약 기능 -----------------------------------------
+//function renderCalendar(month) {
+//    if (!calendarDays) return;
+//    calendarDays.innerHTML = '';
+//
+//    const year = new Date().getFullYear(); // 현재 연도 동적으로 설정
+//    const daysInMonth = new Date(year, month, 0).getDate();
+//    const firstDay = new Date(year, month - 1, 1).getDay();
+//    const prevMonth = month === 1 ? 12 : month - 1; // 1월일 경우 12월로 설정
+//    const prevMonthYear = month === 1 ? year - 1 : year; // 이전 월의 연도
+//    const daysInPrevMonth = new Date(prevMonthYear, prevMonth, 0).getDate();
+//    const prevMonthStart = daysInPrevMonth - firstDay + 1;
+//
+//    for (let i = 0; i < firstDay; i++) {
+//        const day = document.createElement('div');
+//        day.classList.add('day', 'disabled');
+//        day.textContent = prevMonthStart + i;
+//        calendarDays.appendChild(day);
+//    }
+//
+//    for (let i = 1; i <= daysInMonth; i++) {
+//        const day = document.createElement('div');
+//        day.classList.add('day');
+//        day.textContent = i;
+//
+//        const today = new Date(); // 현재 날짜 동적으로 설정
+//        const currentDate = new Date(year, month - 1, i);
+//        if (currentDate < today.setHours(0, 0, 0, 0)) { // 오늘 이전 날짜 비활성화
+//            day.classList.add('disabled');
+//        } else {
+//            day.addEventListener('click', () => {
+//                const days = document.querySelectorAll('.day:not(.disabled)');
+//                days.forEach(d => d.classList.remove('selected'));
+//                day.classList.add('selected');
+//                selectedDate = day.textContent;
+//            });
+//        }
+//
+//        calendarDays.appendChild(day);
+//    }
+//
+//    const totalDays = firstDay + daysInMonth;
+//    const remainingDays = (7 - (totalDays % 7)) % 7;
+//    for (let i = 1; i <= remainingDays; i++) {
+//        const day = document.createElement('div');
+//        day.classList.add('day', 'disabled');
+//        day.textContent = i;
+//        calendarDays.appendChild(day);
+//    }
+//}
 function renderCalendar(month) {
     if (!calendarDays) return;
     calendarDays.innerHTML = '';
 
-    const year = 2025;
-    const daysInMonth = new Date(year, month, 0).getDate();
+    const year = new Date().getFullYear();
+    const daysInMonth = new Date(year, month, 0).getDate(); // 수정: getTERMS OF SERVICEate() → getDate()
     const firstDay = new Date(year, month - 1, 1).getDay();
-    const prevMonth = month === 4 ? 3 : month - 1;
-    const daysInPrevMonth = new Date(year, prevMonth, 0).getDate();
+    const prevMonth = month === 1 ? 12 : month - 1;
+    const prevMonthYear = month === 1 ? year - 1 : year;
+    const daysInPrevMonth = new Date(prevMonthYear, prevMonth, 0).getDate(); // 수정: getTERMS OF SERVICEate() → getDate()
     const prevMonthStart = daysInPrevMonth - firstDay + 1;
 
     for (let i = 0; i < firstDay; i++) {
@@ -350,9 +440,9 @@ function renderCalendar(month) {
         day.classList.add('day');
         day.textContent = i;
 
-        const today = new Date(2025, 3, 16);
+        const today = new Date();
         const currentDate = new Date(year, month - 1, i);
-        if (currentDate < today) {
+        if (currentDate < today.setHours(0, 0, 0, 0)) {
             day.classList.add('disabled');
         } else {
             day.addEventListener('click', () => {
@@ -360,6 +450,8 @@ function renderCalendar(month) {
                 days.forEach(d => d.classList.remove('selected'));
                 day.classList.add('selected');
                 selectedDate = day.textContent;
+                const resDate = `2025-${month}-${selectedDate}`;
+                updateTimeSlots(restNo, resDate);
             });
         }
 
@@ -379,8 +471,8 @@ function renderCalendar(month) {
 function resetSelections() {
     selectedDate = null;
     selectedTime = null;
-    selectedMonth = 4;
-    if (monthSelect) monthSelect.value = '4';
+    selectedMonth = new Date().getMonth() + 1; // 현재 월로 초기화
+    if (monthSelect) monthSelect.value = selectedMonth.toString();
     const days = document.querySelectorAll('.day:not(.disabled)');
     days.forEach(day => day.classList.remove('selected'));
     const timeButtons = document.querySelectorAll('.time-btn');
@@ -388,7 +480,49 @@ function resetSelections() {
     renderCalendar(selectedMonth);
 }
 
-// 코멘트 목록 조회 및 표시
+//시간 슬롯 비활성화 함수
+function updateTimeSlots(restNo, resDate) {
+    fetch(`/search/reservations/times?rest_no=${restNo}&res_date=${resDate}`, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(errData => {
+                throw new Error(errData.message || '서버 오류');
+            });
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.status === 'success') {
+            const reservedTimes = data.reservedTimes || [];
+            timeButtons.forEach(button => {
+                const time = button.textContent.trim();
+                button.disabled = false; // 기본적으로 활성화
+                button.classList.remove('disabled');
+                if (reservedTimes.includes(time)) {
+                    button.disabled = true;
+                    button.classList.add('disabled');
+                    button.title = '이미 예약된 시간입니다.';
+                }
+            });
+        } else {
+            throw new Error(data.message || '예약된 시간 조회 실패');
+        }
+    })
+    .catch(err => {
+        console.error('예약된 시간 조회 실패:', err.message);
+        timeButtons.forEach(button => {
+            button.disabled = false;
+            button.classList.remove('disabled');
+        });
+    });
+}
+
+// 코멘트 목록 조회 및 표시 -----------------------------------------------
 function fetchComments() {
     const commentList = document.querySelector(".panel-footer-body ul.chat");
     if (!commentList) {
@@ -482,18 +616,6 @@ function getComments(callback) {
     });
 }
 
-function formatDate(dateStr) {
-    const date = new Date(dateStr);
-    return date.toLocaleString('ko-KR', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false
-    });
-}
-
 //코멘트 등록
 function uploadComment() {
     console.log("Before uploadComment, window.uploadedFiles:", window.uploadedFiles); // 디버깅 로그
@@ -559,7 +681,7 @@ function uploadComment() {
     });
 }
 
-// 날짜 포맷팅 함수
+// 코멘트 날짜 포맷팅 함수
 function formatDate(dateString) {
     if (!dateString) return '날짜 없음';
     const date = new Date(dateString);

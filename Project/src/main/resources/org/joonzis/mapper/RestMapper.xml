@@ -106,8 +106,27 @@
 		SELECT * FROM RESTAURANT WHERE REST_NO=#{rest_no}
 	</select>
 	
-	
-	
-	
-	
+	<insert id="addReserve" parameterType="org.joonzis.domain.ReserveVO">
+        INSERT INTO RESERVE (RES_NO, MEM_NO, REST_NO, RES_DATE, RES_TIME, RES_MEMO)
+        VALUES (
+            SEQ_RESERVE.NEXTVAL, 
+            #{mem_no, jdbcType=INTEGER}, 
+            #{rest_no, jdbcType=INTEGER}, 
+            <if test="res_date != null">
+                TO_DATE(#{res_date, jdbcType=VARCHAR}, 'YYYY-MM-DD')
+            </if>
+            <if test="res_date == null">
+                NULL
+            </if>,
+            #{res_time, jdbcType=VARCHAR}, 
+            #{res_memo, jdbcType=VARCHAR}
+        )
+    </insert>
+    
+    <select id="getReservedTimes" resultType="string">
+	    SELECT RES_TIME
+	    FROM RESERVE
+	    WHERE REST_NO = #{rest_no, jdbcType=INTEGER}
+	    AND RES_DATE = TO_DATE(#{res_date, jdbcType=VARCHAR}, 'YYYY-MM-DD')
+	</select>
 </mapper>
