@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <ul class="side">
 	<li class="side-myinfo active"><a href="myInfo" class="a-myinfo active">나의 정보</a></li>
+	<li class="side-modifyinfo active"><a href="modifyInfo" class="a-modifyinfo active">정보 수정</a></li>
 	<li class="side-bookmark active"><a href="bookmark" class="a-bookmark active">즐겨 찾기</a></li>
 	<li class="side-booking active"><a href="booking" class="a-booking active">예약 내역</a></li>
 	<li class="side-club active"><a href="club" class="a-club active">나의 모임</a></li>

@@ -1,5 +1,8 @@
 package org.joonzis.service;
 
+import java.util.List;
+
+import org.joonzis.domain.BookMarkVO;
 import org.joonzis.domain.MemberVO;
 import org.joonzis.mapper.MemberMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +44,13 @@ public class MemberServiceImpl implements MemberService{
 	}
     
 	
+	@Override
+	public boolean isIdAvailable(String mem_id) {
+		return mapper.countById(mem_id) == 0;
+	}
+
+	
+	
 	//mypage
 	@Override
 	public MemberVO getMemberInfo(int mem_no) {
@@ -50,11 +60,29 @@ public class MemberServiceImpl implements MemberService{
 	public int[] getFoodKateInfo(int mem_no) {
 		return mapper.getFoodKateInfo(mem_no);
 	}
-
 	@Override
-	public boolean isIdAvailable(String mem_id) {
-		return mapper.countById(mem_id) == 0;
+	public boolean modify(MemberVO vo) {
+		return mapper.modify(vo);
 	}
+	@Override
+	public int deleteFoodKate(int mem_no) {
+		return mapper.deleteFoodKate(mem_no);
+	}
+	@Override
+	public void insertFoodKate(int mem_no, int food_no) {
+		mapper.insertFoodKate(mem_no, food_no);
+	}
+	@Override
+	public List<BookMarkVO> getBookMark(int mem_no) {
+		return mapper.getBookMark(mem_no);
+	}
+	@Override
+	public List<Integer> getBookMarkRestNo(int mem_no) {
+		return mapper.getBookMarkRestNo(mem_no);
+	}
+	
+	
+	
 	
 	
 }

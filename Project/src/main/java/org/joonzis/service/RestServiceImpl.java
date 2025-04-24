@@ -56,4 +56,12 @@ public class RestServiceImpl implements RestService{
 		log.info("get..." + rest_no);
 		return mapper.findByNo(rest_no);
 	}
+	
+	@Override
+	public RestVO getRest(int rest_no) {
+		return mapper.getRest(rest_no);
+	}
+	
+	
+	
 }

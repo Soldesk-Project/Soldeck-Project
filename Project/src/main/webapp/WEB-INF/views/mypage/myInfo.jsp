@@ -84,9 +84,9 @@
             <b>연락처</b>	
           </div>
           <div class="info-content">
-            <input type="text" class="info-phone" name="phoneNumber" value="${fn:substring(member.mem_phone, 0, 3)}" readonly="readonly"><span>-</span>
-            <input type="text" class="info-phone" name="phoneNumber" value="${fn:substring(member.mem_phone, 3, 7)}" readonly="readonly"><span>-</span>
-            <input type="text" class="info-phone" name="phoneNumber" value="${fn:substring(member.mem_phone, 7, 11)}" readonly="readonly">
+            <input type="text" class="info-phone" name="phoneNumber" value="0${fn:substring(member.mem_phone, 0, 2)}" readonly="readonly"><span>-</span>
+            <input type="text" class="info-phone" name="phoneNumber" value="${fn:substring(member.mem_phone, 2, 6)}" readonly="readonly"><span>-</span>
+            <input type="text" class="info-phone" name="phoneNumber" value="${fn:substring(member.mem_phone, 6, 10)}" readonly="readonly">
           </div>
           
           <div class="info-title">

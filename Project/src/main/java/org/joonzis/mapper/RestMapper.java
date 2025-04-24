@@ -18,4 +18,7 @@ public interface RestMapper {
 	
 	// 가게 찾기
 	public List<RestVO> findByNo(int rest_no);
+	
+	public RestVO getRest(int rest_no);
+	
 }

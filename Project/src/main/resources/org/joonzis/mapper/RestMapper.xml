@@ -101,4 +101,13 @@
     WHERE 
         r.REST_NO = #{rest_no}
 	</select>
+	
+	<select id="getRest" resultType="org.joonzis.domain.RestVO">
+		SELECT * FROM RESTAURANT WHERE REST_NO=#{rest_no}
+	</select>
+	
+	
+	
+	
+	
 </mapper>

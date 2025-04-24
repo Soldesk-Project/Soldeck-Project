@@ -1,6 +1,9 @@
 package org.joonzis.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
+import org.joonzis.domain.BookMarkVO;
 import org.joonzis.domain.MemberVO;
 
 public interface MemberMapper {
@@ -22,9 +25,15 @@ public interface MemberMapper {
 			@Param("mem_birth") String mem_birth
 		);
 	
+	int countById(String mem_id);
+	
+	
 	public MemberVO getMemberInfo(@Param("mem_no") int mem_no);
 	public int[] getFoodKateInfo(@Param("mem_no") int mem_no);
-
-	int countById(String mem_id);
+	public boolean modify(MemberVO vo);
+	public int deleteFoodKate(@Param("mem_no") int mem_no);
+	public List<BookMarkVO> getBookMark(@Param("mem_no") int mem_no);
+	public List<Integer> getBookMarkRestNo(@Param("mem_no") int mem_no);
+	
 	
 }

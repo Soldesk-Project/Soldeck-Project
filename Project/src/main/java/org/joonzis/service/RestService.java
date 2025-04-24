@@ -16,4 +16,8 @@ public interface RestService {
 	
 	// 가게 찾기
 	public List<RestVO> get(int rest_no);
+
+	public RestVO getRest(int rest_no);
+
+
 }
