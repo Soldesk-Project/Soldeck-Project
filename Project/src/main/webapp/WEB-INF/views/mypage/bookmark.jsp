@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>북마크 리스트</title>
 </head>
 <body>
   <jsp:include page="../layout/header.jsp"/>
@@ -45,8 +45,7 @@
 
 	  	</div>
 	  </div>
-	  
-	  
+	   
 	  <div class="list-title">
 	  	<span>나만의 작은 리스트</span>
 	  </div>
@@ -76,10 +75,10 @@
 	  		
 	  	</div>
 	  </div>
-	  
 	</div>
   </div>
-	<jsp:include page="../layout/footer.jsp"/>
-<script type="text/javascript" src="/resources/js/bookmark.js"></script>
+
+  <jsp:include page="../layout/footer.jsp"/>
+  <script type="text/javascript" src="/resources/js/bookmark.js"></script>
 </body>
 </html>

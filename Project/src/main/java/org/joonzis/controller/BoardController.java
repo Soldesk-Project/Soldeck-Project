@@ -34,3 +34,4 @@ public class BoardController {
 		return "board/announcement";
 	}
 }
+//

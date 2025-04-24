@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.joonzis.domain.BookMarkVO;
 import org.joonzis.domain.GroupVO;
-import org.joonzis.service.GroupService;
 import org.joonzis.domain.MemberVO;
 import org.joonzis.domain.RestVO;
+import org.joonzis.service.GroupService;
 import org.joonzis.service.MemberService;
 import org.joonzis.service.RestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,12 +130,6 @@ public class myPageController {
 		
 		return "/mypage/bookmark";
 	}
-	
-	
-	
-	
-	
-	
 	
 	@GetMapping("/booking")
 	public String booking() {

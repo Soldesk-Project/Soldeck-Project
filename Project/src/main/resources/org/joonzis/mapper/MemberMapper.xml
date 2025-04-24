@@ -64,8 +64,13 @@
 	</delete>
 	
 	<!-- bookmark 가져오기 -->
-	<select id="getBookMark" resultType="org.joonzis.domain.BookMarkVO">
-		SELECT * FROM BOOKMARK WHERE MEM_NO=#{mem_no}
+	<resultMap id="bookMarkMap" type="org.joonzis.domain.BookMarkVO">
+		<result property="mem_no" column="MEM_NO"/>
+		<result property="rest_no" column="REST_NO"/>
+		<result property="is_public" column="IS_PUBLIC"/>
+	</resultMap>
+	<select id="getBookMark" resultMap="bookMarkMap">
+		SELECT MEM_NO, REST_NO, IS_PUBLIC FROM BOOKMARK WHERE MEM_NO=#{mem_no}
 	</select>
 	<!-- bookmark된 가게 번호 가져오기 -->
 	<select id="getBookMarkRestNo" resultType="int">

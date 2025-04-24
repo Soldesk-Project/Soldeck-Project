@@ -3,7 +3,9 @@ package org.joonzis.service;
 import org.joonzis.domain.ChatLogVO;
 import org.joonzis.mapper.ChatLogMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ChatLogServiceImpl implements ChatLogService {
 	@Autowired
 	private ChatLogMapper chatLogMapper;
