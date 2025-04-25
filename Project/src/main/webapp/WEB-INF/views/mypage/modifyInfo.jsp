@@ -19,6 +19,7 @@
       <form method="POST" id="modifyInfoForm" enctype="multipart/form-data">
 
         <div class="info">
+        	<p class="text_left">개인 정보</p>
         	<div class="info_personal_box">
 	        	<div class="info-profile-div-box">
 		        	<div class="info-profile-div">
@@ -26,27 +27,31 @@
 		    			<input type="file" id="profileImageInput" class="previewImage" accept="image/*" name="profileImageInput">
 					</div>
 					<div class="info-profile-div-div">
-						<p id="text1">※이미지 크기는 최소 200*200px로 업로드해주시길 바랍니다. </p>
+						<p id="text1">※이미지 크기는 최소 100*100px로 업로드해주시길 바랍니다. </p>
 		            	<button type="button" class="profile-upload" id="profileUploadBtn">업로드</button>
 		            </div>
 	            </div>
-		          <div class="info-title">
-		            <b>이름</b>	
-		          </div>
-		          <div class="info-content">
-		            <input type="text" class="info-name" name="name" value="${member.mem_name}" readonly="readonly">
-					
-		          </div>
+	            <div class="info_border_box">
+					<div class="info-title">
+					  <b class="info_text">이름</b>	
+					</div>
+					<div class="info-content">
+					  <input type="text" class="info-name" name="name" value="${member.mem_name}" readonly="readonly">
+					</div>
+		        </div>
+		          
+				<div class="info_border_box">
+					<div class="info-title">
+					  <b>생년월일</b>	
+					</div>
+					<div class="info-content">
+					  <input type="text" class="info-birth" name="year" value="${fn:substring(member.mem_birth, 0, 4)}" readonly="readonly">
+					  <input type="text" class="info-birth" name="month" value="${fn:substring(member.mem_birth, 4, 6)}" readonly="readonly">
+					  <input type="text" class="info-birth" name="day" value="${fn:substring(member.mem_birth, 6, 8)}" readonly="readonly">
+					</div>
+		        </div>
 		      
-		          <div class="info-title">
-		            <b>생년월일</b>	
-		          </div>
-		          <div class="info-content">
-		            <input type="text" class="info-birth" name="year" value="${fn:substring(member.mem_birth, 0, 4)}" readonly="readonly">
-		            <input type="text" class="info-birth" name="month" value="${fn:substring(member.mem_birth, 4, 6)}" readonly="readonly">
-		            <input type="text" class="info-birth" name="day" value="${fn:substring(member.mem_birth, 6, 8)}" readonly="readonly">
-		          </div>
-		      
+		      	<div class="info_border_box">
 		          <div class="info-title">
 		            <b>성별</b>	
 		          </div>
@@ -60,16 +65,20 @@
 						</c:otherwise>
 		          	</c:choose>
 		          </div>
+	          	</div>
 	          </div>
 	          
-	          <div class="info_userInfo_box">
+	          <p class="text_left">가입 정보</p>
+	          <div class="info_personal_box">
+	          <div class="info_border_box">
 		          <div class="info-title">
 		            <b>아이디</b>	
 		          </div>
 		          <div class="info-content">
 		            <input type="text" class="info-rest" id="id" name="id" value="${member.mem_id}" readonly="readonly">
 		          </div>
-		      
+		      </div>
+		      <div class="info_border_box">
 		          <div class="info-title">
 		            <b>비밀번호</b>	
 		          </div>
@@ -77,7 +86,8 @@
 		            <input type="password" class="info-rest" id="password" name="mem_pw" value="${member.mem_pw}">
 		            <div id="passwordErrorMessage" class="message error"></div>
 		          </div>
-		      
+		      </div>
+		      <div class="info_border_box">
 		          <div class="info-title">
 		            <b>별명</b>	
 		          </div>
@@ -85,9 +95,13 @@
 		            <input type="text" class="info-rest" id="nickName" name="mem_nick" value="${member.mem_nick}">
 		            <div id="nicknameCheckMessage" class="message error"></div>
 		          </div>
+		      </div>
 	          </div>
 	          
-	          <div class="info_chooseInfo_box">
+	          
+	          <p class="text_left">나의 추가 정보</p>
+	          <div class="info_personal_box">
+	          <div class="info_border_box">
 		          <div class="info-title">
 		            <b>이메일</b>	
 		          </div>
@@ -95,14 +109,15 @@
 		            <input type="text" class="info-rest" id="email" name="mem_email" value="${member.mem_email}">
 		            <div id="emailCheckMessage" class="message error"></div>
 		          </div>
+		      </div>
 		      
 		          <div class="info-title">
 		            <b>연락처</b>	
 		          </div>
 		          <div class="info-content">
 			          <div>
-			            <input type="text" class="info-phone" id="phone1" name="phoneNumber" value="0${fn:substring(member.mem_phone, 0, 2)}"><span>-</span>
-			            <input type="text" class="info-phone" id="phone2" name="phoneNumber" value="${fn:substring(member.mem_phone, 2, 6)}"><span>-</span>
+			            <input type="text" class="info-phone" id="phone1" name="phoneNumber" value="0${fn:substring(member.mem_phone, 0, 2)}"><span class="dash">-</span>
+			            <input type="text" class="info-phone" id="phone2" name="phoneNumber" value="${fn:substring(member.mem_phone, 2, 6)}"><span class="dash">-</span>
 			            <input type="text" class="info-phone" id="phone3" name="phoneNumber" value="${fn:substring(member.mem_phone, 6, 10)}">
 			          </div>
 		              <div id="phoneErrorMessage" class="message error phone-error"></div>
