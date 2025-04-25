@@ -14,18 +14,18 @@ body {
 /*------------------ body / main menu -------------------------*/
 .container-wrapper {
   background-color: rgba(255, 254, 252, 0.3);
-  padding: 40px 0;
+  padding-bottom: 40px;
 }
 .container{
 	width: 1200px;
 	height: 1000px;
 	margin: auto;
 	flex: 1;
+	background-color: fffefc;
 }
 .side-menu{
-	width: 230px;
-	height: 100%;
-	float: left;
+	width: 200px;
+	display: flex;
 }
 .main-menu{
 	width: 80%;
@@ -41,13 +41,14 @@ body {
 form input{
 	font-size: 15px;
 	border: 1px solid;
-	border-radius: 5px;
-	padding: 0 13px;
+	border-radius: 10px;
+	padding: 0 20px;
 }
 b{
 	font-size: 20px;
 	margin: 0;
 }
+
 .info{
 	margin: 20px 10px;
 	width: 70%;
@@ -65,6 +66,7 @@ b{
 	height: 44px;
 }
 .info-rest{
+	float: left;
 	width: 330px;
 	height: 32px;
 }
@@ -110,8 +112,11 @@ b{
 .info-profile{
 	height: 100%;
 	width: 100%;
-	object-fit: cover;
-	text-align: center;
+}
+fieldset{
+	width: 500px;
+	margin: 0;
+	border-style: none;
 }
 .info-profile-div-box{
 	display: flex;
@@ -130,11 +135,7 @@ b{
 	margin-top: 5px;
 	text-align: center;
 }
-fieldset{
-	width: 500px;
-	margin: 0;
-	border-style: none;
-}
+
 .btn-div{
 	margin: auto;
 	width: 50%;
