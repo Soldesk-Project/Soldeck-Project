@@ -16,5 +16,9 @@
 		DELETE FROM BOOKMARK WHERE MEM_NO=#{mem_no} AND REST_NO=#{rest_no}
 	</delete>
 	
+	<insert id="addBookmark">
+		INSERT INTO BOOKMARK VALUES
+		(#{mem_no}, #{rest_no}, 'Y') 
+	</insert>
 	
 </mapper>

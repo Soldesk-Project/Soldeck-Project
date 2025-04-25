@@ -145,12 +145,41 @@
 	    AND RES_DATE = TO_DATE(#{res_date, jdbcType=VARCHAR}, 'YYYY-MM-DD')
 	</select>
 	
-	<select id="getReserveList" resultType="org.joonzis.domain.ReserveVO">
-		SELECT * FROM RESERVE WHERE MEM_NO=#{mem_no}
+	<select id="getReserveList" resultType="org.joonzis.domain.ReserveRestDTO">
+		SELECT 
+		    e.RES_NO,
+		    e.MEM_NO,
+		    e.RES_DATE,
+		    e.RES_TIME,
+		    e.RES_MEMO,
+		    r.REST_NO,
+		    r.REST_NAME,
+		    r.REST_ADR,
+		    r.REST_BH,
+		    r.REST_CATE,
+		    i.REST_IMG_NAME,
+		    b.IS_PUBLIC
+		FROM 
+		    RESTAURANT r
+		INNER JOIN    
+		    RESERVE e ON r.REST_NO = e.REST_NO
+		LEFT JOIN 
+		    REST_IMG i ON r.REST_NO = i.REST_NO AND i.REST_IMG_NO=1
+		LEFT JOIN
+		    BOOKMARK b ON e.MEM_NO = b.MEM_NO AND r.REST_NO = b.REST_NO
+		WHERE 
+		    e.MEM_NO = #{mem_no}
+		ORDER BY
+			e.RES_TIME ASC,
+		    CASE 
+		        WHEN b.IS_PUBLIC = 'Y' THEN 1
+		        WHEN b.IS_PUBLIC = 'N' THEN 2
+		        ELSE 3
+		    END
 	</select>
 	
-	<delete id="deleteReserve">
-		
+	<delete id="cancelBooking">
+		DELETE FROM RESERVE WHERE RES_NO=#{res_no}
 	</delete>
 	
 	

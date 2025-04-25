@@ -1,8 +1,8 @@
 package org.joonzis.service;
 
 import java.util.List;
-import java.util.Map;
 
+import org.joonzis.domain.ReserveRestDTO;
 import org.joonzis.domain.ReserveVO;
 import org.joonzis.domain.RestVO;
 
@@ -27,8 +27,9 @@ public interface RestService {
     public List<String> getReservedTimes(int rest_no, String res_date);
     
     // 멤버별 예약 리스트 확인
-    public List<ReserveVO> getReserveList(int mem_no);
+    public List<ReserveRestDTO> getReserveList(int mem_no);
     
+    public boolean cancelBooking(int res_no);
     
     
 }

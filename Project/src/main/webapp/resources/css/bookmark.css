@@ -90,6 +90,7 @@ body{
 	display: inline-block;
 	margin: 5px;
 	height: 25px;
+	font-family: inherit;
 }
 .info-text a{
 	text-decoration: none;
@@ -100,8 +101,8 @@ body{
 .input-size {
 	position: absolute;
 	visibility: hidden;
-	height: 0;
 	white-space: pre;
+	height: 0;
 	font-size: 1.1rem;
 	padding: 0 4px;
 	box-sizing: content-box;

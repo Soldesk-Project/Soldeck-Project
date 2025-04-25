@@ -47,25 +47,26 @@ document.querySelectorAll(".view-img img").forEach(moveRestView => {
 	});
 })
 //-----가게 이름 글자수에 맞게 input태그 길이 변경---------------------
-const input = document.querySelector('.res-name');
-const size = document.getElementById('input-size');
-
-function inputSize() {
-  size.textContent = input.value;
-  input.style.width = size.offsetWidth + 30 + 'px';
+window.addEventListener('load', ()=>{
+	document.querySelectorAll('.res-name').forEach(input => resizeInput(input));
+});
+function resizeInput(input) {
+	const size = input.nextElementSibling;
+	size.textContent = input.value;
+	size.style.font = window.getComputedStyle(input).font;
+	input.style.width = size.offsetWidth + 'px';
 }
-inputSize();
 //-----즐겨찾기 삭제 확인 모달-------------------------------------------
 const modal = document.querySelector('.bookmark-check-modal');
 const params = new URLSearchParams(window.location.search);
 function openModal(){
   modal.style.display = 'block';
-  document.body.style.overflow = 'hidden';
+//  document.body.style.overflow = 'hidden';
 }
 
 function closeModal(){
   modal.style.display = 'none';
-  document.body.style.overflow = 'auto';
+//  document.body.style.overflow = 'auto';
 }
 
 //-----즐겨찾기 버튼 누를 때 가게 번호 가져오기 ------------------------------
@@ -73,7 +74,6 @@ let restNo;
 document.querySelectorAll(".bookmark").forEach(bookmarkBtn => {
 	bookmarkBtn.addEventListener('click',e=>{
 		e.preventDefault();
-		// 현재 input 기준으로 가장 가까운 div에서 groupNo를 찾기
 		restNo = bookmarkBtn.closest(".view-info").querySelector("#restNo").value;
 	});
 })
@@ -84,7 +84,7 @@ function outBookmark() {
 	console.log(restNo);
 	console.log(memberNo);
 
-	fetch('/mypage/bookmark', {
+	fetch('/mypage/bookmark/del', {
 		  method: 'POST',
 		  headers: {
 		    'Content-Type': 'application/json'

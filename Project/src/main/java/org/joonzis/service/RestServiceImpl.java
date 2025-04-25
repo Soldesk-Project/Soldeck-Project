@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.joonzis.domain.ReserveRestDTO;
 import org.joonzis.domain.ReserveVO;
 import org.joonzis.domain.RestVO;
 import org.joonzis.mapper.RestMapper;
@@ -98,9 +99,12 @@ public class RestServiceImpl implements RestService{
 	
 	
 	@Override
-	public List<ReserveVO> getReserveList(int mem_no) {
+	public List<ReserveRestDTO> getReserveList(int mem_no) {
 		return mapper.getReserveList(mem_no);
 	}
-	
+	@Override
+	public boolean cancelBooking(int res_no) {
+		return mapper.cancelBooking(res_no);
+	}
 	
 }

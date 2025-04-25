@@ -31,8 +31,9 @@
                 <div class="view-info">
                     <div><button type="button" class="bookmark" id="bookmarkBtn">★</button></div>
                     <div class="info-text">
-	                    <a href="#" draggable="false"><input type="text" class="res-name" value="${bm.rest.rest_name }" readonly="readonly"></a>
-	                    <span class="input-size" id="input-size"></span>
+	                    <a href="#" draggable="false">
+	                    	<input type="text" class="res-name" value="${bm.rest.rest_name }" readonly="readonly"><span class="input-size"></span>
+	                    </a>
 	                    <input type="text" class="res-industry" value="${bm.rest.rest_cate }" readonly="readonly">
 	                    <input type="text" class="res-time" value="${bm.rest.rest_bh }" readonly="readonly">
 	                    <input type="text" class="res-addr" value="${bm.rest.rest_adr }" readonly="readonly">
@@ -61,8 +62,9 @@
                 <div class="view-info">
                     <div><button type="button" class="bookmark" id="bookmarkBtn">★</button></div>
                     <div class="info-text">
-	                    <a href="#" draggable="false"><input type="text" class="res-name" value="${bm.rest.rest_name }" readonly="readonly"></a>
-	                    <span class="input-size" id="input-size"></span>
+	                    <a href="#" draggable="false">
+	                    	<input type="text" class="res-name" value="${bm.rest.rest_name }" readonly="readonly"><span class="input-size"></span>
+                    	</a>
 	                    <input type="text" class="res-industry" value="${bm.rest.rest_cate }" readonly="readonly">
 	                    <input type="text" class="res-time" value="${bm.rest.rest_bh }" readonly="readonly">
 	                    <input type="text" class="res-addr" value="${bm.rest.rest_adr }" readonly="readonly">
@@ -80,12 +82,6 @@
 	</div>
   </div>
 
-  <jsp:include page="../layout/footer.jsp"/>
-
-
-
-
-
 	<div id="customConfirm" class="bookmark-check-modal">
 		<div class="inner-modal">
 	    	<p>즐겨찾기를 삭제하시겠습니까?</p>
@@ -96,20 +92,7 @@
 		</div>
 	</div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <script type="text/javascript" src="/resources/js/bookmark.js"></script>
+  <jsp:include page="../layout/footer.jsp"/>
+<script type="text/javascript" src="/resources/js/bookmark.js"></script>
 </body>
 </html>

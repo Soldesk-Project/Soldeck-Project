@@ -32,7 +32,6 @@ body{
 	margin: 10px;
 }
 .main-list{
-	border: 1px dashed;
 	border-radius: 20px;
 	margin: 15px 0; 
 	overflow: hidden;
@@ -42,6 +41,7 @@ body{
 .inner-main{
 	overflow: auto;
 	height: 100%;
+	background-color: #f0f0f0;
 }
 .inner-main::-webkit-scrollbar {
 	display:inline;
@@ -59,14 +59,21 @@ body{
 }
 .sec-1{
 	text-align: center;
-	width: 30%;
+	width: 275px;
 	height: 100%;
 	float: left;
+	margin-right: 10px;
+	border-radius: 10px;
+    background-color: white;
+    box-shadow: 3px 3px 8px 1px rgba(0, 0, 0, 0.2);
 }
 .sec-2{
-	width: 70%;
+	width: 636px;
 	height: 100%;
 	float: right;
+	border-radius: 10px;
+    background-color: white;
+    box-shadow: 3px 3px 8px 1px rgba(0, 0, 0, 0.2);
 }
 .booking-date{
 	margin: 10px;
@@ -74,9 +81,11 @@ body{
 .booking-img{
 	width: 250px;
 	height: 250px;
-	border: 1px dashed black;
 	margin: 10px;
 	display: inline-block;
+    border-radius: 10px;
+    box-shadow: 3px 3px 8px 1px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
 }
 .booking-res-image{
 	margin: auto;
@@ -88,7 +97,6 @@ body{
 }
 .booking-info{
 	margin: 10px;	
-	border: 1px dashed black;
 	height: 250px;
 	width: auto;
 }
@@ -101,7 +109,6 @@ body{
 .info-text input{
 	outline: none;
 	border: none;
-	font-size: 1.1rem;
 	display: inline-block;
 	margin: 5px;
 	height: 35px;
@@ -120,6 +127,13 @@ body{
 	font-size: 1.1rem;
 	padding: 0 4px;
 	box-sizing: content-box;
+}
+.res-name, .res-industry, .res-time{
+	font-size: 25px;
+}
+.res-addr{
+	font-size: 15px;
+	padding: 10px 0 0;
 }
 .bookmark{
 	float: right;
@@ -176,10 +190,54 @@ body{
 	width: 100px;
 	height: 40px;
 }
-
-
-
-
+/*-----------------------모달-------------------------------*/
+.bookmark-check-modal, .bookmark-add-modal, .booking-cancel-modal{
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: none;
+    position: fixed;
+    top: 35%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+	background: rgba(0,0,0,0.2);
+  	z-index: 999;
+}
+.inner-modal{
+	text-align: center;
+	background: #fff;
+	padding: 20px 25px;
+	border-radius: 8px;
+	box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+	min-width: 300px;
+}
+.bookmark-modal-content{
+	display: flex;
+	align-items:center;
+	justify-content: center;
+}
+.yes-btn{
+    background-color: #FF7D00;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100px;
+    height: 40px;
+    margin: auto;
+}
+.cancle-modal-btn, .add-bookmark-btn, .cancle-booking-btn{
+	background-color: #e53935;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100px;
+    height: 40px;
+    margin: auto;
+}
 
 
 /*------------------ 사이드 메뉴 css -------------------------*/

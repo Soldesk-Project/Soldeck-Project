@@ -1,7 +1,5 @@
 package org.joonzis.controller;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -11,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.joonzis.domain.BookMarkVO;
 import org.joonzis.domain.GroupVO;
 import org.joonzis.domain.MemberVO;
+import org.joonzis.domain.ReserveRestDTO;
 import org.joonzis.domain.RestVO;
 import org.joonzis.service.BookmarkService;
 import org.joonzis.service.GroupService;
@@ -161,43 +160,34 @@ public class myPageController {
 
 		return "/mypage/bookmark";
 	}
-	@PostMapping(value = "/bookmark", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/bookmark/del", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> delBookmark(@RequestBody BookMarkVO vo) {
 		log.info("delBookmark..."+vo.getMem_no()+","+vo.getRest_no());
-//		bservice.deleteBookmark(mem_no, rest_no);
 		boolean result=bservice.deleteBookmark(vo.getMem_no(),vo.getRest_no());
 		return new ResponseEntity<Boolean>(result,HttpStatus.OK);
 	}
-	
-//	/////
-//	@GetMapping(value = "/view", produces = MediaType.APPLICATION_JSON_VALUE)
-//	public String view(@RequestParam(value = "rest_no") int rest_no, Model model) {
-//		log.info("view..." + rest_no);
-//		model.addAttribute("rest_no", rest_no);
-//		return "/search/view";
-//	}
-//	// 상세 페이지 데이터 가져오기
-//	@GetMapping(value = "/view/{rest_no}", produces = MediaType.APPLICATION_JSON_VALUE)
-//	public ResponseEntity<List<RestVO>> getview(@PathVariable(value = "rest_no") int rest_no) {
-//		log.info("getview..." + rest_no);
-//		return new ResponseEntity<List<RestVO>>(service.get(rest_no), HttpStatus.OK);
-//	}
-//	///////
+	@PostMapping(value = "/bookmark/add", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Boolean> addBookmark(@RequestBody BookMarkVO vo) {
+		log.info("delBookmark..."+vo.getMem_no()+","+vo.getRest_no());
+		boolean result=bservice.addBookmark(vo.getMem_no(),vo.getRest_no());
+		return new ResponseEntity<Boolean>(result,HttpStatus.OK);
+	}
 	
 	@GetMapping("/booking")
 	public String booking(Model model) {
 //	public String booking(Model model, @RequestParam("mem_no") int mem_no) {
 		int mem_no=118;
-		
 		log.info("booking...");
-		
-		 rservice.getReserveList(mem_no);
-		
-		model.addAttribute("reserveList", rservice.getReserveList(mem_no));
-		
+		List<ReserveRestDTO> reserveList=rservice.getReserveList(mem_no);
+		model.addAttribute("reserveList", reserveList);
 		return "/mypage/booking";
 	}
-	
+	@PostMapping(value = "/booking/del")
+	public ResponseEntity<Boolean> cancelBooking(@RequestParam("res_no") int res_no) {
+		log.info("delBookmark..."+res_no);
+		boolean result=rservice.cancelBooking(res_no);
+		return new ResponseEntity<Boolean>(result,HttpStatus.OK);
+	}
 	
 	
 	
