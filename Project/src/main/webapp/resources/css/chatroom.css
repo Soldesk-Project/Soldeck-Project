@@ -1,0 +1,99 @@
+/* 채팅창 스타일 */
+.chat-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  background-color: #f0f2f5;
+}
+
+#chat-box {
+  width: 400px;
+  height: 500px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* 내 메시지 */
+.my-message {
+  text-align: right;
+  margin: 5px 0;
+  color: white;
+  background-color: #4caf50;
+  display: inline-block;
+  padding: 10px 14px;
+  border-radius: 16px 16px 0 16px;
+  max-width: 75%;
+  float: right;
+  clear: both;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+  word-wrap: break-word;
+}
+
+/* 상대 메시지 */
+.other-message {
+  text-align: left;
+  margin: 5px 0;
+  color: black;
+  background-color: #e0e0e0;
+  display: inline-block;
+  padding: 10px 14px;
+  border-radius: 16px 16px 16px 0;
+  max-width: 75%;
+  float: left;
+  clear: both;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+  word-wrap: break-word;
+}
+
+h2 {
+  text-align: center;
+}
+
+#msg, #sendBtn {
+  display: block;
+  text-align: center;
+}
+
+.chat-input {
+  display: flex;
+  justify-content: center; /* 수평 중앙 정렬 */
+  align-items: center; /* 수직 중앙 정렬 */
+  margin-top: 10px;
+}
+
+#sendBtn{
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #FF7D00;
+  color: white;
+}
+/* 이미지 메시지 스타일 */
+.my-message img, .other-message img {
+  max-width: 200px;
+  max-height: 200px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 이모티콘 버튼 스타일 */
+#emoji-btn {
+  margin-left: 5px;
+  font-size: 22px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+#emoji-btn:hover {
+  transform: scale(1.2);
+}
