@@ -1,8 +1,22 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    display: flex; 
+    flex-direction: column;
+    min-height: 100vh;
+}
+.text_left{
+	text-align: left;
+	font-size: 16px;
+	margin: 0px 0px 0px 10px; 
+	font-weight: 500;
+}
 /*------------------ body / main menu -------------------------*/
 .container{
 	width: 1200px;
 	height: 1000px;
 	margin: auto;
+	flex: 1;
 }
 .side-menu{
 	width: 230px;
@@ -10,99 +24,112 @@
 	float: left;
 }
 .main-menu{
-	border: 1px dashed;
 	width: 80%;
 	float: right;
 	border-radius: 20px;
 }
-form{
-	border: 1px solid black;
+.info_personal_box{
+	border: 1px solid #EBEBEB;
 	border-radius: 15px;
-	text-align: center;
-	margin: 15px;
-	padding: 5px;
+	margin: 5px 0px 20px 0px; 
 }
 form input{
-	font-size: 20px;
+	font-size: 15px;
 	border: 1px solid;
 	border-radius: 5px;
-	padding: 0 20px;
+	padding: 0 13px;
 }
 b{
 	font-size: 20px;
 	margin: 0;
 }
 .info{
-	text-align: center;
-	margin: auto;
-	width: 100%;
+	margin: 20px 10px;
+	width: 65%;
 }
 .info-title{
 	float: left;
-	margin: 22px 10px;
-	width: 150px;
-	border: 1px dashed;
-	border-radius: 10px;
+	margin: 10px 30px;
+	width: 100px;
 }
 .info-content{
 	margin: 10px 0;
-	display: inline-block;
-	width: 700px;
-	height: 55px;
+	display: flex;
+	align-items : center;
+	width: 400px;
+	height: 44px;
 }
 .info-rest{
-	float: left;
-	width: 85%;
-	height: 50px;
+	width: 330px;
+	height: 32px;
 }
 .info-birth{
 	text-align: center;
 	float: left;
-	width: 15%;
-	height: 50px;
+	width: 110px;
+	height: 32px;
 	margin-right: 10px;
 	padding: 0;
 }
 .info-gender{
 	float: left;
-	width: 299px;
-	height: 50px;
+	width: 330px;
+	height: 32px;
 }
 .info-phone{
 	padding: 0;
-	width: 20%;
-	height: 50px;
+	width: 94.7px;
+	height: 32px;
 	float: left;
 	text-align: center;
 }
 .info-content span{
 	float: left;
-	font-size: 40px;
 	margin: 0 10px;
 }
 .info-name{
 	float: left;
-	width: 299px;
-	height: 50px;
+	width: 330px;
+	height: 32px;
 }
 .info-profile-div{
-	float: right;
 	border: 1px dashed;
 	border-radius: 20px;
 	overflow: hidden;
-	width: 200px;
-	height: 200px;
-	margin: 5px 62px 5px 5px;
+	width: 100px;
+	height: 100px;
+	margin: 30px auto 0px;
+	display: flex;
+	flex-direction: column;
 	
 }
 .info-profile{
 	height: 100%;
 	width: 100%;
 	object-fit: cover;
+	text-align: center;
+}
+.info-profile-div-box{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.info-profile-div-box::after {
+  content: "";
+  margin-top : 20px;
+  width: 600px; /* 원하는 밑줄 길이 */
+  height: 1px;
+  background-color: #EBEBEB;
+  margin-bottom: 10px;
+}
+.info-profile-div-div{
+	margin-top: 5px;
+	text-align: center;
 }
 fieldset{
-	width: 610px;
+	width: 500px;
 	margin: 0;
+	border-style: none;
 }
 .btn-div{
 	margin: auto;
@@ -144,9 +171,8 @@ fieldset{
 	border-radius: 4px;
 	cursor: pointer;
 	width: 70px;
-	float: right;
-    margin: 212px 118px;
-    position: absolute;
+	padding: 3px 10px;
+	margin-top: 5px;
 }
 input[readonly] {
   background-color: #f0f0f0;
@@ -161,16 +187,25 @@ input[readonly] {
 .phone-error{
 	margin: 55px -493px
 }
-
+b{
+	font-size: 17px;
+	font-weight: 400;
+}
+.info_border_box{
+	height : 51px; 
+}
+.dash {
+  font-size: 25px;
+  margin: 0 5px;
+}
 /*------------------ 사이드 메뉴 css -------------------------*/
 
 .side{
-    border: 1px dashed;
     list-style-type: none;
     position: fixed;
     width: 182px;
     padding: 15px;
-    margin: 0;
+    margin-top: 38px;
     border-radius: 20px;
 }
 .side a{
@@ -205,4 +240,10 @@ input[readonly] {
 .side a:hover,
 .side-modifyinfo.active a {
     color: white !important;
+}
+
+#text1{
+	font-size: 12px;
+	text-align: left;
+	margin: 0px 10px 5px;
 }

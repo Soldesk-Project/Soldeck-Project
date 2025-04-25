@@ -39,20 +39,6 @@
           </div>
       
           <div class="info-title">
-            <b>성별</b>	
-          </div>
-          <div class="info-content">
-          	<c:choose>
-				<c:when test="${fn:substring(member.mem_birth,8,9) eq 1}">
-		            <input type="text" class="info-gender" name="gender" value="남자" readonly="readonly">
-				</c:when>          	
-				<c:otherwise>
-		            <input type="text" class="info-gender" name="gender" value="여자" readonly="readonly">
-				</c:otherwise>
-          	</c:choose>
-          </div>
-      
-          <div class="info-title">
             <b>아이디</b>	
           </div>
           <div class="info-content">
