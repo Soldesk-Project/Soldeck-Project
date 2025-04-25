@@ -94,13 +94,6 @@ public class SearchController {
 		log.info("locationData..." + " region : " + region + " category : " + category);
 		return new ResponseEntity<List<RestVO>>(service.getFilteredList(region, category), HttpStatus.OK);
 	}
-	// 상세 페이지 이동
-//	@GetMapping(value = "/view", produces = MediaType.APPLICATION_JSON_VALUE)
-//	public String view(@RequestParam(value = "rest_no") int rest_no, Model model) {
-//		log.info("view..." + rest_no);
-//		model.addAttribute("rest_no", rest_no);
-//		return "/search/view";
-//	}
 	
 	// 상세 페이지 이동
 	@GetMapping(value = "/view")

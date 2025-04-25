@@ -28,7 +28,7 @@
 	        <result property="mem_nick" column="mem_nick"/>
 	        <result property="mem_img" column="mem_img"/>
 	    </association>
-	    <collection property="com_attachList" ofType="org.joonzis.domain.AttachVO">
+	    <collection property="com_attachList" ofType="org.joonzis.domain.AttachVO"  notNullColumn="att_uuid">
 	        <result property="att_uuid" column="att_uuid"/>
 	        <result property="att_path" column="att_path"/>
 	        <result property="att_name" column="att_name"/>
@@ -44,6 +44,16 @@
 	    INSERT INTO "COMMENT" (com_no, mem_no, rest_no, com_con, com_date, com_rate)
 	    VALUES (#{com_no}, #{mem_no}, #{rest_no}, #{com_con}, SYSDATE, #{com_rate})
 	</insert>
+	
+	<!-- 코멘트 삭제 -->
+    <delete id="deleteComment" parameterType="int">
+        DELETE FROM "COMMENT" WHERE com_no = #{com_no}
+    </delete>
+
+    <!-- 코멘트 조회 (권한 확인용) -->
+    <select id="getCommentById" parameterType="int" resultType="org.joonzis.domain.CommentVO">
+        SELECT com_no, mem_no FROM "COMMENT" WHERE com_no = #{com_no}
+    </select>
 	
 	<!-- 코멘트 평균 평점 -->
 	<select id="getAvgRate" resultType="double">

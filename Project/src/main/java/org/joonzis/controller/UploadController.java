@@ -12,8 +12,10 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.ServletContext;
 
 import org.joonzis.domain.AttachVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -37,6 +39,9 @@ public class UploadController {
 
 	@Value("${file.upload-dir}")
     private String uploadFolderPath;
+	
+	@Autowired
+    private ServletContext servletContext;
 
     @PostConstruct
     public void init() {
@@ -45,6 +50,8 @@ public class UploadController {
         try {
             // URL 디코딩 적용
             uploadFolderPath = URLDecoder.decode(uploadFolderPath, StandardCharsets.UTF_8.name());
+            servletContext.setAttribute("uploadFolderPath", uploadFolderPath);
+            log.info("Stored uploadFolderPath in ServletContext: " + uploadFolderPath);
         } catch (Exception e) {
             log.error("Failed to decode uploadFolderPath", e);
         }
