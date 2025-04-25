@@ -1,176 +1,184 @@
-/* 
-*{
-  outline: 1px solid rgba(255, 0, 0, 0.2);
-} 
-*/
-html{
+:root {
+  --main-color: #FF7D00;
+  --border-color: #EBEBEB;
+  --gray-light: #f0f0f0;
+  --gray-medium: #e0e0e0;
+  --gray-dark: #d0d0d0;
+  --font-color: #333;
+  --radius: 10px;
+}
+
+html, body {
   margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  min-height: 100vh;
 }
 
 body {
-    font-family: sans-serif;
-    margin: 0;
-    display: flex; 
-    flex-direction: column;
-    min-height: 100vh;
-}
-.layout{
-	flex-grow : 1;
-	margin : auto;
-	width : 1200px;
-    padding: 20px;
-    background-color: rgb();
-}
-/* header 아래 지역 및 대분류 선택 창 스타일 */
-.page-header{
-	margin-top : 15px;
-	text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 
+.layout {
+  flex-grow: 1;
+  margin: auto;
+  width: 1200px;
+  padding: 20px;
+  background-color: white;
+}
+
+.page-header {
+  margin-top: 15px;
+  text-align: center;
+}
+
+/* 선택 박스 (지역 + 카테고리 공통) */
 .select_box {
-    border: 1px solid #EBEBEB;
-	border-radius: 10px;
-	margin : 15px 0px;  
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  margin: 15px 0;
 }
 
-/* 지역선택창 + 카테고리 */
-/* --------------- 지역 선택창 ---------------  */
+/* --------------- 지역 선택창 --------------- */
 
-/* location-select 스타일 */
 .location-select {
-	appearance: none;
-	padding: 10px;
+  appearance: none;
+  padding: 10px;
 }
 
-/* location-select_select 스타일 */
 .location-select_select {
-	border: 2px solid #FF7D00;
-	border-radius: 25px;
-	background-color: white;
-	appearance: none;
-	font-size: 16px;
-	background-image: url("../images/arrow.svg");
-	background-size : 7px 7px;
-	background-repeat: no-repeat;
-	background-position: right 8px center;
-	padding: 10px 20px;
+  border: 2px solid var(--main-color);
+  border-radius: 25px;
+  font-size: 16px;
+  background: white url("../images/arrow.svg") no-repeat right 8px center;
+  background-size: 7px 7px;
+  padding: 10px 20px;
+  appearance: none;
 }
 
 /* --------------- 카테고리 --------------- */
-.panel-body{
-	margin-top : 15px;
-	margin: 20px 122px 0px 122px;
+
+.panel-body {
+  margin: 20px 122px 0;
 }
 
-/* 전체 컨테이너 스타일 */
 .kategorie-container {
   padding: 5px;
-  /*border: 2px solid #EBEBEB;*/
-  border-radius : 20px;
-  max-width: 40%; 
-  margin: 0 auto;
-  margin-top : 15px;
+  border-radius: 20px;
+  max-width: 40%;
+  margin: 15px auto 0;
 }
 
-/* 리스트 스타일 */
 .kategorie-list {
-  display: flex; /* 가로 배치 */
-  justify-content: center; /* 수평 가운데 정렬 */
-  list-style: none; /* 기본 리스트 스타일 제거 */
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  gap: 35px;
   padding: 0;
   margin: 0;
-  gap: 35px; /* 버튼 간 간격 조정 */
 }
+
 .kategorie-list li {
   display: flex;
-  justify-content: center; /* 버튼을 가운데 정렬 */
+  justify-content: center;
   align-items: center;
   flex-wrap: wrap;
 }
 
-/* 버튼 스타일 */
+/* 공통 버튼 스타일 */
 .btn-fir {
-  width: 60px; /* 버튼의 너비 */
-  height: 60px; /* 버튼의 높이 */
-  background-color: #f0f0f0; /* 배경색 (회색) */
-  border: none; /* 테두리 제거 */
-  border-radius: 50%; /* 원형으로 만들기 */
-  font-size: 16px; /* 텍스트 크기 */
-  color: #333; /* 텍스트 색상 */
-  cursor: pointer; /* 클릭 가능 표시 */
+  width: 60px;
+  height: 60px;
+  background-color: var(--gray-light);
+  border: none;
+  border-radius: 50%;
+  font-size: 16px;
+  color: var(--font-color);
+  cursor: pointer;
   display: flex;
-  justify-content: center; /* 텍스트 수평 가운데 */
-  align-items: center; /* 텍스트 수직 가운데 */
-  transition: background-color 0.3s; /* 호버 효과를 위한 전환 */
-}
-/* 활성화된 버튼 스타일 */
-.btn-fir.active {
-    background-color: #d0d0d0; /* 선택된 버튼 색상 */
-    font-weight: bold;
-}
-/* 호버 효과 */
-.btn-fir:hover {
-  background-color: #e0e0e0; /* 호버 시 더 어두운 회색 */
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s;
 }
 
-/* --------------- 가게들 --------------- */
-/* panel-footer와 footer 간 간격 확보 */
+.btn-fir.active {
+  background-color: var(--gray-dark);
+  font-weight: bold;
+}
+
+.btn-fir:hover {
+  background-color: var(--gray-medium);
+}
+
+/* --------------- 가게 리스트 --------------- */
+
 .panel-footer {
-	width: 1200px;
-	margin: auto;
-	margin-bottom: 30px; /* footer와의 간격 확보 */
-	border: 1px solid #EBEBEB;
-	border-radius: 10px;
+  width: 1200px;
+  margin: 0 auto 30px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
 }
+
 .rest-body {
-  padding: 20px 0px;
+  padding: 20px 0;
 }
+
 .image-con {
   display: flex;
-  flex-wrap: wrap; /* 3개 초과 시 다음 줄로 */
-  gap: 20px; /* 세트 간 간격 */
-  justify-content: center; /* 가로 가운데 정렬 */
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
   padding: 10px;
   background-color: white;
 }
+
 .item-set {
-  flex: 1 1 calc(33.3% - 20px); /* 3개씩 배치 (간격 고려) */
-  max-width: calc(33.3% - 20px); /* 최대 너비 설정 */
-  height: 300px; /* 세트 높이 고정 */
+  flex: 1 1 calc(33.3% - 20px);
+  max-width: calc(33.3% - 20px);
+  height: 300px;
   display: flex;
-  flex-direction: column; /* 세로로 배치 */
-  align-items: center; /* 가운데 정렬 */
+  flex-direction: column;
+  align-items: center;
   box-sizing: border-box;
-  padding: 10px 0px;
+  padding: 10px 0;
 }
+
+.item-set:hover {
+  transform: scale(1.02);
+  transition: transform 0.2s ease-in-out;
+}
+
 .image {
   width: 100%;
-  height: 250px; /* 이미지 높이 */
-  box-sizing: border-box;
-  overflow: hidden;
+  height: 250px;
   border-radius: 16px;
-  box-shadow: 0 0 0 2px rgba(0,0,0,0.2);
+  overflow: hidden;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
 }
+
 .image img {
   width: 100%;
-  height: 100%; /* 부모 높이에 맞춤 */
-  object-fit: cover; /* 이미지가 영역에 맞게 잘림 */
-  display: block; /* 공백 제거 */
+  height: 100%;
+  object-fit: cover;
+  display: block;
   cursor: pointer;
 }
+
 .name {
   width: 100%;
-  height: 50px; /* 이름 영역 높이 */
-  box-sizing: border-box;
+  height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
   padding-top: 20px;
+  box-sizing: border-box;
 }
+
 .name p {
-  margin: 0; /* 기본 마진 제거 */
+  margin: 0;
   font-size: 17px;
-  color: #333;
+  color: var(--font-color);
   cursor: pointer;
   font-weight: 500;
 }
