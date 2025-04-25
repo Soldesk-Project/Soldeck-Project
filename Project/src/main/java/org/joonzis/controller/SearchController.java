@@ -1,6 +1,5 @@
 package org.joonzis.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,12 +9,12 @@ import javax.servlet.http.HttpSession;
 import org.joonzis.domain.MemberVO;
 import org.joonzis.domain.ReserveVO;
 import org.joonzis.domain.RestVO;
+import org.joonzis.service.MemberService;
 import org.joonzis.service.RestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +33,9 @@ public class SearchController {
 	
 	@Autowired
 	private RestService service;
+	
+	@Autowired
+	private MemberService memberService;
 	
 	@GetMapping(value = "/search")
 	public String searchPage(@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword, Model model) {
@@ -93,19 +95,39 @@ public class SearchController {
 		return new ResponseEntity<List<RestVO>>(service.getFilteredList(region, category), HttpStatus.OK);
 	}
 	// 상세 페이지 이동
-	@GetMapping(value = "/view", produces = MediaType.APPLICATION_JSON_VALUE)
-	public String view(@RequestParam(value = "rest_no") int rest_no, Model model) {
-		log.info("view..." + rest_no);
-		model.addAttribute("rest_no", rest_no);
-		return "/search/view";
+//	@GetMapping(value = "/view", produces = MediaType.APPLICATION_JSON_VALUE)
+//	public String view(@RequestParam(value = "rest_no") int rest_no, Model model) {
+//		log.info("view..." + rest_no);
+//		model.addAttribute("rest_no", rest_no);
+//		return "/search/view";
+//	}
+	
+	// 상세 페이지 이동
+	@GetMapping(value = "/view")
+	public String view(@RequestParam(value = "rest_no") int rest_no, Model model, HttpSession session) {
+	    log.info("view..." + rest_no);
+	    MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
+	    if (loggedInMember != null) {
+	        log.info("loggedInMember: " + loggedInMember);
+	        model.addAttribute("member", loggedInMember);
+	    } else {
+	        log.warn("No logged-in user found in session");
+	        model.addAttribute("member", new MemberVO()); // 비로그인 시 빈 MemberVO 객체
+	    }
+	    model.addAttribute("rest_no", rest_no);
+	    return "/search/view"; // /search/view.jsp 렌더링
 	}
+
 	// 상세 페이지 데이터 가져오기
 	@GetMapping(value = "/view/{rest_no}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<RestVO>> getview(@PathVariable(value = "rest_no") int rest_no, Model model, HttpSession session) {
-		log.info("getview..." + rest_no);
-		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
-		model.addAttribute("member",loggedInMember);
-		return new ResponseEntity<List<RestVO>>(service.get(rest_no), HttpStatus.OK);
+	public ResponseEntity<List<RestVO>> getview(@PathVariable(value = "rest_no") int rest_no, HttpSession session) {
+	    log.info("getview..." + rest_no);
+	    List<RestVO> storeList = service.get(rest_no);
+	    if (storeList == null || storeList.isEmpty()) {
+	        log.warn("No store found for rest_no: {}" + rest_no);
+	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	    }
+	    return new ResponseEntity<>(storeList, HttpStatus.OK);
 	}
 	
 	// 예약하기

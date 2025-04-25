@@ -103,6 +103,7 @@
                    <li data-com_no="1">
                       <div class="chat-full">
                          <div class="chat-header">
+                         	<img alt="프로필" src="">
                             <strong>작성자</strong>
                             <small class="pull-right">0000-00-00</small>
                          </div>
@@ -133,7 +134,7 @@
                 </ul>
              </div>
         </div>
-        <div id="login-data" data-memNo="${member.mem_no}" value="${member.mem_no}"></div>
+        <div id="login-data" data-mem_no="${member.mem_no != null ? member.mem_no : '0'}" data-mem_name="${member.mem_name != null ? member.mem_name : ''}"></div>
     </div>
     
 	<!-- 모달 창 (더보기) -->
