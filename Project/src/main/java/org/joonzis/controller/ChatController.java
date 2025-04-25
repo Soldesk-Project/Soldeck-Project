@@ -35,59 +35,61 @@ public class ChatController {
 	
 	@GetMapping("/chatRoom/{groupNo}")
 	public String goChatRoom(@PathVariable("groupNo") int groupNo, HttpSession session, Model model) {
-		List<GroupVO> groups = service.getAllGroups();
-		
-		 // groupNo가 존재하는지 체크
-	    boolean exists = groups.stream().anyMatch(g -> g.getGroupNo() == groupNo);
+	    List<GroupVO> groups = service.getAllGroups();
+	    
+	    // groupNo에 해당하는 그룹을 찾기
+	    GroupVO selectedGroup = groups.stream()
+	                                  .filter(group -> group.getGroupNo() == groupNo)
+	                                  .findFirst()
+	                                  .orElse(null);
 
-	    if (!exists) {
+	    if (selectedGroup == null) {
 	        return "redirect:/error/404";  // 존재하지 않으면 404로
 	    }
+
+	    // 그룹의 chatTitle을 model에 추가
+	    model.addAttribute("chatTitle", selectedGroup.getChatTitle());
+
 	    // 로그인한 사용자 정보 가져오기
 	    MemberVO loginUser = (MemberVO) session.getAttribute("loggedInUser");
 	    
-	    // 로그인한 사용자가 없으면 로그인 페이지로 리다이렉트
 	    if (loginUser == null) {
 	        return "redirect:/login/loginPage";
 	    }
 
-	    // 로그인한 사용자 ID를 currentUser로 설정
 	    String currentNick = loginUser.getMem_nick();
 	    model.addAttribute("currentNick", currentNick);
-	    
-	    // 로그인한 사용자 번호
+
 	    int currentNo = loginUser.getMem_no();
 	    model.addAttribute("currentNo", currentNo);
 
-		model.addAttribute("groupNo", groupNo);
-		
-		// 기존 채팅 로그 가져오기
-		List<ChatLogVO> chatLogs = chatService.getChatsByGroupNo(groupNo);
-		
-		// 채팅 로그의 chatLog를 분리하여 sender와 msg로 나누기
+	    model.addAttribute("groupNo", groupNo);
+	    
+	    // 기존 채팅 로그 가져오기
+	    List<ChatLogVO> chatLogs = chatService.getChatsByGroupNo(groupNo);
+	    
 	    chatLogs.forEach(chatLog -> {
 	        String[] parts = chatLog.getChatLog().split(":", 2);
 	        if (parts.length == 2) {
-	            chatLog.setSender(parts[0]); // sender 설정
-	            chatLog.setMsg(parts[1]);     // msg 설정
+	            chatLog.setSender(parts[0]);
+	            chatLog.setMsg(parts[1]);
 	        }
 	    });
-		
-		// Jackson을 이용해 List<ChatLogVO>를 JSON으로 변환
+
+	    // List<ChatLogVO>를 JSON으로 변환
 	    ObjectMapper objectMapper = new ObjectMapper();
 	    String chatLogsJson = "";
 	    try {
-	        chatLogsJson = objectMapper.writeValueAsString(chatLogs);  // List<ChatLogVO> -> JSON String
+	        chatLogsJson = objectMapper.writeValueAsString(chatLogs);
 	    } catch (JsonProcessingException e) {
 	        e.printStackTrace();
-	        // 예외 처리: 예외가 발생하면 빈 배열로 설정하거나 로그를 남길 수 있음
-	        chatLogsJson = "[]";
+	        chatLogsJson = "[]"; // 예외 발생 시 빈 배열로 설정
 	    }
-	    
+
 	    model.addAttribute("chatLogs", chatLogsJson);
-        
-        log.info("model..." + model );
-	
-		return "chat/chatRoom";
+	    model.addAttribute("groupList", groups);
+
+	    return "chat/chatRoom";
 	}
+
 }

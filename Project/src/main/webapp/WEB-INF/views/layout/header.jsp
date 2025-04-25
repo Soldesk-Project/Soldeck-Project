@@ -8,23 +8,24 @@
 <div class="nav-center">
   <input type="search" placeholder="검색어를 입력하세요." id="search">
 </div>
+
 <c:if test="${sessionScope.loggedInUser != null}">
 	<div class="nav-right">
 		<input type="image" src="../resources/images/profile.png" alt="profile" id="proFile" style="width: 70px; cursor: pointer;"><br>
 	</div>
 	<!-- 모달창 -->
-	<div id="myModal" class="modal">
-		<div class="modal-content">
+	<div id="myModal" class="main-modal">
+		<div class="main-modal-content">
 			<div class="modal-header">
-		    	<div class="profile-icon"></div>
-		    	<span class="nickname">nickName</span>
-		    	<span class="close">×</span>
+			    <div class="profile-icon"></div>
+			    <span class="nickname">nickName</span>
+			    <span class="close">×</span>
 			</div>
 			<ul class="modal-menu">
-		    	<li><a href="/mypage/myInfo">my page</a></li>
-		    	<li><a href="/friendlist/friendList">community</a></li>
-		    	<li><a href="/mypage/bookmark">bookmark</a></li>
-		    	<li><a href="#">logout</a></li>
+			    <li><a href="/mypage/myInfo">my page</a></li>
+			    <li><a href="/friendlist/friendList">community</a></li>
+			    <li><a href="/mypage/bookmark">bookmark</a></li>
+			    <li><a href="#">logout</a></li>
 			</ul>
 		</div>
 	</div>
