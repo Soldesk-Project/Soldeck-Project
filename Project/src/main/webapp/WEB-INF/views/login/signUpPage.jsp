@@ -16,7 +16,7 @@
 			<div class="image-upload-container">
 				<div class="image-upload-area">
 					<div class="image-preview">
-						<img id="previewImage" src="#" alt="미리보기">
+						<img id="previewImage" src="#" alt="프로필 이미지">
 					</div>
 					<div class="file-upload">
 						<label for="profileImage">파일 선택</label>

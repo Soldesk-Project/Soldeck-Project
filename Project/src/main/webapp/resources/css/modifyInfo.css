@@ -1,8 +1,16 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    display: flex; 
+    flex-direction: column;
+    min-height: 100vh;
+}
 /*------------------ body / main menu -------------------------*/
 .container{
 	width: 1200px;
 	height: 1000px;
 	margin: auto;
+	flex: 1;
 }
 .side-menu{
 	width: 230px;
@@ -10,17 +18,24 @@
 	float: left;
 }
 .main-menu{
-	border: 1px dashed;
 	width: 80%;
 	float: right;
 	border-radius: 20px;
 }
-form{
-	border: 1px solid black;
+.info_personal_box{
+	border: 1px solid #EBEBEB;
 	border-radius: 15px;
-	text-align: center;
-	margin: 15px;
-	padding: 5px;
+	margin: 10px 0px; 
+}
+.info_userInfo_box{
+	border: 1px solid #EBEBEB;
+	border-radius: 15px;
+	margin: 10px 0px; 
+}
+.info_chooseInfo_box{
+	border: 1px solid #EBEBEB;
+	border-radius: 15px;
+	margin: 10px 0px; 
 }
 form input{
 	font-size: 20px;
@@ -34,8 +49,8 @@ b{
 }
 .info{
 	text-align: center;
-	margin: auto;
-	width: 100%;
+	margin: 20px 10px;
+	width: 80%;
 }
 .info-title{
 	float: left;
@@ -86,19 +101,26 @@ b{
 	height: 50px;
 }
 .info-profile-div{
-	float: right;
 	border: 1px dashed;
 	border-radius: 20px;
 	overflow: hidden;
 	width: 200px;
 	height: 200px;
-	margin: 5px 62px 5px 5px;
+	margin: 10px;
+	display: flex;
+	flex-direction: column;
 	
 }
 .info-profile{
 	height: 100%;
 	width: 100%;
 	object-fit: cover;
+	text-align: center;
+}
+.info-profile-div-box{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 fieldset{
 	width: 610px;
@@ -144,9 +166,8 @@ fieldset{
 	border-radius: 4px;
 	cursor: pointer;
 	width: 70px;
-	float: right;
-    margin: 212px 118px;
-    position: absolute;
+	padding: 3px 10px;
+	margin: 0px
 }
 input[readonly] {
   background-color: #f0f0f0;
@@ -165,7 +186,6 @@ input[readonly] {
 /*------------------ 사이드 메뉴 css -------------------------*/
 
 .side{
-    border: 1px dashed;
     list-style-type: none;
     position: fixed;
     width: 182px;
@@ -205,4 +225,10 @@ input[readonly] {
 .side a:hover,
 .side-modifyinfo.active a {
     color: white !important;
+}
+
+#text1{
+	font-size: 12px;
+	text-align: left;
+	margin: 0px 10px 5px;
 }
