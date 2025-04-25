@@ -20,4 +20,5 @@ public class CommentVO {
 	private Date com_date;
 	
 	private List<AttachVO> com_attachList;
+	private MemberVO com_memberData;
 }

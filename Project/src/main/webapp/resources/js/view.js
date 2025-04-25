@@ -6,12 +6,9 @@ linkEle.href = CSS_FILE_PATH;
 document.head.appendChild(linkEle);
 
 // 전역 변수 정의
-let mem_no = 0;
-console.log(mem_no);
 const login_data = document.getElementById('login-data');
-const initialmem_no = login_data.dataset.memNo || '';
-console.log(initialmem_no);
-mem_no = initialmem_no;
+const initialmem_no = login_data.dataset.mem_no || '';
+let mem_no = initialmem_no;
 console.log(mem_no);
 let restNo = null;
 let currentIndex = 0;
@@ -153,7 +150,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             const reservationData = {
                 rest_no: restNo,
-                mem_no: 1,
+                mem_no: mem_no,
                 res_date: resDate,
                 res_time: selectedTime,
                 res_memo: '예약 메모'
@@ -528,11 +525,22 @@ function fetchComments() {
                 attachHtml += '</div>';
             }
 
+            // 프로필 이미지 처리
+            const profileImg = comment.com_memberData && comment.com_memberData.mem_img 
+                ? `/resources/images/${comment.com_memberData.mem_img}` 
+                : '/resources/images/profile_1.png';
+
+            // 닉네임 처리
+            const nickName = comment.com_memberData && comment.com_memberData.mem_nick 
+                ? comment.com_memberData.mem_nick 
+                : comment.com_memberData.mem_name;
+
             msg += `
                 <li data-com_no="${comment.com_no}">
                     <div class="chat-full">
                         <div class="chat-header">
-                            <strong>${comment.mem_no}</strong>
+                            <img src="${profileImg}" alt="프로필" class="profile-img">
+                            <strong>${nickName}</strong>
                             <div class="header-right">
                                 <small class="pull-right">${formatDate(comment.com_date)}</small>
                                 ${starsHtml}
@@ -579,10 +587,10 @@ function getComments(callback) {
 function uploadComment() {
     console.log("Before uploadComment, window.uploadedFiles:", window.uploadedFiles); // 디버깅 로그
     const commentInput = document.querySelector("#comment");
-//    if(mem_no < 1){
-//    	alert("로그인을 해주세요.");
-//        return;
-//    }
+    if(mem_no == 0){
+    	alert("로그인을 해주세요.");
+        return;
+    }
     if (!commentInput) {
         console.error("코멘트 입력 필드(#comment)를 찾을 수 없습니다.");
         return;
@@ -613,7 +621,7 @@ function uploadComment() {
     const commentData = {
         rest_no: restNo,
         com_con: commentContent,
-        mem_no: 1,
+        mem_no: mem_no,
         com_rate: ratingValue,
         com_attachList: attachList
     };
