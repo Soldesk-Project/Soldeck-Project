@@ -1,5 +1,7 @@
 package org.joonzis.service;
 
+import java.util.List;
+
 import org.joonzis.domain.ChatLogVO;
 import org.joonzis.mapper.ChatLogMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,4 +23,11 @@ public class ChatLogServiceImpl implements ChatLogService {
 		
 		chatLogMapper.insertChat(chat);
 	}
+
+	@Override
+	public List<ChatLogVO> getChatsByGroupNo(int groupNo) {
+		return chatLogMapper.getChatsByGroupNo(groupNo);
+	}
+	
+	
 }

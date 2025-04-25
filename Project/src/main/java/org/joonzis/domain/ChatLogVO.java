@@ -15,4 +15,7 @@ public class ChatLogVO {
 	private int chatNo, groupNo, memNo;
 	private String chatLog, chatType, chatRead;
 	private Timestamp chatTime;
+	
+	private String sender;
+	private String msg;
 }
