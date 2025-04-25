@@ -52,18 +52,11 @@ public class CommentServiceImpl implements CommentService {
 			}
 			return addCount;
 		}
-//	@Transactional
-//	@Override
-//	public int addComment(CommentVO vo) {
-//		log.info("addComment... " + vo);
-//		int addCount = mapper.addComment(vo);
-//		int currentCom_no = vo.getCom_no();
-//		if(vo.getCom_attachList() != null && vo.getCom_attachList().size() > 0) {
-//			vo.getCom_attachList().forEach(attach -> {
-//				attach.setCom_no(currentCom_no);
-//				attachMapper.insert(attach);
-//			});
-//		}
-//		return addCount;
-//	}
+	
+	// 코멘트 평균 평점
+	@Override
+	public double getAvgRate(int rest_no) {
+		log.info("getAvgRate... " + rest_no);
+		return mapper.getAvgRate(rest_no);
+	}
 }

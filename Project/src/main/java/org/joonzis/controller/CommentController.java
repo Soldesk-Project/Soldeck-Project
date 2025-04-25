@@ -55,4 +55,11 @@ public class CommentController {
     		return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     	}
     }
+    
+    // 코멘트 평균 평점
+    @GetMapping(value = "/rate/{rest_no}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Double> getAvgRate(@PathVariable("rest_no") int rest_no) {
+    	log.info("getAvgRate..." + rest_no);
+    	return new ResponseEntity<>(service.getAvgRate(rest_no), HttpStatus.OK);
+    }
 }

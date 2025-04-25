@@ -26,20 +26,19 @@
 	        <result property="att_name" column="att_name"/>
 	        <result property="com_no" column="com_no"/>
 	    </collection>
-</resultMap>
-    <!-- <select id="getCommentsByRestNo" parameterType="int" resultType="org.joonzis.domain.CommentVO">
-        SELECT COM_NO, MEM_NO, REST_NO, COM_CON, COM_DATE, COM_RATE
-        FROM "COMMENT"
-        WHERE REST_NO = #{rest_no}
-        ORDER BY COM_DATE DESC
-    </select> -->
+	</resultMap>
 
     <!-- 코멘트 등록 -->
     <insert id="addComment" parameterType="org.joonzis.domain.CommentVO">
-    <selectKey keyProperty="com_no" resultType="int" order="BEFORE">
-        SELECT SEQ_COMM.NEXTVAL FROM DUAL
-    </selectKey>
-    INSERT INTO "COMMENT" (com_no, mem_no, rest_no, com_con, com_date, com_rate)
-    VALUES (#{com_no}, #{mem_no}, #{rest_no}, #{com_con}, SYSDATE, #{com_rate})
-</insert>
+	    <selectKey keyProperty="com_no" resultType="int" order="BEFORE">
+	        SELECT SEQ_COMM.NEXTVAL FROM DUAL
+	    </selectKey>
+	    INSERT INTO "COMMENT" (com_no, mem_no, rest_no, com_con, com_date, com_rate)
+	    VALUES (#{com_no}, #{mem_no}, #{rest_no}, #{com_con}, SYSDATE, #{com_rate})
+	</insert>
+	
+	<!-- 코멘트 평균 평점 -->
+	<select id="getAvgRate" resultType="double">
+		SELECT ROUND(AVG(COM_RATE), 1) FROM "COMMENT" WHERE REST_NO = #{rest_no}
+	</select>
 </mapper>

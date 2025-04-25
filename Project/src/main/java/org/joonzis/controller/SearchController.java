@@ -1,9 +1,13 @@
 package org.joonzis.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
+import org.joonzis.domain.MemberVO;
 import org.joonzis.domain.ReserveVO;
 import org.joonzis.domain.RestVO;
 import org.joonzis.service.RestService;
@@ -97,8 +101,10 @@ public class SearchController {
 	}
 	// 상세 페이지 데이터 가져오기
 	@GetMapping(value = "/view/{rest_no}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<RestVO>> getview(@PathVariable(value = "rest_no") int rest_no) {
+	public ResponseEntity<List<RestVO>> getview(@PathVariable(value = "rest_no") int rest_no, Model model, HttpSession session) {
 		log.info("getview..." + rest_no);
+		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
+		model.addAttribute("member",loggedInMember);
 		return new ResponseEntity<List<RestVO>>(service.get(rest_no), HttpStatus.OK);
 	}
 	
