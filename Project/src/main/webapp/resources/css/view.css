@@ -312,16 +312,34 @@ th, td{
         align-items: center;
         gap: 10px;
     }
-/* .chat-header {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-} */
-/* .header-right {
-    display: flex;
-    align-items: center;
-    gap: 10px; 날짜와 별점 사이 간격
-} */
+    .profile-img {
+	    width: 40px;
+	    height: 40px;
+	    border-radius: 50%;
+	    object-fit: cover;
+	    vertical-align: middle;
+	} 
+	.comment-delete-btn {
+    margin-left: auto; /* 오른쪽 정렬 */
+    margin-right: 10px; /* 오른쪽 여백 */
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #888;
+    padding: 5px;
+}
+.comment-delete-btn:hover {
+    color: #ff0000; /* 호버 시 색상 변경 */
+}
+.comment-attachments:empty::before {
+    content: '첨부 파일이 없습니다.';
+    color: #888;
+    font-size: 14px;
+    display: block;
+    text-align: center;
+    padding: 10px;
+}
 .pull-right {
     float: none; /* 기존 float 속성 제거 */
     order: 1; /* 날짜가 먼저 오도록 설정 */
@@ -346,13 +364,6 @@ th, td{
  .chat-body {
         /* margin-top: 10px; */
     }
-/* .chat-body {
-  width: 100%;
-  height: 100px;
-  display: flex; flex로 가로 배치
-  align-items: center; 세로 중앙 정렬
-  gap: 10px; 이미지와 버튼 간 간격
-} */
 .comment-attachments {
         display: flex;
         flex-wrap: wrap;
@@ -406,14 +417,7 @@ th, td{
 .chat-footer{
   border: 1px solid #ddd;
   border-radius: 5px;
-}
-.profile-img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    vertical-align: middle;
-}  
+} 
 /* 모달 창 스타일 (더보기)*/
 .modal_view {
   display: none;

@@ -89,35 +89,6 @@
         uploadResult.innerHTML += str;
         updateArrows();
     }
-   /* function showUploadedFile(uploadResultArr) {
-        if (!uploadResultArr || uploadResultArr.length === 0) {
-            return;
-        }
-
-        let str = '';
-
-        uploadResultArr.forEach(file => {
-            const fileName = file.att_uuid + '_' + file.att_name;
-            const imageUrl = file.att_path + '/' + encodeURIComponent(fileName);
-            console.log("Image URL:", imageUrl);
-
-            str += `<li>`;
-            str += `<div class="image-container">`;
-            str += `<img src="${imageUrl}" alt="${file.att_name}" class="uploaded-image">`;
-            str += `<div class="image-info">`;
-            str += `<a href="${imageUrl}" target="_blank">${file.att_name}</a>`;
-            str += `<span class="delete-btn" data-file="${imageUrl}"> X </span>`;
-            str += `</div>`;
-            str += `</div>`;
-            str += `</li>`;
-        });
-
-        uploadResult.innerHTML += str; // 기존 이미지에 추가
-
-        // ul의 너비를 이미지 개수에 맞게 동적으로 설정
-        const totalImages = uploadResult.children.length;
-        uploadResult.style.width = `${totalImages * (100 / imagesPerPage)}%`;
-    }*/
 
     // 슬라이더 이동 함수
     function moveSlider(direction) {

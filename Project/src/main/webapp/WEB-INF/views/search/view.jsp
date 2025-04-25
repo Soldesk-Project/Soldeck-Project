@@ -22,41 +22,9 @@
 			<!-- 가게 내용 -->
             <div class="content">
 			    <div class="store-list">
-			        <div class="store-item">
-			            <span class="name">가게 총 평점</span>
-			            <span class="rating">로딩 중...</span>
-			        </div>
-			        <div class="store-item" id="age_rate">
-			            <span class="name">&lt;연령별 평점&gt;</span>
-			        </div>
-			        <div class="store-item">
-			            <span class="name">10대</span>
-			            <span class="rating">로딩 중...</span>
-			        </div>
-			        <div class="store-item">
-			            <span class="name">20대</span>
-			            <span class="rating">로딩 중...</span>
-			        </div>
-			        <div class="store-item">
-			            <span class="name">30대</span>
-			            <span class="rating">로딩 중...</span>
-			        </div>
-			        <div class="store-item">
-			            <span class="name">40대</span>
-			            <span class="rating">로딩 중...</span>
-			        </div>
-			        <div class="store-item">
-			            <span class="name">친구들 평점</span>
-			            <span class="rating">로딩 중...</span>
-			        </div>
 			    </div>
 			    <div class="store-details">
 			        <table class="store-table">
-			            <tbody>
-			                <tr>
-			                    <td colspan="2">로딩 중...</td>
-			                </tr>
-			            </tbody>
 			        </table>
 			    </div>
             </div>
@@ -109,25 +77,12 @@
                          </div>
                          <div class="chat-body">
                             <div class="image-con">
-                                <div class="image">
-                                    <img src="https://img1.kakaocdn.net/cthumb/local/C544x408.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flocalfiy%2F9D96CE0AF47646C48E7B41BF852F0E5E" alt="이미지 1">
-                                </div>
-                                <div class="image">
-                                    <img src="https://img1.kakaocdn.net/cthumb/local/C264x196.q50/?fname=http%3A%2F%2Ft1.kakaocdn.net%2Ffiy_reboot%2Fplace%2F42F0E8B92BBD4145B7B7F3A8C66092AD" alt="이미지 2">
-                                </div>
-                                <div class="image">
-                                    <img src="https://img1.kakaocdn.net/cthumb/local/C640x960.q50/?fname=http%3A%2F%2Ft1.kakaocdn.net%2Ffiy_reboot%2Fplace%2FF5F4393C6D35419B9545F2F230E5D334" alt="이미지 3">
-                                </div>
-                                <div class="image">
-                                    <img src="https://img1.kakaocdn.net/cthumb/local/C640x960.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flocal%2FkakaomapPhoto%2Freview%2Fcf3b48884e2c3bf3f7b9bec246ac3f3925e3f921%3Foriginal" alt="이미지 4">
-                                </div>
                             </div>
                             <div class="btn-com">
                                 <button type="button" class="btn btn-com" id="viewBtn">더보기</button>
                             </div>
                          </div>
                          <div class="chat-footer" id="chat_abc">
-                           <p>umst quisque sagittis purus. Pulvinar elementum integer enim neque volutpat ac.</p> 
                          </div>
                       </div>
                    </li>
@@ -141,12 +96,6 @@
 	<div class="modal_view" id="viewModal">
 		<div class="modal_view-content">
 			<div class="image-view">
-                <img src="https://img1.kakaocdn.net/cthumb/local/C544x408.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flocalfiy%2F9D96CE0AF47646C48E7B41BF852F0E5E" alt="이미지 1">
-                <img src="https://img1.kakaocdn.net/cthumb/local/C264x196.q50/?fname=http%3A%2F%2Ft1.kakaocdn.net%2Ffiy_reboot%2Fplace%2F42F0E8B92BBD4145B7B7F3A8C66092AD" alt="이미지 2">
-                <img src="https://img1.kakaocdn.net/cthumb/local/C640x960.q50/?fname=http%3A%2F%2Ft1.kakaocdn.net%2Ffiy_reboot%2Fplace%2FF5F4393C6D35419B9545F2F230E5D334" alt="이미지 3">
-                <img src="https://img1.kakaocdn.net/cthumb/local/C640x960.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flocal%2FkakaomapPhoto%2Freview%2Fcf3b48884e2c3bf3f7b9bec246ac3f3925e3f921%3Foriginal" alt="이미지 4">
-                <img src="https://img1.kakaocdn.net/cthumb/local/C264x196.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flocal%2FkakaomapPhoto%2Freview%2F4e6288d57f8db53b1136c87e78715a4e2f4634f2%3Foriginal" alt="이미지 5">
-            	<img src="https://img1.kakaocdn.net/cthumb/local/C544x408.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flocal%2FkakaomapPhoto%2Freview%2F7ef2638e4b26750a2e18c779ba9b04e9a6bab298%3Foriginal" alt="이미지 6">
 			</div>
 		</div>
 	</div>

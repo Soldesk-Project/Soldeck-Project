@@ -12,6 +12,6 @@
 	</delete>
 	
 	<select id="findByCom_no" parameterType="int" resultType="org.joonzis.domain.AttachVO">
-		SELECT * FROM ATTACH WHERE COM_NO = #{com_no}-1
+		SELECT * FROM ATTACH WHERE COM_NO = #{com_no}
 	</select>
 </mapper>

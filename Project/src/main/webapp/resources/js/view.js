@@ -511,9 +511,10 @@ function fetchComments() {
 
             // 첨부 파일 처리
             let attachHtml = '';
-            if (comment.com_attachList && comment.com_attachList.length > 0) {
+            const attachList = comment.com_attachList || []; // null이면 빈 배열로 초기화
+            if (attachList.length > 0) {
                 attachHtml = '<div class="comment-attachments">';
-                comment.com_attachList.forEach(attach => {
+                attachList.forEach(attach => {
                     const fileName = `${attach.att_uuid}_${attach.att_name}`;
                     const imageUrl = `${attach.att_path}/${encodeURIComponent(fileName)}`;
                     attachHtml += `
@@ -523,6 +524,8 @@ function fetchComments() {
                     `;
                 });
                 attachHtml += '</div>';
+            } else {
+                attachHtml = '<div class="comment-attachments">첨부 파일이 없습니다.</div>'; // 선택적 메시지
             }
 
             // 프로필 이미지 처리
@@ -533,7 +536,13 @@ function fetchComments() {
             // 닉네임 처리
             const nickName = comment.com_memberData && comment.com_memberData.mem_nick 
                 ? comment.com_memberData.mem_nick 
-                : comment.com_memberData.mem_name;
+                : (comment.com_memberData && comment.com_memberData.mem_name || '익명');
+
+            // 삭제 버튼 표시 (로그인한 사용자의 mem_no와 코멘트의 mem_no 비교)
+            const isOwnComment = parseInt(mem_no) === parseInt(comment.mem_no);
+            const deleteButton = isOwnComment 
+                ? `<button class="comment-delete-btn" data-com_no="${comment.com_no}" aria-label="코멘트 삭제">X</button>`
+                : '';
 
             msg += `
                 <li data-com_no="${comment.com_no}">
@@ -545,6 +554,7 @@ function fetchComments() {
                                 <small class="pull-right">${formatDate(comment.com_date)}</small>
                                 ${starsHtml}
                             </div>
+                            ${deleteButton}
                         </div>
                         <div class="chat-body">
                             ${attachHtml}
@@ -558,6 +568,9 @@ function fetchComments() {
         });
 
         commentList.innerHTML = msg;
+
+        // 삭제 버튼 이벤트 리스너 추가 (이벤트 위임)
+        commentList.addEventListener('click', handleCommentDelete);
     });
 }
 
@@ -583,7 +596,67 @@ function getComments(callback) {
     });
 }
 
-//코멘트 등록
+// 코멘트 삭제
+function handleCommentDelete(e) {
+    if (e.target.classList.contains('comment-delete-btn')) {
+        const comNo = e.target.getAttribute('data-com_no');
+        if (!comNo) {
+            console.error('com_no가 정의되지 않았습니다.');
+            alert('코멘트 삭제에 실패했습니다.');
+            return;
+        }
+
+        if (!mem_no || mem_no === '0') {
+            alert('로그인이 필요합니다.');
+            return;
+        }
+
+        if (!confirm('정말로 이 코멘트를 삭제하시겠습니까?')) {
+            return;
+        }
+
+        e.target.disabled = true; // 버튼 비활성화
+        e.target.textContent = '삭제 중...';
+
+        fetch(`/comment/delete/${comNo}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => {
+            // 응답이 JSON인지 확인
+            const contentType = response.headers.get('Content-Type');
+            if (!contentType || !contentType.includes('application/json')) {
+                return response.text().then(text => {
+                    throw new Error(`서버가 JSON이 아닌 응답을 반환했습니다: ${text.substring(0, 50)}...`);
+                });
+            }
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(errData.message || '서버 오류');
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            e.target.disabled = false;
+            e.target.textContent = 'X';
+            alert('코멘트가 삭제되었습니다.');
+            fetchComments();
+            showAvgRate();
+        })
+        .catch(err => {
+            e.target.disabled = false;
+            e.target.textContent = 'X';
+            console.error('Delete error:', err.message);
+            alert('코멘트 삭제에 실패했습니다: ' + err.message);
+        });
+    }
+}
+
+// 코멘트 등록
 function uploadComment() {
     console.log("Before uploadComment, window.uploadedFiles:", window.uploadedFiles); // 디버깅 로그
     const commentInput = document.querySelector("#comment");
