@@ -6,6 +6,13 @@ linkEle.href = CSS_FILE_PATH;
 document.head.appendChild(linkEle);
 
 // 전역 변수 정의
+let mem_no = 0;
+console.log(mem_no);
+const login_data = document.getElementById('login-data');
+const initialmem_no = login_data.dataset.memNo || '';
+console.log(initialmem_no);
+mem_no = initialmem_no;
+console.log(mem_no);
 let restNo = null;
 let currentIndex = 0;
 const visibleSlides = 4;
@@ -194,6 +201,7 @@ function fetchStoreDetails() {
         renderStoreDetails(data);
         showViewList();
         fetchComments();
+        showAvgRate();
     });
 }
 
@@ -367,55 +375,6 @@ function moveSlide(direction) {
 }
 
 // 달력 및 예약 기능 -----------------------------------------
-//function renderCalendar(month) {
-//    if (!calendarDays) return;
-//    calendarDays.innerHTML = '';
-//
-//    const year = new Date().getFullYear(); // 현재 연도 동적으로 설정
-//    const daysInMonth = new Date(year, month, 0).getDate();
-//    const firstDay = new Date(year, month - 1, 1).getDay();
-//    const prevMonth = month === 1 ? 12 : month - 1; // 1월일 경우 12월로 설정
-//    const prevMonthYear = month === 1 ? year - 1 : year; // 이전 월의 연도
-//    const daysInPrevMonth = new Date(prevMonthYear, prevMonth, 0).getDate();
-//    const prevMonthStart = daysInPrevMonth - firstDay + 1;
-//
-//    for (let i = 0; i < firstDay; i++) {
-//        const day = document.createElement('div');
-//        day.classList.add('day', 'disabled');
-//        day.textContent = prevMonthStart + i;
-//        calendarDays.appendChild(day);
-//    }
-//
-//    for (let i = 1; i <= daysInMonth; i++) {
-//        const day = document.createElement('div');
-//        day.classList.add('day');
-//        day.textContent = i;
-//
-//        const today = new Date(); // 현재 날짜 동적으로 설정
-//        const currentDate = new Date(year, month - 1, i);
-//        if (currentDate < today.setHours(0, 0, 0, 0)) { // 오늘 이전 날짜 비활성화
-//            day.classList.add('disabled');
-//        } else {
-//            day.addEventListener('click', () => {
-//                const days = document.querySelectorAll('.day:not(.disabled)');
-//                days.forEach(d => d.classList.remove('selected'));
-//                day.classList.add('selected');
-//                selectedDate = day.textContent;
-//            });
-//        }
-//
-//        calendarDays.appendChild(day);
-//    }
-//
-//    const totalDays = firstDay + daysInMonth;
-//    const remainingDays = (7 - (totalDays % 7)) % 7;
-//    for (let i = 1; i <= remainingDays; i++) {
-//        const day = document.createElement('div');
-//        day.classList.add('day', 'disabled');
-//        day.textContent = i;
-//        calendarDays.appendChild(day);
-//    }
-//}
 function renderCalendar(month) {
     if (!calendarDays) return;
     calendarDays.innerHTML = '';
@@ -620,6 +579,10 @@ function getComments(callback) {
 function uploadComment() {
     console.log("Before uploadComment, window.uploadedFiles:", window.uploadedFiles); // 디버깅 로그
     const commentInput = document.querySelector("#comment");
+//    if(mem_no < 1){
+//    	alert("로그인을 해주세요.");
+//        return;
+//    }
     if (!commentInput) {
         console.error("코멘트 입력 필드(#comment)를 찾을 수 없습니다.");
         return;
@@ -636,7 +599,10 @@ function uploadComment() {
         alert("가게 정보를 불러올 수 없습니다.");
         return;
     }
-
+    if(ratingValue == 0){
+    	alert("평점을 선택해주세요");
+    	return;
+    }
     const attachList = (window.uploadedFiles || []).map(file => ({
         att_uuid: file.att_uuid,
         att_path: file.att_path,
@@ -670,7 +636,10 @@ function uploadComment() {
     .then(data => {
         console.log("Comment uploaded:", data);
         fetchComments();
+        showAvgRate();
         commentInput.value = '';
+        ratingValue = 0;
+        updateStars(0);
         window.uploadedFiles = []; // 초기화
         document.querySelector('.uploadResult ul').innerHTML = '';
         alert("코멘트가 등록되었습니다.");
@@ -686,4 +655,68 @@ function formatDate(dateString) {
     if (!dateString) return '날짜 없음';
     const date = new Date(dateString);
     return date.toISOString().split('T')[0];
+}
+
+// 평점 평균 관련---------------------------
+function getAvgRate(callback) {
+    if (!restNo) {
+        console.error("restNo가 정의되지 않았습니다.");
+        callback(null);
+        return;
+    }
+    fetch(`/comment/rate/${restNo}`, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        callback(data);
+    })
+    .catch(err => {
+        console.error("Fetch avg rate error:", err.message);
+        callback(null);
+    });
+}
+
+function showAvgRate() {
+    const avgRate = document.querySelector(".store-list");
+    getAvgRate(jsonArray => {
+        let msg = '';
+        msg += `<div class="store-item">`;
+        msg += `<span class="name">가게 총 평점</span>`;
+        const avg = typeof jsonArray === 'number' && !isNaN(jsonArray) ? jsonArray.toFixed(1) : '0.0';
+        msg += `<span class="rating">${avg}</span>`;
+        msg += `</div>`;
+        msg += `<div class="store-item" id="age_rate">`;
+        msg += `<span class="name">&lt;연령별 평점&gt;</span>`;
+        msg += `</div>`;
+        msg += `<div class="store-item">`;
+        msg +=  `<span class="name">10대</span>`;
+        msg +=  `<span class="rating">로딩 중...</span>`;
+        msg += `</div>`;
+        msg += `<div class="store-item">`;
+        msg +=    `<span class="name">20대</span>`;
+        msg +=    `<span class="rating">로딩 중...</span>`;
+        msg +=  `</div>`;
+        msg += `<div class="store-item">`;
+        msg +=   `<span class="name">30대</span>`;
+        msg +=   `<span class="rating">로딩 중...</span>`;
+        msg +=  `</div>`;
+        msg += `<div class="store-item">`;
+        msg +=   `<span class="name">40대</span>`;
+        msg +=   `<span class="rating">로딩 중...</span>`;
+        msg += `</div>`;
+        msg += `<div class="store-item">`;
+        msg +=   `<span class="name">친구들 평점</span>`;
+        msg +=   `<span class="rating">로딩 중...</span>`;
+        msg += `</div>`;
+        avgRate.innerHTML = msg;
+    });
 }

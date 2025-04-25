@@ -133,6 +133,7 @@
                 </ul>
              </div>
         </div>
+        <div id="login-data" data-memNo="${member.mem_no}" value="${member.mem_no}"></div>
     </div>
     
 	<!-- 모달 창 (더보기) -->
