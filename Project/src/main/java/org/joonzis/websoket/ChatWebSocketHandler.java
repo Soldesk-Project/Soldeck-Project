@@ -58,8 +58,11 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         if ("chat".equals(msgMap.get("type"))) {
             int memNo = Integer.parseInt(String.valueOf(msgMap.get("mem_no")));
             String msg = String.valueOf(msgMap.get("msg"));
+            String sender = String.valueOf(msgMap.get("sender"));
+            
+            String saveMessage = sender + ":" + msg;
 
-            saveChat(msg, Integer.parseInt(groupNo), memNo);
+            saveChat(saveMessage, Integer.parseInt(groupNo), memNo);
         }
     }
 

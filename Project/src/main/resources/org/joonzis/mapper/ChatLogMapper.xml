@@ -10,4 +10,18 @@
 	        CHAT_SEQ.NEXTVAL, #{groupNo}, #{memNo}, #{chatLog}, #{chatType}, SYSTIMESTAMP, 'N'
 	    )
 	</insert>
+	
+	<resultMap id="ChatLogMap" type="org.joonzis.domain.ChatLogVO">
+	    <id property="chatNo" column="CHAT_NO"/>
+	    <result property="groupNo" column="GROUP_NO"/>
+	    <result property="memNo" column="MEM_NO"/>
+	    <result property="chatLog" column="CHAT_LOG"/>
+	    <result property="chatType" column="CHAT_TYPE"/>
+	    <result property="chatRead" column="CHAT_READ"/>
+	    <result property="chatTime" column="CHAT_TIME"/>
+	</resultMap>
+	
+	<select id="getChatsByGroupNo" resultMap="ChatLogMap">
+	    SELECT * FROM GROUP_CHAT_LOG WHERE GROUP_NO = #{groupNo}
+	</select>
 </mapper>
