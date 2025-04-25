@@ -11,6 +11,7 @@
 <body>
   <jsp:include page="../layout/header.jsp"/>
   
+  <div class="container-wrapper">
   <div class="container">
 	<div class="side-menu">
   		<jsp:include page="../layout/sideMenu.jsp"/>
@@ -150,6 +151,7 @@
         </div>
       </form>
 	</div>
+  </div>
   </div>
   
 	<jsp:include page="../layout/footer.jsp"/>

@@ -23,7 +23,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const profileImageInput = document.getElementById('profileImage');
     const previewImage = document.getElementById('previewImage');
     const fileUploadSpan = document.querySelector('.file-upload .file-name');
-    const birthDateErrorMessage = document.getElementById('birthDateErrorMessage'); // 추가
+    const birthDateErrorMessage = document.getElementById('birthDateErrorMessage');
+    const passwordCheckInput = document.getElementById('passwordCheck');
+        const passwordCheckMessage = document.getElementById('passwordCheckMessage');
 
     // 정규식
     const regId = /^[0-9a-z]{8,16}$/;
@@ -98,48 +100,44 @@ document.addEventListener('DOMContentLoaded', function() {
     
     let isIdChecked = false;
     
-    function validateId() {
-        const idValue = idInput.value.trim();
-        if (!regId.test(idValue)) {
-            idCheckMessage.textContent = '아이디는 8~16자의 영문 소문자와 숫자로만 입력해주세요.';
-            isIdChecked = false; // 유효성 검사 실패 시 중복 확인 안됨으로 설정
-            return false;
-        } else {
-            idCheckMessage.textContent = '아이디 중복 확인 중...';
-            isIdChecked = false; // 다시 입력했으므로 중복 확인 필요
-
-            // 서버에 ID 중복 확인 요청 (AJAX)
-            fetch('/login/checkId', { // 서버의 ID 중복 확인 API 엔드포인트
+    function checkIdAvailability(idValue) {
+        idCheckMessage.textContent = '아이디 중복 확인 중...';
+        isIdChecked = false;
+        return new Promise((resolve, reject) => {
+            fetch('/login/checkId', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: `id=${idValue}`
             })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('ID 중복 확인 실패');
-                }
-                return response.text();
-            })
+            .then(response => response.text())
             .then(data => {
                 if (data === 'available') {
                     idCheckMessage.textContent = '사용 가능한 아이디입니다.';
                     isIdChecked = true;
-                } else if (data === 'unavailable') {
+                    resolve(true);
+                } else {
                     idCheckMessage.textContent = '이미 사용 중인 아이디입니다.';
                     isIdChecked = false;
-                } else {
-                    idCheckMessage.textContent = 'ID 중복 확인 오류';
-                    isIdChecked = false;
+                    resolve(false);
                 }
             })
             .catch(error => {
                 console.error('ID 중복 확인 에러:', error);
                 idCheckMessage.textContent = 'ID 중복 확인에 실패했습니다.';
                 isIdChecked = false;
+                resolve(false); // 오류 발생 시에도 resolve(false) 처리 (폼 제출 막기 위함)
             });
-            return true; // 유효성 형식은 통과했음을 일단 반환
+        });
+    }
+
+    function validateId() {
+        const idValue = idInput.value.trim();
+        if (!regId.test(idValue)) {
+            idCheckMessage.textContent = '아이디는 8~16자의 영문 소문자와 숫자로만 입력해주세요.';
+            isIdChecked = false;
+            return Promise.resolve(false); // 형식 오류 시 즉시 Promise resolve(false)
+        } else {
+            return checkIdAvailability(idValue); // Promise 반환
         }
     }
 
@@ -154,6 +152,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+	function validatePasswordCheck() {
+		const passwordValue = passwordInput.value.trim();
+		const passwordCheckValue = passwordCheckInput.value.trim();
+		if (passwordValue !== passwordCheckValue) {
+			passwordCheckMessage.textContent = '비밀번호와 비밀번호 확인이 일치하지 않습니다.';
+			return false;
+		} else {
+			passwordCheckMessage.textContent = '';
+			return true;
+		}
+	}
+    
     function validateNickname() {
         const nicknameValue = nicknameInput.value.trim();
         if (nicknameValue.length < 2) {
@@ -235,25 +245,28 @@ document.addEventListener('DOMContentLoaded', function() {
     // 이벤트 리스너 추가 (실시간 유효성 검사 - 생년월일 관련 리스너 제거)
     idInput.addEventListener('input', validateId);
     passwordInput.addEventListener('input', validatePassword);
+    passwordCheckInput.addEventListener('input', validatePasswordCheck);
     nicknameInput.addEventListener('input', validateNickname);
     emailInput.addEventListener('input', validateEmail);
     phone1Input.addEventListener('input', validatePhone);
     phone2Input.addEventListener('input', validatePhone);
     phone3Input.addEventListener('input', validatePhone);
     interestCheckboxes.forEach(checkbox => {
-    	checkbox.addEventListener('change', limitInterestSelection);
+    checkbox.addEventListener('change', limitInterestSelection);
     });
 
     // 폼 제출 이벤트 리스너 (AJAX 방식 - multipart/form-data)
     if (registrationForm) {
-        registrationForm.addEventListener('submit', function(event) {
+        registrationForm.addEventListener('submit', async function(event) {
             event.preventDefault(); // 기본 폼 제출 막기
 
             const isNameValid = validateName();
             const isBirthDateValid = validateBirthDate();       
             const isGenderValid = validateGender();
+            const isIdValid = await validateId();
             const isIdFormatValid = validateId();
             const isPasswordValid = validatePassword();
+            const isPasswordCheckValid = validatePasswordCheck();
             const isNicknameValid = validateNickname();
             const isEmailValid = validateEmail();
             const isPhoneValid = validatePhone();
@@ -277,12 +290,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             if (!isNameValid || !isBirthDateValid || !isGenderValid ||
-                    !isIdFormatValid || !isPasswordValid || !isNicknameValid ||
-                    !isEmailValid || !isPhoneValid || !isInterestValid || !isIdChecked) {
-                    if (!isIdChecked && regId.test(idInput.value.trim())) {
-                        alert('아이디 중복 확인을 해주세요.');
-                    }
-                    return; // 유효성 검사 실패 또는 ID 중복 확인 안됨 시 제출 중단
+                    !isIdValid || !isPasswordValid || !isPasswordCheckValid || !isNicknameValid ||
+                    !isEmailValid || !isPhoneValid || !isInterestValid) {
+                    return;
                 }
 
             const formData = new FormData(registrationForm);
@@ -320,6 +330,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const errorElements = {
         idInput: idCheckMessage,
         passwordInput: passwordErrorMessage,
+        passwordCheckInput: passwordCheckMessage,
         nicknameInput: nicknameCheckMessage,
         emailInput: emailCheckMessage,
         interestCheckboxes: interestErrorMessage,

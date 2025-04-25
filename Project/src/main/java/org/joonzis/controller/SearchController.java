@@ -43,11 +43,6 @@ public class SearchController {
 		model.addAttribute("keyword", keyword);
 		return "/search/search";
 	}
-//	@GetMapping(value = "/search")
-//	public String searchPage() {
-//		log.info("search...");
-//		return "/search/search";
-//	}
 	// search페이지 필터기능
 	@GetMapping(value = "/search/filterData", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<RestVO>> filterData(@RequestParam(value = "region", required = false) String region,

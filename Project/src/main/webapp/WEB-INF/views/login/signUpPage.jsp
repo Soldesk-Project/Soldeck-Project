@@ -67,6 +67,12 @@
 			</div>
 
 			<div class="formGroup">
+				<label for="passwordCheck">비밀번호 확인</label>
+				<input type="password" id="passwordCheck" name="passwordCheck" placeholder="PASSWORD 확인" required>
+				<div id="passwordCheckMessage" class="message error"></div>
+			</div>
+
+			<div class="formGroup">
 				<label for="nickname">별명</label>
 				<input type="text" id="nickname" name="nickname" placeholder="NICKNAME" required>
 				<div id="nicknameCheckMessage" class="message error"></div>
