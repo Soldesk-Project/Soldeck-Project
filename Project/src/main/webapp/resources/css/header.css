@@ -1,11 +1,11 @@
-.nav {
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: white;
+  background-color: rgba(255, 254, 252, 0.2);
   width: 1240px; /* 레이아웃의 너비를 고정 */
   height: 100px; /* 고정 높이 설정 */
-  margin: 0 auto; /* 화면 가운데 정렬 */
+  margin: 30px auto; /* 화면 가운데 정렬 */
 }
 .nav-left,
 .nav-center,
