@@ -10,6 +10,7 @@ import org.joonzis.domain.BookMarkVO;
 import org.joonzis.domain.GroupVO;
 import org.joonzis.domain.MemberVO;
 import org.joonzis.domain.ReserveRestDTO;
+import org.joonzis.domain.ReserveVO;
 import org.joonzis.domain.RestVO;
 import org.joonzis.service.BookmarkService;
 import org.joonzis.service.GroupService;
@@ -182,10 +183,10 @@ public class myPageController {
 		model.addAttribute("reserveList", reserveList);
 		return "/mypage/booking";
 	}
-	@PostMapping(value = "/booking/del")
-	public ResponseEntity<Boolean> cancelBooking(@RequestParam("res_no") int res_no) {
-		log.info("delBookmark..."+res_no);
-		boolean result=rservice.cancelBooking(res_no);
+	@PostMapping(value = "/booking/del", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Boolean> cancelBooking(@RequestBody ReserveVO vo) {
+		log.info("delBookmark..."+vo.getRes_no());
+		boolean result=rservice.cancelBooking(vo.getRes_no());
 		return new ResponseEntity<Boolean>(result,HttpStatus.OK);
 	}
 	

@@ -208,7 +208,7 @@ function bookingCancel() {
 		  headers: {
 		    'Content-Type': 'application/json; charset=utf-8'
 		  },
-		  body: 'res_no='+resNo
+		  body: JSON.stringify({res_no: resNo})
 		})
 		  .then(response => response.json())
 		  .then(data=>{
