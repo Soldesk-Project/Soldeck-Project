@@ -36,6 +36,7 @@
       height: 300px;
       border: 1px solid #ccc;
       overflow-y: scroll;
+      overflow-x: hidden;
       margin-bottom: 10px;
       padding: 10px;
     }
