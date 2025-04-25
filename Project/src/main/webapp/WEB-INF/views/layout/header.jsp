@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="nav">
   <div class="nav-left">
     <a href="/"><img src="/resources/images/logo.png" alt="logo" style="width: 70px;"></a>
@@ -8,27 +8,31 @@
 <div class="nav-center">
   <input type="search" placeholder="검색어를 입력하세요." id="search">
 </div>
-<div class="nav-right">
-  <input type="image" src="../resources/images/profile.png" alt="profile" id="proFile" style="width: 70px; cursor: pointer;"><br>
-</div>
-<!-- 모달창 -->
-<div id="myModal" class="modal">
-	<div class="modal-content">
-		<div class="modal-header">
-		    <div class="profile-icon"></div>
-		    <span class="nickname">nickName</span>
-		    <span class="close">×</span>
-		</div>
-		<ul class="modal-menu">
-		    <li><a href="/mypage/myInfo">my page</a></li>
-		    <li><a href="/friendlist/friendList">community</a></li>
-		    <li><a href="/mypage/bookmark">bookmark</a></li>
-		    <li><a href="#">logout</a></li>
-		</ul>
+<c:if test="${sessionScope.loggedInUser != null}">
+	<div class="nav-right">
+		<input type="image" src="../resources/images/profile.png" alt="profile" id="proFile" style="width: 70px; cursor: pointer;"><br>
 	</div>
-</div>
+	<!-- 모달창 -->
+	<div id="myModal" class="modal">
+		<div class="modal-content">
+			<div class="modal-header">
+		    	<div class="profile-icon"></div>
+		    	<span class="nickname">nickName</span>
+		    	<span class="close">×</span>
+			</div>
+			<ul class="modal-menu">
+		    	<li><a href="/mypage/myInfo">my page</a></li>
+		    	<li><a href="/friendlist/friendList">community</a></li>
+		    	<li><a href="/mypage/bookmark">bookmark</a></li>
+		    	<li><a href="#">logout</a></li>
+			</ul>
+		</div>
+	</div>
+</c:if>
 <div class="nav-right1">
-  <a href="/login/loginPage" id="login">로그인</a>
+	<c:if test="${empty sessionScope.loggedInUser}">
+		<a href="/login/loginPage" id="login">로그인</a>
+	</c:if>
 </div>
 </div>
 <script>
@@ -89,5 +93,25 @@ if (searchInput) {
 } else {
     console.error("searchInput 요소를 찾을 수 없습니다.");
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    const logoutLink = document.querySelector('#myModal .modal-menu li:last-child a');
+
+    if (logoutLink) {
+        logoutLink.addEventListener('click', function(event) {
+            event.preventDefault(); // 기본 링크 동작 방지
+
+            const form = document.createElement('form');
+            form.action = '/login/logout'; // LoginController의 로그아웃 처리 URL로 변경
+            form.method = 'POST';
+            form.style.display = 'none'; // 사용자에게 보이지 않게 숨김
+
+            document.body.appendChild(form);
+            form.submit();
+        });
+    } else {
+        console.error("로그아웃 링크를 찾을 수 없습니다.");
+    }
+});
 </script>
 

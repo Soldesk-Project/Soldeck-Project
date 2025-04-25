@@ -202,4 +202,14 @@ public class LoginController {
 			return "fail";
 		}
 	}
+	
+    // 로그아웃 처리
+    @PostMapping("/logout")
+    public String logout(HttpSession session) {
+        if (session != null && session.getAttribute("loggedInUser") != null) {
+            session.removeAttribute("loggedInUser"); // 세션에서 로그인 정보 제거
+            session.invalidate(); // 세션 무효화
+        }
+        return "redirect:/"; // 로그아웃 후 홈페이지로 리다이렉트
+    }
 }

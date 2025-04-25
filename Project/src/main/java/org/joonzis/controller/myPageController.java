@@ -104,42 +104,44 @@ public class myPageController {
 	}
 	@Transactional
 	@PostMapping("modifyInfo")
-	public String modifyInfo(MemberVO vo,RedirectAttributes rttr, 
-							 @RequestParam(value = "profileImageInput", required = false) MultipartFile profileImage,
-							 @RequestParam(value = "food", required = false) List<Integer> interests,
-							 HttpSession session
-							) {
-		
-		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
-		if (loggedInMember == null) {
-			return "redirect:/login/loginPage";
-		}
-		vo.setMem_no(loggedInMember.getMem_no());
+	public String modifyInfo(MemberVO vo, RedirectAttributes rttr,
+	                         @RequestParam(value = "profileImageInput", required = false) MultipartFile profileImage,
+	                         @RequestParam(value = "food", required = false) List<Integer> interests,
+	                         HttpSession session
+	) {
 
-		log.info("수정 요청 데이터: " + vo);
-		
-		if (profileImage != null && !profileImage.isEmpty()) {
+	    MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
+	    if (loggedInMember == null) {
+	        return "redirect:/login/loginPage";
+	    }
+	    vo.setMem_no(loggedInMember.getMem_no());
+
+	    log.info("수정 요청 데이터: " + vo);
+
+	    if (profileImage != null && !profileImage.isEmpty()) {
 	        String originalFilename = profileImage.getOriginalFilename();
-	        String uuid = UUID.randomUUID().toString();
-	        String storedFilename = uuid + "_" + originalFilename;
-	        vo.setMem_img(storedFilename);
-            log.info("이미지 업로드 후 데이터: " + vo);
+	        // 회원 가입 시와 동일한 파일명 생성 규칙 적용 (저장 경로는 제외)
+	        String storedFilename = loggedInMember.getMem_id() + "_" + System.currentTimeMillis() + "_" + originalFilename;
+	        vo.setMem_img(storedFilename); // MemberVO에 새로운 이미지 파일명 설정
+	        log.info("새로운 이미지 파일명 설정: {}"+ storedFilename);
 	    } else {
 	        MemberVO currentMemberInfo = service.getMemberInfo(loggedInMember.getMem_no());
-	        vo.setMem_img(currentMemberInfo.getMem_img());
-            log.info("기존 이미지 유지 후 데이터: " + vo);
+	        vo.setMem_img(currentMemberInfo.getMem_img()); // 기존 이미지 유지
+	        log.info("기존 이미지 유지: {}"+ vo);
 	    }
-		
-		// food_kate 테이블 데이터 삭제
-		service.deleteFoodKate(vo.getMem_no());
-		// 데이터 삽입
-		for (Integer food_no : interests) {
-			service.insertFoodKate(vo.getMem_no(), food_no);
-		}
-		if (service.modify(vo)) {
-			rttr.addFlashAttribute("result","success");
-		}
-		return "redirect:/mypage/myInfo";
+
+	    // food_kate 테이블 데이터 삭제
+	    service.deleteFoodKate(vo.getMem_no());
+	    // 데이터 삽입
+	    if (interests != null) {
+	        for (Integer food_no : interests) {
+	            service.insertFoodKate(vo.getMem_no(), food_no);
+	        }
+	    }
+	    if (service.modify(vo)) {
+	        rttr.addFlashAttribute("result", "success");
+	    }
+	    return "redirect:/mypage/myInfo";
 	}
 	
 	
