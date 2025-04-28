@@ -1,6 +1,10 @@
 package org.joonzis.service;
 
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 import java.util.List;
 
 import org.joonzis.domain.MemberVO;
@@ -23,4 +27,8 @@ public interface MemberService {
     public int deleteFoodKate(int mem_no);
     public void insertFoodKate(int mem_no, int food_no);
 	MemberVO loginProcess(String mem_id, String mem_pw);
+	
+	//friendList
+	List<MemberVO> getRandomMembers(int count);
+	
 }

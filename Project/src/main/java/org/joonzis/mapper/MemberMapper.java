@@ -35,4 +35,6 @@ public interface MemberMapper {
 	public int deleteFoodKate(@Param("mem_no") int mem_no);
 	
 	MemberVO loginProcess(@Param("mem_id") String mem_id);
+	
+	List<MemberVO> selectRandomFriends(@Param("count") int count);
 }

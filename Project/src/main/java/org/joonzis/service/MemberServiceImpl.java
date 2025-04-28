@@ -81,5 +81,9 @@ public class MemberServiceImpl implements MemberService{
 		return null;
 	}
 	
-	
+	//friendList
+    @Override
+    public List<MemberVO> getRandomMembers(int count) {
+        return mapper.selectRandomFriends(count);
+    }
 }

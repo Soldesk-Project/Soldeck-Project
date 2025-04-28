@@ -74,4 +74,5 @@
     	FROM member
     	WHERE mem_id = #{mem_id}
 	</select>
+	
 </mapper>
