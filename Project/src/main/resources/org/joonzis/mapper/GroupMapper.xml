@@ -49,7 +49,26 @@
 	    <result property="chatTitle" column="CHAT_TITLE"/>
 	</resultMap>
 
-	<select id="getAllGroups" resultMap="groupResultMap">
-	    SELECT GROUP_NO, CHAT_TITLE FROM "GROUP" ORDER BY GROUP_NO DESC
+	<select id="getAllGroups" resultType="org.joonzis.domain.GroupMemberDTO">
+	    SELECT
+		    g.GROUP_NO,
+		    g.CHAT_TITLE,
+		    g.IS_PUBLIC,
+		    m.MEM_NO,
+		    m.GROUP_USERMEMO,
+		    m.GROUP_BOOKMARK
+		FROM
+		    "GROUP" g
+		INNER JOIN
+		    GROUP_MEM m ON g.GROUP_NO = m.GROUP_NO
+		WHERE
+		    m.MEM_NO=#{mem_no}
+		ORDER BY 
+		    CASE 
+		        WHEN m.GROUP_BOOKMARK = 'Y' THEN 1
+		        WHEN m.GROUP_BOOKMARK = 'N' THEN 2
+		        ELSE 3
+		    END,
+		    g.CHAT_TITLE ASC
 	</select>
 </mapper>

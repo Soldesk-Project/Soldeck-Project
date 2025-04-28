@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.joonzis.domain.ChatLogVO;
+import org.joonzis.domain.GroupMemberDTO;
 import org.joonzis.domain.GroupVO;
 import org.joonzis.domain.MemberVO;
 import org.joonzis.service.ChatLogService;
@@ -35,11 +36,19 @@ public class ChatController {
 	
 	@GetMapping("/chatRoom/{groupNo}")
 	public String goChatRoom(@PathVariable("groupNo") int groupNo, HttpSession session, Model model) {
-	    List<GroupVO> groups = service.getAllGroups();
+		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
+		if (loggedInMember == null) {
+			return "redirect:/login/loginPage";
+		}
+		int mem_no = loggedInMember.getMem_no();
+		
+		
+		
+		List<GroupMemberDTO> groups = service.getAllGroups(mem_no);
 	    
 	    // groupNo에 해당하는 그룹을 찾기
-	    GroupVO selectedGroup = groups.stream()
-	                                  .filter(group -> group.getGroupNo() == groupNo)
+		GroupMemberDTO selectedGroup = groups.stream()
+	                                  .filter(group -> group.getGroup_no() == groupNo)
 	                                  .findFirst()
 	                                  .orElse(null);
 
@@ -48,7 +57,7 @@ public class ChatController {
 	    }
 
 	    // 그룹의 chatTitle을 model에 추가
-	    model.addAttribute("chatTitle", selectedGroup.getChatTitle());
+	    model.addAttribute("chatTitle", selectedGroup.getChat_title());
 
 	    // 로그인한 사용자 정보 가져오기
 	    MemberVO loginUser = (MemberVO) session.getAttribute("loggedInUser");

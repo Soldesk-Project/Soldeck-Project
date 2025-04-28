@@ -35,14 +35,14 @@ body{
 	overflow: auto;
 	height: 100%;
 }
-.inner-main::-webkit-scrollbar {
+/*.inner-main::-webkit-scrollbar {
 	display:inline;
     width: 10px;  
 }
 .inner-main::-webkit-scrollbar-thumb {
     background:#FF7D00;
     border-radius: 10px;
-}
+}*/
 input{
 	outline: none;
 	border-width: 0;
@@ -90,7 +90,7 @@ input{
 	height: 50%;
 }
 .club-name{
-	font-size: 20px;
+	font-size: 30px;
 	width: 300px;
 	height: 45px;
 	margin: 5px;

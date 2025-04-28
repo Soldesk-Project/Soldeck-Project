@@ -47,14 +47,14 @@ body{
 	height: 100%;
 	background-color: #f0f0f0;
 }
-.inner-content::-webkit-scrollbar {
+/*.inner-content::-webkit-scrollbar {
 	display:inline;
     width: 10px;  
 }
 .inner-content::-webkit-scrollbar-thumb {
     background:#FF7D00;
     border-radius: 10px;
-}
+}*/
 .view-img{
 	display: inline-block;
 	width: 150px;

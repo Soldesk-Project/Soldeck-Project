@@ -182,7 +182,13 @@
 		DELETE FROM RESERVE WHERE RES_NO=#{res_no}
 	</delete>
 	
-	
+	<update id="updateReserveMemo">
+		UPDATE RESERVE 
+		SET
+			RES_MEMO=#{res_memo}
+		WHERE
+			RES_NO=#{res_no}
+	</update>
 	
 	
 	

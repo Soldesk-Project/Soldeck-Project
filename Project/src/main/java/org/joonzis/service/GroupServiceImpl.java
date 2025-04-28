@@ -3,6 +3,7 @@ package org.joonzis.service;
 import java.util.List;
 
 import org.joonzis.domain.ChatRoomVO;
+import org.joonzis.domain.GroupMemberDTO;
 import org.joonzis.domain.GroupVO;
 import org.joonzis.mapper.GroupMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
 	@Override
-	public List<GroupVO> getAllGroups() {
-		return mapper.getAllGroups();
+	public List<GroupMemberDTO> getAllGroups(int mem_no) {
+		return mapper.getAllGroups(mem_no);
 	}
 }

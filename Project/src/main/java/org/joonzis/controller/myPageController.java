@@ -2,11 +2,11 @@ package org.joonzis.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
 import org.joonzis.domain.BookMarkVO;
+import org.joonzis.domain.GroupMemberDTO;
 import org.joonzis.domain.GroupVO;
 import org.joonzis.domain.MemberVO;
 import org.joonzis.domain.ReserveRestDTO;
@@ -146,12 +146,10 @@ public class myPageController {
 	
 	
 	@GetMapping("/bookmark")
-	public String bookmark(Model model) {
-//	public String bookmark(Model model, @RequestParam("mem_no") int mem_no) {
-		int mem_no=118;
-		
+	public String bookmark(Model model, HttpSession session) {
+		MemberVO mvo = (MemberVO) session.getAttribute("loggedInUser");
+		int mem_no = mvo.getMem_no();
 		log.info("bookmark..."+mem_no);
-
 		List<BookMarkVO> bookmarkList = bservice.getBookMark(mem_no);
 		for (BookMarkVO bm : bookmarkList) {
 		    RestVO rest = rservice.getRest(bm.getRest_no());
@@ -175,10 +173,10 @@ public class myPageController {
 	}
 	
 	@GetMapping("/booking")
-	public String booking(Model model) {
-//	public String booking(Model model, @RequestParam("mem_no") int mem_no) {
-		int mem_no=118;
-		log.info("booking...");
+	public String booking(Model model, HttpSession session) {
+		MemberVO mvo = (MemberVO) session.getAttribute("loggedInUser");
+		int mem_no = mvo.getMem_no();
+		log.info("booking..."+mem_no);
 		List<ReserveRestDTO> reserveList=rservice.getReserveList(mem_no);
 		model.addAttribute("reserveList", reserveList);
 		return "/mypage/booking";
@@ -189,7 +187,22 @@ public class myPageController {
 		boolean result=rservice.cancelBooking(vo.getRes_no());
 		return new ResponseEntity<Boolean>(result,HttpStatus.OK);
 	}
+	@PostMapping(value = "/booking/memoUpdate", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Boolean> updateReserveMemo(@RequestBody ReserveVO vo) {
+		log.info("updateReserveMemo..."+vo.getRes_no());
+		boolean result=rservice.updateReserveMemo(vo.getRes_no(), vo.getRes_memo());
+		return new ResponseEntity<Boolean>(result,HttpStatus.OK);
+	}
 	
+	@GetMapping("/club")
+	public String club(Model model, HttpSession session) {
+		MemberVO mvo = (MemberVO) session.getAttribute("loggedInUser");
+		int mem_no = mvo.getMem_no();
+		log.info("club..."+mem_no);
+		List<GroupMemberDTO> groups = groupService.getAllGroups(mem_no);
+		model.addAttribute("groupList", groups);
+		return "/mypage/club";
+	}
 	
 	
 	
@@ -198,13 +211,6 @@ public class myPageController {
 	public String review() {
 		log.info("review...");
 		return "/mypage/review";
-	}
-	@GetMapping("/club")
-	public String club(Model model) {
-		log.info("club...");
-		List<GroupVO> groups = groupService.getAllGroups();
-		model.addAttribute("groupList", groups);
-		return "/mypage/club";
 	}
 	@GetMapping("/event")
 	public String event() {

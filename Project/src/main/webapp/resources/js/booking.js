@@ -41,51 +41,6 @@ document.querySelectorAll(".booking-img img").forEach(moveRestView => {
 		location.href="../search/view?rest_no="+view;
 	});
 })
-//-----버튼들 클릭 이벤트-------------------------------------------
-document.querySelectorAll("button").forEach(btn=>{
-	btn.addEventListener('click',e=>{
-		let type=btn.getAttribute('id');
-		
-		if(type=='bookingCancelBtn'){
-			openBookingCancelModal();
-	    }else if(type=='outBookMarkBtn'){
-	    	deleteBookmark();
-	    	closeModal();
-	    }else if(type=='addBookMarkBtn'){
-	    	addBookmark();
-	    	closeModal();
-		}else if(type=='cancelBookingBtn'){
-			bookingCancel();
-			closeModal();
-		}else if(type=='cancelModalBtn'){
-			closeModal();
-		}else if(type=='saveMemoBtn'){
-			saveMemo(btn);
-		}
-	});
-});
-//-----메모 저장----------------------------------
-function saveMemo(btn){
-	const idx = btn.dataset.idx;
-	const memoArea = document.querySelector(`.booking-memo[data-idx="${idx}"]`);
-	const memo=memoArea.value;
-	localStorage.setItem('bookingMemo'+idx, memo);
-}
-
-window.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.booking-memo').forEach((area, idx) => {
-    area.dataset.idx = idx;
-  });
-  document.querySelectorAll('.booking-memo-btn').forEach((btn, idx) => {
-    btn.dataset.idx = idx;
-  });
-
-  // 저장된 메모 불러오기
-  document.querySelectorAll('.booking-memo').forEach((area, idx) => {
-    const saveMemo = localStorage.getItem('bookingMemo' + idx);
-    area.value = saveMemo ? saveMemo : "-----//";
-  });
-});
 //-----페이지 로딩시 즐겨찾기 유무 판단 / 즐겨찾기 유무에 따라 이벤트 부여----------------------------------------------
 document.addEventListener('DOMContentLoaded', ()=> {
 	const bookmarkButtons = document.querySelectorAll('.bookmark');
@@ -129,10 +84,46 @@ document.querySelectorAll(".booking-cancel-btn").forEach(bookingCancelBtn => {
 		resNo = bookingCancelBtn.closest(".booking-schedule").querySelector(".reserve-no").value;
 	});
 })
+// 메모저장 버튼 -> 예약 번호
+let memo;
+document.querySelectorAll(".booking-memo-btn").forEach(saveMemo => {
+	saveMemo.addEventListener('click',e=>{
+		e.preventDefault();
+		resNo = saveMemo.closest(".sec-2").querySelector(".reserve-no").value;
+		memo=saveMemo.closest(".sec-2").querySelector(".booking-memo").value;
+	});
+})
+//-----버튼들 클릭 이벤트-------------------------------------------
+document.querySelectorAll("button").forEach(btn=>{
+	btn.addEventListener('click',e=>{
+		let type=btn.getAttribute('id');
+		
+		if(type=='bookingCancelBtn'){
+			openBookingCancelModal();
+		}else if(type=='saveMemoBtn'){
+			openSaveMemoModal();
+	    }else if(type=='outBookMarkBtn'){
+	    	deleteBookmark();
+	    	closeModal();
+	    }else if(type=='addBookMarkBtn'){
+	    	addBookmark();
+	    	closeModal();
+		}else if(type=='cancelBookingBtn'){
+			bookingCancel();
+			closeModal();
+		}else if(type=='memoUpdateBtn'){
+			saveMemo();
+			closeModal();
+		}else if(type=='cancelModalBtn'){
+			closeModal();
+		}
+	});
+});
 //-----모달 창 띄우기-------------------------------------------
 const modal1 = document.querySelector('.bookmark-check-modal');
 const modal2 = document.querySelector('.bookmark-add-modal');
 const modal3 = document.querySelector('.booking-cancel-modal');
+const modal4 = document.querySelector('.save-memo-modal');
 //즐겨찾기 삭제
 function openDeleteBookmarkModal(){
 	modal1.style.display = 'block';
@@ -148,11 +139,17 @@ function openBookingCancelModal() {
 	modal3.style.display = 'block';
 	document.body.style.overflow = 'hidden';
 }
+//메모 저장
+function openSaveMemoModal() {
+	modal4.style.display = 'block';
+	document.body.style.overflow = 'hidden';
+}
 //모달 창 닫기
 function closeModal(){
 	modal1.style.display = 'none';
 	modal2.style.display = 'none';
 	modal3.style.display = 'none';
+	modal4.style.display = 'none';
 	document.body.style.overflow = 'auto';
 }
 //-----모달 작동 함수------------------------------------------------------------
@@ -218,7 +215,24 @@ function bookingCancel() {
 		  .catch(e=>console.log(e));
 	
 }
-
+//-----메모 저장----------------------------------
+function saveMemo() {
+	console.log(memo);
+	console.log(resNo);
+	fetch('/mypage/booking/memoUpdate', {
+		  method: 'POST',
+		  headers: {
+		    'Content-Type': 'application/json; charset=utf-8'
+		  },
+		  body: JSON.stringify({res_no: resNo, res_memo: memo})
+		})
+		  .then(response => response.json())
+		  .then(data=>{
+		  	console.log(data);
+		  	location.reload();
+		  })
+		  .catch(e=>console.log(e));
+}
 
 
 

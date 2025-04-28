@@ -32,4 +32,6 @@ public interface RestMapper {
 	public List<ReserveRestDTO> getReserveList(@Param("mem_no") int mem_no);
 	
 	public boolean cancelBooking(@Param("res_no") int res_no);
+	
+	public boolean updateReserveMemo(@Param("res_no") int res_no, @Param("res_memo") String res_memo);
 }

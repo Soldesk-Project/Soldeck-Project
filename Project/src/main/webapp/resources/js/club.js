@@ -28,54 +28,69 @@ document.querySelectorAll('button').forEach(btn => {
       closeModal();
     }else if(type == 'createBtn'){
       createClub();
-    }else if(type == 'bookmarkBtn'){
-      bookmark(btn);
     }else if(type == 'saveMemoBtn'){
-      saveMemo(btn);
+      saveMemo();
     }
   });
 });
 
 //-----메모 저장----------------------------------
-function saveMemo(btn){
-	const idx = btn.dataset.idx;
-  const memoArea = document.querySelector(`.memo-area[data-idx="${idx}"]`);
-  const memo=memoArea.value;
-  localStorage.setItem('memo'+idx, memo);
+function saveMemo() {
+	
+	
+
+
+
+
 }
-
-window.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.memo-area').forEach((area, idx) => {
-    area.dataset.idx = idx;
-  });
-  document.querySelectorAll('.memo-btn').forEach((btn, idx) => {
-    btn.dataset.idx = idx;
-  });
-
-  // 저장된 메모 불러오기
-  document.querySelectorAll('.memo-area').forEach((area, idx) => {
-    const saveMemo = localStorage.getItem('memo' + idx);
-    area.value = saveMemo ? saveMemo : "메모";
-  });
+//-----페이지 로딩시 즐겨찾기 판단-----------------------------
+document.addEventListener('DOMContentLoaded', ()=> {
+	const bookmarkButtons = document.querySelectorAll('.bookmark');
+	const isPublicInputs = document.querySelectorAll('input[id="isPublic"]');
+	bookmarkButtons.forEach((btn, index) => {
+		const isPublic = isPublicInputs[index].value;
+		if (isPublic === 'Y') {
+			btn.classList.remove('active');
+		} else {
+			btn.classList.add('active');
+		}
+	});
 });
-
+document.addEventListener('DOMContentLoaded', () => {
+	document.querySelectorAll('.bookmark').forEach(btn => {
+	    btn.addEventListener('click', function() {
+			if (btn.classList.contains('active')) {
+			    openAddBookmarkModal();
+			} else {
+			    openDeleteBookmarkModal();
+			}
+	    });
+	});
+});
 //-----즐겨찾기 버튼-------------------------------------------
-function bookmark(btn){
-  if (!btn.classList.contains('active')) {
-    if (confirm("즐겨찾기를 해제하시겠습니까?")) {
-      btn.classList.add('active');
-      // 서버로 즐겨찾기 해제 요청
-    }
-  } else {
-    if (confirm("즐겨찾기로 등록하시겠습니까?")) {
-      btn.classList.remove('active');
-      // 서버로 즐겨찾기 등록 요청
-    }
-  }
-}
 
-// 가게 이름 클릭 시 채팅방으로 이동
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//-----가게 이름 클릭 시 채팅방으로 이동--------------------------------------------
 document.querySelectorAll(".club-name").forEach(moveChatRoom => {
 	moveChatRoom.addEventListener('click',e=>{
 		e.preventDefault();

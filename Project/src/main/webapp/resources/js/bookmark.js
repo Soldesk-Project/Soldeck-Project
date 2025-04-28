@@ -61,12 +61,12 @@ const modal = document.querySelector('.bookmark-check-modal');
 const params = new URLSearchParams(window.location.search);
 function openModal(){
   modal.style.display = 'block';
-//  document.body.style.overflow = 'hidden';
+  document.body.style.overflow = 'hidden';
 }
 
 function closeModal(){
   modal.style.display = 'none';
-//  document.body.style.overflow = 'auto';
+  document.body.style.overflow = 'auto';
 }
 
 //-----즐겨찾기 버튼 누를 때 가게 번호 가져오기 ------------------------------

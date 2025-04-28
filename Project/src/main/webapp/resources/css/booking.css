@@ -43,14 +43,14 @@ body{
 	height: 100%;
 	background-color: #f0f0f0;
 }
-.inner-main::-webkit-scrollbar {
+/*.inner-main::-webkit-scrollbar {
 	display:inline;
     width: 10px;  
 }
 .inner-main::-webkit-scrollbar-thumb {
     background:#FF7D00;
     border-radius: 10px;
-}
+}*/
 .booking-list{
 	/*border: 1px solid black;*/
 	width: 98%;
@@ -191,7 +191,7 @@ body{
 	height: 40px;
 }
 /*-----------------------모달-------------------------------*/
-.bookmark-check-modal, .bookmark-add-modal, .booking-cancel-modal{
+#customConfirm{
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -227,7 +227,7 @@ body{
     height: 40px;
     margin: auto;
 }
-.cancle-modal-btn, .add-bookmark-btn, .cancle-booking-btn{
+#cancelModalBtn{
 	background-color: #e53935;
     color: white;
     padding: 10px 15px;

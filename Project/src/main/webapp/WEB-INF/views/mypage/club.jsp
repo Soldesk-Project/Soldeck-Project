@@ -31,16 +31,25 @@
             <div class="club-content">
               <div class="club-info">
                 <div>
-                  <input type="text" name="name" class="club-name" value="${group.chatTitle}" readonly="readonly" />
-                  <input type="hidden" id="groupNo" value="${group.groupNo}" />
+                  <input type="text" name="name" class="club-name" value="${group.chat_title}" readonly="readonly" />
+                  <input type="hidden" id="groupNo" value="${group.group_no}" />
+                  <input type="hidden" id="isPublic" value="${group.group_bookmark }">
+                  <input type="hidden" id="memNo" value="${group.mem_no }">
                   <button type="button" class="bookmark" id="bookmarkBtn">★</button>
                 </div>
                 <div>
-                  <input type="text" name="oc" class="club-oc" value="공개 모임" readonly="readonly" />
+                	<c:choose>
+                		<c:when test="${group.is_public eq 'Y'}">
+		                	<input type="text" name="oc" class="club-oc" value="공개 모임" readonly="readonly" />
+                		</c:when>
+                		<c:otherwise>
+		                	<input type="text" name="oc" class="club-oc" value="비공개 모임" readonly="readonly" />
+                		</c:otherwise>
+                	</c:choose>
                 </div>
               </div>
               <div class="club-memo">
-                <textarea class="memo-area"></textarea>
+                <textarea class="memo-area">${group.group_usermemo }</textarea>
                 <button type="button" class="memo-btn" id="saveMemoBtn">저장</button>
               </div>
             </div>
