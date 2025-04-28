@@ -50,12 +50,12 @@ public class LoginController {
         return "login/findId";
     }
     
-    @PostMapping("/findIdProcess")
+    @PostMapping(value = "/findIdProcess", produces = "text/plain;charset=UTF-8")
     @ResponseBody
-    public String findIdProcess(@RequestParam("name") String mem_name, @RequestParam("birthDate") String mem_birth) {
-        String foundId = memberservice.findId(mem_name, mem_birth);
-        if (foundId != null) {
-            return foundId;
+    public String findIdProcess(@RequestParam("name") String mem_name, @RequestParam("birthDate") String mem_birth, @RequestParam("contact") String mem_phone) {
+        List<String> foundIds = memberservice.findId(mem_name, mem_birth, mem_phone);
+        if (!foundIds.isEmpty()) {
+            return String.join(", ", foundIds);
         } else {
             return "아이디를 찾을 수 없습니다.";
         }

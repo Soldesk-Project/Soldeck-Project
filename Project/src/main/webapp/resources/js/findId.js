@@ -5,10 +5,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const resultDiv = document.getElementById('result');
     const nameInput = document.getElementById('name');
     const birthDateInput = document.getElementById('birthDate');
+    const contactInput = document.getElementById('contact');
 
     findIdBtn.addEventListener('click', function() {
         const name = nameInput.value;
         const birthDate = birthDateInput.value;
+        const contact = contactInput.value;
 
         if (!name) {
             alert('이름을 입력해주세요.');
@@ -22,16 +24,21 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
+        if (!contact) {
+            alert('연락처를 입력해주세요.');
+            contactInput.focus();
+            return;
+        }
         fetch('/login/findIdProcess', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: `name=${encodeURIComponent(name)}&birthDate=${encodeURIComponent(birthDate)}`,
+            body: `name=${encodeURIComponent(name)}&birthDate=${encodeURIComponent(birthDate)}&contact=${encodeURIComponent(contact)}`,
         })
         .then(response => response.text())
         .then(data => {
-            resultDiv.textContent = `아이디 조회 결과: ${data}`;
+            resultDiv.textContent = data;
             resultContainer.style.display = 'block';
         })
         .catch(error => {

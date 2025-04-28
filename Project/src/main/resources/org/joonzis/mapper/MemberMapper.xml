@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.joonzis.mapper.MemberMapper">
 
-<insert id="insertMember">
-    INSERT INTO MEMBER (MEM_NO, MEM_ID, MEM_PW, MEM_NAME, MEM_NICK, MEM_BIRTH, MEM_DATE, MEM_IMG, MEM_EMAIL, MEM_PHONE)
-    VALUES (member_seq.NEXTVAL, #{mem_id}, #{mem_pw}, #{mem_name}, #{mem_nick}, #{mem_birth}, SYSDATE, #{mem_img, jdbcType=VARCHAR}, #{mem_email}, #{mem_phone})
-</insert>
+	<insert id="insertMember">
+    	INSERT INTO MEMBER (MEM_NO, MEM_ID, MEM_PW, MEM_NAME, MEM_NICK, MEM_BIRTH, MEM_DATE, MEM_IMG, MEM_EMAIL, MEM_PHONE)
+    	VALUES (member_seq.NEXTVAL, #{mem_id}, #{mem_pw}, #{mem_name}, #{mem_nick}, #{mem_birth}, SYSDATE, #{mem_img, jdbcType=VARCHAR}, #{mem_email}, #{mem_phone})
+	</insert>
 
     <select id="selectMemNoById" resultType="java.lang.Integer">
         SELECT mem_no
@@ -18,8 +18,8 @@
         VALUES (#{mem_no}, #{food_no})
     </insert>
 
-	<select id="findIdByNameBirth" resultType="java.lang.String">
-		SELECT mem_id FROM member WHERE mem_name = #{mem_name} AND SUBSTR(mem_birth, 1, 8) = #{mem_birth}
+	<select id="findIdByNameBirthContact" resultType="java.lang.String">
+		SELECT mem_id FROM member WHERE mem_name = #{mem_name} AND SUBSTR(mem_birth, 1, 8) = #{mem_birth} AND MEM_PHONE = #{mem_phone}
 	</select>
 	
 	<select id="findPwByIdBirth" resultType="java.lang.String">

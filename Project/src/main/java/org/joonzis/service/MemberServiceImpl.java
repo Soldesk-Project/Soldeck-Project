@@ -1,6 +1,8 @@
 package org.joonzis.service;
 
 
+import java.util.List;
+
 import org.joonzis.domain.MemberVO;
 import org.joonzis.mapper.MemberMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +34,8 @@ public class MemberServiceImpl implements MemberService{
     }
 
 	@Override
-	public String findId(String mem_name, String mem_birth) {
-        return mapper.findIdByNameBirth(mem_name, mem_birth);
+	public List<String> findId(String mem_name, String mem_birth, String mem_phone) {
+        return mapper.findIdByNameBirthContact(mem_name, mem_birth, mem_phone);
 	}
 
 	@Override

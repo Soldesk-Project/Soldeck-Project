@@ -1,13 +1,15 @@
 package org.joonzis.service;
 
 
+import java.util.List;
+
 import org.joonzis.domain.MemberVO;
 
 public interface MemberService {
 
     void signUpProcess(MemberVO member, Integer[] food_no);
     
-    String findId(String mem_name, String mem_birth);
+    List<String> findId(String mem_name, String mem_birth, String mem_phone);
     
     String findPw(String mem_id, String mem_birth);
     
