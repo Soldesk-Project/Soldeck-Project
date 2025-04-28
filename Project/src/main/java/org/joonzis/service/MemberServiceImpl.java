@@ -34,13 +34,13 @@ public class MemberServiceImpl implements MemberService{
     }
 
 	@Override
-	public List<String> findId(String mem_name, String mem_birth, String mem_phone) {
+	public List<String> findId(String mem_name, String mem_birth, Long mem_phone) {
         return mapper.findIdByNameBirthContact(mem_name, mem_birth, mem_phone);
 	}
 
 	@Override
-	public String findPw(String mem_id, String mem_birth) {
-		return mapper.findPwByIdBirth(mem_id, mem_birth);
+	public String findPw(String mem_id, String mem_birth, Long mem_phone) {
+		return mapper.findPwByIdBirthContact(mem_id, mem_birth, mem_phone);
 	}
     
 	
@@ -49,8 +49,6 @@ public class MemberServiceImpl implements MemberService{
 		return mapper.countById(mem_id) == 0;
 	}
 
-	
-	
 	//mypage
 	@Override
 	public MemberVO getMemberInfo(int mem_no) {

@@ -18,7 +18,7 @@
 			<label for="birthDate">생년월일</label>
 			<input type="text" id="birthDate" placeholder="생년월일을 입력하세요.">
 			<label for="contact">연락처</label>
-			<input type="text" id="contact" placeholder="연락처를 입력하세요.">
+			<input type="text" id="contact" name="contact" placeholder="연락처를 입력하세요.">
 			<div class="buttonGroup">
 				<button id="findIdBtn">조회</button>
 				<button id="findPwPageBtn">비밀번호 찾기</button>

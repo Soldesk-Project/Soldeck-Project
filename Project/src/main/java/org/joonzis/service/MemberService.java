@@ -9,9 +9,9 @@ public interface MemberService {
 
     void signUpProcess(MemberVO member, Integer[] food_no);
     
-    List<String> findId(String mem_name, String mem_birth, String mem_phone);
+    List<String> findId(String mem_name, String mem_birth, Long mem_phone);
     
-    String findPw(String mem_id, String mem_birth);
+    String findPw(String mem_id, String mem_birth, Long mem_phone);
     
     boolean isIdAvailable(String mem_id);
 

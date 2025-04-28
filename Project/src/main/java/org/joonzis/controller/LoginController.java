@@ -53,7 +53,8 @@ public class LoginController {
     @PostMapping(value = "/findIdProcess", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String findIdProcess(@RequestParam("name") String mem_name, @RequestParam("birthDate") String mem_birth, @RequestParam("contact") String mem_phone) {
-        List<String> foundIds = memberservice.findId(mem_name, mem_birth, mem_phone);
+    	Long phone = Long.parseLong(mem_phone.replaceAll("[^0-9]", ""));
+        List<String> foundIds = memberservice.findId(mem_name, mem_birth.substring(0, 8), phone);
         if (!foundIds.isEmpty()) {
             return String.join(", ", foundIds);
         } else {
@@ -68,8 +69,9 @@ public class LoginController {
     
     @PostMapping("/findPwProcess")
     @ResponseBody
-    public String findPwProcess(@RequestParam("Id") String mem_id, @RequestParam("birthDate") String mem_birth) {
-    	String foundPw = memberservice.findPw(mem_id, mem_birth);
+    public String findPwProcess(@RequestParam("Id") String mem_id, @RequestParam("birthDate") String mem_birth, @RequestParam("contact") String mem_phone) {
+    	Long phone = Long.parseLong(mem_phone); // String을 Long으로 변환
+        String foundPw = memberservice.findPw(mem_id, mem_birth, phone);
     	if (foundPw != null) {
     		return foundPw;
     	} else {

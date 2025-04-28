@@ -19,14 +19,19 @@
     </insert>
 
 	<select id="findIdByNameBirthContact" resultType="java.lang.String">
-		SELECT mem_id FROM member WHERE mem_name = #{mem_name} AND SUBSTR(mem_birth, 1, 8) = #{mem_birth} AND MEM_PHONE = #{mem_phone}
+		SELECT mem_id
+		FROM member
+		WHERE mem_name = #{mem_name}
+		AND SUBSTR(mem_birth, 1, 8) = #{mem_birth}
+		AND MEM_PHONE = #{mem_phone}
 	</select>
 	
-	<select id="findPwByIdBirth" resultType="java.lang.String">
+	<select id="findPwByIdBirthContact" resultType="java.lang.String">
     	SELECT mem_pw
     	FROM member
     	WHERE mem_id = #{mem_id}
     	AND SUBSTR(mem_birth, 1, 8) = #{mem_birth}
+    	AND MEM_PHONE = #{mem_phone}
 	</select>
 	
 	

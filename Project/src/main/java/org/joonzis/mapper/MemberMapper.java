@@ -18,12 +18,13 @@ public interface MemberMapper {
     List<String> findIdByNameBirthContact(
             @Param("mem_name") String mem_name,
             @Param("mem_birth") String mem_birth,
-            @Param("mem_phone") String mem_phone
+            @Param("mem_phone") Long mem_phone
     );
 
-	String findPwByIdBirth(
+	String findPwByIdBirthContact(
 			@Param("mem_id") String mem_id,
-			@Param("mem_birth") String mem_birth
+			@Param("mem_birth") String mem_birth,
+			@Param("mem_phone") Long mem_phone
 		);
 	
 	int countById(String mem_id);

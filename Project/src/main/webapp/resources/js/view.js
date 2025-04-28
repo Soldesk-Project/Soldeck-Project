@@ -60,12 +60,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const pageHeader = document.querySelector(".page-header");
     if (pageHeader) {
         restNo = pageHeader.dataset.restNo;
-//        console.log("Rest No: ", restNo);
+        //console.log("Rest No: ", restNo);
     } else {
         console.error("page-header 요소를 찾을 수 없습니다.");
         restNo = null;
     }
-
+    
     // 중복된 store-details 요소 정리
     const storeDetailsElements = document.querySelectorAll('.store-details');
     if (storeDetailsElements.length > 1) {
@@ -243,6 +243,20 @@ function renderStoreDetails(data) {
             <td>${storeData.rest_phone || '정보 없음'}</td>
         </tr>
     `;
+    
+    // **여기에 즐겨찾기 버튼 이벤트 리스너 코드를 추가하세요.**
+    const favoriteBtn = document.querySelector('.favorite-btn');
+    if (favoriteBtn) {
+        favoriteBtn.addEventListener('click', function() {
+            if (mem_no === '0' || !mem_no) {
+                alert('로그인이 필요한 기능입니다.');
+                window.location.href = '/login/loginPage';
+            } else {
+                alert('즐겨찾기 기능은 아직 구현 중입니다.');
+             // 여기에 실제 즐겨찾기 추가 로직을 구현해야 합니다.
+            }
+        });
+    }
 }
 
 // 데이터 가져오기 공통 함수

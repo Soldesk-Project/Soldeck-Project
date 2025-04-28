@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const findPwBtn = document.getElementById('findPwBtn');
   const idInput = document.getElementById('Id');
   const birthDateInput = document.getElementById('birth_date');
+  const contactInput = document.getElementById('contact');
   const resultContainer = document.getElementById('resultContainer');
   const resultDiv = document.getElementById('result');
 
@@ -17,13 +18,18 @@ document.addEventListener('DOMContentLoaded', function() {
       alert('생년월일을 입력해주세요.');
       return;
     }
+    if (!contactInput.value) {
+        alert('연락처를 입력해주세요.');
+        contactInput.focus();
+        return;
+    }
 
     fetch('/login/findPwProcess', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: `Id=${encodeURIComponent(id)}&birthDate=${encodeURIComponent(birthDate)}`,
+      body: `Id=${encodeURIComponent(id)}&birthDate=${encodeURIComponent(birthDate)}&contact=${encodeURIComponent(contactInput.value)}`,
     })
     .then(response => {
       if (!response.ok) {
