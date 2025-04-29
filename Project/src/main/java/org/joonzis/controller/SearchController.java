@@ -1,5 +1,6 @@
 package org.joonzis.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -159,15 +160,26 @@ public class SearchController {
         }
     }
 	
+	// 현재 위치 기준 식당 데이터 가져오기
 	@GetMapping(value = "/getLocation", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public List<RestVO> getLocation() {
-		log.info("map...");
-		List<RestVO> places = service.getTest();
-		log.info(places);
-		return places;
+	public List<RestVO> getLocation(@RequestParam("keyword") String keyword) {
+	    
+	    List<RestVO> allPlaces = service.getTest(); // 전체 가게 리스트 불러옴
+	    List<RestVO> filteredPlaces = new ArrayList<>();
+	    
+	    if (keyword != null && !keyword.trim().isEmpty()) {
+	        for (RestVO place : allPlaces) {
+	            if (keyword.equals(place.getRest_cate())) {
+	                filteredPlaces.add(place);
+	            }
+	        }
+	    }
+
+	    return filteredPlaces;
 	}
 	
+	// map.jsp로 이동
 	@GetMapping("/map")
 	public String goMap() {
 		return "/search/map";

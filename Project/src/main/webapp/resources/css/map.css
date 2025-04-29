@@ -1,0 +1,109 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  height: 100%; /* 다시 명확히 body에만 flex 적용 */
+}
+
+#sidebar {
+  display: flex;  /* 🔥 추가 */
+  flex-direction: column;  /* 🔥 추가 */
+  width: 400px;
+  height: 100vh;
+  background: #f1f1f1;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow: visible; /* 🔥 여기 visible로 변경 */
+  position: relative;
+  transition: width 0.3s ease, padding 0.3s ease;
+}
+
+#sidebar-head{
+  display: flex; 
+}
+
+#sidebar-body{
+  flex: 1; /* 남은 공간 다 사용 */
+  overflow-y: auto; /* 세로 스크롤 */
+  padding: 10px 20px;
+  background: #fff;
+}
+
+#sidebar.collapsed {
+  width: 0;
+  padding: 0;
+  overflow: visible; /* 🔥 닫힐 때는 숨기자 */
+}
+
+#toggleArrow {
+  position: absolute;
+  top: 50%;
+  right: -15px; /* 사이드바 오른쪽에 살짝 삐져나오게 */
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  background: #666;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10;
+  font-size: 16px;
+}
+
+#sidebar a {
+  margin-right: 10px; /* 로고와 검색창 사이에 공간 추가 */
+}
+
+#map {
+  flex: 1;
+  height: 100%; /* 🔥 여기서 100vh 말고 100% */
+}
+.search-box{
+	border: 4px solid #FF7D00;
+    border-radius: 25px;
+    text-align: left;
+	height: 50px;
+	margin-left: 10px; /* 검색창과 로고 사이 공간 추가 */
+}
+
+/* 가게 리스트 스타일 */
+.store-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
+  background: #fafafa;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.store-thumbnail {
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.store-info {
+  text-align: center;
+}
+
+.store-name {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.store-address {
+  font-size: 13px;
+  color: gray;
+}

@@ -116,49 +116,14 @@ function moveSlider(name, direction) {
     track.style.transform = `translateX(${translateX}px)`;
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-	  const locationSelect = document.querySelector('.location-select select');
-	  const categoryButtons = document.querySelectorAll('.kategorie-list button');
-
-	  // 페이지 로드 시 카테고리 버튼 활성화 상태 초기화
-	  categoryButtons.forEach(btn => btn.classList.remove('active'));
-	  
-	  locationSelect.addEventListener('change', handleFilter);
-	  categoryButtons.forEach(button => {
-	    button.addEventListener('click', handleFilter);
-	  });
-
-	  function handleFilter() {
-	    const selectedRegion = locationSelect.value;
-	    let selectedCategory = '';
-
-	    // 카테고리 버튼 처리
-	    if (this.classList.contains('btn')) {
-	      categoryButtons.forEach(btn => btn.classList.remove('active'));
-	      this.classList.add('active');
-//	      selectedCategory = this.id.slice(0, -3).toLowerCase();
-	      selectedCategory = this.value;
-	    } else if (this === locationSelect) {
-	      // 지역 선택 변경 시 카테고리 선택 초기화
-	      categoryButtons.forEach(btn => btn.classList.remove('active'));
-	      selectedCategory = '';
-	    } else {
-	      // 이미 활성화된 카테고리 찾기 (지역 변경 없이 다른 동작으로 handleFilter가 호출될 경우 대비)
-	      const activeCategoryButton = document.querySelector('.kategorie-list button.active');
-	      if (activeCategoryButton) {
-	        selectedCategory = activeCategoryButton.value;
-	      }
-	    }
-	    // 지역과 카테고리 모두 선택되었을 때만 fetchData 호출 및 페이지 이동
-	    if (selectedRegion && selectedCategory) {
-	    	let params = new URLSearchParams();
-	        params.append('region', selectedRegion);
-	        params.append('category', selectedCategory);
-	        window.location.href = `/search/location?${params.toString()}`;
-	    } else {
-	      console.log('지역과 카테고리를 모두 선택해주세요.');
-	      // 필요에 따라 사용자에게 알림 메시지를 표시할 수 있습니다.
-	    }
-	  }
-	});
-
+// 지역별 지도 이동 함수
+document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll('.btn-fir').forEach(btn => {
+        btn.addEventListener('click', () => {
+            let keyword = btn.getAttribute("value"); // 한식, 중식 등
+            console.log("클릭된 키워드:", keyword);
+            sessionStorage.setItem('keyword', keyword);
+            location.href = "../search/map"; // 그냥 이동
+        });
+    });
+});
