@@ -46,4 +46,22 @@ public class GroupServiceImpl implements GroupService {
 	public List<GroupMemberDTO> getAllGroups(int mem_no) {
 		return mapper.getAllGroups(mem_no);
 	}
+	
+	
+	
+	
+	
+	@Override
+	public boolean updateGroupMemo(int group_no, int mem_no, String group_usermemo) {
+		return mapper.updateGroupMemo(group_no, mem_no, group_usermemo);
+	}
+	@Override
+	public boolean addGroupBookmark(int group_no, int mem_no) {
+		return mapper.addGroupBookmark(group_no, mem_no);
+	}
+	@Override
+	public boolean cancelGroupBookmark(int group_no, int mem_no) {
+		return mapper.cancelGroupBookmark(group_no, mem_no);
+	}
+	
 }

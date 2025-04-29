@@ -105,7 +105,38 @@
 		</div>
 	</div>
 </div>
+	
+	
+	<div id="customConfirm" class="bookmark-check-modal">
+		<div class="inner-modal">
+	    	<p>즐겨찾기를 삭제하시겠습니까?</p>
+			<div class="bookmark-modal-content">
+			    <button class="yes-btn" id="outBookMarkBtn">예</button>
+				<button class="cancle-modal-btn" id="cancelModalBtn">아니오</button>
+		    </div>
+		</div>
+	</div>
+	<div id="customConfirm" class="bookmark-add-modal">
+		<div class="inner-modal">
+	    	<p>즐겨찾기를 추가하시겠습니까?</p>
+			<div class="bookmark-modal-content">
+			    <button class="yes-btn" id="addBookMarkBtn">예</button>
+				<button class="add-bookmark-btn" id="cancelModalBtn">아니오</button>
+		    </div>
+		</div>
+	</div>
+	<div id="customConfirm" class="save-memo-modal">
+		<div class="inner-modal">
+	    	<p>메모를 저장하시겠습니까?</p>
+			<div class="bookmark-modal-content">
+			    <button class="yes-btn" id="memoUpdateBtn">예</button>
+				<button class="cancle-booking-btn" id="cancelModalBtn">아니오</button>
+		    </div>
+		</div>
+	</div>
+
 	<jsp:include page="../layout/footer.jsp"/>
+	
 <script type="text/javascript" src="/resources/js/club.js"></script>
 </body>
 </html>

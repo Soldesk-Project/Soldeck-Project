@@ -115,4 +115,31 @@ public class CommentServiceImpl implements CommentService {
 		log.info("getAvgRate... " + rest_no);
 		return mapper.getAvgRate(rest_no);
 	}
+	
+	
+	
+	
+	@Override
+	public List<CommentVO> getCommentList(int mem_no) {
+		 List<CommentVO> comments = mapper.getCommentList(mem_no);
+		    for (CommentVO comment : comments) {
+		        if (comment.getCom_attachList() == null) {
+		            comment.setCom_attachList(new ArrayList<>());
+		        }
+		    }
+	    return comments;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

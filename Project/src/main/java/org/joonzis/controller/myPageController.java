@@ -6,13 +6,14 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.joonzis.domain.BookMarkVO;
+import org.joonzis.domain.CommentVO;
 import org.joonzis.domain.GroupMemberDTO;
-import org.joonzis.domain.GroupVO;
 import org.joonzis.domain.MemberVO;
 import org.joonzis.domain.ReserveRestDTO;
 import org.joonzis.domain.ReserveVO;
 import org.joonzis.domain.RestVO;
 import org.joonzis.service.BookmarkService;
+import org.joonzis.service.CommentService;
 import org.joonzis.service.GroupService;
 import org.joonzis.service.MemberService;
 import org.joonzis.service.RestService;
@@ -48,6 +49,8 @@ public class myPageController {
 	private BookmarkService bservice;
 	@Autowired
 	private GroupService groupService;
+	@Autowired
+	private CommentService cservice;
 	
 	
 	
@@ -250,12 +253,43 @@ public class myPageController {
 		model.addAttribute("groupList", groups);
 		return "/mypage/club";
 	}
+	@PostMapping(value = "/club/memoUpdate", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Boolean> updateGRoupMemo(@RequestBody GroupMemberDTO dto) {
+		log.info("updateGRoupMemo..."+dto.getMem_no()+dto.getGroup_no());
+		boolean result=groupService.updateGroupMemo(dto.getGroup_no(), dto.getMem_no(), dto.getGroup_usermemo());
+		return new ResponseEntity<Boolean>(result,HttpStatus.OK);
+	}
+	@PostMapping(value = "/groupBookmark/del", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Boolean> cancelGroupBookmark(@RequestBody GroupMemberDTO dto) {
+		log.info("cancelGroupBookmark..."+dto.getGroup_no()+dto.getMem_no());
+		boolean result=groupService.cancelGroupBookmark(dto.getGroup_no(), dto.getMem_no());
+		return new ResponseEntity<Boolean>(result,HttpStatus.OK);
+	}
+	@PostMapping(value = "/groupBookmark/add", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Boolean> addGroupBookmark(@RequestBody GroupMemberDTO dto) {
+		log.info("addGroupBookmark..."+dto.getGroup_no()+dto.getMem_no());
+		boolean result=groupService.addGroupBookmark(dto.getGroup_no(),dto.getMem_no());
+		return new ResponseEntity<Boolean>(result,HttpStatus.OK);
+	}
 	
 	@GetMapping("/review")
-	public String review() {
-		log.info("review...");
+	public String review(Model model, HttpSession session) {
+		MemberVO mvo = (MemberVO) session.getAttribute("loggedInUser");
+		int mem_no = mvo.getMem_no();
+		log.info("review..."+mem_no);
+		List<CommentVO> comment = cservice.getCommentList(mem_no);
+		model.addAttribute("commentList", comment);
 		return "/mypage/review";
 	}
+	@PostMapping(value = "/review/del", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Boolean> deleteComment(@RequestBody CommentVO vo) {
+		log.info("deleteComment..."+vo.getCom_no()+vo.getMem_no());
+		int result=cservice.deleteComment(vo.getCom_no(), vo.getMem_no());
+		return new ResponseEntity<Boolean>((result==1?true:false),HttpStatus.OK);
+	}
+	
+	
+	
 	@GetMapping("/event")
 	public String event() {
 		log.info("event...");

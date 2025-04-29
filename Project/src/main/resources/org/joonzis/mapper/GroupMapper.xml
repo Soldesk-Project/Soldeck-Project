@@ -49,6 +49,10 @@
 	    <result property="chatTitle" column="CHAT_TITLE"/>
 	</resultMap>
 
+
+
+
+	<!-- 모임 리스트 기져오기 -->
 	<select id="getAllGroups" resultType="org.joonzis.domain.GroupMemberDTO">
 	    SELECT
 		    g.GROUP_NO,
@@ -71,4 +75,38 @@
 		    END,
 		    g.CHAT_TITLE ASC
 	</select>
+	
+	<!-- 그룹 메모 저장 -->
+	<update id="updateGroupMemo">
+		UPDATE GROUP_MEM
+		SET
+			GROUP_USERMEMO=#{group_usermemo}
+		WHERE
+			GROUP_NO=#{group_no}
+		AND
+			MEM_NO=#{mem_no}
+	</update>
+	
+	<!-- 그룹 즐겨찾기 저장 -->
+	<update id="addGroupBookmark">
+		UPDATE GROUP_MEM
+		SET
+			GROUP_BOOKMARK='Y'
+		WHERE
+			GROUP_NO=#{group_no}
+		AND
+			MEM_NO=#{mem_no}
+	</update>
+	
+	<!-- 그룹 즐겨찾기 해제 -->
+	<update id="cancelGroupBookmark">
+		UPDATE GROUP_MEM
+		SET
+			GROUP_BOOKMARK='N'
+		WHERE
+			GROUP_NO=#{group_no}
+		AND
+			MEM_NO=#{mem_no}
+	</update>
+	
 </mapper>

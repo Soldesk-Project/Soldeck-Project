@@ -17,4 +17,7 @@ public interface CommentService {
     
     // 코멘트 평균 평점 
     public double getAvgRate(int rest_no);
+    
+    // 내 댓글 조회
+    public List<CommentVO> getCommentList(int mem_no);
 }

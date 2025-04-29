@@ -53,6 +53,7 @@
 							<input type="text" class="booking-date" name="bookingDate" value="<fmt:formatDate value="${rl.res_date}" pattern='yyyy - MM - dd'/>" readonly="readonly">
 							<input type="text" class="booking-date" name="bookingDateTime" value="${rl.res_time }" readonly="readonly">
 		                    <input type="hidden" class="reserve-no" value="${rl.res_no }">
+		                    <input type="hidden" class="member-no" value="${rl.mem_no }">
 							<button type="button" class="booking-cancel-btn" id="bookingCancelBtn">예약취소</button>
 						</div>
 						<div>
