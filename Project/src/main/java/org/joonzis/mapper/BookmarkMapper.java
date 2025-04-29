@@ -10,6 +10,7 @@ public interface BookmarkMapper {
 	public List<BookMarkVO> getBookMark(@Param("mem_no") int mem_no);
 	public List<Integer> getBookMarkRestNo(@Param("mem_no") int mem_no);
 	public boolean deleteBookmark(@Param("mem_no") int mem_no, @Param("rest_no") int rest_no);
-	public boolean addBookmark(@Param("mem_no") int mem_no, @Param("rest_no") int rest_no);
+	public boolean addBookmark(BookMarkVO vo);
+	public int check(@Param("mem_no") int mem_no, @Param("rest_no") int rest_no);
 	
 }

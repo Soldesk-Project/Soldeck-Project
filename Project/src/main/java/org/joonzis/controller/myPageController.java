@@ -23,7 +23,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -159,18 +161,63 @@ public class myPageController {
 
 		return "/mypage/bookmark";
 	}
-	@PostMapping(value = "/bookmark/del", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Boolean> delBookmark(@RequestBody BookMarkVO vo) {
-		log.info("delBookmark..."+vo.getMem_no()+","+vo.getRest_no());
-		boolean result=bservice.deleteBookmark(vo.getMem_no(),vo.getRest_no());
-		return new ResponseEntity<Boolean>(result,HttpStatus.OK);
-	}
-	@PostMapping(value = "/bookmark/add", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Boolean> addBookmark(@RequestBody BookMarkVO vo) {
-		log.info("delBookmark..."+vo.getMem_no()+","+vo.getRest_no());
-		boolean result=bservice.addBookmark(vo.getMem_no(),vo.getRest_no());
-		return new ResponseEntity<Boolean>(result,HttpStatus.OK);
-	}
+	// 상세 페이지 즐겨찾기 상태 확인
+    @GetMapping("/favorites/status/{restNo}")
+    public ResponseEntity<Boolean> checkFavoriteStatus(@PathVariable int restNo, HttpSession session) {
+        MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
+        if (loggedInMember == null) {
+            return new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED);
+        }
+        int mem_no = loggedInMember.getMem_no();
+        boolean isFavorite = bservice.isBookmarked(mem_no, restNo);
+        return new ResponseEntity<>(isFavorite, HttpStatus.OK);
+    }
+	
+ // 즐겨찾기 추가 (상세 페이지 및 마이페이지)
+    @PostMapping(value = {"/favorites/add", "/bookmark/add"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Boolean> addBookmark(@RequestBody BookMarkVO vo, HttpSession session) {
+        MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
+        if (loggedInMember == null) {
+            return new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED);
+        }
+        int mem_no = loggedInMember.getMem_no();
+        String isPublicStr = vo.getIs_public();
+        boolean publicFlag = "true".equalsIgnoreCase(isPublicStr);
+        String dbIsPublic = publicFlag ? "Y" : "N";
+
+        BookMarkVO bookmarkVO = new BookMarkVO();
+        bookmarkVO.setMem_no(mem_no);
+        bookmarkVO.setRest_no(vo.getRest_no());
+        bookmarkVO.setIs_public(dbIsPublic);
+
+        boolean result = bservice.addBookmark(bookmarkVO);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    // 즐겨찾기 제거 (상세 페이지 및 마이페이지)
+    @DeleteMapping(value = {"/favorites/remove/{restNo}", "/bookmark/del"})
+    public ResponseEntity<Boolean> delBookmark(@PathVariable(required = false) Integer restNo, @RequestBody(required = false) BookMarkVO vo, HttpSession session) {
+        MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
+        if (loggedInMember == null) {
+            return new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED);
+        }
+        int mem_no = loggedInMember.getMem_no();
+        int targetRestNo = 0;
+
+        // 경로 변수로 restNo가 넘어온 경우 (상세 페이지)
+        if (restNo != null) {
+            targetRestNo = restNo;
+        }
+        // 요청 본문에 BookMarkVO 형태로 넘어온 경우 (마이페이지)
+        else if (vo != null) {
+            targetRestNo = vo.getRest_no();
+        } else {
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST); // restNo 정보가 없는 경우 에러 응답
+        }
+
+        boolean result = bservice.deleteBookmark(mem_no, targetRestNo);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 	
 	@GetMapping("/booking")
 	public String booking(Model model, HttpSession session) {
@@ -203,9 +250,6 @@ public class myPageController {
 		model.addAttribute("groupList", groups);
 		return "/mypage/club";
 	}
-	
-	
-	
 	
 	@GetMapping("/review")
 	public String review() {

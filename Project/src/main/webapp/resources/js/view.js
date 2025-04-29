@@ -27,6 +27,12 @@ const calendarDays = document.getElementById('calendarDays');
 let selectedDate = null;
 let selectedTime = null;
 let selectedMonth = new Date().getMonth() + 1; // 초기 월을 현재 월로 설정
+let isFavorite = false; // 초기 즐겨찾기 상태
+const favoriteModal = document.getElementById('favoriteModal');
+const publicFavoriteBtn = document.getElementById('publicFavoriteBtn');
+const privateFavoriteBtn = document.getElementById('privateFavoriteBtn');
+const closeFavoriteModalBtn = document.getElementById('closeFavoriteModalBtn');
+let favoriteBtnElement = null;
 
 //JSP에서 시간 슬롯 가져오기
 const timeButtons = document.querySelectorAll('.time-options .time-btn');
@@ -39,7 +45,7 @@ stars.forEach(star => {
     star.addEventListener('click', () => {
         ratingValue = parseInt(star.getAttribute('data-value'));
         updateStars(ratingValue);
-//        console.log('선택된 별점:', ratingValue); // 변환된 데이터 확인
+//      console.log('선택된 별점:', ratingValue); // 변환된 데이터 확인
     });
 });
 
@@ -65,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("page-header 요소를 찾을 수 없습니다.");
         restNo = null;
     }
-    
+
     // 중복된 store-details 요소 정리
     const storeDetailsElements = document.querySelectorAll('.store-details');
     if (storeDetailsElements.length > 1) {
@@ -91,7 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
         viewModal.addEventListener('click', function (event) {
             if (event.target === viewModal) {
                 viewModal.style.display = 'none';
-//                console.log(1);
+//              console.log(1);
             }
         });
     }
@@ -142,7 +148,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 alert('날짜와 시간을 선택해주세요.');
                 return;
             }
-            const resDate = `2025-${selectedMonth}-${selectedDate}`; // 예: "2025-4-24"
+            const resDate = `2025-<span class="math-inline">\{selectedMonth\}\-</span>{selectedDate}`; // 예: "2025-4-24"
             // resDate 형식 검증
             if (!/^\d{4}-\d{1,2}-\d{1,2}$/.test(resDate)) {
                 alert('유효한 날짜 형식이 아닙니다.');
@@ -157,7 +163,7 @@ document.addEventListener("DOMContentLoaded", function () {
             };
             fetch('/search/reservations/add', {
                 method: 'POST',
-                headers: { 
+                headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 },
@@ -181,10 +187,39 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    // 모달 바깥 클릭 시 닫기 (favoriteModal)
+    if (favoriteModal) {
+        favoriteModal.addEventListener('click', function (event) {
+            if (event.target === favoriteModal) {
+                favoriteModal.style.display = 'none';
+            }
+        });
+    }
+
+    if (closeFavoriteModalBtn) {
+        closeFavoriteModalBtn.addEventListener('click', () => {
+            favoriteModal.style.display = 'none';
+        });
+    }
+
+    if (publicFavoriteBtn) {
+        publicFavoriteBtn.addEventListener('click', () => {
+            addFavorite(true); // 공개
+        });
+    }
+
+    if (privateFavoriteBtn) {
+        privateFavoriteBtn.addEventListener('click', () => {
+            addFavorite(false); // 비공개
+        });
+    }
+
     // 코멘트 업로드 버튼
     if (commentBtn) {
         commentBtn.addEventListener('click', uploadComment);
     }
+
+    checkInitialFavoriteStatus(); // 초기 상태 확인
 });
 
 // 가게 상세 정보 가져오기 및 렌더링
@@ -219,43 +254,38 @@ function renderStoreDetails(data) {
     storeDetails.innerHTML = `
         <tr>
             <td colspan="2">
-                <button class="favorite-btn">즐겨찾기</button>
+                <button id="favoriteBtn" class="favorite-btn">즐겨찾기</button>
             </td>
         </tr>
         <tr>
             <td>가게 이름 :</td>
-            <td>${storeData.rest_name || '정보 없음'}</td>
-        </tr>
-        <tr>
-            <td>가게 종류 :</td>
-            <td>${storeData.rest_cate || '정보 없음'}</td>
+            <td>${storeData.rest_name || '정보 없음'}</td\>
+    	</tr\>
+    	<tr\>
+    		<td\>가게 종류 \:</td\>
+    		<td\>${storeData.rest_cate || '정보 없음'}</td>
         </tr>
         <tr>
             <td>가게 시간 :</td>
-            <td>${storeData.rest_bh || '정보 없음'}</td>
-        </tr>
-        <tr>
-            <td>가게 주소 :</td>
-            <td>${storeData.rest_adr || '정보 없음'}</td>
+            <td>${storeData.rest_bh || '정보 없음'}</td\>
+    	</tr\>
+    	<tr\>
+    		<td\>가게 주소 \:</td\>
+    		<td\>${storeData.rest_adr || '정보 없음'}</td>
         </tr>
         <tr>
             <td>가게 연락처 :</td>
             <td>${storeData.rest_phone || '정보 없음'}</td>
         </tr>
     `;
-    
-    // **여기에 즐겨찾기 버튼 이벤트 리스너 코드를 추가하세요.**
-    const favoriteBtn = document.querySelector('.favorite-btn');
-    if (favoriteBtn) {
-        favoriteBtn.addEventListener('click', function() {
-            if (mem_no === '0' || !mem_no) {
-                alert('로그인이 필요한 기능입니다.');
-                window.location.href = '/login/loginPage';
-            } else {
-                alert('즐겨찾기 기능은 아직 구현 중입니다.');
-             // 여기에 실제 즐겨찾기 추가 로직을 구현해야 합니다.
-            }
-        });
+
+    const newFavoriteBtnElement = document.getElementById('favoriteBtn');
+    if (newFavoriteBtnElement) {
+        newFavoriteBtnElement.addEventListener('click', handleFavoriteClick); // 익명 함수 제거, handleFavoriteClick 직접 할당
+        favoriteBtnElement = newFavoriteBtnElement;
+        updateFavoriteButtonUI();
+    } else {
+        console.error("renderStoreDetails에서 favoriteBtn 요소를 찾을 수 없습니다.");
     }
 }
 
@@ -268,7 +298,7 @@ function get(callback) {
     }
 
     const url = `/search/view/${restNo}`;
-//    console.log("Fetching URL:", url);
+//  console.log("Fetching URL:", url);
     fetch(url, {
         headers: {
             'Accept': 'application/json'
@@ -420,7 +450,7 @@ function renderCalendar(month) {
                 days.forEach(d => d.classList.remove('selected'));
                 day.classList.add('selected');
                 selectedDate = day.textContent;
-                const resDate = `2025-${month}-${selectedDate}`;
+                const resDate = `2025-<span class="math-inline">\{month\}\-</span>{selectedDate}`;
                 updateTimeSlots(restNo, resDate);
             });
         }
@@ -452,7 +482,7 @@ function resetSelections() {
 
 //시간 슬롯 비활성화 함수
 function updateTimeSlots(restNo, resDate) {
-    fetch(`/search/reservations/times?rest_no=${restNo}&res_date=${resDate}`, {
+    fetch(`/search/reservations/times?rest_no=<span class="math-inline">\{restNo\}&res\_date\=</span>{resDate}`, {
         method: 'GET',
         headers: {
             'Accept': 'application/json'
@@ -543,18 +573,18 @@ function fetchComments() {
             }
 
             // 프로필 이미지 처리
-            const profileImg = comment.com_memberData && comment.com_memberData.mem_img 
-                ? `/resources/images/${comment.com_memberData.mem_img}` 
+            const profileImg = comment.com_memberData && comment.com_memberData.mem_img
+                ? `/resources/images/${comment.com_memberData.mem_img}`
                 : '/resources/images/profile_1.png';
 
             // 닉네임 처리
-            const nickName = comment.com_memberData && comment.com_memberData.mem_nick 
-                ? comment.com_memberData.mem_nick 
+            const nickName = comment.com_memberData && comment.com_memberData.mem_nick
+                ? comment.com_memberData.mem_nick
                 : (comment.com_memberData && comment.com_memberData.mem_name || '익명');
 
             // 삭제 버튼 표시 (로그인한 사용자의 mem_no와 코멘트의 mem_no 비교)
             const isOwnComment = parseInt(mem_no) === parseInt(comment.mem_no);
-            const deleteButton = isOwnComment 
+            const deleteButton = isOwnComment
                 ? `<button class="comment-delete-btn" data-com_no="${comment.com_no}" aria-label="코멘트 삭제">X</button>`
                 : '';
 
@@ -675,7 +705,7 @@ function uploadComment() {
     console.log("Before uploadComment, window.uploadedFiles:", window.uploadedFiles); // 디버깅 로그
     const commentInput = document.querySelector("#comment");
     if(mem_no == 0){
-    	alert("로그인을 해주세요.");
+        alert("로그인을 해주세요.");
         return;
     }
     if (!commentInput) {
@@ -695,8 +725,8 @@ function uploadComment() {
         return;
     }
     if(ratingValue == 0){
-    	alert("평점을 선택해주세요");
-    	return;
+        alert("평점을 선택해주세요");
+        return;
     }
     const attachList = (window.uploadedFiles || []).map(file => ({
         att_uuid: file.att_uuid,
@@ -797,21 +827,108 @@ function showAvgRate() {
         msg +=  `<span class="rating">로딩 중...</span>`;
         msg += `</div>`;
         msg += `<div class="store-item">`;
-        msg +=    `<span class="name">20대</span>`;
-        msg +=    `<span class="rating">로딩 중...</span>`;
+        msg +=      `<span class="name">20대</span>`;
+        msg +=      `<span class="rating">로딩 중...</span>`;
         msg +=  `</div>`;
         msg += `<div class="store-item">`;
-        msg +=   `<span class="name">30대</span>`;
-        msg +=   `<span class="rating">로딩 중...</span>`;
+        msg +=      `<span class="name">30대</span>`;
+        msg +=      `<span class="rating">로딩 중...</span>`;
         msg +=  `</div>`;
         msg += `<div class="store-item">`;
-        msg +=   `<span class="name">40대</span>`;
-        msg +=   `<span class="rating">로딩 중...</span>`;
+        msg +=      `<span class="name">40대</span>`;
+        msg +=      `<span class="rating">로딩 중...</span>`;
         msg += `</div>`;
         msg += `<div class="store-item">`;
-        msg +=   `<span class="name">친구들 평점</span>`;
-        msg +=   `<span class="rating">로딩 중...</span>`;
+        msg +=      `<span class="name">친구들 평점</span>`;
+        msg +=      `<span class="rating">로딩 중...</span>`;
         msg += `</div>`;
         avgRate.innerHTML = msg;
     });
+}
+
+function handleFavoriteClick() {
+    console.log("handleFavoriteClick isFavorite:", window.isFavorite); // 전역 변수 직접 참조
+    const favoriteBtnElement = document.getElementById('favoriteBtn');
+    const favoriteModal = document.getElementById('favoriteModal');
+
+    if (window.isFavorite) {
+        removeFavorite();
+        if (favoriteBtnElement) {
+            favoriteBtnElement.style.backgroundColor = '';
+            favoriteBtnElement.textContent = '즐겨찾기';
+            window.isFavorite = false;
+        } else {
+            console.error("favoriteBtnElement를 찾을 수 없습니다.");
+        }
+    } else {
+        if (favoriteModal) {
+            favoriteModal.style.display = 'block';
+        } else {
+            console.error("favoriteModal을 찾을 수 없습니다.");
+        }
+    }
+}
+
+function checkInitialFavoriteStatus() {
+	// 서버에 현재 사용자가 해당 식당을 즐겨찾기했는지 요청
+    fetch(`/mypage/favorites/status/${restNo}`, {
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        window.isFavorite = data; // 서버 응답 값을 직접 할당
+        updateFavoriteButtonUI(); // 초기 상태 반영
+    });
+}
+
+function addFavorite(isPublic) {
+    const favoriteModal = document.getElementById('favoriteModal');
+    fetch(`/mypage/favorites/add`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ mem_no: mem_no, rest_no: restNo, is_public: isPublic })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data) { // 서버 응답 데이터(boolean)가 true인지 확인
+            window.isFavorite = true; // 전역 변수 업데이트
+            updateFavoriteButtonUI();
+            console.trace("updateFavoriteButtonUI 호출 스택 (addFavorite)");
+            if (favoriteModal) {
+                favoriteModal.style.display = 'none';
+            }
+        } else {
+            alert('즐겨찾기 추가에 실패했습니다.');
+        }
+    });
+}
+
+function removeFavorite() {
+    fetch(`/mypage/favorites/remove/${restNo}`, {
+        method: 'DELETE'
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            isFavorite = false;
+            updateFavoriteButtonUI();
+            console.trace("updateFavoriteButtonUI 호출 스택(removeFavorite)");
+        } else {
+            alert('즐겨찾기 해제에 실패했습니다.');
+        }
+    });
+}
+
+function updateFavoriteButtonUI() {
+	const favoriteBtnElement = document.getElementById('favoriteBtn');
+    if (favoriteBtnElement) {
+        favoriteBtnElement.textContent = window.isFavorite ? '즐겨찾기 해제' : '즐겨찾기';
+        // 필요하다면 아이콘 변경 등의 추가 UI 업데이트
+    } else {
+        console.error("favoriteBtnElement를 찾을 수 없습니다.");
+    }
 }

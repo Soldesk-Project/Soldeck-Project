@@ -18,7 +18,12 @@
 	
 	<insert id="addBookmark">
 		INSERT INTO BOOKMARK VALUES
-		(#{mem_no}, #{rest_no}, 'Y') 
+		(#{mem_no}, #{rest_no}, #{is_public, jdbcType=CHAR})
 	</insert>
 	
+	<select id="check" parameterType="map" resultType="int">
+    	SELECT COUNT(*)
+    	FROM BOOKMARK
+    	WHERE MEM_NO = #{mem_no} AND REST_NO = #{rest_no}
+	</select>
 </mapper>

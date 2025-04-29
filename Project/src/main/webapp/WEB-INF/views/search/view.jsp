@@ -150,6 +150,22 @@
 	  </div>
 	</div>
 	
+	<div class="modal" id="favoriteModal">
+		<div class="modal-content">
+			<h3>즐겨찾기 설정</h3>
+			<button type="button" class="btn btn-sec" id="publicFavoriteBtn">공개</button>
+			<button type="button" class="btn btn-sec" id="privateFavoriteBtn">비공개</button>
+			<button type="button" class="btn btn-close" id="closeFavoriteModalBtn">취소</button>
+		</div>
+	</div>
+
+	<div class="modal_view" id="viewModal">
+		<div class="modal_view-content">
+			<div class="image-view">
+			</div>
+		</div>
+	</div>
+	
 	<jsp:include page="../layout/footer.jsp"/>
 	<script type="text/javascript" src="/resources/js/view.js"></script>
 	<script type="text/javascript" src="/resources/js/upload.js"></script>

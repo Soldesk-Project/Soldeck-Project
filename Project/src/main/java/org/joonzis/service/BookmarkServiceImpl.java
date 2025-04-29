@@ -29,8 +29,12 @@ public class BookmarkServiceImpl implements BookmarkService{
 		return mapper.deleteBookmark(mem_no, rest_no);
 	}
 	@Override
-	public boolean addBookmark(int mem_no, int rest_no) {
-		return mapper.addBookmark(mem_no, rest_no);
+	public boolean addBookmark(BookMarkVO vo) {
+		return mapper.addBookmark(vo);
+	}
+	@Override
+	public boolean isBookmarked(int mem_no, int rest_no) {
+	       return mapper.check(mem_no, rest_no) > 0;
 	}
 	
 	
