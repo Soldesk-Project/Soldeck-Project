@@ -84,8 +84,8 @@ function outBookmark() {
 	console.log(restNo);
 	console.log(memberNo);
 
-	fetch('/mypage/bookmark/del', {
-		  method: 'POST',
+	fetch(`/mypage/favorites/remove/${restNo}`, {
+		  method: 'DELETE',
 		  headers: {
 		    'Content-Type': 'application/json'
 		  },
