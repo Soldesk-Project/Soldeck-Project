@@ -58,7 +58,6 @@ function resizeInput(input) {
 }
 //-----즐겨찾기 삭제 확인 모달-------------------------------------------
 const modal = document.querySelector('.bookmark-check-modal');
-const params = new URLSearchParams(window.location.search);
 function openModal(){
   modal.style.display = 'block';
   document.body.style.overflow = 'hidden';
@@ -77,10 +76,11 @@ document.querySelectorAll(".bookmark").forEach(bookmarkBtn => {
 		restNo = bookmarkBtn.closest(".view-info").querySelector("#restNo").value;
 	});
 })
+//멤버 번호 가져오기
+let memberNo=document.querySelector("#memNo").value;
+
 //----- 즐겨찾기 삭제 함수-------------------------------------------------
 function outBookmark() {
-//	let memberNo=params.get("mem_no");
-	let memberNo=118;
 	console.log(restNo);
 	console.log(memberNo);
 

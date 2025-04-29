@@ -113,6 +113,7 @@ input{
 	margin: 5px;
 	height: 110px; 
 	width: 540px;
+    font-size: 15px;
 }
 textarea{
 	resize: none;
@@ -148,7 +149,6 @@ textarea{
 	width: 60px;
 	height: 80px;
 }
-
 /*------------------ 사이드 메뉴 css -------------------------*/
 
 .side{
@@ -195,6 +195,53 @@ textarea{
 }
 
 /*------------------ 모달 css -------------------------*/
+#customConfirm{
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: none;
+    position: fixed;
+    top: 35%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+	background: rgba(0,0,0,0.2);
+  	z-index: 999;
+}
+.inner-modal{
+	text-align: center;
+	background: #fff;
+	padding: 20px 25px;
+	border-radius: 8px;
+	box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+	min-width: 300px;
+}
+.bookmark-modal-content{
+	display: flex;
+	align-items:center;
+	justify-content: center;
+}
+.yes-btn{
+    background-color: #FF7D00;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100px;
+    height: 40px;
+    margin: auto;
+}
+#cancelModalBtn{
+	background-color: #e53935;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100px;
+    height: 40px;
+    margin: auto;
+}
 .open-modal-btn {
   background-color: #3b82f6;
   color: white;

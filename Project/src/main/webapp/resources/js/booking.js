@@ -91,8 +91,13 @@ document.querySelectorAll(".booking-memo-btn").forEach(saveMemo => {
 		e.preventDefault();
 		resNo = saveMemo.closest(".sec-2").querySelector(".reserve-no").value;
 		memo=saveMemo.closest(".sec-2").querySelector(".booking-memo").value;
+		checkMemo();
 	});
 })
+let memberNo;
+document.addEventListener("DOMContentLoaded", ()=>{
+	memberNo=document.querySelector(".member-no").value;
+});
 //-----버튼들 클릭 이벤트-------------------------------------------
 document.querySelectorAll("button").forEach(btn=>{
 	btn.addEventListener('click',e=>{
@@ -100,8 +105,6 @@ document.querySelectorAll("button").forEach(btn=>{
 		
 		if(type=='bookingCancelBtn'){
 			openBookingCancelModal();
-		}else if(type=='saveMemoBtn'){
-			openSaveMemoModal();
 	    }else if(type=='outBookMarkBtn'){
 	    	deleteBookmark();
 	    	closeModal();
@@ -153,13 +156,8 @@ function closeModal(){
 	document.body.style.overflow = 'auto';
 }
 //-----모달 작동 함수------------------------------------------------------------
-
-
-const params = new URLSearchParams(window.location.search);
-const memberNo=118;
 //----- 즐겨찾기 삭제 함수-------------------------------------------------
 function deleteBookmark() {
-//	let memberNo=params.get("mem_no");
 	console.log(restNo);
 	console.log(memberNo);
 	
@@ -179,7 +177,6 @@ function deleteBookmark() {
 }
 //-----즐겨찾기 추가 함수----------------------------------------------------
 function addBookmark() {
-//	let memberNo=params.get("mem_no");
 	console.log(restNo);
 	console.log(memberNo);
 	
@@ -197,7 +194,7 @@ function addBookmark() {
 		  })
 		  .catch(e=>console.log(e));
 }
-//-----예약 취소 함수--------
+//-----예약 취소 함수--------------------------------------
 function bookingCancel() {
 	console.log(resNo);
 	fetch('/mypage/booking/del', {
@@ -216,6 +213,15 @@ function bookingCancel() {
 	
 }
 //-----메모 저장----------------------------------
+function checkMemo() {
+	const checkMemo=/^.{0,45}$/;
+	if (!checkMemo.test(memo)) {
+		alert("45자 미만으로 작성");
+		return;
+	}else{
+		openSaveMemoModal();
+	}
+}
 function saveMemo() {
 	console.log(memo);
 	console.log(resNo);

@@ -23,26 +23,22 @@ document.querySelectorAll('button').forEach(btn => {
     let type = btn.getAttribute("id");
 
     if(type == 'createClubBtn'){
-      openModal();
+        openModal();
     }else if(type == 'closeModalBtn'){
-      closeModal();
+        closeModal();
+    }else if(type == 'cancelModalBtn'){
+    	closeModal();
     }else if(type == 'createBtn'){
-      createClub();
-    }else if(type == 'saveMemoBtn'){
-      saveMemo();
-    }
+        createClub();
+    }else if(type == 'outBookMarkBtn'){
+    	deleteBookmark();
+	}else if(type == 'addBookMarkBtn'){
+		addBookmark();
+	}else if(type == 'memoUpdateBtn'){
+		saveMemo();
+	}
   });
 });
-
-//-----메모 저장----------------------------------
-function saveMemo() {
-	
-	
-
-
-
-
-}
 //-----페이지 로딩시 즐겨찾기 판단-----------------------------
 document.addEventListener('DOMContentLoaded', ()=> {
 	const bookmarkButtons = document.querySelectorAll('.bookmark');
@@ -58,39 +54,36 @@ document.addEventListener('DOMContentLoaded', ()=> {
 });
 document.addEventListener('DOMContentLoaded', () => {
 	document.querySelectorAll('.bookmark').forEach(btn => {
-	    btn.addEventListener('click', function() {
+		btn.addEventListener('click', function() {
 			if (btn.classList.contains('active')) {
-			    openAddBookmarkModal();
+				openAddBookmarkModal();
 			} else {
-			    openDeleteBookmarkModal();
+				openDeleteBookmarkModal();
 			}
-	    });
+		});
 	});
 });
 //-----즐겨찾기 버튼-------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//-----가게 이름 클릭 시 채팅방으로 이동--------------------------------------------
+//즐겨찾기 버튼 -> 그룹 번호
+let groupNo;
+document.querySelectorAll(".bookmark").forEach(bookmarkBtn => {
+	bookmarkBtn.addEventListener('click',e=>{
+		e.preventDefault();
+		groupNo = bookmarkBtn.closest(".club-info").querySelector("#groupNo").value;
+	});
+})
+//메모저장 버튼 -> 그룹 번호, 메모 내용
+let memo;
+document.querySelectorAll(".memo-btn").forEach(saveMemo => {
+	saveMemo.addEventListener('click',e=>{
+		e.preventDefault();
+		groupNo = saveMemo.closest(".club-content").querySelector("#groupNo").value;
+		memo=saveMemo.closest(".club-content").querySelector(".memo-area").value;
+		checkMemo();
+	});
+})
+let memberNo=document.querySelector("#memNo").value;
+//-----그룹 이름 클릭 시 채팅방으로 이동--------------------------------------------
 document.querySelectorAll(".club-name").forEach(moveChatRoom => {
 	moveChatRoom.addEventListener('click',e=>{
 		e.preventDefault();
@@ -100,8 +93,13 @@ document.querySelectorAll(".club-name").forEach(moveChatRoom => {
 	});
 })
 
-// 모달 관련 스크립트
+
+
+//----- 모달 관련 스크립트---------------------------------------------------------------
 const modal = document.querySelector('#modal');
+const modal2 = document.querySelector('.save-memo-modal');
+const modal3 = document.querySelector('.bookmark-check-modal');
+const modal4 = document.querySelector('.bookmark-add-modal');
 const clubTilte = document.querySelector("input[name='club-title']");
 const clubDesc = document.querySelector("textarea[name='club-desc']");
 const minAge = document.querySelector("input[name='min-age']");
@@ -110,13 +108,33 @@ const isPublic = document.querySelector(".public-checkbox").checked ? 'Y' : 'N';
 
 function openModal(){
   modal.style.display = 'block';
-//  document.body.style.overflow = 'hidden';
+  document.body.style.overflow = 'hidden';
 }
-
+//메모 저장
+function openSaveMemoModal() {
+	modal2.style.display = 'block';
+	document.body.style.overflow = 'hidden';
+}
+//즐겨찾기 삭제
+function openDeleteBookmarkModal(){
+	modal3.style.display = 'block';
+	document.body.style.overflow = 'hidden';
+}
+//즐겨찾기 추가
+function openAddBookmarkModal() {
+	modal4.style.display = 'block';
+	document.body.style.overflow = 'hidden';
+}
 function closeModal(){
   modal.style.display = 'none';
-//  document.body.style.overflow = 'auto';
+  modal2.style.display = 'none';
+  modal3.style.display = 'none';
+  modal4.style.display = 'none';
+  document.body.style.overflow = 'auto';
 }
+//----- --------------------------------------------------------------
+
+
 
 function createClub(){
   const gender = document.querySelector("input[name='gender']:checked");
@@ -156,7 +174,75 @@ function createClub(){
     })
     .catch(err => console.log(err));
 }
+//-----메모 저장----------------------------------
+function checkMemo() {
+	const checkMemo=/^.{0,200}$/;
+	if (!checkMemo.test(memo)) {
+		alert("200자 미만으로 작성");
+		return;
+	}else{
+		openSaveMemoModal();
+	}
+}
+function saveMemo() {
+	console.log(groupNo);
+	console.log(memberNo);
+	console.log(memo);
+	
+	fetch('/mypage/club/memoUpdate', {
+		  method: 'POST',
+		  headers: {
+		    'Content-Type': 'application/json; charset=utf-8'
+		  },
+		  body: JSON.stringify({mem_no: memberNo, group_no: groupNo, group_usermemo: memo})
+		})
+		  .then(response => response.json())
+		  .then(data=>{
+		  	console.log(data);
+		  	location.reload();
+		  })
+		  .catch(e=>console.log(e));
+	
 
+}
+//----- 즐겨찾기 삭제 함수-------------------------------------------------
+function deleteBookmark() {
+	console.log(groupNo);
+	console.log(memberNo);
+	
+	fetch('/mypage/groupBookmark/del', {
+		  method: 'POST',
+		  headers: {
+		    'Content-Type': 'application/json; charset=utf-8'
+		  },
+		  body: JSON.stringify({mem_no: memberNo, group_no: groupNo})
+		})
+		  .then(response => response.json())
+		  .then(data=>{
+		  	console.log(data);
+		  	location.reload();
+		  })
+		  .catch(e=>console.log(e));
+}
+//-----즐겨찾기 추가 함수----------------------------------------------------
+function addBookmark() {
+	console.log(groupNo);
+	console.log(memberNo);
+	
+	fetch('/mypage/groupBookmark/add', {
+		  method: 'POST',
+		  headers: {
+		    'Content-Type': 'application/json; charset=utf-8'
+		  },
+		  body: JSON.stringify({mem_no: memberNo, group_no: groupNo})
+		})
+		  .then(response => response.json())
+		  .then(data=>{
+		  	console.log(data);
+		  	location.reload();
+		  })
+		  .catch(e=>console.log(e));
+}
 
 
 

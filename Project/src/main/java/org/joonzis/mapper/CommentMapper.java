@@ -2,6 +2,7 @@ package org.joonzis.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.joonzis.domain.CommentVO;
 
 public interface CommentMapper {
@@ -21,5 +22,5 @@ public interface CommentMapper {
     // 코멘트  평균 평점
     public double getAvgRate(int rest_no);
     
-    
+    public List<CommentVO> getCommentList(@Param("mem_no") int mem_no); 
 }

@@ -2,6 +2,7 @@ package org.joonzis.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.joonzis.domain.ChatRoomVO;
 import org.joonzis.domain.GroupMemberDTO;
 import org.joonzis.domain.GroupVO;
@@ -16,4 +17,16 @@ public interface GroupMapper {
 	
 	// 그룹 정보 가져오기
 	public List<GroupMemberDTO> getAllGroups(int mem_no);
+	
+	
+	
+	public boolean updateGroupMemo(@Param("group_no") int group_no, 
+								   @Param("mem_no")	int mem_no, 
+								   @Param("group_usermemo") String group_usermemo);
+	
+	public boolean addGroupBookmark(@Param("group_no") int group_no, 
+			   						@Param("mem_no") int mem_no);
+	
+	public boolean cancelGroupBookmark(@Param("group_no") int group_no, 
+									   @Param("mem_no")	int mem_no);
 }

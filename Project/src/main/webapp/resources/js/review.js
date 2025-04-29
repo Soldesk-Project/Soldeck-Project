@@ -22,11 +22,51 @@ document.querySelectorAll('button').forEach(btn => {
     let type = btn.getAttribute("id");
 
     if(type == 'removeBtn'){
-      removeReview();
+        openModal();
+    }else if(type=='deleteCommentBtn'){
+    	removeReview();
+    	closeModal();
+    }else if(type=='cancelModalBtn'){
+    	closeModal();;
     }
   });
 });
+//-----즐겨찾기 삭제 확인 모달-------------------------------------------
+const modal = document.querySelector('.delete-comment-modal');
+function openModal(){
+  modal.style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(){
+  modal.style.display = 'none';
+  document.body.style.overflow = 'auto';
+}
+//-----버튼 누를 때 댓글 번호 가져오기 ------------------------------
+let comNo;
+document.querySelectorAll(".remove-btn").forEach(removeBtn => {
+	removeBtn.addEventListener('click',e=>{
+		e.preventDefault();
+		comNo = removeBtn.closest(".appraisal-div").querySelector("#memNo").value;
+	});
+})
+let memNo=document.querySelector("#memNo").value;
 //-----리뷰 삭제 함수---------------------------------------------------
 function removeReview() {
-	console.log('리뷰 삭제 버튼');
+	console.log(comNo);
+	console.log(memNo);
+	fetch('/mypage/review/del', {
+		  method: 'POST',
+		  headers: {
+		    'Content-Type': 'application/json; charset=utf-8'
+		  },
+		  body: JSON.stringify({com_no: comNo, mem_no: memNo})
+		})
+		  .then(response => response.json())
+		  .then(data=>{
+		  	console.log(data);
+		  	location.reload();
+		  })
+		  .catch(e=>console.log(e));
+	
+	
 }
