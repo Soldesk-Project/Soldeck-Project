@@ -189,14 +189,8 @@
 		WHERE
 			RES_NO=#{res_no}
 	</update>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	<select id="getTest" resultType="org.joonzis.domain.RestVO">
+		SELECT * FROM restaurant
+	</select>
 </mapper>

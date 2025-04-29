@@ -30,6 +30,9 @@ public interface RestService {
     public List<ReserveRestDTO> getReserveList(int mem_no);
     
     public boolean cancelBooking(int res_no);
+
     public boolean updateReserveMemo(int res_no, String res_memo);
     
+    public List<RestVO> getTest();
+  
 }

@@ -26,7 +26,6 @@
     <button id="sendBtn" onclick="sendMessage()">보내기</button>  
   </div>
   
-  <!-- UMD 버전으로 교체 -->
   <script type="module">
     import { EmojiButton } from 'https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@4.6.4/dist/index.min.js';
 

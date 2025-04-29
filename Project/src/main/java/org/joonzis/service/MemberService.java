@@ -1,10 +1,5 @@
 package org.joonzis.service;
 
-
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 import java.util.List;
 
 import org.joonzis.domain.MemberVO;

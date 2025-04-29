@@ -33,5 +33,9 @@ public interface RestMapper {
 	
 	public boolean cancelBooking(@Param("res_no") int res_no);
 	
+
 	public boolean updateReserveMemo(@Param("res_no") int res_no, @Param("res_memo") String res_memo);
+
+	public List<RestVO> getTest();
+
 }

@@ -74,7 +74,6 @@ pageEncoding="UTF-8"%>
 			</div>
 		</div>
 	</div>
-	
 	<script src="/resources/js/friendList.js"></script>
 	<jsp:include page="../layout/footer.jsp"/>
 	

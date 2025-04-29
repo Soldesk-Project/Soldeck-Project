@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.extern.log4j.Log4j;
 
@@ -157,4 +158,18 @@ public class SearchController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
+	
+	@GetMapping(value = "/getLocation", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<RestVO> getLocation() {
+		log.info("map...");
+		List<RestVO> places = service.getTest();
+		log.info(places);
+		return places;
+	}
+	
+	@GetMapping("/map")
+	public String goMap() {
+		return "/search/map";
+	}
 }

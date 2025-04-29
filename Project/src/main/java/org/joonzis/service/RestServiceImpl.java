@@ -106,8 +106,14 @@ public class RestServiceImpl implements RestService{
 	public boolean cancelBooking(int res_no) {
 		return mapper.cancelBooking(res_no);
 	}
+
 	@Override
 	public boolean updateReserveMemo(int res_no, String res_memo) {
 		return mapper.updateReserveMemo(res_no, res_memo);
+	}
+	
+	@Override
+	public List<RestVO> getTest() {
+		return mapper.getTest();
 	}
 }
