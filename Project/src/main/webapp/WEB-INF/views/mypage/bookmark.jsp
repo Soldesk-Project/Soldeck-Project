@@ -69,6 +69,7 @@
 	                    <input type="text" class="res-industry" value="${bm.rest.rest_cate }" readonly="readonly">
 	                    <input type="text" class="res-time" value="${bm.rest.rest_bh }" readonly="readonly">
 	                    <input type="text" class="res-addr" value="${bm.rest.rest_adr }" readonly="readonly">
+	                    <input type="hidden" id="memNo" value="${bm.mem_no }">
                         <input type="hidden" id="restNo" value="${bm.rest.rest_no }">
                     </div>
                 </div>
