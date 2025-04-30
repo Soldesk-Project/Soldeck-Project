@@ -90,13 +90,14 @@ public class FriendController {
     
     @GetMapping(value = "/friendListRecommendData", produces = "application/json")
     @ResponseBody
-    public List<FriendVO> getFriendRandomListData(HttpSession session) {
-        MemberVO member = (MemberVO) session.getAttribute("loggedInUser");
-        if (member == null) {
-            return Collections.emptyList();  // 로그인 안 되어 있으면 빈 리스트 반환
-        }
+    public List<FriendVO> getfriendListRecommendData(HttpSession session) {
+    	MemberVO member = (MemberVO) session.getAttribute("loggedInUser");
+    	 if (member == null) {
+             throw new IllegalStateException("로그인이 필요합니다.");
+         }
 
-        int mem_no = member.getMem_no();
+    	int mem_no = member.getMem_no();
         return fservice.getRandomFriendList(mem_no);  // JSON 응답
     }
+    
 }

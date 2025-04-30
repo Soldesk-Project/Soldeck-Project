@@ -35,17 +35,21 @@
 	</delete>
 	
 	<select id="getRandomFriendList" parameterType="int" resultMap="FriendWithMemberMap">
-		SELECT 
-		    #{mem_no} AS mem_no,
-		    m.mem_no AS friend_mem_no,
-		    NULL AS fre_memo,        
-		    m.mem_img,
-		    m.mem_nick
-		FROM member m
-		WHERE m.mem_no != #{mem_no}
-		  AND m.mem_no NOT IN (
-		    SELECT friend_mem_no FROM friend WHERE mem_no = #{mem_no})
-		ORDER BY m.mem_no ASC
+	 <![CDATA[
+		SELECT *
+		FROM (
+		  SELECT m.*
+		  FROM member m
+		  WHERE m.mem_no != #{mem_no}
+		    AND m.mem_no NOT IN (
+		      SELECT f.friend_mem_no
+		      FROM friend f
+		      WHERE f.mem_no = #{mem_no}
+		    )
+		  ORDER BY DBMS_RANDOM.VALUE
+		)
+		WHERE ROWNUM <= 10
+		 ]]>
 	</select>
 	
 </mapper>

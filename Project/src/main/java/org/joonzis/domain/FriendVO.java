@@ -1,5 +1,7 @@
 package org.joonzis.domain;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,4 +16,6 @@ public class FriendVO {
 	private String fre_memo;
 	
 	private MemberVO friendMember;
+	
+	private List<BookMarkVO> bookMarkList;
 }
