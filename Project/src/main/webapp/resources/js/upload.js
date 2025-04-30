@@ -34,7 +34,6 @@
         })
         .then(data => {
             showUploadedFile(data);
-            console.log("Uploaded files:", data);
             fileInput.value = '';
             updateArrows(); // 화살표만 업데이트
         })
@@ -67,13 +66,11 @@
 
         window.uploadedFiles = window.uploadedFiles || [];
         window.uploadedFiles.push(...uploadResultArr);
-        console.log("After adding to window.uploadedFiles:", window.uploadedFiles); // 디버깅 로그
 
         let str = '';
         uploadResultArr.forEach(file => {
             const fileName = file.att_uuid + '_' + file.att_name;
             const imageUrl = file.att_path + '/' + encodeURIComponent(fileName);
-            console.log("Image URL:", imageUrl);
 
             str += `<li>`;
             str += `<div class="image-container">`;
@@ -153,7 +150,6 @@
             })
             .then(response => response.text())
             .then(result => {
-                console.log("Delete result:", result);
                 // 해당 요소 삭제
                 const targetLi = e.target.closest('li');
                 targetLi.remove();

@@ -198,7 +198,7 @@ public class myPageController {
     }
 
     // 즐겨찾기 제거 (상세 페이지 및 마이페이지)
-    @DeleteMapping(value = {"/favorites/remove/{restNo}"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = {"/favorites/remove/{restNo}", "/bookmark/del"}, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> delBookmark(@PathVariable(required = false) Integer restNo, @RequestBody(required = false) BookMarkVO vo, HttpSession session) {
         MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
         if (loggedInMember == null) {

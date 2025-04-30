@@ -143,19 +143,24 @@
 	    <div class="time-selection">
 	      <h3>시간 선택</h3>
 	      <div class="time-options">
-	        <button class="time-btn">10:00</button>
-	        <button class="time-btn">10:30</button>
 	        <button class="time-btn">11:00</button>
 	        <button class="time-btn">11:30</button>
 	        <button class="time-btn">12:00</button>
-	        <button class="time-btn">14:00</button>
-	        <button class="time-btn">15:00</button>
+	        <button class="time-btn">12:30</button>
+	        <button class="time-btn">13:00</button>
+	        <button class="time-btn">13:30</button>
 	        <button class="time-btn">16:00</button>
+	        <button class="time-btn">16:30</button>
 	        <button class="time-btn">17:00</button>
+	        <button class="time-btn">17:30</button>
 	        <button class="time-btn">18:00</button>
+	        <button class="time-btn">18:30</button>
 	        <button class="time-btn">19:00</button>
+	        <button class="time-btn">19:30</button>
 	        <button class="time-btn">20:00</button>
+	        <button class="time-btn">20:30</button>
 	        <button class="time-btn">21:00</button>
+	        <button class="time-btn">21:30</button>
 	      </div>
 	    </div>
 	    <!-- 모달 버튼 -->

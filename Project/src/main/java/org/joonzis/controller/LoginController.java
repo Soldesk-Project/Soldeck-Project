@@ -1,6 +1,8 @@
 package org.joonzis.controller;
 
 import java.io.File;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
@@ -21,9 +23,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.view.InternalResourceViewResolver; 
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+import lombok.extern.log4j.Log4j; 
 
 @Controller
+@Log4j
 @RequestMapping("/login")
 public class LoginController {
 
@@ -39,9 +44,20 @@ public class LoginController {
         resolver.setSuffix(".jsp");
         return resolver;
     }
-
+    
     @RequestMapping(value = "/loginPage", method = RequestMethod.GET)
-    public String loginPage() {
+    public String loginPage(@RequestParam(value = "redirectUrl", required = false) String redirectUrl, 
+                            HttpSession session) {
+        if (redirectUrl != null && !redirectUrl.isEmpty()) {
+            try {
+                redirectUrl = URLDecoder.decode(redirectUrl, StandardCharsets.UTF_8.toString());
+                session.setAttribute("redirectUrl", redirectUrl); // 세션에 redirectUrl 저장
+            } catch (Exception e) {
+                log.error("Error decoding redirectUrl: " + e.getMessage());
+            }
+        } else {
+            log.info("No redirectUrl provided");
+        }
         return "login/loginPage";
     }
 
@@ -206,12 +222,21 @@ public class LoginController {
 	}
 	
     // 로그아웃 처리
-    @PostMapping("/logout")
-    public String logout(HttpSession session) {
-        if (session != null && session.getAttribute("loggedInUser") != null) {
-            session.removeAttribute("loggedInUser"); // 세션에서 로그인 정보 제거
-            session.invalidate(); // 세션 무효화
-        }
-        return "redirect:/"; // 로그아웃 후 홈페이지로 리다이렉트
-    }
+	@PostMapping("/logout")
+	public String logout(HttpSession session, @RequestParam(value = "redirectUrl", required = false) String redirectUrl) {
+	    if (session != null && session.getAttribute("loggedInUser") != null) {
+	        session.removeAttribute("loggedInUser"); // 세션에서 로그인 정보 제거
+	        session.invalidate(); // 세션 무효화
+	    }
+	    if (redirectUrl != null && !redirectUrl.isEmpty()) {
+	        try {
+	            redirectUrl = URLDecoder.decode(redirectUrl, StandardCharsets.UTF_8.toString());
+	            log.info("Decoded redirectUrl: " + redirectUrl);
+	            return "redirect:" + redirectUrl; // 로그아웃 후 원래 페이지로 리다이렉션
+	        } catch (Exception e) {
+	            log.error("Error decoding redirectUrl: " + e.getMessage());
+	        }
+	    }
+	    return "redirect:/"; // redirectUrl이 없으면 홈페이지로 리다이렉트
+	}
 }

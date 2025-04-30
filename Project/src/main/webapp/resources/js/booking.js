@@ -162,7 +162,7 @@ function deleteBookmark() {
 	console.log(memberNo);
 	
 	fetch('/mypage/bookmark/del', {
-		  method: 'POST',
+		  method: 'DELETE',
 		  headers: {
 		    'Content-Type': 'application/json; charset=utf-8'
 		  },
