@@ -31,4 +31,10 @@ public class FriendServiceImpl implements FriendService {
 	public List<FriendVO> getRandomFriendList(int mem_no) {
 		return mapper.getRandomFriendList(mem_no);
 	}
+	
+	@Override
+	public void insertFriend(int mem_no, int friend_mem_no) {
+		mapper.insertFriend(mem_no, friend_mem_no);
+		
+	}
 }

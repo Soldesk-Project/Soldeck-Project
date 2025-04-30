@@ -72,6 +72,8 @@ fetch("/friendlist/friendListRecommendData", {
   const container = document.getElementById("friendListRandomContainer");
 
   data.forEach(friend => {
+	  console.log("받은 친구 데이터:", friend);
+	  
     const hashtags = (friend.hashtags || [])
       .slice(0, 3) // 최대 3개 제한
       .map(fk => `<li>#${fk.food_no}</li>`)
@@ -79,7 +81,7 @@ fetch("/friendlist/friendListRecommendData", {
     const favorites = (friend.bookMarkList || [])
       .filter(bm => bm.is_public === "Y" && bm.rest)
       .slice(0, 3) // 최대 3개 제한
-      .map(bm => `<li>#\${bm.rest.rest_name}</li>`)
+      .map(bm => `<li>#${bm.rest.rest_name}</li>`)
       .join('');
 
     const el = document.createElement("div");
@@ -91,20 +93,20 @@ fetch("/friendlist/friendListRecommendData", {
         <div class="profileTop">
           <img src="/images/\${friend.friendMember.mem_img}" alt="프로필" width="80" height="80"
             onerror="if (!this.dataset.error) { this.dataset.error = true; this.src='/images/profile.png'; }">
-          <div class="nicknameBox"><p>\${friend.mem_nick}</p></div>
+          <div class="nicknameBox"><p>${friend.friendMember.mem_nick}</p></div>
           <div class="followBtn">
-            <button onclick="follow(\${friend.friend_mem_no}, this)">팔로우</button>
+            <button onclick="follow(${friend.friendMember.friend_mem_no}, this)">팔로우</button>
           </div>
         </div>
         <div class="detailBox" style="display: none;">
           <div class="preference">
             <p class="title">선호도</p>
-            <ul class="hashtags">\${hashtags}</ul>
+            <ul class="hashtags">${hashtags}</ul>
           </div>
           <div class="favorites">
             <p class="title">공개된 즐겨찾기 리스트</p>
             <div class="scrollBox">
-              <ul>\${favorites}</ul>
+              <ul>${favorites}</ul>
             </div>
           </div>
         </div>
@@ -135,6 +137,7 @@ fetch("/friendlist/friendListRecommendData", {
 function follow(friendMemNo, button) {
 fetch("/friendlist/follow", {
   method: "POST",
+  credentials: "include",
   headers: {
     "Content-Type": "application/x-www-form-urlencoded"
   },

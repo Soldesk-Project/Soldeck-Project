@@ -12,4 +12,6 @@ public interface FriendService {
 	
 	public List<FriendVO> getRandomFriendList(int mem_no);
 	
+	void insertFriend(int mem_no, int friend_mem_no);
+	
 }

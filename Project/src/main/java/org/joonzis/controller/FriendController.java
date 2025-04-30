@@ -100,4 +100,16 @@ public class FriendController {
         return fservice.getRandomFriendList(mem_no);  // JSON 응답
     }
     
+    @PostMapping("/follow")
+    @ResponseBody
+    public ResponseEntity<String> follow(@RequestParam("friend_mem_no") int friendMemNo, HttpSession session) {
+        MemberVO member = (MemberVO) session.getAttribute("loggedInUser");
+        
+        if (member == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다");
+        }
+
+        fservice.insertFriend(member.getMem_no(), friendMemNo);
+        return ResponseEntity.ok("추가 완료");
+    }
 }

@@ -13,5 +13,6 @@ public interface FriendMapper {
 	
 	List<FriendVO> getRandomFriendList(@Param("mem_no") int mem_no);
 	
+	void insertFriend(@Param("mem_no") int mem_no, @Param("friend_mem_no") int friend_mem_no);
 	
 }
