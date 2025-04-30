@@ -222,6 +222,33 @@ public class myPageController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 	
+    @PostMapping(value = "/bookmark/private", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Boolean> privateBookmarking(@RequestBody BookMarkVO vo) {
+    	log.info("updateReserveMemo...");
+    	boolean result=bservice.privateBookmarking(vo.getMem_no(), vo.getRest_no());
+    	return new ResponseEntity<Boolean>(result,HttpStatus.OK);
+    }
+	@PostMapping(value = "/bookmark/public", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Boolean> publicBookmarking(@RequestBody BookMarkVO vo) {
+		log.info("publicBookmarking...");
+		boolean result=bservice.publicBookmarking(vo.getMem_no(), vo.getRest_no());
+		return new ResponseEntity<Boolean>(result,HttpStatus.OK);
+	}
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 	@GetMapping("/booking")
 	public String booking(Model model, HttpSession session) {
 		MemberVO mvo = (MemberVO) session.getAttribute("loggedInUser");

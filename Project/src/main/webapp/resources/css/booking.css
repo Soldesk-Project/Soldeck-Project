@@ -50,39 +50,38 @@ body{
     border-radius: 10px;
 }*/
 .booking-list{
-	/*border: 1px solid black;*/
-	width: 98%;
-	height: 409px;
-	margin: 10px 0 30px 10px;
-}
-.sec-1{
-	text-align: center;
-	width: 275px;
-	height: 100%;
-	float: left;
-	margin-right: 10px;
-	border-radius: 10px;
-    background-color: white;
-    box-shadow: 3px 3px 8px 1px rgba(0, 0, 0, 0.2);
-}
-.sec-2{
-	width: 636px;
-	height: 100%;
-	float: right;
-	border-radius: 10px;
-    background-color: white;
-    box-shadow: 3px 3px 8px 1px rgba(0, 0, 0, 0.2);
-}
-.booking-date{
+	width: 940px;
+	height: 300px;
 	margin: 10px;
+    margin-bottom: 40px;	
+	display: flex;
+}
+.image-div{
+	text-align: center;
+	width: 270px;
+	height: 270px;
+	margin-top:auto;
+	border-radius: 10px;
+    background-color: white;
+    box-shadow: 3px 3px 8px 1px rgba(0, 0, 0, 0.2);
+}
+.booking-info{
+	width: 640px;
+	height: 300px;
+	margin-left: auto;
+}
+.border-div{
+	border:1px dashed;
+	background-color: white;
+	height: 240px;
+    box-sizing: border-box;
+    border-radius: 15px;
 }
 .booking-img{
 	width: 250px;
 	height: 250px;
 	margin: 10px;
-	display: inline-block;
     border-radius: 10px;
-    box-shadow: 3px 3px 8px 1px rgba(0, 0, 0, 0.2);
     overflow: hidden;
 }
 .booking-res-image{
@@ -90,32 +89,59 @@ body{
 	height: 100%;
 	width: 100%;
 }
-.category{
-	margin: 20px 10px;
+.booking-schedule{
+	height: 60px;
+	width: 100%;
+	display: flex;
+	justify-content: end;
+	text-align: center;
 }
-.booking-info{
-	margin: 10px;	
-	height: 250px;
-	width: auto;
+.booking-date{
+	height: 30px;
+	margin: 15px 10px;
+	padding: 0;
+    text-align: center;
+    font-size: 17px;
+    outline: none;
+	border: 1px solid;
+	box-sizing: border-box;
+	border-radius: 15px;
+}
+.date{
+	width: 120px;
+}
+.time{
+	width: 70px;
 }
 .info-text{
-	height:100%;
+	height: 130px;
+	display: flex;
+}
+.rest-info{
+	width: 550px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 }
-.info-text input{
+.rest-info input{
+	margin: 10px;
+	height: 35px;
 	outline: none;
 	border: none;
-	display: inline-block;
-	margin: 5px;
-	height: 35px;
 }
-.info-text a{
-	text-decoration: none;
-	display: inline-block;
-	width: fit-content;
-	max-width: 100%;
+.res-name{
+	font-size: 20px;
+}
+.res-addr{
+	font-size: 15px;
+}
+.memo-div{
+	display: flex;
+	height: 100px;
+	flex-direction: column;
+}
+.memo-div span{
+	margin: 10px;
 }
 .input-size {
 	position: absolute;
@@ -126,15 +152,11 @@ body{
 	padding: 0 4px;
 	box-sizing: content-box;
 }
-.res-name, .res-industry, .res-time{
-	font-size: 25px;
-}
-.res-addr{
-	font-size: 15px;
-	padding: 10px 0 0;
+
+.bookmark-div{
+	margin-left:auto;
 }
 .bookmark{
-	float: right;
 	margin: 0 10px;
 	width: 40px;
 	height: 40px;
@@ -152,21 +174,8 @@ body{
 .bookmark:hover {
   	color: #FFD700;
 }
-.booking-schedule{
-	height: 69px;
-	width: 100%;
-}
-.booking-date{
-	text-align: center;
-	float: left;
-    text-align: center;
-    display: inline-block;
-    width: 220px;
-    font-size: 1.5rem;
-    height: 40px;
-}
 .booking-cancel-btn{
-	margin: 11px 20px;
+	margin: 10px 20px;
 }
 .booking-memo{
 	height: 40px;
@@ -174,11 +183,11 @@ body{
 	margin: 0 10px;
 }
 .booking-memo-btn{
-	margin: 0 20px;
+	margin: 3px 20px;
+	float: right;
 }
 .booking-memo-btn,
 .booking-cancel-btn{
-	float: right;
 	background-color: #FF7D00;
 	color: white;
 	padding: 10px 15px;

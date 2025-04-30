@@ -24,41 +24,42 @@
 				
 				<c:forEach var="rl" items="${reserveList }">
 				<div class="booking-list">
-					<div class="sec-1">
+					<div class="image-div">
 						<div class="booking-img">
 							<img src="${rl.rest_img_name }" alt="가게 사진" class="booking-res-image">
 						</div>
-						<div class="category">
-							<span> 예약 일정</span>
-						</div>
-						<div class="category">
-							<span> 특이 사항</span>
-						</div>
 					</div>
-					<div class="sec-2">
-						<div class="booking-info">
-							<div><button type="button" class="bookmark" id="bookmarkBtn">★</button></div>
-		                    <div class="info-text">
-			                    <a href="#" draggable="false">
-			                    	<input type="text" class="res-name" value="${rl.rest_name }" readonly="readonly"><span class="input-size"></span>
-			                    </a>
-			                    <input type="text" class="res-industry" value="${rl.rest_cate }" readonly="readonly">
-			                    <input type="text" class="res-time" value="${rl.rest_bh }" readonly="readonly">
-			                    <input type="text" class="res-addr" value="${rl.rest_adr }" readonly="readonly">
-			                    <input type="hidden" id="restNo" value="${rl.rest_no }">
-			                    <input type="hidden" id="isPublic" value="${rl.is_public }">
-		                    </div>
-						</div>
+					<div class="booking-info">
 						<div class="booking-schedule">
-							<input type="text" class="booking-date" name="bookingDate" value="<fmt:formatDate value="${rl.res_date}" pattern='yyyy - MM - dd'/>" readonly="readonly">
-							<input type="text" class="booking-date" name="bookingDateTime" value="${rl.res_time }" readonly="readonly">
-		                    <input type="hidden" class="reserve-no" value="${rl.res_no }">
-		                    <input type="hidden" class="member-no" value="${rl.mem_no }">
+							<div>
+								<input type="text" class="booking-date date" name="bookingDate" value="<fmt:formatDate value="${rl.res_date}" pattern='yyyy - MM - dd'/>" readonly="readonly">
+								<input type="text" class="booking-date time" name="bookingDateTime" value="${rl.res_time }" readonly="readonly">
+			                    <input type="hidden" class="reserve-no" value="${rl.res_no }">
+			                    <input type="hidden" class="member-no" value="${rl.mem_no }">
+							</div>
 							<button type="button" class="booking-cancel-btn" id="bookingCancelBtn">예약취소</button>
 						</div>
-						<div>
-							<input type="text" class="booking-memo" value="${rl.res_memo }">
-							<button type="button" class="booking-memo-btn" id="saveMemoBtn">저장</button>
+						<div class="border-div">
+		                    <div class="info-text">
+		            	        <div class="rest-info">
+			    	                <a href="#" draggable="false">
+				                    	<input type="text" class="res-name" value="${rl.rest_name }" readonly="readonly"><span class="input-size"></span>
+				                    </a>
+				                    <input type="text" class="res-addr" value="${rl.rest_adr }" readonly="readonly">
+			                    </div>
+								<div class="bookmark-div">
+									<button type="button" class="bookmark" id="bookmarkBtn">★</button>
+								</div>
+		                    </div>
+		                    <div class="memo-div">
+			                    <span>특이 사항</span>
+			                    <div>
+									<input type="text" class="booking-memo" value="${rl.res_memo }">
+									<button type="button" class="booking-memo-btn" id="saveMemoBtn">저장</button>
+				                    <input type="hidden" id="restNo" value="${rl.rest_no }">
+				                    <input type="hidden" id="isPublic" value="${rl.is_public }">
+			                    </div>
+		                    </div>
 						</div>
 					</div>
 				</div>

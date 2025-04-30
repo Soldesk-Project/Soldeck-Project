@@ -18,18 +18,22 @@ linkEle3.href = CSS_FILE_PATH3;
 document.head.appendChild(linkEle3);
 //-----버튼 클릭 이벤트---------------------------------------------
 document.querySelectorAll('button').forEach(btn => {
-  btn.addEventListener('click', () => {
-    let type = btn.getAttribute("id");
-
-    if(type == 'bookmarkBtn'){
-    	openModal();
-    }else if(type == 'outBookMarkBtn'){
-    	outBookmark();
-    	closeModal();
-    }else if(type == 'cancelModalBtn'){
-    	closeModal();
-    }
-  });
+	btn.addEventListener('click', () => {
+		let type = btn.getAttribute("id");
+		
+		if(type == 'bookmarkBtn'){
+			openModal();
+		}else if(type == 'outBookMarkBtn'){
+			outBookmark();
+			closeModal();
+		}else if(type == 'cancelModalBtn'){
+	    	closeModal();
+		}else if(type == 'leftBtn'){
+			privateToPublicBookmark();
+		}else if(type == 'rightBtn'){
+			publicToPrivateBookmark();
+	    }
+	});
 });
 //-----가게 이름 이동------------------------------------------
 document.querySelectorAll(".info-text a").forEach(moveRestView => {
@@ -66,9 +70,11 @@ function openModal(){
 function closeModal(){
   modal.style.display = 'none';
   document.body.style.overflow = 'auto';
+  restNo=0;
 }
 
-//-----즐겨찾기 버튼 누를 때 가게 번호 가져오기 ------------------------------
+//-----데이터 가져오기 ------------------------------
+//즐겨찾기 -> 가게 번호
 let restNo;
 document.querySelectorAll(".bookmark").forEach(bookmarkBtn => {
 	bookmarkBtn.addEventListener('click',e=>{
@@ -76,9 +82,8 @@ document.querySelectorAll(".bookmark").forEach(bookmarkBtn => {
 		restNo = bookmarkBtn.closest(".view-info").querySelector("#restNo").value;
 	});
 })
-//멤버 번호 가져오기
+//멤버 번호
 let memberNo=document.querySelector("#memNo").value;
-
 //----- 즐겨찾기 삭제 함수-------------------------------------------------
 function outBookmark() {
 	console.log(restNo);
@@ -98,6 +103,116 @@ function outBookmark() {
 		  })
 		  .catch(e=>console.log(e));
 }
+//-----버튼 지역별 목록-----------------------------------------------------------
+document.addEventListener('DOMContentLoaded', ()=>{
+    document.querySelectorAll('.btn').forEach(btn=>{
+        btn.addEventListener('click', function(){
+        	if (this.classList.contains('active')) {
+				this.classList.remove('active');
+				document.querySelectorAll('.view').forEach(view=>{
+					view.style.display='';
+				})
+        		return;
+			}
+        	document.querySelectorAll('.btn').forEach(activeBtn=>{
+        		activeBtn.classList.remove('active');
+        	})
+        	btn.classList.add('active');
+            let region = this.value;
+            document.querySelectorAll('.view').forEach(view=>{
+                if (view.dataset.adr == region) {
+                    view.style.display = '';
+                } else {
+                    view.style.display = 'none';
+                }
+            });
+        });
+    });
+});
+//-----가게 선택시 정보 가져오기---------------------------------------------------------------
+let isPublic;
+document.addEventListener('DOMContentLoaded', ()=>{
+    document.querySelectorAll('.view').forEach(view=>{
+    	view.addEventListener('click', function(e){
+    		if (e.target.closest('button')) return;
+    		if (e.target.closest('input')) return;
+    		if (e.target.closest('img')) return;
+    		
+    		
+    		if (this.classList.contains('active')) {
+				this.classList.remove('active');
+				restNo=0;
+        		return;
+			}
+    		document.querySelectorAll('.view').forEach(view2=>{
+        		view2.classList.remove('active');
+        	});
+        	restNo = this.closest(".view").querySelector("#restNo").value;
+        	isPublic= this.closest(".view").querySelector(".is-public").value;
+    		view.classList.add('active');
+    	});
+    });
+});
+//-----버튼으로 즐겨찾기 설정 변경--------------------------------------------------------
+function publicToPrivateBookmark() {
+	if (restNo==0 || restNo==null) {
+		alert('가게가 선택되지 않았습니다');
+		return;
+	}
+	if (isPublic=='N') {
+		alert('이미 비공개 즐겨찾기 입니다');
+		return;
+	}
+	fetch('/mypage/bookmark/private', {
+		  method: 'POST',
+		  headers: {
+		    'Content-Type': 'application/json'
+		  },
+		  body: JSON.stringify({mem_no: memberNo, rest_no: restNo})
+		})
+		  .then(response => response.json())
+		  .then(data=>{
+		  	console.log(data);
+		  	location.reload();
+		  })
+		  .catch(e=>console.log(e));
+	
+}
+function privateToPublicBookmark() {
+	if (restNo==0 || restNo==null) {
+		alert('가게가 선택되지 않았습니다');
+		return;
+	}
+	if (isPublic=='Y') {
+		alert('이미 공개 즐겨찾기 입니다');
+		return;
+	}
+	fetch('/mypage/bookmark/public', {
+		  method: 'POST',
+		  headers: {
+		    'Content-Type': 'application/json'
+		  },
+		  body: JSON.stringify({mem_no: memberNo, rest_no: restNo})
+		})
+		  .then(response => response.json())
+		  .then(data=>{
+		  	console.log(data);
+		  	location.reload();
+		  })
+		  .catch(e=>console.log(e));
+	
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 

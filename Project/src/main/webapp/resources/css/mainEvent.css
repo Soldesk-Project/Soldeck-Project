@@ -1,0 +1,30 @@
+/*------------------ body / main menu -------------------------*/
+::-webkit-scrollbar {
+  display: none;
+}
+.container{
+	width: 1200px;
+	height: 1000px;
+	margin: auto;
+	border: 1px solid;
+	margin-bottom: 30px;
+}
+.main-menu{
+	overflow: auto;
+}
+.event-tap{
+	width: 500px;
+    height: 400px;
+    border: 1px solid;
+    margin: 49px;
+    display: flex;
+    flex-direction: column;
+    float: left;
+}
+.event-img-div{
+	height: 350px;
+}
+.event-title{
+	height: 50px;
+	border-top: 1px solid;
+}

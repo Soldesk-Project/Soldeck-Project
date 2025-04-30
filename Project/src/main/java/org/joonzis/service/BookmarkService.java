@@ -12,5 +12,8 @@ public interface BookmarkService {
     public boolean addBookmark(BookMarkVO vo);
 	public boolean isBookmarked(int mem_no, int rest_no);
 
-
+	
+	public boolean publicBookmarking(int mem_no, int rest_no);
+	public boolean privateBookmarking(int mem_no, int rest_no);
+	
 }
