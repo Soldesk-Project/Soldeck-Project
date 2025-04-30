@@ -462,37 +462,6 @@ function moveSlide(direction) {
         slidesWrapper.style.transform = `translateX(-${offset}%)`;
     }
 }
-/*function initializeSlides() {
-    const slidesWrapper = document.querySelector('.slides-wrapper');
-    const slides = document.querySelectorAll('.slide');
-    const totalSlides = slides.length;
-
-    if (totalSlides === 0) {
-        slidesWrapper.innerHTML = '<div class="slide">관련 가게가 없습니다.</div>';
-        return;
-    }
-
-    slidesWrapper.style.transform = `translateX(0%)`;
-}*/
-
-/*function moveSlide(direction) {
-    const slidesWrapper = document.querySelector('.slides-wrapper');
-    const slides = document.querySelectorAll('.slide');
-    const totalSlides = slides.length;
-
-    if (totalSlides <= visibleSlides) {
-        return;
-    }
-
-    currentIndex += direction;
-    if (currentIndex < 0) {
-        currentIndex = 0;
-    } else if (currentIndex > totalSlides - visibleSlides) {
-        currentIndex = totalSlides - visibleSlides;
-    }
-    const offset = currentIndex * (100 / visibleSlides);
-    slidesWrapper.style.transform = `translateX(-${offset}%)`;
-}*/
 
 // 달력 및 예약 기능 -----------------------------------------
 function renderCalendar(month) {
