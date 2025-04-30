@@ -12,7 +12,7 @@
 	<jsp:include page="../layout/header.jsp"/>
 	
 	<div class="container">
-        <div class="page-header" data-rest-no="${rest_no}">
+        <div class="page-header" data-rest_no="${rest_no}">
         	<!-- 이미지 -->
             <div class="slideshow-container">
                 <div class="slides-wrapper"></div>
@@ -28,13 +28,23 @@
 			        </table>
 			    </div>
             </div>
-            <div class="store-reserve">
-            	<button type="button" class="btn btn-fir" id="reservationBtn">예약</button>
-            </div>
         </div>
             
         <div class="panel-body">
-            <div class="store-COMMENT">COMMENT</div>
+        	<div class="comment-image-container">
+        		<div class="image-wrapper"></div>
+        		
+			</div>
+        	<div>
+	            <div class="store-reserve">
+	            	<button type="button" class="btn btn-fir" id="reservationBtn">예약</button>
+	            </div>
+	            <!-- 더보기 버튼 (기본적으로 숨김) -->
+ 			    <button class="more-btn" style="display: none;">더보기</button>
+	            <div>
+	            	<p class="store-COMMENT">COMMENT</p>
+	            </div>
+        	</div>
         </div>
         
         <div class="panel-footer">
@@ -91,6 +101,12 @@
         </div>
         <div id="login-data" data-mem_no="${member.mem_no != null ? member.mem_no : '0'}" data-mem_name="${member.mem_name != null ? member.mem_name : ''}"></div>
     </div>
+    <!-- 모달 창 -->
+	<div class="modal2" style="display: none;">
+	  <div class="modal-content2">
+	    <div class="modal-image-container"></div>
+	  </div>
+	</div>
     
 	<!-- 모달 창 (더보기) -->
 	<div class="modal_view" id="viewModal">
