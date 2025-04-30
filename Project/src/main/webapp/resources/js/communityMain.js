@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const minorCategoryButtonsContainer = document.querySelector('.minor-category-buttons');
     const communityTopArea = document.querySelector('.community-top-area');
     const searchButton = document.querySelector('.community-search-inline .search-area button');
+    var popup = document.getElementById('popup');
+    var closeBtn = document.getElementById('popup-close');
 
     // 대분류 버튼 클릭 이벤트 처리
     majorCategoryButtons.forEach(button => {
@@ -71,4 +73,14 @@ document.addEventListener('DOMContentLoaded', function() {
     //     console.log('게시글 목록 업데이트 요청:', major, minor);
     //     // 서버에 데이터를 요청하고 응답을 받아 post-list 영역을 업데이트하는 로직 구현
     // }
+    
+    // 팝업 표시 (예시: 페이지 로드 후 1초 뒤에 표시)
+    setTimeout(function() {
+        popup.style.display = 'block'; // 'flex' 대신 'block' 사용
+    }, 1000);
+
+    // 팝업 닫기
+    closeBtn.addEventListener('click', function() {
+        popup.style.display = 'none';
+    });
 });
