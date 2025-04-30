@@ -36,5 +36,4 @@ public interface MemberMapper {
 	
 	MemberVO loginProcess(@Param("mem_id") String mem_id);
 	
-	List<MemberVO> selectRandomFriends(@Param("count") int count);
 }
