@@ -124,14 +124,13 @@ function showMyLocation(places) {
 	}
 }
 //테스트중
-/*function getSearch() {
+function getSearch() {
     const searchKeyword = sessionStorage.getItem('search');
     if (searchKeyword) {
     	// 스페이스바로 검색어 분리
-        const keywords = searchKeyword.trim().split(/\s+/);
-        const encodedKeywords = keywords.map(keyword => encodeURIComponent(keyword)).join(',');
-        const params = new URLSearchParams();
-        params.append('keywords', encodedKeywords);
+    	const keywords = searchKeyword.trim().split(/\s+/);
+    	const params = new URLSearchParams();
+    	params.append('keywords', keywords.join(','));
 
         fetch(`/search/getSearch?${params.toString()}`)
             .then(response => response.json())
@@ -143,18 +142,6 @@ function showMyLocation(places) {
                 console.error('가게 목록을 불러오는데 실패했습니다.', error);
             });
     }
-}*/
-function getSearch() {
-	const searchKeyword = sessionStorage.getItem('search');
-	fetch(`/search/getSearch?searchKeyword=${searchKeyword}`) //컨트롤러에 session에 저장된 keyword 값 전달
-	.then(response => response.json())
-	.then(places => {
-		console.log(places);
-		showMyLocation(places);  // places를 넘겨줌
-	})
-	.catch(error => {
-		console.error('가게 목록을 불러오는데 실패했습니다.', error);
-	});
 }
 
 function displayMarker(locPosition, message, map) {

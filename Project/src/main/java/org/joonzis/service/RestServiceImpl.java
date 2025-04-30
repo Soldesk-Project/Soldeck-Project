@@ -118,12 +118,7 @@ public class RestServiceImpl implements RestService{
 	}
 	
 	@Override
-	public List<RestVO> getSearch(String searchKeyword) {
-        return mapper.getSearch(searchKeyword);
-	}
-	// 테스트중
-	@Override
-	public List<RestVO> getSearch2(List<String> keywords) {
-		return mapper.getSearch2(keywords);
+	public List<RestVO> getSearch(List<String> keywords) {
+		return mapper.getSearch(keywords);
 	}
 }

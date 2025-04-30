@@ -39,8 +39,7 @@ public interface RestMapper {
 	public List<RestVO> getTest();
 	
 	// 맵 특정 가게 검색
-	public List<RestVO> getSearch(String searchKeyword);
-	// 테스트
-	public List<RestVO> getSearch2(List<String> keywords);
+	public List<RestVO> getSearch(@Param("keywords") List<String> keywords);
+
 
 }

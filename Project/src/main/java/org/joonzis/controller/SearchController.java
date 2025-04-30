@@ -1,5 +1,6 @@
 package org.joonzis.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -185,27 +186,16 @@ public class SearchController {
 	// 현재 위치 기준 식당 검색 데이터 가져오기
 	@GetMapping(value = "/getSearch", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<List<RestVO>> getSearch(@RequestParam("searchKeyword") String searchKeyword) {
-        List<RestVO> list = service.getSearch(searchKeyword);
-        list.forEach(rest -> {
-            if (rest.getRest_img_name() == null || rest.getRest_img_name().isEmpty()) {
-                rest.setRest_img_name("/resources/images/noImage.png");
-            }
-        });
-        return new ResponseEntity<>(list, HttpStatus.OK);
-	}
-	// 테스트중
-	@GetMapping(value = "/getSearch2", produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
 	public ResponseEntity<List<RestVO>> getSearch2(
-	        @RequestParam(value = "keywords", required = false, defaultValue = "") String keywords) {
+	        @RequestParam(value = "keywords", required = false, defaultValue = "") String keywords) throws UnsupportedEncodingException {
 	    try {
 	        // 디코딩
 	        String decodedKeywords = URLDecoder.decode(keywords, StandardCharsets.UTF_8.toString());
 	        List<String> keywordList = Arrays.asList(decodedKeywords.split(","));
+//	        List<String> keywordList = Arrays.asList(keywords.split(","));
 	        log.info("Search keywords: " + keywordList);
 
-	        List<RestVO> list = service.getSearch2(keywordList);
+	        List<RestVO> list = service.getSearch(keywordList);
 	        list.forEach(rest -> {
 	            if (rest.getRest_img_name() == null || rest.getRest_img_name().isEmpty()) {
 	                rest.setRest_img_name("/resources/images/noImage.png");
