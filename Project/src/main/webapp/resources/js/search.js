@@ -1,8 +1,8 @@
-// CSS 파일 추가
 const CSS_FILE_PATH = '/resources/css/search.css';
-let linkEle = document.createElement('link');
-linkEle.rel = 'stylesheet';
-linkEle.href = CSS_FILE_PATH;
+const linkEle = Object.assign(document.createElement('link'), {
+    rel: 'stylesheet',
+    href: CSS_FILE_PATH
+});
 document.head.appendChild(linkEle);
 
 let selectedRegion = '';

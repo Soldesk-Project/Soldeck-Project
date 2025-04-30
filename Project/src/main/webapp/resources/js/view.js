@@ -9,7 +9,6 @@ document.head.appendChild(linkEle);
 const login_data = document.getElementById('login-data');
 const initialmem_no = login_data.dataset.mem_no || '';
 let mem_no = initialmem_no;
-console.log(mem_no);
 let restNo = null;
 let currentIndex = 0;
 const visibleSlides = 4;
@@ -34,6 +33,13 @@ const privateFavoriteBtn = document.getElementById('privateFavoriteBtn');
 const closeFavoriteModalBtn = document.getElementById('closeFavoriteModalBtn');
 let favoriteBtnElement = null;
 
+const imageWrapper = document.querySelector('.image-wrapper');
+const images = imageWrapper.querySelectorAll('.image');
+const panelbody = document.querySelector('.panel-body');
+const moreBtn = panelbody.querySelector('.more-btn');
+const modal = document.querySelector('.modal2');
+const modalImageContainer = modal.querySelector('.modal-image-container');
+const closeBtn = modal.querySelector('.close-btn');
 //JSP에서 시간 슬롯 가져오기
 const timeButtons = document.querySelectorAll('.time-options .time-btn');
 const timeSlots = Array.from(timeButtons).map(button => button.textContent.trim());
@@ -59,14 +65,21 @@ function updateStars(rating) {
         }
     });
 }
-
 // 초기화 및 이벤트 리스너 설정
 document.addEventListener("DOMContentLoaded", function () {
+	showCommentsImage();
+
+	  // 이미지 더보기 모달 외부 클릭 시 닫기
+	  modal.addEventListener('click', (e) => {
+	    if (e.target === modal) {
+	      modal.style.display = 'none';
+	    }
+	  });
+	
     // page-header에서 restNo 가져오기
     const pageHeader = document.querySelector(".page-header");
     if (pageHeader) {
-        restNo = pageHeader.dataset.restNo;
-        //console.log("Rest No: ", restNo);
+        restNo = pageHeader.dataset.rest_no;
     } else {
         console.error("page-header 요소를 찾을 수 없습니다.");
         restNo = null;
@@ -234,6 +247,7 @@ function fetchStoreDetails() {
         showViewList();
         fetchComments();
         showAvgRate();
+        showCommentsImage();
     });
 }
 
@@ -393,10 +407,75 @@ function initializeSlides() {
         return;
     }
 
-    slidesWrapper.style.transform = `translateX(0%)`;
+    // 슬라이드 복제: 무한 루프를 위해 첫 4개와 마지막 4개를 추가
+    const cloneCount = visibleSlides;
+    for (let i = 0; i < cloneCount; i++) {
+        const cloneFirst = slides[i].cloneNode(true);
+        slidesWrapper.appendChild(cloneFirst);
+    }
+    for (let i = totalSlides - cloneCount; i < totalSlides; i++) {
+        const cloneLast = slides[i].cloneNode(true);
+        slidesWrapper.insertBefore(cloneLast, slides[0]);
+    }
+
+    // 초기 위치 설정: 복제된 마지막 슬라이드에서 시작
+    currentIndex = cloneCount; // 복제된 마지막 슬라이드 위치
+    const offset = currentIndex * (100 / visibleSlides);
+    slidesWrapper.style.transform = `translateX(-${offset}%)`;
+    slidesWrapper.style.transition = 'none'; // 초기 위치 설정 시 애니메이션 없음
+    setTimeout(() => {
+        slidesWrapper.style.transition = 'transform 0.5s ease-in-out';
+    }, 0);
 }
 
 function moveSlide(direction) {
+    const slidesWrapper = document.querySelector('.slides-wrapper');
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length - 2 * visibleSlides; // 원본 슬라이드 수
+    const totalWithClones = slides.length;
+
+    if (totalSlides <= visibleSlides) {
+        return;
+    }
+
+    currentIndex += direction * visibleSlides; // 4개씩 이동
+
+    // 무한 루프 처리
+    if (currentIndex >= totalWithClones - visibleSlides) {
+        currentIndex = visibleSlides; // 복제된 마지막 슬라이드 위치로
+        slidesWrapper.style.transition = 'none';
+        const offset = currentIndex * (100 / visibleSlides);
+        slidesWrapper.style.transform = `translateX(-${offset}%)`;
+        setTimeout(() => {
+            slidesWrapper.style.transition = 'transform 0.5s ease-in-out';
+        }, 0);
+    } else if (currentIndex < visibleSlides) {
+        currentIndex = totalWithClones - 2 * visibleSlides; // 복제된 첫 슬라이드 직전
+        slidesWrapper.style.transition = 'none';
+        const offset = currentIndex * (100 / visibleSlides);
+        slidesWrapper.style.transform = `translateX(-${offset}%)`;
+        setTimeout(() => {
+            slidesWrapper.style.transition = 'transform 0.5s ease-in-out';
+        }, 0);
+    } else {
+        const offset = currentIndex * (100 / visibleSlides);
+        slidesWrapper.style.transform = `translateX(-${offset}%)`;
+    }
+}
+/*function initializeSlides() {
+    const slidesWrapper = document.querySelector('.slides-wrapper');
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+
+    if (totalSlides === 0) {
+        slidesWrapper.innerHTML = '<div class="slide">관련 가게가 없습니다.</div>';
+        return;
+    }
+
+    slidesWrapper.style.transform = `translateX(0%)`;
+}*/
+
+/*function moveSlide(direction) {
     const slidesWrapper = document.querySelector('.slides-wrapper');
     const slides = document.querySelectorAll('.slide');
     const totalSlides = slides.length;
@@ -413,10 +492,76 @@ function moveSlide(direction) {
     }
     const offset = currentIndex * (100 / visibleSlides);
     slidesWrapper.style.transform = `translateX(-${offset}%)`;
-}
+}*/
 
 // 달력 및 예약 기능 -----------------------------------------
 function renderCalendar(month) {
+    if (!calendarDays) return;
+    calendarDays.innerHTML = '';
+
+    const year = new Date().getFullYear();
+    const daysInMonth = new Date(year, month, 0).getDate();
+    const firstDay = new Date(year, month - 1, 1).getDay();
+    const prevMonth = month === 1 ? 12 : month - 1;
+    const prevMonthYear = month === 1 ? year - 1 : year;
+    const daysInPrevMonth = new Date(prevMonthYear, prevMonth, 0).getDate();
+    const prevMonthStart = daysInPrevMonth - firstDay + 1;
+
+    const today = new Date();
+    const todayDate = today.getDate();
+    const todayMonth = today.getMonth() + 1; // JavaScript 월은 0부터 시작
+    const todayYear = today.getFullYear();
+
+    // 이전 달의 날짜 채우기
+    for (let i = 0; i < firstDay; i++) {
+        const day = document.createElement('div');
+        day.classList.add('day', 'disabled');
+        day.textContent = prevMonthStart + i;
+        calendarDays.appendChild(day);
+    }
+
+    // 현재 달의 날짜 채우기
+    for (let i = 1; i <= daysInMonth; i++) {
+        const day = document.createElement('div');
+        day.classList.add('day');
+        day.textContent = i;
+
+        const currentDate = new Date(year, month - 1, i);
+        if (currentDate < today.setHours(0, 0, 0, 0)) {
+            day.classList.add('disabled');
+        } else {
+            day.addEventListener('click', () => {
+                const days = document.querySelectorAll('.day:not(.disabled)');
+                days.forEach(d => d.classList.remove('selected'));
+                day.classList.add('selected');
+                selectedDate = day.textContent;
+                const resDate = `2025-${month}-${selectedDate}`;
+                updateTimeSlots(restNo, resDate);
+            });
+
+            // 오늘 날짜가 현재 월에 있고, 해당 날짜라면 선택 상태로 설정
+            if (year === todayYear && month === todayMonth && i === todayDate) {
+                day.classList.add('selected');
+                selectedDate = i.toString();
+                const resDate = `2025-${month}-${selectedDate}`;
+                updateTimeSlots(restNo, resDate); // 시간 슬롯 즉시 업데이트
+            }
+        }
+
+        calendarDays.appendChild(day);
+    }
+
+    // 남은 셀을 다음 달의 날짜로 채워 6줄(42셀) 완성
+    const totalDays = firstDay + daysInMonth;
+    const remainingCells = 42 - totalDays;
+    for (let i = 1; i <= remainingCells; i++) {
+        const day = document.createElement('div');
+        day.classList.add('day', 'disabled');
+        day.textContent = i;
+        calendarDays.appendChild(day);
+    }
+}
+/*function renderCalendar(month) {
     if (!calendarDays) return;
     calendarDays.innerHTML = '';
 
@@ -466,7 +611,7 @@ function renderCalendar(month) {
         day.textContent = i;
         calendarDays.appendChild(day);
     }
-}
+}*/
 
 function resetSelections() {
     selectedDate = null;
@@ -640,6 +785,70 @@ function getComments(callback) {
     });
 }
 
+// 코멘트 이미지들
+function showCommentsImage() {
+    const imageUL = document.querySelector(".image-wrapper");
+    if (!imageUL) {
+        console.error('이미지 컨테이너(.image-wrapper)를 찾을 수 없습니다.');
+        return;
+    }
+
+    getComments(data => {
+        const seenComNos = new Set();
+        let msg = '';
+
+        data.forEach(comment => {
+            // 중복 코멘트 제외
+            if (seenComNos.has(comment.com_no)) {
+                return;
+            }
+            seenComNos.add(comment.com_no);
+
+            // 첨부 파일 처리
+            const attachList = comment.com_attachList || [];
+            if (attachList.length === 0) {
+                return;
+            }
+
+            // 이미지 하나당 .image 생성
+            attachList.forEach(attach => {
+                const fileName = `${attach.att_uuid}_${attach.att_name}`;
+                const imageUrl = `${attach.att_path}/${encodeURIComponent(fileName)}`;
+                msg += `
+                    <div class="image">
+                        <div class="attachment">
+                            <img src="${imageUrl}" alt="${attach.att_name}" class="comment-image-show">
+                        </div>
+                    </div>
+                `;
+            });
+        });
+
+        imageUL.innerHTML = msg;
+        
+        // ✅ 이미지 렌더링 후 처리
+        const images = imageUL.querySelectorAll('.image');
+        const moreBtn = document.querySelector('.more-btn');
+        console.log("이미지 수 (렌더 후):", images.length);
+        if (images.length > 4) {
+            moreBtn.style.display = 'block';
+        }
+     // 더보기 버튼 클릭 시 모달 열기
+  	  moreBtn.addEventListener('click', () => {
+  	    	// 모달에 이미지 추가
+  	    	modalImageContainer.innerHTML = '';
+  	    	images.forEach(image => {
+  	    		const imgElement = image.querySelector('img').cloneNode(true);
+  	    		const imageDiv = document.createElement('div');
+  	    		imageDiv.classList.add('image');
+  	    		imageDiv.appendChild(imgElement);
+  	    		modalImageContainer.appendChild(imageDiv);
+  	    	});
+  	    	modal.style.display = 'flex';
+  	    });
+    });
+}
+
 // 코멘트 삭제
 function handleCommentDelete(e) {
     if (e.target.classList.contains('comment-delete-btn')) {
@@ -690,6 +899,7 @@ function handleCommentDelete(e) {
             alert('코멘트가 삭제되었습니다.');
             fetchComments();
             showAvgRate();
+            showCommentsImage();
         })
         .catch(err => {
             e.target.disabled = false;
@@ -762,6 +972,7 @@ function uploadComment() {
         console.log("Comment uploaded:", data);
         fetchComments();
         showAvgRate();
+        showCommentsImage();
         commentInput.value = '';
         ratingValue = 0;
         updateStars(0);
@@ -778,8 +989,7 @@ function uploadComment() {
 // 코멘트 날짜 포맷팅 함수
 function formatDate(dateString) {
     if (!dateString) return '날짜 없음';
-    const date = new Date(dateString);
-    return date.toISOString().split('T')[0];
+    return new Date(dateString).toISOString().split('T')[0];
 }
 
 // 평점 평균 관련---------------------------
@@ -836,10 +1046,6 @@ function showAvgRate() {
         msg +=  `</div>`;
         msg += `<div class="store-item">`;
         msg +=      `<span class="name">40대</span>`;
-        msg +=      `<span class="rating">로딩 중...</span>`;
-        msg += `</div>`;
-        msg += `<div class="store-item">`;
-        msg +=      `<span class="name">친구들 평점</span>`;
         msg +=      `<span class="rating">로딩 중...</span>`;
         msg += `</div>`;
         avgRate.innerHTML = msg;
