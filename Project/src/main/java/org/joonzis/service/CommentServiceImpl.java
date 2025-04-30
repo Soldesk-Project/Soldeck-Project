@@ -130,7 +130,11 @@ public class CommentServiceImpl implements CommentService {
 	    return comments;
 	}
 	
-	
+	@Override
+	public List<CommentVO> getAgeAvgRate(int rest_no) {
+		log.info("getAgeAvgRate... " + rest_no);
+		return mapper.getAgeAvgRate(rest_no);
+	}
 	
 	
 	

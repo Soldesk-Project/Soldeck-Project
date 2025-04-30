@@ -18,6 +18,7 @@ public class CommentVO {
 	private int com_no, mem_no, rest_no, com_rate;
 	private String com_con;
 	private Date com_date;
+	private double age_group, avg_rating;
 	
 	private List<AttachVO> com_attachList;
 	private MemberVO com_memberData;

@@ -90,4 +90,11 @@ public class CommentController {
     	log.info("getAvgRate..." + rest_no);
     	return new ResponseEntity<>(service.getAvgRate(rest_no), HttpStatus.OK);
     }
+    
+    // 코멘트 평균 평점
+    @GetMapping(value = "/ageRate/{rest_no}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<CommentVO>> getAgeAvgRate(@PathVariable("rest_no") int rest_no) {
+    	log.info("getAgeAvgRate..." + rest_no);
+    	return new ResponseEntity<List<CommentVO>>(service.getAgeAvgRate(rest_no), HttpStatus.OK);
+    }
 }

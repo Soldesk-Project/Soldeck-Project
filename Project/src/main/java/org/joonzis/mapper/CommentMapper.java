@@ -23,4 +23,7 @@ public interface CommentMapper {
     public double getAvgRate(int rest_no);
     
     public List<CommentVO> getCommentList(@Param("mem_no") int mem_no); 
+    
+    // 코멘트 연령별 평균 평점
+    public List<CommentVO> getAgeAvgRate(int rest_no);
 }

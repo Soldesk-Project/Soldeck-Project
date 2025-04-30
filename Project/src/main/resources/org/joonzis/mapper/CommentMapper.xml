@@ -88,7 +88,45 @@
 	    </collection>
 	</resultMap>
 	
-	
+	<!-- 코멘트 연령별 평균 평점 -->
+	<select id="getAgeAvgRate" resultType="org.joonzis.domain.CommentVO">
+		SELECT 
+    FLOOR((
+        EXTRACT(YEAR FROM SYSDATE) - 
+        EXTRACT(YEAR FROM 
+            TO_DATE(
+                CASE 
+                    WHEN LENGTH(MEM_BIRTH) = 10 AND REGEXP_LIKE(MEM_BIRTH, '^\d{4}-\d{2}-\d{2}$') 
+                        THEN MEM_BIRTH
+                    WHEN LENGTH(MEM_BIRTH) >= 8 AND REGEXP_LIKE(MEM_BIRTH, '^\d{8,}$') 
+                        THEN SUBSTR(MEM_BIRTH, 1, 4) || '-' || SUBSTR(MEM_BIRTH, 5, 2) || '-' || SUBSTR(MEM_BIRTH, 7, 2)
+                    ELSE '2000-01-01' -- 유효하지 않은 형식은 기본값으로 대체
+                END, 
+                'YYYY-MM-DD'
+            )
+        )
+    ) / 10) * 10 AS age_group,
+    ROUND(AVG(c.COM_RATE), 1) AS avg_rating
+FROM "COMMENT" c
+JOIN "MEMBER" m ON c.MEM_NO = m.MEM_NO
+WHERE c.REST_NO = #{rest_no}
+GROUP BY FLOOR((
+    EXTRACT(YEAR FROM SYSDATE) - 
+    EXTRACT(YEAR FROM 
+        TO_DATE(
+            CASE 
+                WHEN LENGTH(MEM_BIRTH) = 10 AND REGEXP_LIKE(MEM_BIRTH, '^\d{4}-\d{2}-\d{2}$') 
+                    THEN MEM_BIRTH
+                WHEN LENGTH(MEM_BIRTH) >= 8 AND REGEXP_LIKE(MEM_BIRTH, '^\d{8,}$') 
+                    THEN SUBSTR(MEM_BIRTH, 1, 4) || '-' || SUBSTR(MEM_BIRTH, 5, 2) || '-' || SUBSTR(MEM_BIRTH, 7, 2)
+                ELSE '2000-01-01'
+            END, 
+            'YYYY-MM-DD'
+        )
+    )
+) / 10) * 10
+ORDER BY age_group
+	</select>
 	
 	
 </mapper>
