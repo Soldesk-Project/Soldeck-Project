@@ -20,4 +20,7 @@ public interface CommentService {
     
     // 내 댓글 조회
     public List<CommentVO> getCommentList(int mem_no);
+    
+    // 코멘트 연령별 평균 평점
+    public List<CommentVO> getAgeAvgRate(int rest_no);
 }

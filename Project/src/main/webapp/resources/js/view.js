@@ -989,8 +989,56 @@ function getAvgRate(callback) {
     });
 }
 
+function getAgeAvgRate(callback) {
+    // 서버에서 연령대별 평점 데이터를 가져오는 API 호출
+    fetch(`/comment/ageRate/${restNo}`, {
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('연령대별 평점 조회 실패');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // 데이터 예: [{ ageGroup: 10, avgRating: 4.5 }, { ageGroup: 20, avgRating: 3.8 }, ...]
+        let ageAvgHtml = '';
+        const ageGroups = [10, 20, 30, 40];
+
+        // 연령대별 HTML 생성
+        ageGroups.forEach(age => {
+            const ratingData = data.find(item => item.age_group === age);
+            const avgRating = ratingData ? ratingData.avg_rating.toFixed(1) : '0.0';
+            ageAvgHtml += `
+                <div class="store-item">
+                    <span class="name">${age}대</span>
+                    <span class="rating">${avgRating}</span>
+                </div>`;
+        });
+        console.log(ageAvgHtml);
+        callback(ageAvgHtml);
+    })
+    .catch(err => {
+        console.error('연령대별 평점 조회 실패:', err.message);
+        // 에러 시 기본 HTML 반환
+        let ageAvgHtml = '';
+        const ageGroups = [10, 20, 30, 40];
+        ageGroups.forEach(age => {
+            ageAvgHtml += `
+                <div class="store-item">
+                    <span class="name">${age}대</span>
+                    <span class="rating">0.0</span>
+                </div>`;
+        });
+        callback(ageAvgHtml);
+    });
+}
+
 function showAvgRate() {
     const avgRate = document.querySelector(".store-list");
+    
     getAvgRate(jsonArray => {
         let msg = '';
         msg += `<div class="store-item">`;
@@ -1001,23 +1049,13 @@ function showAvgRate() {
         msg += `<div class="store-item" id="age_rate">`;
         msg += `<span class="name">&lt;연령별 평점&gt;</span>`;
         msg += `</div>`;
-        msg += `<div class="store-item">`;
-        msg +=  `<span class="name">10대</span>`;
-        msg +=  `<span class="rating">로딩 중...</span>`;
-        msg += `</div>`;
-        msg += `<div class="store-item">`;
-        msg +=      `<span class="name">20대</span>`;
-        msg +=      `<span class="rating">로딩 중...</span>`;
-        msg +=  `</div>`;
-        msg += `<div class="store-item">`;
-        msg +=      `<span class="name">30대</span>`;
-        msg +=      `<span class="rating">로딩 중...</span>`;
-        msg +=  `</div>`;
-        msg += `<div class="store-item">`;
-        msg +=      `<span class="name">40대</span>`;
-        msg +=      `<span class="rating">로딩 중...</span>`;
-        msg += `</div>`;
-        avgRate.innerHTML = msg;
+        
+     // 연령대별 평점 가져오기
+        getAgeAvgRate(ageAvgHtml => {
+            // 연령대별 평점을 총 평점 아래에 추가
+            msg += ageAvgHtml;
+            avgRate.innerHTML = msg;
+        });
     });
 }
 
