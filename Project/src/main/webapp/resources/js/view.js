@@ -158,7 +158,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 alert('날짜와 시간을 선택해주세요.');
                 return;
             }
-//            const resDate = `2025-<span class="math-inline">\{selectedMonth\}\-</span>{selectedDate}`; // 예: "2025-4-24"
             const resDate = `2025-${selectedMonth}-${selectedDate}`; // 예: "2025-4-24"
             // resDate 형식 검증
             if (!/^\d{4}-\d{1,2}-\d{1,2}$/.test(resDate)) {
@@ -591,7 +590,6 @@ function resetSelections() {
 
 //시간 슬롯 비활성화 함수
 function updateTimeSlots(restNo, resDate) {
-//	fetch(`/search/reservations/times?rest_no=<span class="math-inline">\{restNo\}&res\_date\=</span>{resDate}`, {
     fetch(`/search/reservations/times?rest_no=${restNo}&res_date=${resDate}`, {
         method: 'GET',
         headers: {
@@ -1049,9 +1047,15 @@ function showAvgRate() {
 }
 
 function handleFavoriteClick() {
-    console.log("handleFavoriteClick isFavorite:", window.isFavorite); // 전역 변수 직접 참조
+    console.log("handleFavoriteClick isFavorite:", window.isFavorite);
     const favoriteBtnElement = document.getElementById('favoriteBtn');
     const favoriteModal = document.getElementById('favoriteModal');
+
+    if (mem_no == 0) {
+        alert("즐겨찾기 기능은 로그인 후 가능합니다.")
+        window.location.href = '/login/loginPage';
+        return;
+    }
 
     if (window.isFavorite) {
         removeFavorite();
