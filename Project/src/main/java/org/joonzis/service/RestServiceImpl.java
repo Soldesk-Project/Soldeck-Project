@@ -116,4 +116,14 @@ public class RestServiceImpl implements RestService{
 	public List<RestVO> getTest() {
 		return mapper.getTest();
 	}
+	
+	@Override
+	public List<RestVO> getSearch(String searchKeyword) {
+        return mapper.getSearch(searchKeyword);
+	}
+	// 테스트중
+	@Override
+	public List<RestVO> getSearch2(List<String> keywords) {
+		return mapper.getSearch2(keywords);
+	}
 }

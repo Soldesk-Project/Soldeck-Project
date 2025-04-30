@@ -123,6 +123,7 @@ document.addEventListener("DOMContentLoaded", function() {
             let keyword = btn.getAttribute("value"); // 한식, 중식 등
             console.log("클릭된 키워드:", keyword);
             sessionStorage.setItem('keyword', keyword);
+            sessionStorage.setItem('actionType', 'category'); // 행동 유형 저장
             location.href = "../search/map"; // 그냥 이동
         });
     });

@@ -193,4 +193,74 @@
 	<select id="getTest" resultType="org.joonzis.domain.RestVO">
 		SELECT * FROM restaurant
 	</select>
+	
+	<select id="getSearch" resultType="org.joonzis.domain.RestVO" parameterType="String">
+	    SELECT 
+	        r.REST_NO,
+	        r.REST_NAME,
+	        r.REST_PHONE,
+	        r.REST_ADR,
+	        r.REST_BH,
+	        r.REST_LOC,
+	        r.REST_CATE,
+	        r.latitude,
+	        r.longitude,
+	        i.REST_IMG_NAME,
+	        i.REST_IMG_NO
+	    FROM 
+	        RESTAURANT r
+	    LEFT JOIN (
+	        SELECT 
+	            REST_NO,
+	            REST_IMG_NAME,
+	            REST_IMG_NO,
+	            ROW_NUMBER() OVER (PARTITION BY REST_NO ORDER BY REST_IMG_NO) AS rn
+	        FROM 
+	            REST_IMG
+	    ) i ON r.REST_NO = i.REST_NO AND i.rn = 1
+	    <where>
+	        <if test="_parameter != null and _parameter != ''">
+	            AND (
+	                UPPER(r.rest_name) LIKE '%' || UPPER(#{_parameter}) || '%'
+	            )
+	        </if>
+	    </where>
+	</select>
+	<!-- 테스트 중 -->
+	<select id="getSearch2" resultType="org.joonzis.domain.RestVO" parameterType="list">
+    SELECT 
+        r.REST_NO,
+        r.REST_NAME,
+        r.REST_PHONE,
+        r.REST_ADR,
+        r.REST_BH,
+        r.REST_LOC,
+        r.REST_CATE,
+        r.latitude,
+        r.longitude,
+        i.REST_IMG_NAME,
+        i.REST_IMG_NO
+    FROM 
+        RESTAURANT r
+    LEFT JOIN (
+        SELECT 
+            REST_NO,
+            REST_IMG_NAME,
+            REST_IMG_NO,
+            ROW_NUMBER() OVER (PARTITION BY REST_NO ORDER BY REST_IMG_NO) AS rn
+        FROM 
+            REST_IMG
+    ) i ON r.REST_NO = i.REST_NO AND i.rn = 1
+    <where>
+        <if test="_parameter != null and _parameter.size() > 0">
+            <foreach collection="_parameter" item="keyword" open="(" close=")" separator=" OR ">
+                (
+                    UPPER(r.rest_name) LIKE '%' || UPPER(#{keyword}) || '%'
+                    OR UPPER(r.rest_loc) LIKE '%' || UPPER(#{keyword}) || '%'
+                    OR UPPER(r.rest_cate) LIKE '%' || UPPER(#{keyword}) || '%'
+                )
+            </foreach>
+        </if>
+    </where>
+</select>
 </mapper>

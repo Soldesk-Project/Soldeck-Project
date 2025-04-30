@@ -223,19 +223,10 @@ public class LoginController {
 	
     // 로그아웃 처리
 	@PostMapping("/logout")
-	public String logout(HttpSession session, @RequestParam(value = "redirectUrl", required = false) String redirectUrl) {
+	public String logout(HttpSession session) {
 	    if (session != null && session.getAttribute("loggedInUser") != null) {
 	        session.removeAttribute("loggedInUser"); // 세션에서 로그인 정보 제거
 	        session.invalidate(); // 세션 무효화
-	    }
-	    if (redirectUrl != null && !redirectUrl.isEmpty()) {
-	        try {
-	            redirectUrl = URLDecoder.decode(redirectUrl, StandardCharsets.UTF_8.toString());
-	            log.info("Decoded redirectUrl: " + redirectUrl);
-	            return "redirect:" + redirectUrl; // 로그아웃 후 원래 페이지로 리다이렉션
-	        } catch (Exception e) {
-	            log.error("Error decoding redirectUrl: " + e.getMessage());
-	        }
 	    }
 	    return "redirect:/"; // redirectUrl이 없으면 홈페이지로 리다이렉트
 	}

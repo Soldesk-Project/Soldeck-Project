@@ -31,7 +31,6 @@
     </c:if>
     <div class="nav-right1">
         <c:if test="${empty sessionScope.loggedInUser}">
-            <!-- <a href="/login/loginPage" id="login">로그인</a> -->
             <a href="javascript:void(0)" id="login">로그인</a>
         </c:if>
     </div>
@@ -46,8 +45,9 @@ function handleSearch(event) {
     
     if (headerSearchKeyword) {
         const encodedKeyword = encodeURIComponent(headerSearchKeyword);
-        const searchUrl = "/search/search?keyword=" + encodedKeyword;
-        window.location.href = searchUrl;
+        sessionStorage.setItem('search', encodedKeyword);
+        sessionStorage.setItem('actionType', 'search'); // 행동 유형 저장
+        window.location.href = "/search/map"; // 그냥 이동
     } else {
         console.log("검색어가 비어 있습니다.");
         alert("검색어를 입력하세요.");
@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 form.method = 'POST';
                 form.style.display = 'none';
                 
-             	// 현재 URL을 redirectUrl로 추가
+             // 현재 URL을 redirectUrl로 추가
                 const currentUrl = encodeURIComponent(window.location.href);
                 const redirectInput = document.createElement('input');
                 redirectInput.type = 'hidden';

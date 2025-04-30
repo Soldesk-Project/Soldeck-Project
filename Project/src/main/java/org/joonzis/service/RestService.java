@@ -34,5 +34,9 @@ public interface RestService {
     public boolean updateReserveMemo(int res_no, String res_memo);
     
     public List<RestVO> getTest();
-  
+    
+    // 맵 특정 가게 검색
+ 	public List<RestVO> getSearch(String searchKeyword);
+ 	// 테스트
+    public List<RestVO> getSearch2(List<String> keywords);
 }

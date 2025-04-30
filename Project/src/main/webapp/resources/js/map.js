@@ -36,6 +36,9 @@ function showMyLocation(places) {
 	
 	var markers = []; // 마커 저장 배열
 	
+	const sidebarBody = document.getElementById('sidebar-body');
+    sidebarBody.innerHTML = ''; // 기존 사이드바 항목 초기화
+	
 	var options = {
 			enableHighAccuracy: true,
 			timeout: 10000,
@@ -85,7 +88,6 @@ function showMyLocation(places) {
 					markers.push({ place, marker: placeMarker });
 	          
 					// 🔥 사이드바에 가게 추가
-					const sidebarBody = document.getElementById('sidebar-body');
 					const storeItem = document.createElement('div');
 					storeItem.className = 'store-item';
 					storeItem.innerHTML = ` 
@@ -98,16 +100,19 @@ function showMyLocation(places) {
 					sidebarBody.appendChild(storeItem);
 				}
 			});
-			// 사이드바에서 가게 이름 클릭 시 해당 마커로 이동
-			const storeNames = document.querySelectorAll('.store-name');
-			storeNames.forEach(function(storeName) {
-				storeName.addEventListener('click', function() {
-					var index = parseInt(storeName.getAttribute('data-index'));
-					var marker = markers[index];
-					var position = marker.marker.getPosition();
-					map.setCenter(position);  // 지도 중심 이동
-					marker.marker.setMap(map); // 해당 마커만 표시
-				});
+			// 사이드바에서 가게 이름 또는 사진 클릭 시 해당 마커로 이동
+			sidebarBody.addEventListener('click', function(event) {
+			    const target = event.target;
+			    // 클릭된 요소가 store-name 또는 store-thumbnail인지 확인
+			    if (target.classList.contains('store-name') || target.classList.contains('store-thumbnail')) {
+			        const storeItem = target.closest('.store-item'); // 부모 .store-item 찾기
+			        const storeName = storeItem.querySelector('.store-name'); // .store-name 요소 찾기
+			        const index = parseInt(storeName.getAttribute('data-index'));
+			        const marker = markers[index];
+			        const position = marker.marker.getPosition();
+			        map.setCenter(position); // 지도 중심 이동
+			        marker.marker.setMap(map); // 해당 마커만 표시
+			    }
 			});
 			
 		}, function(error) {
@@ -117,6 +122,39 @@ function showMyLocation(places) {
 	} else {
 		alert('브라우저가 Geolocation을 지원하지 않습니다.');
 	}
+}
+//테스트중
+/*function getSearch() {
+    const searchKeyword = sessionStorage.getItem('search');
+    if (searchKeyword) {
+    	// 스페이스바로 검색어 분리
+        const keywords = searchKeyword.trim().split(/\s+/);
+        const encodedKeywords = keywords.map(keyword => encodeURIComponent(keyword)).join(',');
+        const params = new URLSearchParams();
+        params.append('keywords', encodedKeywords);
+
+        fetch(`/search/getSearch?${params.toString()}`)
+            .then(response => response.json())
+            .then(places => {
+                console.log(places);
+                showMyLocation(places);
+            })
+            .catch(error => {
+                console.error('가게 목록을 불러오는데 실패했습니다.', error);
+            });
+    }
+}*/
+function getSearch() {
+	const searchKeyword = sessionStorage.getItem('search');
+	fetch(`/search/getSearch?searchKeyword=${searchKeyword}`) //컨트롤러에 session에 저장된 keyword 값 전달
+	.then(response => response.json())
+	.then(places => {
+		console.log(places);
+		showMyLocation(places);  // places를 넘겨줌
+	})
+	.catch(error => {
+		console.error('가게 목록을 불러오는데 실패했습니다.', error);
+	});
 }
 
 function displayMarker(locPosition, message, map) {
@@ -135,9 +173,21 @@ function displayMarker(locPosition, message, map) {
   map.setCenter(locPosition);
 }
 
-// 실행
-getPlacesAndShowMap();
+//실행 로직 수정
+document.addEventListener('DOMContentLoaded', function() {
+    const actionType = sessionStorage.getItem('actionType'); // 클릭 또는 검색 여부 확인
+    
+    if (actionType === 'category') {
+        getPlacesAndShowMap(); // 클릭으로 카테고리 기반 결과 표시
+    } else if (actionType === 'search') {
+        getSearch(); // 검색 키워드 기반 결과 표시
+    } else {
+        console.error('알 수 없는 행동 유형:', actionType);
+        // 기본 동작: 홈 페이지로 리다이렉션 또는 에러 페이지 표시
+        location.href = '/';
+    }
 
+});
 
 // 사이드바 스크립트
 // 화살표 클릭하면 사이드바 접고 펴기
