@@ -138,6 +138,7 @@ function displayMarker(locPosition, message, map) {
 // 실행
 getPlacesAndShowMap();
 
+
 // 사이드바 스크립트
 // 화살표 클릭하면 사이드바 접고 펴기
 const toggleArrow = document.getElementById('toggleArrow');

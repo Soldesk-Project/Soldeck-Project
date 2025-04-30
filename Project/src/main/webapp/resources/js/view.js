@@ -51,7 +51,6 @@ stars.forEach(star => {
     star.addEventListener('click', () => {
         ratingValue = parseInt(star.getAttribute('data-value'));
         updateStars(ratingValue);
-//      console.log('선택된 별점:', ratingValue); // 변환된 데이터 확인
     });
 });
 
@@ -88,7 +87,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // 중복된 store-details 요소 정리
     const storeDetailsElements = document.querySelectorAll('.store-details');
     if (storeDetailsElements.length > 1) {
-        console.warn('store-details 요소가 중복으로 발견되었습니다. 첫 번째 요소만 유지합니다.');
         for (let i = 1; i < storeDetailsElements.length; i++) {
             storeDetailsElements[i].remove();
         }
@@ -110,7 +108,6 @@ document.addEventListener("DOMContentLoaded", function () {
         viewModal.addEventListener('click', function (event) {
             if (event.target === viewModal) {
                 viewModal.style.display = 'none';
-//              console.log(1);
             }
         });
     }
@@ -161,7 +158,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 alert('날짜와 시간을 선택해주세요.');
                 return;
             }
-            const resDate = `2025-<span class="math-inline">\{selectedMonth\}\-</span>{selectedDate}`; // 예: "2025-4-24"
+//            const resDate = `2025-<span class="math-inline">\{selectedMonth\}\-</span>{selectedDate}`; // 예: "2025-4-24"
+            const resDate = `2025-${selectedMonth}-${selectedDate}`; // 예: "2025-4-24"
             // resDate 형식 검증
             if (!/^\d{4}-\d{1,2}-\d{1,2}$/.test(resDate)) {
                 alert('유효한 날짜 형식이 아닙니다.');
@@ -312,7 +310,6 @@ function get(callback) {
     }
 
     const url = `/search/view/${restNo}`;
-//  console.log("Fetching URL:", url);
     fetch(url, {
         headers: {
             'Accept': 'application/json'
@@ -325,7 +322,6 @@ function get(callback) {
         return response.json();
     })
     .then(data => {
-        console.log("View Fetch data:", data);
         callback(data || {});
     })
     .catch(err => {
@@ -387,7 +383,6 @@ function getList(callback) {
         return response.json();
     })
     .then(data => {
-        console.log("stores Fetch data:", data);
         callback(data || []);
     })
     .catch(err => {
@@ -596,7 +591,8 @@ function resetSelections() {
 
 //시간 슬롯 비활성화 함수
 function updateTimeSlots(restNo, resDate) {
-    fetch(`/search/reservations/times?rest_no=<span class="math-inline">\{restNo\}&res\_date\=</span>{resDate}`, {
+//	fetch(`/search/reservations/times?rest_no=<span class="math-inline">\{restNo\}&res\_date\=</span>{resDate}`, {
+    fetch(`/search/reservations/times?rest_no=${restNo}&res_date=${resDate}`, {
         method: 'GET',
         headers: {
             'Accept': 'application/json'
@@ -645,7 +641,6 @@ function fetchComments() {
     }
 
     getComments(data => {
-        console.log("Received comments data:", data); // 디버깅 로그
         if (!data || data.length === 0) {
             commentList.innerHTML = '<li><div class="chat-full">코멘트가 없습니다.</div></li>';
             return;
@@ -683,7 +678,7 @@ function fetchComments() {
                 });
                 attachHtml += '</div>';
             } else {
-                attachHtml = '<div class="comment-attachments">첨부 파일이 없습니다.</div>'; // 선택적 메시지
+                attachHtml = ''; // 선택적 메시지
             }
 
             // 프로필 이미지 처리
@@ -798,7 +793,6 @@ function showCommentsImage() {
         // ✅ 이미지 렌더링 후 처리
         const images = imageUL.querySelectorAll('.image');
         const moreBtn = document.querySelector('.more-btn');
-        console.log("이미지 수 (렌더 후):", images.length);
         if (images.length > 4) {
             moreBtn.style.display = 'block';
         }
@@ -881,7 +875,6 @@ function handleCommentDelete(e) {
 
 // 코멘트 등록
 function uploadComment() {
-    console.log("Before uploadComment, window.uploadedFiles:", window.uploadedFiles); // 디버깅 로그
     const commentInput = document.querySelector("#comment");
     if(mem_no == 0){
         alert("로그인을 해주세요.");
@@ -912,7 +905,6 @@ function uploadComment() {
         att_path: file.att_path,
         att_name: file.att_name
     }));
-    console.log("com_attachList:", attachList);
 
     const commentData = {
         rest_no: restNo,
@@ -921,7 +913,6 @@ function uploadComment() {
         com_rate: ratingValue,
         com_attachList: attachList
     };
-    console.log("commentData:", commentData);
 
     fetch('/comment/add', {
         method: 'POST',
@@ -938,7 +929,6 @@ function uploadComment() {
         return response.json();
     })
     .then(data => {
-        console.log("Comment uploaded:", data);
         fetchComments();
         showAvgRate();
         showCommentsImage();
@@ -1017,7 +1007,6 @@ function getAgeAvgRate(callback) {
                     <span class="rating">${avgRating}</span>
                 </div>`;
         });
-        console.log(ageAvgHtml);
         callback(ageAvgHtml);
     })
     .catch(err => {

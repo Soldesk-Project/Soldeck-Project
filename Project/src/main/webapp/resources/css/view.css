@@ -514,6 +514,7 @@ th, td{
     }
     .chat-footer p {
         margin: 10px;
+        white-space: pre-wrap;
     }
 .image-con {
   display: flex;

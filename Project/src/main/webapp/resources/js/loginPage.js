@@ -1,3 +1,23 @@
+document.addEventListener('DOMContentLoaded', function() {
+    // 아이디와 비밀번호 입력 필드에 Enter 키 이벤트 추가
+    const userIdInput = document.getElementById('userId');
+    const passwordInput = document.getElementById('password');
+
+    userIdInput.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter' || event.keyCode === 13) {
+            event.preventDefault(); // 기본 동작 방지
+            login(); // 로그인 함수 호출
+        }
+    });
+
+    passwordInput.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter' || event.keyCode === 13) {
+            event.preventDefault(); // 기본 동작 방지
+            login(); // 로그인 함수 호출
+        }
+    });
+});
+
 //각 버튼 클릭 이밴트
 document.querySelectorAll('button').forEach( btn => {
 	btn.addEventListener('click', e=> {
@@ -51,7 +71,7 @@ function login() {
         console.log(data);
         
         if (data === 'success') {
-        	location.href = '/'; // 로그인 성공 시 메인 페이지로 리다이렉트 (루트 경로 가정)
+        	location.href = `${redirectUrl}`; // 로그인 성공 시 메인 페이지로 리다이렉트 (루트 경로 가정)
         } else if (data === 'fail') {
         	alert(LOGIN_FAIL_MSG);
             return;
