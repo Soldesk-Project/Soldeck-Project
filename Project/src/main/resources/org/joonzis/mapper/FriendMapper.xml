@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.joonzis.mapper.FriendMapper">
+
+	<resultMap id="FriendWithMemberMap" type="org.joonzis.domain.FriendVO">
+	    <result property="mem_no" column="mem_no"/>
+	    <result property="friend_mem_no" column="friend_mem_no"/>
+	    <result property="fre_memo" column="fre_memo"/>
+	    
+	    <association property="friendMember" javaType="org.joonzis.domain.MemberVO">
+	        <result property="mem_no" column="friend_mem_no"/> <!-- 친구의 번호 -->
+	        <result property="mem_img" column="mem_img"/>
+	        <result property="mem_nick" column="mem_nick"/>
+	    </association>
+	</resultMap>
+	
+	<select id="getFriendList" parameterType="int" resultMap="FriendWithMemberMap">
+	    SELECT 
+	        f.mem_no,
+	        f.friend_mem_no,
+	        f.fre_memo,
+	        m.mem_img,
+	        m.mem_nick
+	    FROM friend f
+	    JOIN member m ON f.friend_mem_no = m.mem_no
+	    WHERE f.mem_no = #{mem_no}
+	</select>
+	
+	<delete id="removeFriend">
+		DELETE FROM friend
+		WHERE mem_no = #{mem_no}
+		AND friend_mem_no = #{friend_mem_no}
+	</delete>
+	
+	<select id="getRandomFriendList" parameterType="int" resultMap="FriendWithMemberMap">
+		SELECT 
+		    #{mem_no} AS mem_no,
+		    m.mem_no AS friend_mem_no,
+		    NULL AS fre_memo,        
+		    m.mem_img,
+		    m.mem_nick
+		FROM member m
+		WHERE m.mem_no != #{mem_no}
+		  AND m.mem_no NOT IN (
+		    SELECT friend_mem_no FROM friend WHERE mem_no = #{mem_no})
+		ORDER BY m.mem_no ASC
+	</select>
+	
+</mapper>
