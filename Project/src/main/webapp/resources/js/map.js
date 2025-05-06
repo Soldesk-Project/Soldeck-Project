@@ -25,6 +25,9 @@ function getPlacesAndShowMap() {
         });
 }
 
+// 다른 마커 클릭 시  기존 마커를 끄기 위한 변수
+let currentInfowindow = null;
+
 function showMyLocation(places) {
 	var mapContainer = document.getElementById('map');
 	var mapOption = {
@@ -46,6 +49,10 @@ function showMyLocation(places) {
 	};
 
 	if (navigator.geolocation) {
+		
+		const actionType = sessionStorage.getItem('actionType');
+	    const maxDistance = (actionType === 'search') ? Infinity : 2;
+
 		navigator.geolocation.getCurrentPosition(function(position) {
 			var myLat = 37.5054070438773; // 현재 위도
 			var myLon = 127.026682479708; // 현재 경도
@@ -67,7 +74,7 @@ function showMyLocation(places) {
 
 			// 정렬된 가게들 표시
 			places.forEach(function(place, index) {
-				if (place.distance <= 2) {  // 2km 이내만 표시
+				if (place.distance <= maxDistance) {  // 2km 이내만 표시
 					// 마커 추가
 					var placeMarker = new kakao.maps.Marker({
 						map: map,
@@ -76,16 +83,28 @@ function showMyLocation(places) {
 					});
 					
 					var placeInfowindow = new kakao.maps.InfoWindow({
-						content: `<div style="padding:5px;">${place.rest_name}</div>`,
-						removable: true
-					});
+						  content: `
+						    <div class="custom-infowindow">
+						      <div class="info-title">${place.rest_name}</div>
+						      <div class="info-address">${place.rest_adr}</div>
+						      <div class="info-distance">거리: ${place.distance.toFixed(2)}km</div>
+						      <button class="info-detail-btn" onclick="goToDetail(${place.rest_no})">상세보기</button>
+						    </div>
+						  `,
+						  removable: true
+						});
 					
 					kakao.maps.event.addListener(placeMarker, 'click', function() {
-						placeInfowindow.open(map, placeMarker);
+						if (currentInfowindow) {
+						    currentInfowindow.close();
+						  }
+
+						  placeInfowindow.open(map, placeMarker);
+						  currentInfowindow = placeInfowindow;
 					});
 					
 					// 마커를 배열에 저장
-					markers.push({ place, marker: placeMarker });
+					markers.push({ place, marker: placeMarker, infowindow: placeInfowindow });
 	          
 					// 🔥 사이드바에 가게 추가
 					const storeItem = document.createElement('div');
@@ -108,10 +127,20 @@ function showMyLocation(places) {
 			        const storeItem = target.closest('.store-item'); // 부모 .store-item 찾기
 			        const storeName = storeItem.querySelector('.store-name'); // .store-name 요소 찾기
 			        const index = parseInt(storeName.getAttribute('data-index'));
-			        const marker = markers[index];
-			        const position = marker.marker.getPosition();
-			        map.setCenter(position); // 지도 중심 이동
-			        marker.marker.setMap(map); // 해당 마커만 표시
+			        const { marker, infowindow } = markers[index];
+
+			        // 지도 이동
+			        const position = marker.getPosition();
+			        map.setCenter(position);
+			        
+			        // 기존 InfoWindow 닫기
+			        if (currentInfowindow) {
+			        	currentInfowindow.close();
+			        }
+			        
+			        // 새 InfoWindow 열기
+			        infowindow.open(map, marker);
+			        currentInfowindow = infowindow;
 			    }
 			});
 			
@@ -123,6 +152,7 @@ function showMyLocation(places) {
 		alert('브라우저가 Geolocation을 지원하지 않습니다.');
 	}
 }
+
 //테스트중
 function getSearch() {
     const searchKeyword = sessionStorage.getItem('search');
@@ -143,6 +173,12 @@ function getSearch() {
             });
     }
 }
+
+// 상세보기 페이지 이동
+function goToDetail(restNo) {
+	  window.location.href = `/search/view?rest_no=${restNo}`;
+	}
+
 
 function displayMarker(locPosition, message, map) {
   var marker = new kakao.maps.Marker({
