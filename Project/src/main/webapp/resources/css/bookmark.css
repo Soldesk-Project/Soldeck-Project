@@ -1,14 +1,14 @@
 /*------------------ body / main menu -------------------------*/
 body{
- -ms-overflow-style: none;
- }
+}
 ::-webkit-scrollbar {
   display: none;
 }
 .container{
 	width: 1200px;
-	height: 1500px;
+	height: 1200px;
 	margin: auto;
+	
 }
 .side-menu{
 	width: 230px;
@@ -16,36 +16,8 @@ body{
 	float: left;
 }
 .main-menu{
-	width: 80%;
+	width: 960px;
 	float: right;
-}
-.list-title{
-	width: 90%;
-  	height: 60px;
-  	/*border: 1px dashed;*/
-	border-radius: 20px;
-  	align-items: center;
-	display: flex;
-    color: #FF7D00;
-    
-}
-.list-title span{
-	font-size: 40px;
-	margin: auto;
-	align-items: center;
-}
-.list-content{
-	overflow: hidden;
-	width: 90%;
-	height: 600px; 
-  	/*border: 1px dashed;*/
-	border-radius: 20px;
-	margin: 15px 0;
-}
-.inner-content{
-	overflow: auto;
-	height: 100%;
-	background-color: #f0f0f0;
 }
 /*.inner-content::-webkit-scrollbar {
 	display:inline;
@@ -55,13 +27,66 @@ body{
     background:#FF7D00;
     border-radius: 10px;
 }*/
+.loc-btn{
+	display: flex;
+	justify-content: center;
+	margin: 30px;
+}
+.btn{
+	margin: 0px 10px;
+    border: 1px dashed #FF7D00;
+    border-radius: 15px;
+    width: 55px;
+    height: 35px;
+    background-color: white;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+.btn:hover, .btn.active{
+	background-color: #FF7D00;
+	color: white;
+}
+.bookmark-list{
+	display: flex;
+	justify-content: space-between;
+	height: 1100px;
+}
+.list-main{
+	width: 400px;
+}
+.list-title{
+	margin:10px;
+}
+.list-title span{
+	font-size: 30px;
+	margin: 10px;
+}
+.list-content{
+	overflow: hidden;
+}
+.inner-content{
+	overflow: auto;
+	
+	height: 1000px;
+}
+.view{
+	border: 1px solid gray;
+	border-radius: 15px;
+	margin-bottom: 20px;
+	display: flex;
+	background-color: #f0f0f0;
+}
+.view.active{
+	background-color: #FF7D00;
+}
 .view-img{
-	display: inline-block;
-	width: 150px;
-	height: 150px;
-	margin: 20px;
+	width: 130px;
+	height: 130px;
+	margin: 10px;
 	border-radius: 10px;
-	box-shadow: 3px 3px 8px 1px rgba(0, 0, 0, 0.2);
 	overflow: hidden;
 }
 .view-res-image{
@@ -70,27 +95,30 @@ body{
 	width: 100%;
 }
 .view-info{
-	float: right;
-	width: 630px;
-	height: 150px;
-	border-radius: 10px;
-	background-color: white;
-	box-shadow: 3px 3px 8px 1px rgba(0, 0, 0, 0.2);
-	margin: 20px 20px 20px 0;
+	width: 230px;
+    border: 1px dashed;
+    box-sizing: border-box;
+    border-radius: 10px;
+    height: 130px;
+    margin: auto;
+    background-color: white;
 }
 .info-text{
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	height: 128px;
 }
 .info-text input{
 	outline: none;
 	border: none;
 	font-size: 1.1rem;
-	display: inline-block;
 	margin: 5px;
 	height: 25px;
-	font-family: inherit;
+	max-width: 170px;
+}
+.res-cate{
+	width: 50px;
 }
 .info-text a{
 	text-decoration: none;
@@ -106,6 +134,9 @@ body{
 	font-size: 1.1rem;
 	padding: 0 4px;
 	box-sizing: content-box;
+}
+.res-cate{
+    width: 50px;
 }
 .bookmark{
 	float: right;
@@ -124,8 +155,36 @@ body{
 	color: #bbb;
 }
 .bookmark:hover {
+	transition: color 0.2s;
   	color: #FFD700;
 }
+.change-bookmark-button{
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.change-btn{
+	background-color: white;
+    color: gray;
+    width: 45px;
+    height: 45px;
+    font-size: 30px;
+    margin: 20px;
+    padding: 0;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+.change-btn:hover{
+	transition: color 0.2s;
+	color: black;
+}
+
+
+
+
+
 /*-----------------------모달-------------------------------*/
 .bookmark-check-modal{
     padding: 20px;
@@ -178,7 +237,6 @@ body{
 /*------------------ 사이드 메뉴 css -------------------------*/
 
 .side{
-    border: 1px dashed;
     list-style-type: none;
     position: fixed;
     width: 182px;

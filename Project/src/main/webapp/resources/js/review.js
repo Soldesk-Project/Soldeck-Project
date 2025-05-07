@@ -46,10 +46,10 @@ let comNo;
 document.querySelectorAll(".remove-btn").forEach(removeBtn => {
 	removeBtn.addEventListener('click',e=>{
 		e.preventDefault();
-		comNo = removeBtn.closest(".appraisal-div").querySelector("#memNo").value;
+		comNo = removeBtn.closest(".appraisal-div").querySelector(".com-no").value;
 	});
 })
-let memNo=document.querySelector("#memNo").value;
+let memNo=document.querySelector(".mem-no").value;
 //-----리뷰 삭제 함수---------------------------------------------------
 function removeReview() {
 	console.log(comNo);

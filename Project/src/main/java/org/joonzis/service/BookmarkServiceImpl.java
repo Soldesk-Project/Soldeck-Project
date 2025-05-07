@@ -39,4 +39,12 @@ public class BookmarkServiceImpl implements BookmarkService{
 	
 	
 	
+	@Override
+	public boolean privateBookmarking(int mem_no, int rest_no) {
+		return mapper.privateBookmarking(mem_no, rest_no);
+	}
+	@Override
+	public boolean publicBookmarking(int mem_no, int rest_no) {
+		return mapper.publicBookmarking(mem_no, rest_no);
+	}
 }

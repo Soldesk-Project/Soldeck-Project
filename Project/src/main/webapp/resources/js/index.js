@@ -9,6 +9,9 @@ document.addEventListener('DOMContentLoaded', function() {
     closeBtn.addEventListener('click', function() {
         popup.style.display = 'none';
     });
+    document.querySelector(".pop-up_image").addEventListener('click',()=>{
+    	location.href='/event/main';
+    });
 });
 
 // 메인 페이지 이미지 슬라이더

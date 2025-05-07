@@ -1,5 +1,5 @@
 //-----CSS 파일 추가-----------------------------------------
-const CSS_FILE_PATH = '/resources/css/event.css';
+const CSS_FILE_PATH = '/resources/css/mainEvent.css';
 let linkEle = document.createElement('link');
 linkEle.rel = 'stylesheet';
 linkEle.href = CSS_FILE_PATH;
@@ -16,6 +16,3 @@ let linkEle3 = document.createElement('link');
 linkEle3.rel = 'stylesheet';
 linkEle3.href = CSS_FILE_PATH3;
 document.head.appendChild(linkEle3);
-
-
-

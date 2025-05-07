@@ -107,3 +107,48 @@ body {
   font-size: 13px;
   color: gray;
 }
+
+
+/* 마커 클릭시 가게 정보 css */
+.custom-infowindow {
+  width: 240px;
+  padding: 10px;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  font-family: 'Arial', sans-serif;
+}
+
+.custom-infowindow .info-thumbnail {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.custom-infowindow .info-title {
+  font-weight: bold;
+  font-size: 16px;
+  margin: 8px 0 4px;
+}
+
+.custom-infowindow .info-address,
+.custom-infowindow .info-distance {
+  font-size: 13px;
+  color: #555;
+}
+
+.info-detail-btn {
+  margin-top: 8px;
+  padding: 5px 10px;
+  background-color: #ff7f50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.info-detail-btn:hover {
+  background-color: #ff5a2e;
+}
