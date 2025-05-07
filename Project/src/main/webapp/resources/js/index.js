@@ -2,36 +2,45 @@ document.addEventListener('DOMContentLoaded', function() {
     var popup = document.getElementById('popup');
     var closeBtn = document.getElementById('popup-close');
 
-    // 팝업 표시 (예시: 페이지 로드 후 1초 뒤에 표시)
     setTimeout(function() {
-        popup.style.display = 'block'; // 'flex' 대신 'block' 사용
+        popup.style.display = 'block';
     }, 1000);
 
-    // 팝업 닫기
     closeBtn.addEventListener('click', function() {
         popup.style.display = 'none';
     });
 });
 
-// 메인 페이지 슬라이더 형식 
+// 메인 페이지 이미지 슬라이더
 const slides = document.getElementById("slides");
+const slideContainers = document.querySelectorAll('#slides .slide-container');
+const slideCount = slideContainers.length;
+let currentImageIndex = 0;
 
 let isDragging = false;
 let startX = 0;
 let currentTranslate = 0;
-
-//3초마다 이미지 넘어가는 기능
-setInterval(() => {
-    currentSlideIndex++;
-    if (currentSlideIndex >= slides.children.length) {
-        currentSlideIndex = 0;
-    }
-    setPositionByIndex();
-}, 3000);
-
 let prevTranslate = 0;
 let animationID;
-let currentSlideIndex = 0;
+let autoSlideInterval;
+const autoSlideDelay = 3000; // 자동 슬라이드 간격 (3초)
+
+function startAutoSlide() {
+    autoSlideInterval = setInterval(() => {
+        moveSlider('image', 1);
+    }, autoSlideDelay);
+}
+
+function stopAutoSlide() {
+    clearInterval(autoSlideInterval);
+}
+
+function resetAutoSlide() {
+    stopAutoSlide();
+    startAutoSlide();
+}
+
+startAutoSlide();
 
 slides.addEventListener("mousedown", startDrag);
 slides.addEventListener("mouseup", endDrag);
@@ -42,6 +51,7 @@ function startDrag(e) {
     isDragging = true;
     startX = e.pageX;
     animationID = requestAnimationFrame(animation);
+    stopAutoSlide();
 }
 
 function drag(e) {
@@ -50,7 +60,6 @@ function drag(e) {
     const diff = currentPosition - startX;
     let tentativeTranslate = prevTranslate + diff;
 
-    //최대/최소 이동 거리 제한
     const maxTranslate = 0;
     const minTranslate = -((slides.children.length - 1) * slides.offsetWidth);
 
@@ -68,13 +77,14 @@ function endDrag() {
     isDragging = false;
     const movedBy = currentTranslate - prevTranslate;
 
-    if (movedBy < -100 && currentSlideIndex < slides.children.length - 1) {
-        currentSlideIndex++;
-    } else if (movedBy > 100 && currentSlideIndex > 0) {
-        currentSlideIndex--;
+    if (movedBy < -100 && currentImageIndex < slideCount - 1) {
+        currentImageIndex++;
+    } else if (movedBy > 100 && currentImageIndex > 0) {
+        currentImageIndex--;
     }
 
     setPositionByIndex();
+    resetAutoSlide();
 }
 
 function animation() {
@@ -87,44 +97,60 @@ function setSliderPosition() {
 }
 
 function setPositionByIndex() {
-    currentTranslate = -currentSlideIndex * slides.offsetWidth;
+    currentTranslate = -currentImageIndex * slides.offsetWidth;
     prevTranslate = currentTranslate;
     setSliderPosition();
 }
 
-
-// pick 화면 3개씩 이동
-const sliderIndexes = {
-	    today: 0,
-	    preference: 0,
-	    friend: 0
-	};
-
 function moveSlider(name, direction) {
-    const track = document.getElementById(`${name}-slider`);
-    const items = track.children.length;
-    const itemsPerPage = 3;
-    const itemWidth = 340; // 320px + 20px margin
+    if (name === 'image') {
+        currentImageIndex += direction;
 
-    const maxIndex = Math.ceil(items / itemsPerPage) - 1;
+        if (currentImageIndex < 0) {
+            currentImageIndex = slideCount - 1;
+        } else if (currentImageIndex >= slideCount) {
+            currentImageIndex = 0;
+        }
 
-    sliderIndexes[name] += direction;
-    if (sliderIndexes[name] < 0) sliderIndexes[name] = 0;
-    if (sliderIndexes[name] > maxIndex) sliderIndexes[name] = maxIndex;
+        const translateValue = -currentImageIndex * 100 + '%';
+        slides.style.transform = 'translateX(' + translateValue + ')';
+        resetAutoSlide();
+    } else {
+        const track = document.getElementById(`${name}-slider`);
+        if (!track) return;
+        const items = track.children.length;
+        const itemsPerPage = 3;
+        const itemWidth = 340;
 
-    const translateX = -sliderIndexes[name] * itemWidth * itemsPerPage;
-    track.style.transform = `translateX(${translateX}px)`;
+        const maxIndex = Math.ceil(items / itemsPerPage) - 1;
+        const sliderIndexes = { // 함수 내에서 sliderIndexes를 관리
+            today: 0,
+            preference: 0,
+            friend: 0
+        };
+
+        if (!sliderIndexes.hasOwnProperty(name)) {
+            sliderIndexes[name] = 0; // 해당 슬라이더의 인덱스 초기화
+        }
+
+        sliderIndexes[name] += direction;
+        if (sliderIndexes[name] < 0) sliderIndexes[name] = 0;
+        if (sliderIndexes[name] > maxIndex) sliderIndexes[name] = maxIndex;
+
+        const translateX = -sliderIndexes[name] * itemWidth * itemsPerPage;
+        track.style.transform = `translateX(${translateX}px)`;
+    }
 }
 
 // 지역별 지도 이동 함수
 document.addEventListener("DOMContentLoaded", function() {
     document.querySelectorAll('.btn-fir').forEach(btn => {
         btn.addEventListener('click', () => {
-            let keyword = btn.getAttribute("value"); // 한식, 중식 등
+            let keyword = btn.getAttribute("value");
             console.log("클릭된 키워드:", keyword);
             sessionStorage.setItem('keyword', keyword);
-            sessionStorage.setItem('actionType', 'category'); // 행동 유형 저장
-            location.href = "../search/map"; // 그냥 이동
+            sessionStorage.setItem('actionType', 'category');
+            location.href = "../search/map";
         });
     });
 });

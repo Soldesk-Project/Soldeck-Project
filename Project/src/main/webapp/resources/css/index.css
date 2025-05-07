@@ -23,7 +23,26 @@ body {
     height: 400px;
     border-radius: 15px;
 }
+.slide-btn {
+    position: absolute; /* 추가 */
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    color: #FF7D00;
+    padding: 10px;
+    z-index: 10; /* 슬라이드 이미지 위에 표시 */
+}
 
+.slide-btn.prev {
+    left: 10px;
+}
+
+.slide-btn.next {
+    right: 10px;
+}
 .slides {
     display: flex;
     transition: transform 0.3s ease-out;

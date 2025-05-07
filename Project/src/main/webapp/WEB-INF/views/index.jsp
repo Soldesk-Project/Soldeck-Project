@@ -12,10 +12,11 @@
 <body>
     <%@ include file="../views/layout/header.jsp" %>
 
-    <div class="content">
-        <div class="image-section">
-    		 <div class="slides" id="slides">
-		        <div class="slide-container">
+	<div class="content">
+		<div class="image-section">
+			<button class="slide-btn prev" onclick="moveSlider('image', -1)">&#10094;</button>
+			<div class="slides" id="slides">
+				<div class="slide-container">
 		            <img src="resources/images/index_slide_image_1.png" alt="슬라이드 이미지 1" class="slide"> <!-- 이미지 강제로 넣은.. db기준으로 랜덤돌려야 함 '이하동문' -->
 		        </div>
 		        <div class="slide-container">
@@ -25,6 +26,7 @@
 		            <img src="resources/images/index_slide_image_1.png" alt="슬라이드 이미지 3" class="slide">
 		        </div>
     		</div>
+    		<button class="slide-btn next" onclick="moveSlider('image', 1)">&#10095;</button>
 		</div>
 		
 	<div class="select_box">
