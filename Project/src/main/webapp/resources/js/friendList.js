@@ -204,7 +204,6 @@ fetch("/friendlist/friendListRecommendData", {
 //팔로우 버튼 클릭 시 친구 요청 보내기
 //친구 요청 버튼 클릭 시
 function follow(friendMemNo, button) {
-<<<<<<< Updated upstream
     fetch("/friendlist/follow", {
         method: "POST",
         credentials: "include",  // 세션 정보 포함
@@ -237,7 +236,6 @@ function acceptFriend(senderMemNo) {
 	  .then(res => res.text())
 	}
 
-=======
 	console.log("보내는 값:", friendMemNo);
 fetch("/friendlist/follow", {
  	
@@ -317,4 +315,3 @@ document.addEventListener("DOMContentLoaded", function () {
 	      });
 	  });
 	});
->>>>>>> Stashed changes

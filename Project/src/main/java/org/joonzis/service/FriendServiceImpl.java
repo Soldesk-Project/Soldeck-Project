@@ -42,7 +42,6 @@ public class FriendServiceImpl implements FriendService {
 	}
 	
 	@Override
-<<<<<<< Updated upstream
     public boolean sendFriendRequest(int senderMemNo, int receiverMemNo) {
         // 중복 요청 방지
         if (mapper.checkRequestExist(senderMemNo, receiverMemNo) == 0) {
@@ -64,9 +63,7 @@ public class FriendServiceImpl implements FriendService {
 
         return true;
     }
-=======
 	public List<MemberVO> getSimpleSearch(String keyword) {
 		return mapper.searchFriendByNickname("%" + keyword + "%");
 	}
->>>>>>> Stashed changes
 }
