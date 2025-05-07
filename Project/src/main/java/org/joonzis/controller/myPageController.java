@@ -1,10 +1,13 @@
 package org.joonzis.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
+import org.joonzis.domain.AttachVO;
 import org.joonzis.domain.BookMarkVO;
 import org.joonzis.domain.CommentVO;
 import org.joonzis.domain.GroupMemberDTO;
@@ -18,6 +21,7 @@ import org.joonzis.service.GroupService;
 import org.joonzis.service.MemberService;
 import org.joonzis.service.RestService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -51,6 +55,8 @@ public class myPageController {
 	private GroupService groupService;
 	@Autowired
 	private CommentService cservice;
+	@Value("${file.upload-dir}")
+    private String uploadFolderPath;
 	
 	@GetMapping("/myInfo")
 	public String myInfo(Model model, HttpSession session) {
@@ -117,19 +123,26 @@ public class myPageController {
 	    vo.setMem_no(loggedInMember.getMem_no());
 
 	    log.info("수정 요청 데이터: " + vo);
+	    log.info("Upload Folder Path: " + uploadFolderPath);
 
 	    if (profileImage != null && !profileImage.isEmpty()) {
 	        String originalFilename = profileImage.getOriginalFilename();
 	        // 회원 가입 시와 동일한 파일명 생성 규칙 적용 (저장 경로는 제외)
 	        String storedFilename = loggedInMember.getMem_id() + "_" + System.currentTimeMillis() + "_" + originalFilename;
 	        vo.setMem_img(storedFilename); // MemberVO에 새로운 이미지 파일명 설정
-	        log.info("새로운 이미지 파일명 설정: {}"+ storedFilename);
+	        try {
+	            File saveFile = new File(uploadFolderPath, storedFilename);
+	            profileImage.transferTo(saveFile);
+
+	        } catch (Exception e) {
+	            log.error("File upload failed: " + storedFilename, e);
+	        }
+	        log.info("새로운 이미지 파일명 설정: "+ storedFilename);
 	    } else {
 	        MemberVO currentMemberInfo = service.getMemberInfo(loggedInMember.getMem_no());
 	        vo.setMem_img(currentMemberInfo.getMem_img()); // 기존 이미지 유지
-	        log.info("기존 이미지 유지: {}"+ vo);
+	        log.info("기존 이미지 유지: "+ vo);
 	    }
-
 	    // food_kate 테이블 데이터 삭제
 	    service.deleteFoodKate(vo.getMem_no());
 	    // 데이터 삽입

@@ -235,7 +235,7 @@ async function modify(mem_no){
         }
         const result = await response.text();
         console.log('수정 성공:', result);
-        window.location.href = '/mypage/myInfo'; 
+        location.href = '/mypage/myInfo'; 
     } catch (error) {
         console.error('수정 실패:', error.message);
     }

@@ -16,3 +16,11 @@ let linkEle3 = document.createElement('link');
 linkEle3.rel = 'stylesheet';
 linkEle3.href = CSS_FILE_PATH3;
 document.head.appendChild(linkEle3);
+//-----이벤트 클릭 이동-------------------------------------------
+document.querySelectorAll(".main-menu a").forEach(event=>{
+	event.addEventListener('click', e=>{
+		e.preventDefault();
+		let tab=event.getAttribute('href');
+		location.href='/event'+tab;
+	})
+})

@@ -681,7 +681,7 @@ function fetchComments() {
 
             // 프로필 이미지 처리
             const profileImg = comment.com_memberData && comment.com_memberData.mem_img
-                ? `/resources/images/${comment.com_memberData.mem_img}`
+                ? `/resources/upload/${comment.com_memberData.mem_img}`
                 : '/resources/images/profile_1.png';
 
             // 닉네임 처리
@@ -699,7 +699,7 @@ function fetchComments() {
                 <li data-com_no="${comment.com_no}">
                     <div class="chat-full">
                         <div class="chat-header">
-                            <img src="${profileImg}" alt="프로필" class="profile-img">
+                            <img src="${profileImg}" alt="프로필" class="profile-img" onerror="this.src='/resources/images/profile.png'">
                             <strong>${nickName}</strong>
                             <div class="header-right">
                                 <small class="pull-right">${formatDate(comment.com_date)}</small>

@@ -23,7 +23,7 @@
         <p class="myInfo_text"> 나의 정보 </p>
         <div class="info_personal_box">
 			<div class="info-profile-div">
-	            <img class="info-profile" src="${member.mem_img}" alt="유저 프로필" onerror="this.src='/resources/images/profile.png'">
+	            <img class="info-profile" src="../resources/upload/${member.mem_img}" alt="유저 프로필" onerror="this.src='/resources/images/profile.png'">
 			</div>            
 	        <div class="info-title">
 	        <b>이름</b>	

@@ -17,6 +17,10 @@ public class EventController {
 		return "/event/main";
 	}
 	
+	@GetMapping("/list/*")
+	public void eventTab() {
+		log.info("eventTab...");
+	}
 	
 	
 	

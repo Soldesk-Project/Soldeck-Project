@@ -86,7 +86,7 @@ fetch("/friendlist/friendListData")
       el.innerHTML = `
         <div class="profile">
           <img src="/images/${friend.friendMember.mem_img}" alt="프로필" width="80" height="80"
-               onerror="if (!this.dataset.error) { this.dataset.error = true; this.src='/images/profile.png'; }">
+               onerror="if (!this.dataset.error) { this.dataset.error = true; this.src='../resources/images/profile.png'; }">
           <div class="nicknameBox"><p>${friend.friendMember.mem_nick}</p></div>
           <div class="memo_input">
     	  	<input type="text" id="friend_memo_box" name="fre_memo" value="${friend.fre_memo || ''}" placeholder="메모 입력" data-friend-id="${friend.friend_mem_no}" />
@@ -160,7 +160,7 @@ fetch("/friendlist/friendListRecommendData", {
       <div class="profile_random">
         <div class="profileTop">
           <img src="/images/\${friend.friendMember.mem_img}" alt="프로필" width="80" height="80"
-            onerror="if (!this.dataset.error) { this.dataset.error = true; this.src='/images/profile.png'; }">
+            onerror="if (!this.dataset.error) { this.dataset.error = true; this.src='../resources/images/profile.png'; }">
           <div class="nicknameBox"><p>${friend.friendMember.mem_nick}</p></div>
           <div class="followBtn">
             <button onclick="follow(${friend.mem_no}, this)">팔로우</button>
@@ -258,7 +258,6 @@ fetch("/friendlist/follow", {
     alert("팔로우에 실패했습니다.");
   }
 });
-}
 
 //친구 검색 결과 창
 document.addEventListener("DOMContentLoaded", function () {
@@ -296,7 +295,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	            return `
 	              <div class="friend-item">
 	                <img src="${imgSrc}" 
-	                     onerror="this.onerror=null; this.src='/resources/upload/profile.png';" 
+	                     onerror="this.onerror=null; this.src='../resources/upload/profile.png';" 
 	                     width="47.2" alt="프로필">
 	                <span>${friend.mem_nick}</span>
 	                
