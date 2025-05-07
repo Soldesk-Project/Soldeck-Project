@@ -10,9 +10,12 @@ pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="../resources/css/friendList.css">
 <link rel="stylesheet" href="../resources/css/footer.css">
 </head>
-<body style="overflow-y: scroll;">
+<body style="overflow-y: scroll;" data-mem-no="${sessionScope.loggedInUser.mem_no}">
 
 	<jsp:include page="../layout/header.jsp"/>
+	
+	<!-- 알림 표시 영역 -->
+	<div id="notificationContainer" style="position: fixed; top: 10px; right: 10px; z-index: 9999;"></div>
 	
 	<div class="container_F">
 		<div class="searchBox">

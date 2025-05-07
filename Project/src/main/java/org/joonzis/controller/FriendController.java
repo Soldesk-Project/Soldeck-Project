@@ -9,6 +9,7 @@ import org.joonzis.domain.FriendVO;
 import org.joonzis.domain.MemberVO;
 import org.joonzis.service.FriendService;
 import org.joonzis.service.MemberService;
+import org.joonzis.websoket.FriendSocketHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,9 @@ public class FriendController {
 	
 	@Autowired
 	MemberService service;
+	
+	@Autowired
+	private FriendSocketHandler friendSocketHandler;
 	
 	//@GetMapping("/friendList")
 	//public void getFriendList() {
@@ -100,16 +104,43 @@ public class FriendController {
         return fservice.getRandomFriendList(mem_no);  // JSON 응답
     }
     
-    @PostMapping("/follow")
+    @PostMapping(value = "/follow", produces = "application/json;charset-UTF-8")
     @ResponseBody
-    public ResponseEntity<String> follow(@RequestParam("friend_mem_no") int friendMemNo, HttpSession session) {
+    public ResponseEntity<String> follow(@RequestParam("friend_mem_no") int receiverMemNo, HttpSession session) {
         MemberVO member = (MemberVO) session.getAttribute("loggedInUser");
         
         if (member == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다");
         }
+        
+        int senderMemNo = member.getMem_no();
 
-        fservice.insertFriend(member.getMem_no(), friendMemNo);
-        return ResponseEntity.ok("추가 완료");
+        boolean sent = fservice.sendFriendRequest(senderMemNo, receiverMemNo);
+
+        if (sent) {
+            // 웹소켓 알림 전송
+            //String msg = member.getMem_nick() + "님이 친구 요청을 보냈습니다.";
+            friendSocketHandler.sendFriendRequestAlert(receiverMemNo, senderMemNo, member.getMem_nick());
+            return ResponseEntity.ok("요청이 전송되었습니다");
+        } else {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 요청을 보냈습니다");
+        }
+    }
+    
+    @PostMapping("/accept")
+    @ResponseBody
+    public ResponseEntity<String> acceptRequest(@RequestParam("sender_mem_no") int senderMemNo,
+                                                HttpSession session) {
+        MemberVO member = (MemberVO) session.getAttribute("loggedInUser");
+
+        if (member == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다");
+        }
+
+        int receiverMemNo = member.getMem_no();
+
+        fservice.acceptFriendRequest(senderMemNo, receiverMemNo);
+
+        return ResponseEntity.ok("친구 수락 완료");
     }
 }

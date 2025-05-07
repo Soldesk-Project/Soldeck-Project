@@ -52,4 +52,37 @@
 		 ]]>
 	</select>
 	
+	<insert id="insertFriend" parameterType="org.joonzis.domain.FriendVO">
+	    INSERT INTO friend (mem_no, friend_mem_no)
+	    VALUES (#{mem_no}, #{friend_mem_no})
+	</insert>
+	
+	<!-- 친구 요청 존재 여부 확인 -->
+    <select id="checkRequestExist" resultType="int">
+	  SELECT COUNT(*)
+	  FROM friend_req
+	  WHERE mem_no = #{senderMemNo}
+	    AND mem_no2 = #{receiverMemNo}
+	</select>
+
+    <!-- 친구 요청 삽입 -->
+    <insert id="insertFriendRequest">
+        INSERT INTO friend_req (mem_no, mem_no2, frd_req)
+        VALUES (#{senderMemNo}, #{receiverMemNo}, 'PENDING')
+    </insert>
+
+    <!-- 요청 상태 업데이트 -->
+    <update id="updateRequestStatus">
+        UPDATE friend_req
+        SET frd_req = #{status}
+        WHERE mem_no = #{senderMemNo}
+          AND mem_no2 = #{receiverMemNo}
+    </update>
+
+    <!-- 친구 관계 등록 -->
+    <insert id="insertFriendAfterRequestAccepted">
+        INSERT INTO friend (mem_no, friend_mem_no)
+        VALUES (#{senderMemNo}, #{receiverMemNo})
+    </insert>
+		
 </mapper>

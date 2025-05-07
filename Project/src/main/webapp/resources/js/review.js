@@ -41,6 +41,7 @@ function closeModal(){
   modal.style.display = 'none';
   document.body.style.overflow = 'auto';
 }
+
 //-----버튼 누를 때 댓글 번호 가져오기 ------------------------------
 let comNo;
 document.querySelectorAll(".remove-btn").forEach(removeBtn => {

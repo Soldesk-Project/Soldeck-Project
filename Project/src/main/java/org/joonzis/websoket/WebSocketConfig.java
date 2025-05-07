@@ -12,10 +12,17 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Autowired
     private ChatWebSocketHandler chatWebSocketHandler;
+    
+    @Autowired
+    private FriendSocketHandler friendSocketHandler;
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(chatWebSocketHandler, "/chat/{groupNo}")
                 .setAllowedOrigins("*");  // 필요에 따라 다른 도메인 설정
+        
+        // 친구 요청 알림용 WebSocket 경로 추가
+        registry.addHandler(friendSocketHandler, "/friendSocket")
+                .setAllowedOrigins("*");
     }
 }

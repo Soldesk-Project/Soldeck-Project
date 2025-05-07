@@ -54,7 +54,6 @@ public class myPageController {
 	
 	@GetMapping("/myInfo")
 	public String myInfo(Model model, HttpSession session) {
-//	public String myInfo(Model model, @RequestParam("mem_no") int mem_no) {
 		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
 		if (loggedInMember == null) {
 			// 로그인되지 않은 경우 처리 (예: 로그인 페이지로 리다이렉트)
@@ -86,7 +85,6 @@ public class myPageController {
 	}
 	@GetMapping("/modifyInfo")
 	public String modifyInfo(Model model, HttpSession session) {
-//	public String modifyInfo(Model model, @RequestParam("mem_no") int mem_no) {
 		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
 		if (loggedInMember == null) {
 			return "redirect:/login/loginPage";
@@ -197,6 +195,7 @@ public class myPageController {
     // 즐겨찾기 제거 (상세 페이지 및 마이페이지)
     @DeleteMapping(value = {"/favorites/remove/{restNo}", "/bookmark/del"}, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> delBookmark(@PathVariable(required = false) Integer restNo, @RequestBody(required = false) BookMarkVO vo, HttpSession session) {
+
         MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
         if (loggedInMember == null) {
             return new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED);
@@ -216,6 +215,7 @@ public class myPageController {
         }
 
         boolean result = bservice.deleteBookmark(mem_no, targetRestNo);
+				log.info("result..." + result);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
     
@@ -292,12 +292,14 @@ public class myPageController {
 		model.addAttribute("commentList", comment);
 		return "/mypage/review";
 	}
+	
 	@PostMapping(value = "/review/del", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> deleteComment(@RequestBody CommentVO vo) {
 		log.info("deleteComment..."+vo.getCom_no()+vo.getMem_no());
 		int result=cservice.deleteComment(vo.getCom_no(), vo.getMem_no());
 		return new ResponseEntity<Boolean>((result==1?true:false),HttpStatus.OK);
 	}
+
 	@GetMapping("/event")
 	public String event() {
 		log.info("event...");

@@ -14,4 +14,10 @@ public interface FriendService {
 	
 	void insertFriend(int mem_no, int friend_mem_no);
 	
+	// 친구 요청 보내기
+    boolean sendFriendRequest(int senderMemNo, int receiverMemNo);
+
+    // 친구 요청 수락
+    boolean acceptFriendRequest(int senderMemNo, int receiverMemNo);
+	
 }

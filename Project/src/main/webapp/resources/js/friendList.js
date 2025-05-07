@@ -1,3 +1,71 @@
+const senderMemNo = parseInt(document.body.dataset.memNo, 10);
+
+console.log(senderMemNo);
+
+let socket = null;
+
+if (senderMemNo) {
+    // WebSocket 연결
+    socket = new WebSocket("wss://4ea1-14-52-79-21.ngrok-free.app/friendSocket");
+
+    socket.onopen = () => {
+        console.log("WebSocket 연결됨");
+        socket.send(senderMemNo.toString());  // 서버에 내 mem_no 전달
+    };
+
+    // WebSocket 메시지 수신 시 처리
+    socket.onmessage = (event) => {
+        const data = JSON.parse(event.data); // 서버에서 받은 데이터(JSON 형태로 가정)
+        console.log("받은 데이터:", data); 
+        displayFriendRequestAlert(data);  // 알림 화면에 표시
+    };
+
+    socket.onclose = () => console.log("WebSocket 연결 종료");
+    socket.onerror = (err) => console.error("WebSocket 오류", err);
+}
+
+//친구 요청 알림을 화면에 표시
+function displayFriendRequestAlert(data) {
+    const notificationContainer = document.getElementById("notificationContainer");
+
+    const notification = document.createElement("div");
+    notification.classList.add("friend-request-notification");
+    notification.innerHTML = `
+        <p><strong>${data.senderNick}</strong>님이 친구 요청을 보냈습니다.</p>
+        <button onclick="acceptFriend(${data.senderMemNo})">수락</button>
+        <button onclick="declineFriendRequest(${data.senderMemNo})">거절</button>
+    `;
+
+    notificationContainer.appendChild(notification);
+}
+
+// 친구 요청 수락
+function acceptFriendRequest(senderMemNo) {
+    fetch("/friendlist/acceptFriendRequest", {
+        method: "POST",
+        body: JSON.stringify({ friendMemNo: senderMemNo }),
+        headers: { "Content-Type": "application/json" }
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert("친구 요청을 수락했습니다!");
+    });
+}
+
+// 친구 요청 거절
+function declineFriendRequest(senderMemNo) {
+    fetch("/friendlist/declineFriendRequest", {
+        method: "POST",
+        body: JSON.stringify({ friendMemNo: senderMemNo }),
+        headers: { "Content-Type": "application/json" }
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert("친구 요청을 거절했습니다.");
+    });
+}
+
+
 fetch("/friendlist/friendListData")
   .then(response => response.json())
   .then(data => {
@@ -95,7 +163,7 @@ fetch("/friendlist/friendListRecommendData", {
             onerror="if (!this.dataset.error) { this.dataset.error = true; this.src='/images/profile.png'; }">
           <div class="nicknameBox"><p>${friend.friendMember.mem_nick}</p></div>
           <div class="followBtn">
-            <button onclick="follow(${friend.friendMember.friend_mem_no}, this)">팔로우</button>
+            <button onclick="follow(${friend.mem_no}, this)">팔로우</button>
           </div>
         </div>
         <div class="detailBox" style="display: none;">
@@ -133,25 +201,38 @@ fetch("/friendlist/friendListRecommendData", {
   });
 });
 
-//팔로우 버튼
+//팔로우 버튼 클릭 시 친구 요청 보내기
+//친구 요청 버튼 클릭 시
 function follow(friendMemNo, button) {
-fetch("/friendlist/follow", {
-  method: "POST",
-  credentials: "include",
-  headers: {
-    "Content-Type": "application/x-www-form-urlencoded"
-  },
-  body: new URLSearchParams({
-    friend_mem_no: friendMemNo
-  })
-})
-.then(res => {
-  if (res.ok) {
-    alert("팔로우 완료!");
-    button.disabled = true;
-    button.textContent = "팔로잉";
-  } else {
-    alert("팔로우에 실패했습니다.");
-  }
-});
+    fetch("/friendlist/follow", {
+        method: "POST",
+        credentials: "include",  // 세션 정보 포함
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: new URLSearchParams({
+            friend_mem_no: friendMemNo
+        })
+    })
+    .then(res => res.text())
+    .then(msg => {
+        button.disabled = true;
+        button.textContent = "요청됨";
+    })
+    .catch(error => {
+        console.error("친구 요청 실패", error);
+        alert("요청을 처리하는 중 오류가 발생했습니다.");
+    });
 }
+
+function acceptFriend(senderMemNo) {
+	  fetch("/friendlist/accept", {
+	    method: "POST",
+	    headers: {
+	      "Content-Type": "application/x-www-form-urlencoded"
+	    },
+	    body: new URLSearchParams({ sender_mem_no: senderMemNo })
+	  })
+	  .then(res => res.text())
+	}
+
