@@ -6,6 +6,27 @@ body {
 	flex-direction: column;
 	min-height: 100vh;
 }
+/*친구 검색창 css*/
+
+#searchResultContainer {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+#searchResultContainer.show {
+  max-height: 500px;
+  opacity: 1;
+}
+
+.friend-item{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
 /* 친구 목록 css */
 /* 스크롤 */
 .scroll-container {

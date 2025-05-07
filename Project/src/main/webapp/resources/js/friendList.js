@@ -107,7 +107,7 @@ fetch("/friendlist/friendListData")
 
 /* 언팔로우 버튼*/
 function unfollow(friendMemNo, button) {
-	  if (!confirm("정말 이 친구를 언팔로우하시겠습니까?")) return;
+	  if (!confirm("정말 친구를 언팔로우하시겠습니까?")) return;
 
 	  fetch("/friendlist/unfollow", {
 	    method: "POST",
@@ -204,6 +204,7 @@ fetch("/friendlist/friendListRecommendData", {
 //팔로우 버튼 클릭 시 친구 요청 보내기
 //친구 요청 버튼 클릭 시
 function follow(friendMemNo, button) {
+<<<<<<< Updated upstream
     fetch("/friendlist/follow", {
         method: "POST",
         credentials: "include",  // 세션 정보 포함
@@ -236,3 +237,84 @@ function acceptFriend(senderMemNo) {
 	  .then(res => res.text())
 	}
 
+=======
+	console.log("보내는 값:", friendMemNo);
+fetch("/friendlist/follow", {
+ 	
+	
+  method: "POST",
+  credentials: "include",
+  headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+  },
+  body: new URLSearchParams({
+    friend_mem_no: friendMemNo
+  })
+})
+.then(res => {
+  if (res.ok) {
+    alert("팔로우 완료!");
+    button.disabled = true;
+    button.textContent = "팔로잉";
+  } else {
+    alert("팔로우에 실패했습니다.");
+  }
+});
+}
+
+//친구 검색 결과 창
+document.addEventListener("DOMContentLoaded", function () {
+	  const searchBtn = document.getElementById("searchButton");
+	  const input = document.getElementById("searchInput");
+	  const resultContainer = document.getElementById("searchResultContainer");
+
+	  searchBtn.addEventListener("click", function () {
+	    const keyword = input.value.trim();
+
+	    if (keyword === "") {
+	      resultContainer.classList.remove("show");
+	      resultContainer.innerHTML = "";
+	      return;
+	    }
+
+	    fetch(`/friendlist/search?keyword=${encodeURIComponent(keyword)}`)
+	      .then(res => res.json())
+	      .then(data => {
+	        console.log("응답 데이터:", data);
+
+	        if (!Array.isArray(data)) {
+	          console.error("배열x", data);
+	          return;
+	        }
+
+	        if (data.length === 0) {
+	          resultContainer.innerHTML = "<div>검색 결과가 없습니다.</div>";
+	        } else {
+	          resultContainer.innerHTML = data.map(friend => {
+	            const imgSrc = friend.mem_img
+	              ? `/resources/upload/${friend.mem_img}`
+	              : `/resources/upload/profile.png`;
+
+	            return `
+	              <div class="friend-item">
+	                <img src="${imgSrc}" 
+	                     onerror="this.onerror=null; this.src='/resources/upload/profile.png';" 
+	                     width="47.2" alt="프로필">
+	                <span>${friend.mem_nick}</span>
+	                
+	                <div class="followBtn">
+	            		<button onclick="follow(${friend.mem_no}, this)">팔로우</button>
+	            	</div>
+	              </div>
+	            `;
+	          }).join("");
+	        }
+
+	        resultContainer.classList.add("show");
+	      })
+	      .catch(err => {
+	        console.error("검색 실패:", err);
+	      });
+	  });
+	});
+>>>>>>> Stashed changes

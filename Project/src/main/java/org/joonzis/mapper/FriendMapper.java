@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.joonzis.domain.FriendVO;
+import org.joonzis.domain.MemberVO;
 
 public interface FriendMapper {
 
@@ -15,6 +16,7 @@ public interface FriendMapper {
 	
 	void insertFriend(@Param("mem_no") int mem_no, @Param("friend_mem_no") int friend_mem_no);
 	
+<<<<<<< Updated upstream
 	 // 친구 요청 보내기 (friend_request 테이블에 삽입)
     void insertFriendRequest(@Param("senderMemNo") int senderMemNo, @Param("receiverMemNo") int receiverMemNo);
     
@@ -26,4 +28,8 @@ public interface FriendMapper {
     
     // 친구 요청 수락 후 친구 관계 추가 (friend 테이블에 삽입)
     void insertFriendAfterRequestAccepted(@Param("senderMemNo") int senderMemNo, @Param("receiverMemNo") int receiverMemNo);
+=======
+	List<MemberVO> searchFriendByNickname(@Param("keyword") String keyword);
+	
+>>>>>>> Stashed changes
 }

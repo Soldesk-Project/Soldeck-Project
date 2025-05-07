@@ -34,6 +34,11 @@
 		AND friend_mem_no = #{friend_mem_no}
 	</delete>
 	
+	<insert id="insertFriend">
+		INSERT INTO friend (mem_no, friend_mem_no)
+		VALUES (#{mem_no}, #{friend_mem_no})
+	</insert>
+	
 	<select id="getRandomFriendList" parameterType="int" resultMap="FriendWithMemberMap">
 	 <![CDATA[
 		SELECT *
@@ -52,6 +57,7 @@
 		 ]]>
 	</select>
 	
+<<<<<<< Updated upstream
 	<insert id="insertFriend" parameterType="org.joonzis.domain.FriendVO">
 	    INSERT INTO friend (mem_no, friend_mem_no)
 	    VALUES (#{mem_no}, #{friend_mem_no})
@@ -85,4 +91,12 @@
         VALUES (#{senderMemNo}, #{receiverMemNo})
     </insert>
 		
+=======
+	<select id="searchFriendByNickname" parameterType="String" resultType="org.joonzis.domain.MemberVO">
+    	SELECT mem_no, mem_nick, mem_img
+    	FROM MEMBER
+    	WHERE mem_nick LIKE #{keyword}
+	</select>
+	
+>>>>>>> Stashed changes
 </mapper>

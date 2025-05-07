@@ -20,9 +20,10 @@ pageEncoding="UTF-8"%>
 	<div class="container_F">
 		<div class="searchBox">
 			<p class="searchTitle">친구 검색</p>
-			<input type="search" class="friendSearch">
-		<button value="검색" class="searchBtn">검색</button>
+			<input type="text" id="searchInput" placeholder="친구 검색">
+		<button id="searchButton">검색</button>
 		</div>
+		<div id="searchResultContainer"></div>
 		<div class="friendWrapper">
 			<div class="friendListBox">
 				<div class="friendTitle">

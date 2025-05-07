@@ -143,4 +143,10 @@ public class FriendController {
 
         return ResponseEntity.ok("친구 수락 완료");
     }
+    
+    @GetMapping(value = "/search", produces = "application/json")
+    @ResponseBody
+    public List<MemberVO> searchFriend(@RequestParam("keyword") String keyword) {
+        return fservice.getSimpleSearch("%" + keyword + "%");
+    }
 }
