@@ -12,19 +12,11 @@
 <%@ include file="../layout/header.jsp" %>
 
 <div class="community-container">
-    <div class="community-top-area">
-        <div class="community-search-inline">
-            <div class="search-area">
-                <input type="text" placeholder="글 제목에 배치할 키워드 입력">
-                <button type="button">검색</button>
-            </div>
-        </div>
-        <div class="community-major-category-area">
-            <label>대분류:</label>
-            <button type="button" class="major-category-button active" data-major="major1">대분류 1</button>
-            <button type="button" class="major-category-button" data-major="major2">대분류 2</button>
-        </div>
-    </div>
+	<div class="community-major-category-area">
+		<label>대분류:</label>
+		<button type="button" class="major-category-button active" data-major="major1">대분류 1</button>
+		<button type="button" class="major-category-button" data-major="major2">대분류 2</button>
+	</div>
 
     <div class="community-minor-category-area">
         <div>
@@ -36,13 +28,13 @@
 
     <div class="community-content-area">
         <section class="community-popular-posts">
-            <h2>좋아요 순 게시글</h2>
+            <h2><a href="/community/communityList?mode=best" class="popular-posts-title-link">좋아요 순 게시글</a></h2>
             <div class="popular-post-list">
                 </div>
         </section>
 
 		<section class="community-list">
-			<h2 class="community-title">커뮤니티 게시글 목록</h2>
+			<h2 class="community-title"><a href="/community/communityList" class="community-title-link">커뮤니티 게시글 목록</a></h2>
 			<div class="post-filter-area">
 				<label for="sort-by">정렬:</label>
 				<select id="sort-by">

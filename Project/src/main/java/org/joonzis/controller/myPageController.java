@@ -52,9 +52,6 @@ public class myPageController {
 	@Autowired
 	private CommentService cservice;
 	
-	
-	
-	
 	@GetMapping("/myInfo")
 	public String myInfo(Model model, HttpSession session) {
 //	public String myInfo(Model model, @RequestParam("mem_no") int mem_no) {
@@ -221,34 +218,21 @@ public class myPageController {
         boolean result = bservice.deleteBookmark(mem_no, targetRestNo);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-	
-    @PostMapping(value = "/bookmark/private", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Boolean> privateBookmarking(@RequestBody BookMarkVO vo) {
-    	log.info("updateReserveMemo...");
-    	boolean result=bservice.privateBookmarking(vo.getMem_no(), vo.getRest_no());
-    	return new ResponseEntity<Boolean>(result,HttpStatus.OK);
-    }
-	@PostMapping(value = "/bookmark/public", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Boolean> publicBookmarking(@RequestBody BookMarkVO vo) {
-		log.info("publicBookmarking...");
-		boolean result=bservice.publicBookmarking(vo.getMem_no(), vo.getRest_no());
+    
+	@PostMapping(value = "/bookmark/private", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Boolean> updateBookmarkToPrivate(@RequestBody BookMarkVO vo) {
+		log.info("updateBookmarkToPrivate...");
+		boolean result = bservice.updateBookmarkPublicStatus(vo.getMem_no(), vo.getRest_no(), "N");
 		return new ResponseEntity<Boolean>(result,HttpStatus.OK);
 	}
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+	@PostMapping(value = "/bookmark/public", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Boolean> updateBookmarkToPublic(@RequestBody BookMarkVO vo) {
+		log.info("updateBookmarkToPublic...");
+		boolean result = bservice.updateBookmarkPublicStatus(vo.getMem_no(), vo.getRest_no(), "Y");
+		return new ResponseEntity<Boolean>(result,HttpStatus.OK);
+	}
+
 	@GetMapping("/booking")
 	public String booking(Model model, HttpSession session) {
 		MemberVO mvo = (MemberVO) session.getAttribute("loggedInUser");
@@ -314,9 +298,6 @@ public class myPageController {
 		int result=cservice.deleteComment(vo.getCom_no(), vo.getMem_no());
 		return new ResponseEntity<Boolean>((result==1?true:false),HttpStatus.OK);
 	}
-	
-	
-	
 	@GetMapping("/event")
 	public String event() {
 		log.info("event...");

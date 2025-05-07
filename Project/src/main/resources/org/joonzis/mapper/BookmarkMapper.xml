@@ -26,42 +26,11 @@
     	FROM BOOKMARK
     	WHERE MEM_NO = #{mem_no} AND REST_NO = #{rest_no}
 	</select>
-	
-	
-	<update id="privateBookmarking">
-		UPDATE 
-		    BOOKMARK
-		SET 
-		    IS_PUBLIC = 'N'
-		WHERE
-		    MEM_NO=#{mem_no}
-		AND
-		    REST_NO=#{rest_no}
-	</update>
-	
-	<update id="publicBookmarking">
-		UPDATE 
-		    BOOKMARK
-		SET 
-		    IS_PUBLIC = 'Y'
-		WHERE
-		    MEM_NO=#{mem_no}
-		AND
-		    REST_NO=#{rest_no}
-	</update>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+    <update id="updateIsPublic">
+        UPDATE bookmark
+        SET is_public = #{is_public}
+        WHERE mem_no = #{mem_no}
+          AND rest_no = #{rest_no}
+    </update>
 </mapper>

@@ -37,19 +37,32 @@ document.querySelectorAll('button').forEach(btn => {
 });
 //-----가게 이름 이동------------------------------------------
 document.querySelectorAll(".info-text a").forEach(moveRestView => {
-	moveRestView.addEventListener('click',e=>{
+	moveRestView.addEventListener('dbclick',e=>{//더블클릭으로 이동
 		e.preventDefault();
 		const view = moveRestView.closest(".view").querySelector("#restNo").value;
 		location.href="../search/view?rest_no="+view;
 	});
 })
 document.querySelectorAll(".view-img img").forEach(moveRestView => {
-	moveRestView.addEventListener('click',e=>{
+	moveRestView.addEventListener('dbclick',e=>{//더블클릭으로 이동
 		e.preventDefault();
 		const view = moveRestView.closest(".view").querySelector("#restNo").value;
 		location.href="../search/view?rest_no="+view;
 	});
 })
+//-----북마크 아이템 클릭 시 restNo 저장---------------------------------------
+document.querySelectorAll(".view").forEach(viewItem => {
+    viewItem.addEventListener('click', function(e) {
+        // 클릭된 요소가 버튼, input, img 태그가 아닐 경우에만 restNo를 업데이트
+        if (!e.target.closest('button') && !e.target.closest('input') && !e.target.closest('img')) {
+            restNo = this.querySelector("#restNo").value;
+            isPublic = this.querySelector(".is-public").value;
+            // 선택된 아이템에 시각적인 효과를 줄 수도 있습니다 (예: 테두리 강조)
+            document.querySelectorAll(".view").forEach(v => v.classList.remove('selected'));
+            this.classList.add('selected');
+        }
+    });
+});
 //-----가게 이름 글자수에 맞게 input태그 길이 변경---------------------
 window.addEventListener('load', ()=>{
 	document.querySelectorAll('.res-name').forEach(input => resizeInput(input));
@@ -131,26 +144,21 @@ document.addEventListener('DOMContentLoaded', ()=>{
 });
 //-----가게 선택시 정보 가져오기---------------------------------------------------------------
 let isPublic;
-document.addEventListener('DOMContentLoaded', ()=>{
-    document.querySelectorAll('.view').forEach(view=>{
-    	view.addEventListener('click', function(e){
-    		if (e.target.closest('button')) return;
-    		if (e.target.closest('input')) return;
-    		if (e.target.closest('img')) return;
-    		
-    		
-    		if (this.classList.contains('active')) {
-				this.classList.remove('active');
-				restNo=0;
-        		return;
-			}
-    		document.querySelectorAll('.view').forEach(view2=>{
-        		view2.classList.remove('active');
-        	});
-        	restNo = this.closest(".view").querySelector("#restNo").value;
-        	isPublic= this.closest(".view").querySelector(".is-public").value;
-    		view.classList.add('active');
-    	});
+document.querySelectorAll(".view").forEach(viewItem => {
+    viewItem.addEventListener('click', function(e) {
+        if (!e.target.closest('button') && !e.target.closest('input') && !e.target.closest('img') && !e.target.closest('.info-text a')) {
+            restNo = this.querySelector("#restNo").value;
+            isPublic = this.querySelector(".is-public").value;
+            document.querySelectorAll(".view").forEach(v => v.classList.remove('selected'));
+            this.classList.add('selected');
+        }
+    });
+});
+document.querySelectorAll(".info-text a, .view-img img").forEach(element => {
+    element.addEventListener('dblclick', function(e) {
+        e.preventDefault();
+        const view = this.closest(".view").querySelector("#restNo").value;
+        location.href="../search/view?rest_no="+view;
     });
 });
 //-----버튼으로 즐겨찾기 설정 변경--------------------------------------------------------
@@ -202,21 +210,3 @@ function privateToPublicBookmark() {
 		  .catch(e=>console.log(e));
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

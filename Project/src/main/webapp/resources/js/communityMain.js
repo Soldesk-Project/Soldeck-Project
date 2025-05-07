@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const majorCategoryButtons = document.querySelectorAll('.major-category-button');
     const minorCategoryArea = document.querySelector('.community-minor-category-area');
     const minorCategoryButtonsContainer = document.querySelector('.minor-category-buttons');
-    const communityTopArea = document.querySelector('.community-top-area');
+    const communityMajorCategoryArea = document.querySelector('.community-major-category-area');
     const searchButton = document.querySelector('.community-search-inline .search-area button');
     var popup = document.getElementById('popup');
     var closeBtn = document.getElementById('popup-close');
@@ -32,10 +32,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     minorCategoryButtonsContainer.appendChild(minorButton);
                 });
                 minorCategoryArea.style.display = 'block';
-                communityTopArea.style.paddingBottom = '15px'; // community-top-area 확장
+                communityMajorCategoryArea.style.paddingBottom = '15px'; // community-top-area 확장
             } else {
                 minorCategoryArea.style.display = 'none';
-                communityTopArea.style.paddingBottom = '15px'; // 소분류 없을 때도 유지 (선택 사항)
+                communityMajorCategoryArea.style.paddingBottom = '15px'; // 소분류 없을 때도 유지 (선택 사항)
             }
 
             // TODO: 선택된 대분류에 따른 게시글 목록 업데이트 (초기 로딩)

@@ -36,15 +36,8 @@ public class BookmarkServiceImpl implements BookmarkService{
 	public boolean isBookmarked(int mem_no, int rest_no) {
 	       return mapper.check(mem_no, rest_no) > 0;
 	}
-	
-	
-	
 	@Override
-	public boolean privateBookmarking(int mem_no, int rest_no) {
-		return mapper.privateBookmarking(mem_no, rest_no);
-	}
-	@Override
-	public boolean publicBookmarking(int mem_no, int rest_no) {
-		return mapper.publicBookmarking(mem_no, rest_no);
+	public boolean updateBookmarkPublicStatus(int mem_no, int rest_no, String is_public) {
+		return mapper.updateIsPublic(mem_no, rest_no, is_public) > 0;
 	}
 }

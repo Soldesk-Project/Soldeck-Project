@@ -12,9 +12,6 @@ public interface BookmarkMapper {
 	public boolean deleteBookmark(@Param("mem_no") int mem_no, @Param("rest_no") int rest_no);
 	public boolean addBookmark(BookMarkVO vo);
 	public int check(@Param("mem_no") int mem_no, @Param("rest_no") int rest_no);
-
-	
-	public boolean privateBookmarking(@Param("mem_no") int mem_no, @Param("rest_no") int rest_no);
-	public boolean publicBookmarking(@Param("mem_no") int mem_no, @Param("rest_no") int rest_no);
+	public int updateIsPublic(@Param("mem_no")int mem_no, @Param("rest_no")int rest_no, @Param("is_public")String is_public);
 	
 }
