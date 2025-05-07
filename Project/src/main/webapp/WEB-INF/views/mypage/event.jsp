@@ -44,6 +44,6 @@
   </div>
 	
 	<jsp:include page="../layout/footer.jsp"/>
-<script type="text/javascript" src="/resources/js/event.js"></script>
+<script type="text/javascript" src="/resources/js/mypageEvent.js"></script>
 </body>
 </html>

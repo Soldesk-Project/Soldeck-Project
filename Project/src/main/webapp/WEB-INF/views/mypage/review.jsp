@@ -34,7 +34,8 @@
 							<div class="appraisal-div">
 								<span>평점</span>
 								<input type="text" name="score" class="score" value="${co.com_rate }" readonly="readonly">
-								<input type="hidden" id="memNo" value="${co.com_no }">
+								<input type="hidden" class="com-no" value="${co.com_no }">
+								<input type="hidden" class="mem-no" value="${co.mem_no }">
 								<button type="button" class="remove-btn" id="removeBtn">삭제</button>
 							</div>
 						</div>
