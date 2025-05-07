@@ -234,31 +234,20 @@ function acceptFriend(senderMemNo) {
 	    body: new URLSearchParams({ sender_mem_no: senderMemNo })
 	  })
 	  .then(res => res.text())
-	}
+	  .then(res => {
+		  if (res.ok) {
+			  alert("팔로우 완료!");
+			  button.disabled = true;
+			  button.textContent = "팔로잉";
+		  } else {
+			  alert("팔로우에 실패했습니다.");
+		  }
+	  });
 
 	console.log("보내는 값:", friendMemNo);
-fetch("/friendlist/follow", {
- 	
-	
-  method: "POST",
-  credentials: "include",
-  headers: {
-    "Content-Type": "application/x-www-form-urlencoded"
-  },
-  body: new URLSearchParams({
-    friend_mem_no: friendMemNo
-  })
-})
-.then(res => {
-  if (res.ok) {
-    alert("팔로우 완료!");
-    button.disabled = true;
-    button.textContent = "팔로잉";
-  } else {
-    alert("팔로우에 실패했습니다.");
-  }
-});
 
+
+}
 //친구 검색 결과 창
 document.addEventListener("DOMContentLoaded", function () {
 	  const searchBtn = document.getElementById("searchButton");
