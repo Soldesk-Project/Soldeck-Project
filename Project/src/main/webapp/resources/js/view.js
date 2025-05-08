@@ -1053,7 +1053,8 @@ function handleFavoriteClick() {
 
     if (mem_no == 0) {
         alert("즐겨찾기 기능은 로그인 후 가능합니다.")
-        window.location.href = '/login/loginPage';
+        const currentUrl = encodeURIComponent(window.location.pathname + window.location.search);
+        window.location.href = `/login/loginPage?redirectUrl=${currentUrl}`;
         return;
     }
 
