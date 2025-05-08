@@ -133,6 +133,11 @@
 
 
 	<script type="text/javascript" src="/resources/js/index.js"></script>
+	<script type="text/javascript">
+	    document.addEventListener('DOMContentLoaded', function() {
+	        fetchRecommendations(); // 페이지 로드 시 병렬 fetch 호출
+	    });
+	</script>
     <%@ include file="../views/layout/footer.jsp" %>
 </body>
 </html>

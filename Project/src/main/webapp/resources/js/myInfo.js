@@ -22,7 +22,7 @@ let f=document.forms[0];
 document.querySelectorAll('button').forEach(btn => {
   btn.addEventListener('click', () => {
     let type = btn.getAttribute("id");
-    let mem_no=f.mno.value
+    let mem_no=f.mno.value;
 
     if(type == 'modifyBtn'){
     	location.href='/mypage/modifyInfo?mem_no='+mem_no;
