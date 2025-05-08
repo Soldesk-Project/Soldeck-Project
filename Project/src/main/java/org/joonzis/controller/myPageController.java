@@ -3,11 +3,9 @@ package org.joonzis.controller;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
-import org.joonzis.domain.AttachVO;
 import org.joonzis.domain.BookMarkVO;
 import org.joonzis.domain.CommentVO;
 import org.joonzis.domain.GroupMemberDTO;
@@ -153,7 +151,13 @@ public class myPageController {
 	    }
 	    if (service.modify(vo)) {
 	        rttr.addFlashAttribute("result", "success");
+	        
+	        // 최신 회원 정보로 세션 갱신
+	        MemberVO updatedMember = service.getMemberInfo(vo.getMem_no());
+	        session.setAttribute("loggedInUser", updatedMember);
 	    }
+	    
+	    
 	    return "redirect:/mypage/myInfo";
 	}
 	

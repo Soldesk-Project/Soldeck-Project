@@ -14,7 +14,7 @@
         <div class="profileBox">
         	<div class="profileBox1">
         		<div class="profile_img_box">
-					<img src="../resources/upload/${member.mem_img}" alt="프로필" width="80" height="80"
+					<img src="/resources/upload/${member.mem_img}" alt="프로필" width="80" height="80"
                 	 onerror="if (!this.dataset.error) { this.dataset.error = true; this.src='../resources/images/profile.png'; }">
 				</div>
 				<!-- <div><img src='../resources/images/profile_line.png' alt="라인"></div>  -->
@@ -24,7 +24,8 @@
 					<div class="nickname">${member.mem_nick}님</div>
 					<div class="mypageAndlouout">
 						<div class="mypage_text"><a href="/mypage/myInfo">마이페이지</a></div>
-						<div><a href="/login/logout">로그아웃</a></div>
+						<form id="logoutForm" action="/login/logout" method="POST" style="display: none;"></form>
+						<div><a href="#" onclick="document.getElementById('logoutForm').submit();">로그아웃</a></div>
 					</div>
 				</div>
 			</div>
