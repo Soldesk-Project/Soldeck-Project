@@ -1,3 +1,14 @@
+.mypage_text a {
+  color: #606060; /* 원하는 색상으로 변경 */
+  text-decoration: none; /* 밑줄 제거 (선택 사항) */
+  font-weight: 400;
+}
+.mypage_text a:hover {
+  color: #303030; /* 원하는 색상으로 변경 */
+  text-decoration: none; /* 밑줄 제거 (선택 사항) */
+  font-weight: 500;
+  
+}
 .header {
   display: flex;
   justify-content: space-between;
@@ -34,8 +45,25 @@ input[type="search"]::-webkit-search-cancel-button {
     appearance: none;
     display: none;
 }
-#profile{
-  margin-right: 40px;
+.profile_img_box{
+	width: 70px;
+	height: 70px;
+	border-radius: 50%;
+	overflow: hidden;
+}
+.profile_img_box img{
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;	
+}
+.nickAndmypage{
+	display: flex;
+	flex-direction: column;
+	margin-left: 25px;
+	gap: 7px;
+	align-items: center;
+	justify-content: center;
 }
 #login {
   /*border: 2px solid #FF7D00;*/
@@ -50,9 +78,6 @@ input[type="search"]::-webkit-search-cancel-button {
 .nav-left {
   justify-content: flex-start;
   padding-left: 100px;
-}
-.nav-right{
-	margin-right: 40px;
 }
 .nav-right1 {
   justify-content: flex-start;
@@ -92,12 +117,26 @@ input[type="search"]::-webkit-search-cancel-button {
     border: 2px solid #ccc;
     border-radius: 50%;
 }
-
+.profileBox{
+	height: 75px;
+	border: 1px solid #EBEBEB;
+	border-radius: 20px;
+	padding: 5px 30px 5px 10px; 
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+.profileBox1{
+	margin: 3px;
+}
+.profileBox2{
+	align-items: center;
+	justify-content: center;
+}
 .nickname {
-    flex-grow: 1;
-    text-align: left;
-    margin-left: 10px;
-    font-weight: bold;
+    font-weight: 500;
+    font-size: 19px;
 }
 
 .close {

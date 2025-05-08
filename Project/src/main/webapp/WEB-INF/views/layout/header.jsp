@@ -9,11 +9,25 @@
     </div>
 
     <c:if test="${sessionScope.loggedInUser != null}">
-        <div class="nav-right">
-            <input type="image" src="../resources/images/profile.png" alt="profile" id="proFile" style="width: 70px; cursor: pointer;"><br>
+    	<c:set var="member" value="${sessionScope.loggedInUser}" />
+    
+        <div class="profileBox">
+        	<div class="profileBox1">
+        		<div class="profile_img_box">
+					<img src="../resources/upload/${member.mem_img}" alt="프로필" width="80" height="80"
+                	 onerror="if (!this.dataset.error) { this.dataset.error = true; this.src='../resources/images/profile.png'; }">
+				</div>
+			</div>
+			<div class="profileBox2">
+				<div class="nickAndmypage">
+					<div class="nickname">${member.mem_nick}님</div>
+					<div class="mypage_text"><a href="/mypage/myInfo">My page</a></div>
+				</div>
+			</div>
         </div>
         <!-- 모달창 -->
-        <div id="myModal" class="main-modal">
+<!--
+          <div id="myModal" class="main-modal">
             <div class="main-modal-content">
                 <div class="modal-header">
                     <div class="profile-icon"></div>
@@ -28,6 +42,7 @@
                 </ul>
             </div>
         </div>
+-->
     </c:if>
     <div class="nav-right1">
         <c:if test="${empty sessionScope.loggedInUser}">
