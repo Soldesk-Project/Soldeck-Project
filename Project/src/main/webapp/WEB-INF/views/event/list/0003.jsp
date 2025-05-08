@@ -11,9 +11,10 @@
   
 	<div class="container">
 		<div class="main-menu">
-		3
-		
-		
+			<h1>룰렛 돌리기</h1>
+			<canvas id="canvas" width="500" height="500"></canvas>
+			<button id="spin" class="spin-btn">Spin</button>
+			<p>현재 내 포인트 : <span>0</span></p>
 		
 		
 		</div>	

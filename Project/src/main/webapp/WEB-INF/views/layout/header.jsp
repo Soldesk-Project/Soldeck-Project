@@ -15,7 +15,7 @@
         	<div class="profileBox1">
         		<div class="profile_img_box">
 					<img src="/resources/upload/${member.mem_img}" alt="프로필" width="80" height="80"
-                	 onerror="if (!this.dataset.error) { this.dataset.error = true; this.src='../resources/images/profile.png'; }">
+                	 onerror="if (!this.dataset.error) { this.dataset.error = true; this.src='/resources/images/profile.png'; }">
 				</div>
 				<!-- <div><img src='../resources/images/profile_line.png' alt="라인"></div>  -->
 			</div>

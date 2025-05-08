@@ -34,10 +34,6 @@ canvas {
   margin: 0 auto;
   border: 1px solid #000;
 }
-#game-board{
-	width: 400px;
-	height: 400px;
-}
 
 .buttons button{
 	background-color: #FF7D00;
@@ -47,6 +43,9 @@ canvas {
 	border-radius: 4px;
 	cursor: pointer;
 	margin: 30px 20px; 
+}
+.buttons button:hover {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .50);
 }
 .start-btn{
 	width: 100px;

@@ -144,21 +144,25 @@ document.addEventListener('DOMContentLoaded', ()=>{
 });
 //-----가게 선택시 정보 가져오기---------------------------------------------------------------
 let isPublic;
-document.querySelectorAll(".view").forEach(viewItem => {
-    viewItem.addEventListener('click', function(e) {
-        if (!e.target.closest('button') && !e.target.closest('input') && !e.target.closest('img') && !e.target.closest('.info-text a')) {
-            restNo = this.querySelector("#restNo").value;
-            isPublic = this.querySelector(".is-public").value;
-            document.querySelectorAll(".view").forEach(v => v.classList.remove('selected'));
-            this.classList.add('selected');
-        }
-    });
-});
-document.querySelectorAll(".info-text a, .view-img img").forEach(element => {
-    element.addEventListener('dblclick', function(e) {
-        e.preventDefault();
-        const view = this.closest(".view").querySelector("#restNo").value;
-        location.href="../search/view?rest_no="+view;
+
+document.querySelectorAll('.view').forEach(view=>{
+	view.addEventListener('click', function(e){
+		if (e.target.closest('button')||e.target.closest('input')||e.target.closest('img')){
+			return;
+		}
+		
+		
+		if (this.classList.contains('active')) {
+			this.classList.remove('active');
+			restNo=0;
+    		return;
+		}
+		document.querySelectorAll('.view').forEach(view2=>{
+    		view2.classList.remove('active');
+    	});
+    	restNo = this.closest(".view").querySelector("#restNo").value;
+    	isPublic= this.closest(".view").querySelector(".is-public").value;
+		view.classList.add('active');
     });
 });
 //-----버튼으로 즐겨찾기 설정 변경--------------------------------------------------------

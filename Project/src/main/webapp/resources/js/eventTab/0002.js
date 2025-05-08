@@ -30,7 +30,7 @@ const scale = 20;
 const rows = canvas.height / scale;
 const columns = canvas.width / scale;
 let score = 0;
-let highScore=0;
+let highScore=document.querySelector("#highScore").textContent;
 
 let snake;
 let fruit;
@@ -74,7 +74,6 @@ function gameOver() {
 		highScore=score;
 		document.getElementById("highScore").textContent = highScore;
 	}
-  alert("게임 오버! 점수: " + score);
   snake.reset();
   stopGame();
 }
