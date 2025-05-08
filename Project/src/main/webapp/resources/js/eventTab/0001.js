@@ -22,8 +22,25 @@ window.addEventListener('keydown', function(e) {
 	  	e.preventDefault();
   	}
 });
+//----- 프로필 경로 수정---------------------------------------------
+document.querySelector("#proFile").src="/resources/images/profile.png"
+//----- 버튼-----------------------------------------------------------------
+document.querySelectorAll('button').forEach(btn => {
+	btn.addEventListener('click', () => {
+		let type = btn.getAttribute("id");
 
+		if(type == 'highScore'){
+			checkScore();
+		}
+	});
+});	
+	
 //-----크롬 공룡 게임----------------------------------------------------
+	
+let highScoreValue='';	
+	
+
+
 function hideClass(name) {
    var myClasses = document.querySelectorAll(name),
   i = 0,
@@ -207,6 +224,7 @@ FOCUS: 'focus',
 LOAD: 'load'
 };
 Runner.prototype = {
+		
 /**
 * Setting individual settings for debugging.
 * @param {string} setting
@@ -337,7 +355,7 @@ this.resizeTimerId_ = null;
 var boxStyles = window.getComputedStyle(this.outerContainerEl);
 var padding = Number(boxStyles.paddingLeft.substr(0,
 boxStyles.paddingLeft.length - 2));
-this.dimensions.WIDTH = this.outerContainerEl.offsetWidth - padding * 2;
+this.dimensions.WIDTH = 600;
 // Redraw the elements back onto the canvas.
 if (this.canvas) {
 this.canvas.width = this.dimensions.WIDTH;
@@ -731,8 +749,8 @@ function createCanvas(container, width, height, opt_classname) {
 var canvas = document.createElement('canvas');
 canvas.className = opt_classname ? Runner.classes.CANVAS + ' ' +
 opt_classname : Runner.classes.CANVAS;
-canvas.width = width;
-canvas.height = height;
+canvas.width = 600;
+canvas.height = 150;
 container.appendChild(canvas);
 return canvas;
 }
@@ -1580,6 +1598,12 @@ distance = this.getActualDistance(distance);
 var highScoreStr = (this.defaultString +
 distance).substr(-this.config.MAX_DISTANCE_UNITS);
 this.highScore = ['10', '11', ''].concat(highScoreStr.split(''));
+
+	for (let i = 0; i < highScoreStr.length; i++) {
+		if (highScoreStr[i]!=0) {
+			highScoreValue=highScoreValue+highScoreStr[i];
+		}
+	}
 },
 /**
 * Reset the distance meter back to '00000'.
@@ -1955,8 +1979,9 @@ this.canvas.height = height;
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
 
+  let runner;
 if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
-  new Runner('.interstitial-wrapper');
+  runner=new Runner('.interstitial-wrapper');
 } else {
   document.getElementById("main-frame-notchrome").style.display="";
 	}
@@ -1967,6 +1992,15 @@ if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
   hideClass(".onlyforchrome");
 }
 	  
-
+    
+    
+//-----공룡게임창 크기----------------------------------------    
+window.onload = function() {
+	runner.horizon.resize(600, 150);
+};
+//----- 최고점수 값 받아오기------------------------------------------------------------------
+function checkScore() {
+	console.log(highScoreValue);
+}
 
 

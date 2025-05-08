@@ -105,6 +105,12 @@ function setPositionByIndex() {
     setSliderPosition();
 }
 
+const sliderIndexes = { // 함수 내에서 sliderIndexes를 관리
+        today: 0,
+        preference: 0,
+        friend: 0
+    };
+
 function moveSlider(name, direction) {
     if (name === 'image') {
         currentImageIndex += direction;
@@ -126,11 +132,7 @@ function moveSlider(name, direction) {
         const itemWidth = 340;
 
         const maxIndex = Math.ceil(items / itemsPerPage) - 1;
-        const sliderIndexes = { // 함수 내에서 sliderIndexes를 관리
-            today: 0,
-            preference: 0,
-            friend: 0
-        };
+        
 
         if (!sliderIndexes.hasOwnProperty(name)) {
             sliderIndexes[name] = 0; // 해당 슬라이더의 인덱스 초기화
@@ -157,3 +159,145 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 });
+
+todayList();
+// 오늘의 추천 픽 보여주기
+function todayList() {
+	const imageUL = document.getElementById("today-slider");
+
+	let msg = '';
+	  getTodayList(jsonArray => {
+	  	  if (!Array.isArray(jsonArray)) {
+	  		  console.error('jsonArray가 배열이 아닙니다:', jsonArray);
+	      return;
+	  	  }
+		  
+		  for (let i = jsonArray.length - 1; i > 0; i--) {
+		      const j = Math.floor(Math.random() * (i + 1));
+		      [jsonArray[i], jsonArray[j]] = [jsonArray[j], jsonArray[i]];
+		  }
+
+		  const limitedArray = jsonArray.slice(0, 300);
+
+		  limitedArray.forEach(json => {
+		      const rest_no = json.rest_no || 'default';
+		      msg += `<div class="recommendation-item" data-rest_no="${rest_no}"><img src="${json.rest_img_name || ''}" alt="이미지 없음" onerror="this.src='/resources/images/noImage.png';">`;
+//		      msg += `<p>${json.rest_name || '이름 없음'}</p>`;
+		      msg += `</div>`;
+		  });
+
+		  imageUL.innerHTML = msg;
+		  setupEventListeners();
+	  });
+}
+// 오늘의 추천 픽 데이터 가져오기
+function getTodayList(callback) {
+	const url = `/search/index/todayData`;
+	fetch(url, {
+        headers: {
+        	'Accept': 'application/json'
+        }
+	})
+      .then(response => {
+          if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+      })
+      .then(data => {
+          callback(data || []); // 데이터가 없으면 빈 배열 전달
+      })
+      .catch(err => {
+          console.error("Fetch error:", err.message);
+          callback([]); // 에러 발생 시 빈 배열 전달
+      });
+}
+
+// 오늘의 추천 픽 클릭 이벤트
+function setupEventListeners() {
+    const sliderWindows = document.querySelectorAll('.recommendation-slider-window');
+    if (!sliderWindows.length) {
+        console.error('recommendation-slider-window 요소를 찾을 수 없습니다.');
+        return;
+    }
+
+    sliderWindows.forEach(window => {
+        window.addEventListener('click', (event) => {
+            if (event.target.tagName === 'IMG' || event.target.tagName === 'P') {
+                if (event.target.tagName === 'IMG') {
+                    const imageSrc = event.target.src;
+                }
+                if (event.target.tagName === 'P') {
+                    const storeName = event.target.textContent;
+                }
+
+                const item = event.target.closest('.recommendation-item');
+                if (!item) {
+                    console.error('recommendation-item 요소를 찾을 수 없습니다.');
+                    return;
+                }
+
+                const rest_no = item.dataset.rest_no;
+                location.href = `/search/view?rest_no=${rest_no}`;
+            }
+        });
+    });
+}
+const userData = document.getElementById('user-data');
+const user_no = userData.dataset.user || ''; // 검색어 추가
+if(user_no != ''){
+	LikeKateList();
+}
+	
+//유저 선호음식 추천 픽 보여주기
+function LikeKateList() {
+	const imageUL = document.getElementById("preference-slider");
+
+	let msg = '';
+	getLikeKateList(jsonArray => {
+	  	  if (!Array.isArray(jsonArray)) {
+	  		  console.error('jsonArray가 배열이 아닙니다:', jsonArray);
+	      return;
+	  	  }
+		  
+		  for (let i = jsonArray.length - 1; i > 0; i--) {
+		      const j = Math.floor(Math.random() * (i + 1));
+		      [jsonArray[i], jsonArray[j]] = [jsonArray[j], jsonArray[i]];
+		  }
+
+		  const limitedArray = jsonArray.slice(0, 300);
+
+		  limitedArray.forEach(json => {
+		      const rest_no = json.rest_no || 'default';
+		      msg += `<div class="recommendation-item" data-rest_no="${rest_no}"><img src="${json.rest_img_name || ''}" alt="이미지 없음" onerror="this.src='/resources/images/noImage.png';">`;
+//		      msg += `<p>${json.rest_name || '이름 없음'}</p>`;
+		      msg += `</div>`;
+		  });
+
+		  imageUL.innerHTML = msg;
+		  setupEventListeners();
+	  });
+}
+
+// 유저 선호음식 추천 픽 데이터 가져오기
+function getLikeKateList(callback) {
+	const url = `/search/index/likeKateData`;
+	fetch(url, {
+        headers: {
+        	'Accept': 'application/json'
+        }
+	})
+      .then(response => {
+          if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+      })
+      .then(data => {
+          callback(data || []); // 데이터가 없으면 빈 배열 전달
+      })
+      .catch(err => {
+          console.error("Fetch error:", err.message);
+          callback([]); // 에러 발생 시 빈 배열 전달
+      });
+}

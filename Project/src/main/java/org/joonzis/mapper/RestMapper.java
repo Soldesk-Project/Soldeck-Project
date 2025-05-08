@@ -13,11 +13,11 @@ public interface RestMapper {
 	// 전체 가게 목록
 	public List<RestVO> findAll();
 	
-	// 특정 가게 목록
-	public List<RestVO> filteredAll(Map<String, Object> params);
+	// 인덱스 취향 추천 픽
+	public List<RestVO> likeKateData(List<String> foodList);
 	
-	// 특정 가게 검색
-	public List<RestVO> search(Map<String, Object> params);
+	// 인덱스 오늘의 추천 픽
+	public List<RestVO> todayData();
 	
 	// 가게 찾기
 	public List<RestVO> findByNo(int rest_no);
