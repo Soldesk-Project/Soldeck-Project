@@ -5,6 +5,7 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -33,6 +34,7 @@ import lombok.extern.log4j.Log4j;
 public class LoginController {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+    private final Map<String, HttpSession> loggedInSessions = new ConcurrentHashMap<>();
 
     @Autowired
     private MemberService memberservice;
@@ -204,30 +206,36 @@ public class LoginController {
     }
     
     // 로그인 처리
-	@PostMapping("/loginProcess")
+    @PostMapping("/loginProcess")
     @ResponseBody
-    public String loginProcess(@RequestBody Map<String, String> loginData, HttpSession session) {
-		String mem_id = loginData.get("userId");
-		String mem_pw = loginData.get("password");
+    public String loginProcess(@RequestBody Map<String, String> loginData, HttpSession newSession) {
+        String mem_id = loginData.get("userId");
+        String mem_pw = loginData.get("password");
 
-		MemberVO loggedInMember = memberservice.loginProcess(mem_id, mem_pw);
+        // 이미 로그인된 세션이 있는지 확인
+        if (loggedInSessions.containsKey(mem_id)) {
+            return "duplicateLogin"; // 중복 로그인 시 "duplicateLogin" 반환
+        }
 
-		if (loggedInMember != null) {
-			// 로그인 성공 시 세션에 사용자 정보 저장
-			session.setAttribute("loggedInUser", loggedInMember);
-			return "success";
-		} else {
-			return "fail";
-		}
-	}
-	
-    // 로그아웃 처리
-	@PostMapping("/logout")
-	public String logout(HttpSession session) {
-	    if (session != null && session.getAttribute("loggedInUser") != null) {
-	        session.removeAttribute("loggedInUser"); // 세션에서 로그인 정보 제거
-	        session.invalidate(); // 세션 무효화
-	    }
-	    return "redirect:/"; // redirectUrl이 없으면 홈페이지로 리다이렉트
-	}
+        MemberVO loggedInMember = memberservice.loginProcess(mem_id, mem_pw);
+
+        if (loggedInMember != null) {
+            // 로그인 성공 시 세션에 사용자 정보 및 세션 ID 저장
+            newSession.setAttribute("loggedInUser", loggedInMember);
+            loggedInSessions.put(mem_id, newSession);
+            return "success";
+        } else {
+            return "fail";
+        }
+    }
+
+    @PostMapping("/logout")
+    public String logout(HttpSession session) {
+        MemberVO loggedInUser = (MemberVO) session.getAttribute("loggedInUser");
+        if (loggedInUser != null) {
+            loggedInSessions.remove(loggedInUser.getMem_id());
+        }
+        session.invalidate();
+        return "redirect:/";
+    }
 }

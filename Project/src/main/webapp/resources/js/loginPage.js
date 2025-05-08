@@ -75,6 +75,9 @@ function login() {
         } else if (data === 'fail') {
         	alert(LOGIN_FAIL_MSG);
             return;
+        } else if (data === 'duplicateLogin') {
+            alert('이미 다른 곳에서 로그인된 계정입니다.'); // 중복 로그인 경고창 표시
+            return;
         } else {
             console.error("알 수 없는 응답:", data);
         	alert("로그인 처리 중 오류가 발생했습니다."); // 예외 처리
