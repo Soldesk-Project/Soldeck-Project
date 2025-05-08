@@ -34,31 +34,34 @@ canvas {
   margin: 0 auto;
   border: 1px solid #000;
 }
+#game-board{
+	width: 400px;
+	height: 400px;
+}
 
-.score {
+.buttons button{
+	background-color: #FF7D00;
+	color: white;
+	padding: 10px 15px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	margin: 30px 20px; 
+}
+.start-btn{
+	width: 100px;
+	height: 40px;
+}
+.save-score{
+	width: 150px;
+	height: 40px;
+}
+.score-div {
   font-size: 1.2rem;
   margin-top: 1rem;
+  display: flex;
+  margin: 0px;
 }
-
-
-.buttons {
-  margin-top: 1rem;
-}
-
-.buttons button {
-  background-color: #4CAF50;
-  border: none;
-  color: white;
-  padding: 0.5rem 1rem;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 1rem;
-  margin: 0 0.5rem;
-  cursor: pointer;
-  border-radius: 0.5rem;
-}
-
-.buttons button:hover {
-  background-color: #45a049;
+.score-div p{
+	margin: 0 20px;
 }

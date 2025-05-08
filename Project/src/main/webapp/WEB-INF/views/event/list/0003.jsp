@@ -20,6 +20,6 @@
 	</div>	
 	
 	<jsp:include page="../../layout/footer.jsp"/>
-<script type="text/javascript" src="/resources/js/eventTab.js"></script>
+<script type="text/javascript" src="/resources/js/eventTab/0003.js"></script>
 </body>
 </html>

@@ -22,16 +22,15 @@ window.addEventListener('keydown', function(e) {
 		e.preventDefault();
 	}
 });
-//----- 프로필 경로 수정---------------------------------------------
-document.querySelector("#proFile").src="/resources/images/profile.png"
 	
 //----- 게임 ------------------------------------------------------------------
-	const canvas = document.getElementById("game-board");
+const canvas = document.getElementById("game-board");
 const ctx = canvas.getContext("2d");
 const scale = 20;
 const rows = canvas.height / scale;
 const columns = canvas.width / scale;
 let score = 0;
+let highScore=0;
 
 let snake;
 let fruit;
@@ -56,6 +55,7 @@ function startGame() {
       if (snake.eat(fruit)) {
         score++;
         document.getElementById("score").textContent = score;
+        document.getElementById("highScore").textContent = highScore;
         fruit.pickLocation();
       }
 
@@ -70,6 +70,10 @@ function stopGame() {
 }
 
 function gameOver() {
+	if (score>highScore) {
+		highScore=score;
+		document.getElementById("highScore").textContent = highScore;
+	}
   alert("게임 오버! 점수: " + score);
   snake.reset();
   stopGame();
@@ -175,5 +179,24 @@ window.addEventListener("keydown", (event) => {
   snake.changeDirection(direction);
 });
 
-document.getElementById("start-btn").addEventListener("click", startGame);
-document.getElementById("stop-btn").addEventListener("click", stopGame);	
+document.querySelector(".start-btn").addEventListener("click", startGame);
+document.querySelector(".save-score").addEventListener("click", saveScore);
+
+function saveScore() {
+	console.log(highScore);
+	
+	
+	
+	
+}
+
+
+
+
+
+
+
+
+
+
+

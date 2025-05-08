@@ -22,8 +22,6 @@ window.addEventListener('keydown', function(e) {
 	  	e.preventDefault();
   	}
 });
-//----- 프로필 경로 수정---------------------------------------------
-document.querySelector("#proFile").src="/resources/images/profile.png"
 //----- 버튼-----------------------------------------------------------------
 document.querySelectorAll('button').forEach(btn => {
 	btn.addEventListener('click', () => {
