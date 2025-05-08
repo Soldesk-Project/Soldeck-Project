@@ -50,32 +50,39 @@ public class SearchController {
 		model.addAttribute("keyword", keyword);
 		return "/search/search";
 	}
-	// search페이지 필터기능
-	@GetMapping(value = "/search/filterData", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<RestVO>> filterData(@RequestParam(value = "region", required = false) String region,
-			@RequestParam(value = "category", required = false) String category) {
-		log.info("filterData..." + " region : " + region + " category : " + category);
-		return new ResponseEntity<List<RestVO>>(service.getFilteredList(region, category), HttpStatus.OK);
+	// index페이지 취향 추천픽 데이터
+	@GetMapping(value = "/index/likeKateData", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<RestVO>> likeKateData(HttpSession session) {
+		MemberVO uesrInfo = (MemberVO) session.getAttribute("loggedInUser");
+		int mem_no = uesrInfo.getMem_no();
+		int foodKate[]=memberService.getFoodKateInfo(mem_no);
+		List<String> foodList = new ArrayList<>();
+	    for (int f : foodKate) {
+	        String foodName = changeFoodNoToName(f);
+	        foodList.add(foodName);
+	    }
+		return new ResponseEntity<List<RestVO>>(service.likeKateData(foodList), HttpStatus.OK);
+	}
+	private String changeFoodNoToName(int no) {
+	    switch(no) {
+	        case 1: return "한식";
+	        case 2: return "중식";
+	        case 3: return "일식";
+	        case 4: return "양식";
+	        case 5: return "베트남식";
+	        default: return "";
+	    }
 	}
 	
-	// search페이지 검색기능
-	@GetMapping(value = "/search/searchData", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<RestVO>> searchData(
-            @RequestParam(value = "keyword", required = false) String keyword,
-            @RequestParam(value = "region", required = false) String region,
-            @RequestParam(value = "category", required = false) String category) {
-        log.info("searchData... keyword: " + keyword + ", region: " + region + ", category: " + category);
-        if (keyword == null || keyword.trim().isEmpty()) {
-            log.info("Search keyword is empty, proceeding with region and category filters");
-        }
-
-        List<RestVO> list = service.getSearchList(keyword, region, category);
+	// index페이지 오늘의 추천픽 데이터
+	@GetMapping(value = "/index/todayData", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<RestVO>> todayData() {
+        List<RestVO> list = service.todayData();
         list.forEach(rest -> {
             if (rest.getRest_img_name() == null || rest.getRest_img_name().isEmpty()) {
                 rest.setRest_img_name("/resources/images/noImage.png");
             }
         });
-        log.info("Returning data: " + list.size() + " items");
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 	
@@ -90,12 +97,12 @@ public class SearchController {
 		return "/search/location";
 	}
 	// JSON 데이터 반환 (AJAX 요청용)
-	@GetMapping(value = "/location/data", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<RestVO>> locationData(@RequestParam(value = "region", required = false) String region,
-														@RequestParam(value = "category", required = false) String category) {
-		log.info("locationData..." + " region : " + region + " category : " + category);
-		return new ResponseEntity<List<RestVO>>(service.getFilteredList(region, category), HttpStatus.OK);
-	}
+//	@GetMapping(value = "/location/data", produces = MediaType.APPLICATION_JSON_VALUE)
+//	public ResponseEntity<List<RestVO>> locationData(@RequestParam(value = "region", required = false) String region,
+//														@RequestParam(value = "category", required = false) String category) {
+//		log.info("locationData..." + " region : " + region + " category : " + category);
+//		return new ResponseEntity<List<RestVO>>(service.getFilteredList(region, category), HttpStatus.OK);
+//	}
 	
 	// 상세 페이지 이동
 	@GetMapping(value = "/view")

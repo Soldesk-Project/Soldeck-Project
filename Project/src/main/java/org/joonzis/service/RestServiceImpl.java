@@ -29,27 +29,16 @@ public class RestServiceImpl implements RestService{
 	
 	// 특정 가게 목록
 	@Override
-	public List<RestVO> getFilteredList(String region, String category) {
-		log.info("getFilteredList... region: " + region + ", category: " + category);
-		Map<String, Object> params = new HashMap<>();
-	    if (region != null && !region.isEmpty()) {
-	        params.put("region", "%" + region + "%");
-	    }
-	    if (category != null && !category.isEmpty()) {
-	        params.put("category", category);
-	    }
-		return mapper.filteredAll(params);
+	public List<RestVO> likeKateData(List<String> foodList) {
+		log.info("likeKateData...");
+		return mapper.likeKateData(foodList);
 	}
 	
 	// 특정 가게 검색
 	@Override
-    public List<RestVO> getSearchList(String keyword, String region, String category) {
-        log.info("getSearchList... keyword: " + keyword + ", region: " + region + ", category: " + category);
-        Map<String, Object> params = new HashMap<>();
-        params.put("keyword", keyword);
-        params.put("region", region);
-        params.put("category", category);
-        return mapper.search(params);
+    public List<RestVO> todayData() {
+        log.info("todayData... ");
+        return mapper.todayData();
     }
 	
 	// 가게 찾기

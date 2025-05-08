@@ -82,12 +82,7 @@
 			
 			    	<div class="recommendation-slider-window">
 			        	<div class="recommendation-slider-track" id="today-slider">
-			            	<div class="recommendation-item"><img src="/resources/images/1.png" alt="추천 1" onclick="showRandumfood()"></div>
-			            	<div class="recommendation-item"><img src="/resources/images/2.png" alt="추천 2" onclick="showRandumfood()"></div>
-			            	<div class="recommendation-item"><img src="/resources/images/3.png" alt="추천 3" onclick="showRandumfood()"></div>
-			            	<div class="recommendation-item"><img src="/resources/images/4.png" alt="추천 4" onclick="showRandumfood()"></div>
-			            	<div class="recommendation-item"><img src="/resources/images/5.png" alt="추천 5" onclick="showRandumfood()"></div>
-			            	<div class="recommendation-item"><img src="/resources/images/6.png" alt="추천 5" onclick="showRandumfood()"></div>
+			            	<!-- <div class="recommendation-item"><img src="/resources/images/1.png" alt="추천 1" onclick="showRandumfood()"></div> -->
 			        	</div>
 			    	</div>
 			
@@ -101,19 +96,14 @@
 			
 			    	<div class="recommendation-slider-window">
 			        	<div class="recommendation-slider-track" id="preference-slider">
-			            	<div class="recommendation-item"><img src="preference1.jpg" alt="취향 1" onclick="showMostpickfood()"></div>
-			            	<div class="recommendation-item"><img src="preference2.jpg" alt="취향 2" onclick="showMostpickfood()"></div>
-			            	<div class="recommendation-item"><img src="preference3.jpg" alt="취향 3" onclick="showMostpickfood()"></div>
-			            	<div class="recommendation-item"><img src="preference4.jpg" alt="취향 4" onclick="showMostpickfood()"></div>
-			            	<div class="recommendation-item"><img src="preference5.jpg" alt="취향 4" onclick="showMostpickfood()"></div>
-			            	<div class="recommendation-item"><img src="preference6.jpg" alt="취향 4" onclick="showMostpickfood()"></div>
+			            	<!-- <div class="recommendation-item"><img src="preference1.jpg" alt="취향 1" onclick="showMostpickfood()"></div> -->
 			        	</div>
 			    	</div>
 			
 			    	<button class="slide-btn next" onclick="moveSlider('preference', 1)">&#10095;</button>
 				</div>
 
-            	<h2 class="indexTitle"># 친구 추천 pick</h2>
+            	<!-- <h2 class="indexTitle"># 친구 추천 pick</h2>
 				<div class="recommendation-slider-wrapper">
 			    	<button class="slide-btn prev" onclick="moveSlider('friend', -1)">&#10094;</button>
 			
@@ -129,7 +119,7 @@
 			    	</div>
 			
 			    	<button class="slide-btn next" onclick="moveSlider('friend', 1)">&#10095;</button>
-				</div>
+				</div> -->
 			</c:if>
         </div>
 		<div class="popup" id="popup">
@@ -138,6 +128,7 @@
 	                <img alt="pop-up" src="/resources/images/popup.png" class="pop-up_image">
 	            </div>
 	    </div>
+	    <div id="user-data" data-user="${sessionScope.loggedInUser.mem_no}"></div>
     </div>
 
 
