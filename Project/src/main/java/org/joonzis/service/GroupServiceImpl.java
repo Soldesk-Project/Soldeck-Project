@@ -26,7 +26,7 @@ public class GroupServiceImpl implements GroupService {
             log.info("Group created successfully: " + vo);
             
             // 2. 그룹 번호가 생성되면, 해당 그룹 번호로 채팅방 생성
-            int groupNo = vo.getGroupNo();  // 그룹 번호를 받아옵니다.
+            int groupNo = vo.getGroup_no();  // 그룹 번호를 받아옵니다.
 
             ChatRoomVO chatRoomVO = new ChatRoomVO();
             chatRoomVO.setGroupNo(groupNo);
@@ -62,6 +62,42 @@ public class GroupServiceImpl implements GroupService {
 	@Override
 	public boolean cancelGroupBookmark(int group_no, int mem_no) {
 		return mapper.cancelGroupBookmark(group_no, mem_no);
+	}
+	
+	
+	@Override
+	public List<GroupVO> getGroupList(int mem_no) {
+		return mapper.getgroupList(mem_no);
+	}
+	
+	@Override
+    public Integer getGroupNoByMember(int mem_no) {
+        return mapper.getGroupNoByMember(mem_no);
+    }
+
+    @Override
+    public List<GroupVO> getRandomGroupList(int group_no, int mem_no) {
+        return mapper.getRandomGroupList(group_no, mem_no);
+    }
+
+    @Override
+    public List<GroupVO> getRandomGroupListWithoutFilter(int mem_no) {
+        return mapper.getRandomGroupListWithoutFilter(mem_no);
+    }
+
+	@Override
+	public List<GroupVO> getSimpleSearch(String keyword) {
+		return mapper.searchGroupBygroupname(keyword);
+	}
+	
+	@Override
+	public void insertGroup(int group_no, int mem_no) {
+		mapper.insertGroup(group_no, mem_no);
+	}
+	
+	@Override
+	public void removeGroup(int group_no, int mem_no) {
+		mapper.removeGroup(group_no, mem_no);
 	}
 	
 }

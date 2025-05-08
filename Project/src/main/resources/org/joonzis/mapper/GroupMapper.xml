@@ -109,4 +109,59 @@
 			MEM_NO=#{mem_no}
 	</update>
 	
+	<resultMap id="groupResultRandomMap" type="org.joonzis.domain.GroupVO">
+	    <result property="groupNo" column="GROUP_NO"/>
+	    <result property="chatImage" column="GROUP_IMG"/>
+	    <result property="chatTitle" column="CHAT_TITLE"/>
+	</resultMap>
+	
+	<select id="getGroupNoByMember" parameterType="int" resultType="int">
+	    SELECT group_no
+	    FROM group_mem
+	    WHERE mem_no = #{mem_no}
+	    AND ROWNUM = 1
+	</select>
+	
+	<select id="getRandomGroupList" resultType="org.joonzis.domain.GroupVO">
+	    <![CDATA[
+		    SELECT *
+		    FROM (
+		        SELECT g.*
+		        FROM "GROUP" g
+		        WHERE g.group_no != #{group_no}
+		          AND g.group_no NOT IN (
+		              SELECT gm.group_no
+		              FROM group_mem gm
+		              WHERE gm.mem_no = #{mem_no}
+		          )
+		        ORDER BY g.chat_title ASC
+		    )
+		    WHERE ROWNUM <= 10
+	    ]]>
+	</select>
+	
+	<select id="getRandomGroupListWithoutFilter" resultType="org.joonzis.domain.GroupVO">
+	    <![CDATA[
+		    SELECT *
+		    FROM (
+		        SELECT g.*
+		        FROM "GROUP" g
+		        WHERE g.group_no NOT IN (
+		            SELECT gm.group_no
+		            FROM group_mem gm
+		            WHERE gm.mem_no = #{mem_no}
+		        )
+		        ORDER BY g.chat_title ASC
+		    )
+		    WHERE ROWNUM <= 10
+	    ]]>
+	</select>
+	
+	<!-- 모임 검색 -->
+	<select id="searchGroupBygroupname" parameterType="String" resultType="org.joonzis.domain.GroupVO">
+    	SELECT group_no, chat_title, group_img
+    	FROM "GROUP"
+    	WHERE chat_title LIKE #{keyword}
+	</select>
+	
 </mapper>

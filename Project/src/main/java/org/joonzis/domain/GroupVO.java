@@ -14,7 +14,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class GroupVO {
-	private int groupNo, memNo, maxMem, minAge, maxAge;
-	private String chatTitle, limGender, isPublic, groupMemo;
-	private Date regDate;
+	private int group_no, mem_no, max_mem, min_age, max_age;
+	private String chat_title, lim_gender, is_public, group_memo, group_img;
+	private Date reg_date;
 }

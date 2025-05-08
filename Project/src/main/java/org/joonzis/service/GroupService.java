@@ -21,5 +21,21 @@ public interface GroupService {
 	public boolean addGroupBookmark(int group_no, int mem_no);
 	
 	public boolean cancelGroupBookmark(int group_no, int mem_no);
+	
+	//채팅 목록 불러오기
+	public List<GroupVO> getGroupList(int mem_no);
+	//채팅 탈퇴하기
+	void removeGroup(int group_no, int mem_no);
+	//랜덤추천채팅 목록 불러오기
+	Integer getGroupNoByMember(int mem_no);
+	
+    public List<GroupVO> getRandomGroupList(int group_no, int mem_no);
+    //내가 속한 모임 필터링
+    public List<GroupVO> getRandomGroupListWithoutFilter(int mem_no);
+	//채팅 가입하기
+	void insertGroup(int group_no, int mem_no);
+	//검색어가 포함된 채팅 목록 불러오기
+	public List<GroupVO> getSimpleSearch(String keyword);
+	
 
 }
