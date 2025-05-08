@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../resources/css/loginPage.css">
 <link rel="stylesheet" href="../resources/css/footer.css">
 <body>
+	<div class="wrapper">
 	<div class="container">
 		<a href="/">
 			<img src="../resources/images/logo.png" alt="로고" class="loginLogo">
@@ -30,11 +31,12 @@
 			<button type="button" class="btn btn-fir" id="signUpPageBtn"> 회원가입</button>	
 		</div>
    </div>
+   </div>
+	<%@ include file="../layout/footer.jsp" %>
 	
 	<script type="text/javascript">
         var redirectUrl = '<%= session.getAttribute("redirectUrl") %>';
     </script>
 	<script type="text/javascript" src="/resources/js/loginPage.js"></script>
-	<%@ include file="../layout/footer.jsp" %>
 </body>
 </html>

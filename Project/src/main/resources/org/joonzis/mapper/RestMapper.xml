@@ -6,8 +6,54 @@
 	<select id="findAll" resultType="org.joonzis.domain.RestVO">
 		SELECT * FROM RESTAURANT
 	</select>
-    
-    <select id="likeKateData" resultType="org.joonzis.domain.RestVO" parameterType="list">
+
+	<select id="likeKateData" resultType="org.joonzis.domain.RestVO" parameterType="list">
+<![CDATA[
+    WITH first_image AS (
+        SELECT 
+            REST_NO,
+            REST_IMG_NAME,
+            REST_IMG_NO,
+            ROW_NUMBER() OVER (PARTITION BY REST_NO ORDER BY REST_IMG_NO) AS rn
+        FROM REST_IMG
+    )
+    SELECT *
+    FROM (
+        SELECT 
+            r.REST_NO,
+            r.REST_NAME,
+            r.REST_PHONE,
+            r.REST_ADR,
+            r.REST_BH,
+            r.REST_LOC,
+            r.REST_CATE,
+            i.REST_IMG_NAME,
+            i.REST_IMG_NO
+        FROM RESTAURANT r
+        LEFT JOIN first_image i
+            ON r.REST_NO = i.REST_NO AND i.rn = 1
+]]>
+    <if test="list != null and list.size() > 0">
+        <![CDATA[
+        WHERE r.REST_CATE IN (
+        ]]>
+        <foreach collection="list" item="category" separator=",">
+            #{category}
+        </foreach>
+        <![CDATA[
+        )
+        ]]>
+    </if>
+<![CDATA[
+        ORDER BY DBMS_RANDOM.VALUE
+    )
+    WHERE ROWNUM <= 300
+]]>
+</select>
+
+	
+	
+  <!-- <select id="likeKateData" resultType="org.joonzis.domain.RestVO" parameterType="list">
 	    SELECT 
 		    r.REST_NO,
 		    r.REST_NAME,
@@ -37,31 +83,78 @@
                 </foreach>
             )
    		 </if>
-	</select>
+	</select> -->
 	
 	<select id="todayData" resultType="org.joonzis.domain.RestVO">
+<![CDATA[
+    SELECT *
+    FROM (
+        SELECT 
+            r.REST_NO,
+            r.REST_NAME,
+            r.REST_PHONE,
+            r.REST_ADR,
+            r.REST_BH,
+            r.REST_LOC,
+            r.REST_CATE,
+            i.REST_IMG_NAME,
+            i.REST_IMG_NO,
+            DBMS_RANDOM.VALUE AS rand_val
+        FROM 
+            RESTAURANT r
+        LEFT JOIN (
+            SELECT 
+                REST_NO,
+                REST_IMG_NAME,
+                REST_IMG_NO
+            FROM (
+                SELECT 
+                    REST_NO,
+                    REST_IMG_NAME,
+                    REST_IMG_NO,
+                    ROW_NUMBER() OVER (PARTITION BY REST_NO ORDER BY REST_IMG_NO) AS rn
+                FROM 
+                    REST_IMG
+            ) i
+            WHERE i.rn = 1
+        ) i ON r.REST_NO = i.REST_NO
+        ORDER BY DBMS_RANDOM.VALUE
+    )
+    WHERE ROWNUM <= 300
+]]>
+</select>
+
+	
+	<!-- <select id="todayData" resultType="org.joonzis.domain.RestVO">
     SELECT 
-	    r.REST_NO,
-	    r.REST_NAME,
-	    r.REST_PHONE,
-	    r.REST_ADR,
-	    r.REST_BH,
-	    r.REST_LOC,
-	    r.REST_CATE,
-	    i.REST_IMG_NAME,
-	    i.REST_IMG_NO
-	FROM 
-	    RESTAURANT r
-	LEFT JOIN (
-	    SELECT 
-	        REST_NO,
-	        REST_IMG_NAME,
-	        REST_IMG_NO,
-	        ROW_NUMBER() OVER (PARTITION BY REST_NO ORDER BY REST_IMG_NO) AS rn
-	    FROM 
-	        REST_IMG
-	) i ON r.REST_NO = i.REST_NO AND i.rn = 1
-	</select>
+        r.REST_NO,
+        r.REST_NAME,
+        r.REST_PHONE,
+        r.REST_ADR,
+        r.REST_BH,
+        r.REST_LOC,
+        r.REST_CATE,
+        i.REST_IMG_NAME,
+        i.REST_IMG_NO
+    FROM 
+        RESTAURANT r
+    LEFT JOIN (
+        SELECT 
+            REST_NO,
+            REST_IMG_NAME,
+            REST_IMG_NO
+        FROM (
+            SELECT 
+                REST_NO,
+                REST_IMG_NAME,
+                REST_IMG_NO,
+                ROW_NUMBER() OVER (PARTITION BY REST_NO ORDER BY REST_IMG_NO) AS rn
+            FROM 
+                REST_IMG
+        ) i
+        WHERE i.rn = 1
+    ) i ON r.REST_NO = i.REST_NO
+</select> -->
 	
 	<select id="findByNo" resultType="org.joonzis.domain.RestVO">
 		SELECT 
