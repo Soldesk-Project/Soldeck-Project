@@ -221,12 +221,19 @@ body {
     text-align: center;
     line-height: 20px;
 }
-.community-title-link, .popular-posts-title-link {
+.community-title{
 	color: black;
 	text-decoration: none;
 	cursor: pointer;
 }
-
-.community-title-link:hover, .popular-posts-title-link:hover {
+.popular-title{
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
+.community-title:hover{
+	text-decoration: underline;
+}
+.popular-title:hover{
 	text-decoration: underline;
 }

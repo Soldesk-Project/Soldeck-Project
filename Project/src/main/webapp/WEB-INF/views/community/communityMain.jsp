@@ -28,13 +28,13 @@
 
     <div class="community-content-area">
         <section class="community-popular-posts">
-            <h2><a href="/community/communityList?mode=best" class="popular-posts-title-link">좋아요 순 게시글</a></h2>
+             <h2 class="popular-title"><span id="popularPostsLink" class="clickable-title">좋아요 순 게시글</span></h2>
             <div class="popular-post-list">
                 </div>
         </section>
 
 		<section class="community-list">
-			<h2 class="community-title"><a href="/community/communityList" class="community-title-link">커뮤니티 게시글 목록</a></h2>
+			<h2 class="community-title"><span id="communityListLink" class="clickable-title">커뮤니티 게시글 목록</span></h2>
 			<div class="post-filter-area">
 				<label for="sort-by">정렬:</label>
 				<select id="sort-by">

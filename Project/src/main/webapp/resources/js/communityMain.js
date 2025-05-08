@@ -73,7 +73,20 @@ document.addEventListener('DOMContentLoaded', function() {
     //     console.log('게시글 목록 업데이트 요청:', major, minor);
     //     // 서버에 데이터를 요청하고 응답을 받아 post-list 영역을 업데이트하는 로직 구현
     // }
-    
+ // 좋아요 순 게시글 링크 클릭 이벤트
+if (popularPostsLink) {
+    popularPostsLink.addEventListener('click', function() {
+        window.location.href = '/community/communityList?mode=best';
+    });
+}
+
+// 커뮤니티 게시글 목록 링크 클릭 이벤트
+if (communityListLink) {
+    communityListLink.addEventListener('click', function() {
+        window.location.href = '/community/communityList';
+    });
+}
+
     // 팝업 표시 (예시: 페이지 로드 후 1초 뒤에 표시)
     setTimeout(function() {
         popup.style.display = 'block'; // 'flex' 대신 'block' 사용
