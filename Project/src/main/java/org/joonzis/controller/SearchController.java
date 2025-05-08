@@ -169,8 +169,7 @@ public class SearchController {
 	@GetMapping(value = "/getLocation", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<RestVO> getLocation(@RequestParam("keyword") String keyword) {
-	    
-	    List<RestVO> allPlaces = service.getTest(); // 전체 가게 리스트 불러옴
+	    List<RestVO> allPlaces = service.getAllRestWithThumbnail(); // 전체 가게 리스트 불러옴
 	    List<RestVO> filteredPlaces = new ArrayList<>();
 	    
 	    if (keyword != null && !keyword.trim().isEmpty()) {
@@ -212,5 +211,16 @@ public class SearchController {
 	@GetMapping("/map")
 	public String goMap() {
 		return "/search/map";
+	}
+	
+	@GetMapping(value = "/getPlaceByNo", produces = "application/json")
+	@ResponseBody
+	public RestVO getPlaceByNo(@RequestParam("rest_no") int restNo) {
+	    List<RestVO> places = service.get(restNo); // 서비스에서 반환된 리스트
+	    if (places != null && !places.isEmpty()) {
+	        return places.get(0); // 첫 번째 항목만 반환
+	    } else {
+	        return null; // 데이터가 없으면 null 반환
+	    }
 	}
 }

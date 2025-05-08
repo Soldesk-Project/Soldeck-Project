@@ -22,6 +22,11 @@
 	</div>
   <div id="map"></div>
   
+  <button class="changeLocationBtn">
+  	<span class="btn_text">현 지도에서 검색</span>
+  </button>
+  
+  
 	<script>
 	// 검색 관련 스크립트
 	let headerSearchKeyword = '';

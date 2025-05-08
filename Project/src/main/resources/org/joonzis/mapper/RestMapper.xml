@@ -92,6 +92,8 @@
         r.REST_BH,
         r.REST_LOC,
         r.REST_CATE,
+        r.LATITUDE,
+	    r.LONGITUDE,
         i.REST_IMG_NAME,
         i.REST_IMG_NO
     FROM 
@@ -189,10 +191,6 @@
 		WHERE
 			RES_NO=#{res_no}
 	</update>
-
-	<select id="getTest" resultType="org.joonzis.domain.RestVO">
-		SELECT * FROM restaurant
-	</select>
 	
 	<select id="getSearch" resultType="org.joonzis.domain.RestVO" parameterType="list">
     SELECT 
@@ -230,5 +228,26 @@
 		</if>
     </where>
 </select>
+
+	<select id="getAllRestWithThumbnail" resultType="org.joonzis.domain.RestVO">
+	    SELECT 
+	        r.REST_NO,
+	        r.REST_NAME,
+	        r.REST_PHONE,
+	        r.REST_ADR,
+	        r.REST_BH,
+	        r.REST_LOC,
+	        r.REST_CATE,
+	        r.LATITUDE,
+	        r.LONGITUDE,
+	        i.REST_IMG_NAME,
+	        i.REST_IMG_NO
+	    FROM 
+	        RESTAURANT r
+	    LEFT JOIN 
+	        REST_IMG i ON r.REST_NO = i.REST_NO
+	    WHERE 
+	        i.REST_IMG_NO = 1
+	</select>
 
 </mapper>

@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const fileUploadSpan = document.querySelector('.file-upload .file-name');
     const birthDateErrorMessage = document.getElementById('birthDateErrorMessage');
     const passwordCheckInput = document.getElementById('passwordCheck');
-        const passwordCheckMessage = document.getElementById('passwordCheckMessage');
+    const passwordCheckMessage = document.getElementById('passwordCheckMessage');
 
     // 정규식
     const regId = /^[0-9a-z]{8,16}$/;

@@ -138,7 +138,7 @@ body {
   color: #555;
 }
 
-.info-detail-btn {
+.info-detail-btn, .share-btn{
   margin-top: 8px;
   padding: 5px 10px;
   background-color: #ff7f50;
@@ -151,4 +151,33 @@ body {
 
 .info-detail-btn:hover {
   background-color: #ff5a2e;
+}
+
+.share-btn:hover {
+  background-color: #ff5a2e;
+}
+
+.changeLocationBtn {
+    display: none;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    padding: 10px 20px;
+    background-color: #2e8bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.changeLocationBtn:hover {
+    background-color: #0056b3; /* 버튼에 마우스 hover 시 배경색 변경 */
+}
+
+.changeLocationBtn .btn_text {
+    font-weight: bold; /* 글자 두껍게 */
 }

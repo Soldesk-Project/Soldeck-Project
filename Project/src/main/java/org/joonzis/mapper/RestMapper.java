@@ -35,11 +35,11 @@ public interface RestMapper {
 	
 
 	public boolean updateReserveMemo(@Param("res_no") int res_no, @Param("res_memo") String res_memo);
-
-	public List<RestVO> getTest();
 	
 	// 맵 특정 가게 검색
 	public List<RestVO> getSearch(@Param("keywords") List<String> keywords);
-
+	
+	// 썸네일 + 전체 가게
+	public List<RestVO> getAllRestWithThumbnail();
 
 }

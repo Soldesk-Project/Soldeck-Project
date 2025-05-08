@@ -6,7 +6,7 @@ let socket = null;
 
 if (senderMemNo) {
     // WebSocket 연결
-    socket = new WebSocket("wss://4ea1-14-52-79-21.ngrok-free.app/friendSocket");
+    socket = new WebSocket("wss://c499-14-52-79-21.ngrok-free.app/friendSocket");
 
     socket.onopen = () => {
         console.log("WebSocket 연결됨");
@@ -226,24 +226,25 @@ function follow(friendMemNo, button) {
 }
 
 function acceptFriend(senderMemNo) {
-     fetch("/friendlist/accept", {
-       method: "POST",
-       headers: {
-         "Content-Type": "application/x-www-form-urlencoded"
-       },
-       body: new URLSearchParams({ sender_mem_no: senderMemNo })
-     })
-     .then(res => res.text())
-     .then(res => {
-        if (res.ok) {
-           alert("팔로우 완료!");
-           button.disabled = true;
-           button.textContent = "팔로잉";
-        } else {
-           alert("팔로우에 실패했습니다.");
-        }
-     });
-   }
+
+	  fetch("/friendlist/accept", {
+	    method: "POST",
+	    headers: {
+	      "Content-Type": "application/x-www-form-urlencoded"
+	    },
+	    body: new URLSearchParams({ sender_mem_no: senderMemNo })
+	  })
+	  .then(res => res.text())
+	  .then(res => {
+		  if (res.ok) {
+			  alert("팔로우 완료!");
+			  button.disabled = true;
+			  button.textContent = "팔로잉";
+		  } else {
+			  alert("팔로우에 실패했습니다.");
+		  }
+	  });
+	}
 
 
 //친구 검색 결과 창
@@ -252,11 +253,9 @@ document.addEventListener("DOMContentLoaded", function () {
      const input = document.getElementById("searchInput");
      const resultContainer = document.getElementById("searchResultContainer");
 
-     searchBtn.addEventListener("click", function () {
-       const keyword = input.value.trim();
-       
-       console.log(1);
-
+	  searchBtn.addEventListener("click", function () {
+	    const keyword = input.value.trim();
+	    
        if (keyword === "") {
          resultContainer.classList.remove("show");
          resultContainer.innerHTML = "";

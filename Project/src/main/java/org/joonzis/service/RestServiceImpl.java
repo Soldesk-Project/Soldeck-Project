@@ -115,14 +115,14 @@ public class RestServiceImpl implements RestService{
 	public boolean updateReserveMemo(int res_no, String res_memo) {
 		return mapper.updateReserveMemo(res_no, res_memo);
 	}
-	
-	@Override
-	public List<RestVO> getTest() {
-		return mapper.getTest();
-	}
-	
+
 	@Override
 	public List<RestVO> getSearch(List<String> keywords) {
 		return mapper.getSearch(keywords);
+	}
+
+	@Override
+	public List<RestVO> getAllRestWithThumbnail() {
+		return mapper.getAllRestWithThumbnail();
 	}
 }
