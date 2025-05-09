@@ -10,46 +10,67 @@
 .page-header {
     margin: 30px;
 }
-.slideshow-container{
-    width: 100%;
-    height: 250px;
+.slideshow-container {
     position: relative;
+    max-width: 100%;
+    height: 250px;
     overflow: hidden;
+    padding: 0 36px; /* 버튼 공간 확보 */
+    box-sizing: border-box;
     margin-bottom: 20px;
-    margin-left: 1px;
 }
-.slides-wrapper{
+
+.slides-container {
+    overflow: hidden;
+    width: 100%;
+}
+
+.slides-wrapper {
     display: flex;
-    height: 100%;
-    gap: 15px;
-    transition: transform 0.5s ease-in-out;
+    transition: transform 0.5s ease-in-out; /* JavaScript와 트랜지션 동기화 */
+    gap: 20px; /* 이미지 간 20px 간격 */
 }
+
 .slide {
-    flex: 0 0 calc(25% - 15px);
-    height: 100%;
+    flex: 0 0 248px; /* 슬라이드 너비 고정 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+	    overflow: hidden;
 }
+
 .slide img {
     width: 100%;
     height: 100%;
-    object-fit: inherit;
+    object-fit: inherit; /* 이미지 비율 유지 */
 }
+
 .prev, .next {
+    width: 16px;
     cursor: pointer;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    padding: 10px;
-    color: white;
+    color: #FF7D00;
     font-weight: bold;
-    font-size: 24px;
-    background-color: rgba(0, 0, 0, 0.5);
+    font-size: 30px;
     user-select: none;
+    text-align: center;
 }
+
+.prev {
+	padding-left: 10px;
+    left: 0;
+}
+
 .next {
+	padding-right: 10px;
     right: 0;
 }
-.prev:hover, .next:hover {
-    background-color: rgba(0, 0, 0, 0.8);
+a:hover {
+  color: #FF7D00; /* 원하는 색상으로 변경 */
+  text-decoration: none;
+  
 }
 .content {
     display: flex;
@@ -58,23 +79,25 @@
     height: 380px;
 }
 .store-list {
-    flex: 3; /* 3:7 비율의 3 */
+    flex: 2.5;
     border: 1px solid #ddd;
     border-radius: 4px;
     box-sizing: border-box;
     display: flex;
-    height: 100%;
+    height: 75%;
     flex-direction: column;
     padding: 10px 0;
 }
 .store-item {
     display: flex;
-    justify-content: space-between;
-    padding: 10px 30px;
+    padding: 0 20px;
     flex: 1;
     align-items: center;
+    text-align: center;
+    font-size: 17px;
 }
 .store-item .name {
+	flex: 7;
     font-weight: bold;
 }
 #age_rate{
@@ -83,25 +106,97 @@
 }
 .store-item .rating {
     color: orange;
+    flex: 3;
 }
 .store-details {
-    flex: 7; /* 나머지 공간 채우기 */
+    flex: 5;
     height: 100%;
     border: 1px solid #ddd;
     border-radius: 4px;
     padding: 20px;
     box-sizing: border-box; /* 패딩 포함 너비 계산 */
+    display: flex;
+    flex-direction: column;
 }
-.store-details table {
-    border-collapse : collapse;
-	border-radius: 5px;
-	text-align: left;
-    width: 100%;
+.store-tap {
+	margin-bottom: 15px;
 }
-th, td{
-    padding-bottom: 30px;
+.store-tap button {
+	background: none;
+	width: 55px;
+	height: 40px;
+	border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+.store-tap button.active {
+    background-color: #FF7D00;
+    color: white;
+    border-color: #FF7D00;
+}
+.store-tap button.active:hover {
+    background-color: #FF7D00; /* active 상태에서 호버해도 색상 유지 */
+    color: white;
+}
+.store-tap button:hover {
+    background-color: #e0e0e0;
 }
 
+.store-info {
+	display: block;
+    width: 100%;
+    text-align: left;
+    border-radius: 5px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    padding-bottom: 25px; /* 원래 td의 padding-bottom */
+}
+
+.info-label {
+    flex: 0 0 100px; /* 레이블 너비 고정, 필요 시 조정 가능 */
+    font-weight: bold; /* 레이블 강조 */
+}
+
+.info-value {
+    flex: 1; /* 값이 나머지 공간을 채움 */
+}
+
+.tabel_favor {
+    padding-bottom: 30px; /* 일관된 간격 유지 */
+    text-align: end; /* 버튼 중앙 정렬 */
+}
+.store-menu {
+	display: none;
+	overflow: overlay;
+}
+.menu {
+	display: flex;
+	margin-bottom: 5px;
+}
+.menu_name{
+	flex: 5;
+}
+.menu_price{
+	flex: 5;
+}
+
+.store-map {
+    flex: 2.5;
+    height: 300px; /* 미니맵 높이 */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
 .panel-body {
   display: flex;
   justify-content: space-between;

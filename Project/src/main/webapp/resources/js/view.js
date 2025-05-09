@@ -235,9 +235,6 @@ document.addEventListener("DOMContentLoaded", function () {
 // 가게 상세 정보 가져오기 및 렌더링
 function fetchStoreDetails() {
     const storeDetails = document.querySelector('.store-details');
-    if (storeDetails) {
-        storeDetails.querySelector('table').innerHTML = '<tr><td colspan="2">로딩 중...</td></tr>';
-    }
 
     get(data => {
         renderStoreDetails(data);
@@ -245,14 +242,19 @@ function fetchStoreDetails() {
         fetchComments();
         showAvgRate();
         showCommentsImage();
+        storeMenu();
+        
+        initMap(store_latitude, store_longitude, store_name);
     });
 }
-
+let store_name = '';
+let store_latitude = '';
+let store_longitude = '';
 // 가게 상세 정보 렌더링
 function renderStoreDetails(data) {
-    const storeDetails = document.querySelector('.store-details table tbody');
+    const storeDetails = document.querySelector('.store-info');
     if (!storeDetails) {
-        console.error('가게 상세 정보 컨테이너(.store-details table tbody)를 찾을 수 없습니다.');
+        console.error('가게 상세 정보 컨테이너(.store-info)를 찾을 수 없습니다.');
         return;
     }
 
@@ -261,33 +263,33 @@ function renderStoreDetails(data) {
         storeDetails.innerHTML = '<tr><td colspan="2">가게 정보를 찾을 수 없습니다.</td></tr>';
         return;
     }
-
+    store_name = storeData.rest_name;
+    store_latitude = storeData.latitude;
+    store_longitude = storeData.longitude;
     storeDetails.innerHTML = `
-        <tr>
-            <td colspan="2">
-                <button id="favoriteBtn" class="favorite-btn">즐겨찾기</button>
-            </td>
-        </tr>
-        <tr>
-            <td>가게 이름 :</td>
-            <td>${storeData.rest_name || '정보 없음'}</td\>
-    	</tr\>
-    	<tr\>
-    		<td\>가게 종류 \:</td\>
-    		<td\>${storeData.rest_cate || '정보 없음'}</td>
-        </tr>
-        <tr>
-            <td>가게 시간 :</td>
-            <td>${storeData.rest_bh || '정보 없음'}</td\>
-    	</tr\>
-    	<tr\>
-    		<td\>가게 주소 \:</td\>
-    		<td\>${storeData.rest_adr || '정보 없음'}</td>
-        </tr>
-        <tr>
-            <td>가게 연락처 :</td>
-            <td>${storeData.rest_phone || '정보 없음'}</td>
-        </tr>
+    	<div class="info-item">
+            <div class="info-label">가게 이름 :</div>
+            <div class="info-value">${storeData.rest_name || '정보 없음'}</div>
+        </div>
+        <div class="info-item">
+            <div class="info-label">가게 종류 :</div>
+            <div class="info-value">${storeData.rest_cate || '정보 없음'}</div>
+        </div>
+        <div class="info-item">
+            <div class="info-label">영업 시간 :</div>
+            <div class="info-value">${storeData.rest_bh || '정보 없음'}</div>
+        </div>
+        <div class="info-item">
+            <div class="info-label">가게 주소 :</div>
+            <div class="info-value">${storeData.rest_adr || '정보 없음'}</div>
+        </div>
+        <div class="info-item">
+            <div class="info-label">가게 연락처 :</div>
+            <div class="info-value">${storeData.rest_phone || '정보 없음'}</div>
+        </div>
+        <div class="tabel_favor">
+            <button id="favoriteBtn"></button>
+        </div>
     `;
 
     const newFavoriteBtnElement = document.getElementById('favoriteBtn');
@@ -328,6 +330,122 @@ function get(callback) {
         callback({});
     });
 }
+let menuLoaded = false;
+//가게 메뉴 정보 렌더링
+function storeMenu() {
+    const storeMenus = document.querySelector('.store-menu');
+    if (!storeMenus) {
+        console.error('가게 메뉴 정보(.store-map)를 찾을 수 없습니다.');
+        return;
+    }
+    
+    if (menuLoaded) {
+        return; // 이미 로드된 경우 리턴
+    }
+    
+    getMenu(jsonArray => {
+        let msg = '';
+        jsonArray.forEach(json => {
+            msg += `<div class="menu">`;
+            msg += `<span class="menu_name">${json.menu_name}</span>`;
+            msg += `<span class="menu_price">${json.menu_price}</span>`;
+            msg += `</div>`;
+        });
+
+        storeMenus.innerHTML = msg;
+        menuLoaded = true; // 로드 완료 플래그 설정
+    });
+}
+
+function getMenu(callback) {
+    if (!restNo) {
+        console.error("restNo가 정의되지 않았습니다.");
+        callback({});
+        return;
+    }
+
+    const url = `/search/view/menu/${restNo}`;
+    fetch(url, {
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        callback(data || {});
+    })
+    .catch(err => {
+        console.error("Fetch error:", err.message);
+        callback({});
+    });
+}
+
+//탭 전환 로직
+document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('.store-tap button');
+    const contents = document.querySelectorAll('.store-info, .store-menu');
+
+    const showTab = (targetId) => {
+        contents.forEach(content => {
+            content.style.display = 'none';
+        });
+
+        buttons.forEach(button => {
+            button.classList.remove('active');
+        });
+
+        const targetContent = document.querySelector(`.${targetId}`);
+        if (targetContent) {
+            targetContent.style.display = 'block';
+        }
+
+        const activeButton = document.querySelector(`[data-target="${targetId}"]`);
+        if (activeButton) {
+            activeButton.classList.add('active');
+        }
+
+        // 메뉴 탭 클릭 시 storeMenu 호출
+        if (targetId === 'store-menu') {
+            storeMenu();
+        }
+    };
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            const targetId = button.getAttribute('data-target');
+            showTab(targetId);
+        });
+    });
+
+    // 초기 상태: store-info 표시 (renderStoreDetails는 JSP에서 호출)
+    showTab('store-info');
+});
+
+function initMap(lat, lng, storeName) {
+    const mapContainer = document.getElementById('map');
+    const mapOption = {
+        center: new kakao.maps.LatLng(lat, lng),
+        level: 3
+    };
+
+    const map = new kakao.maps.Map(mapContainer, mapOption);
+
+    const marker = new kakao.maps.Marker({
+        position: mapOption.center,
+        map: map
+    });
+
+    const infoWindow = new kakao.maps.InfoWindow({
+        content: `<div style="padding:5px;font-size:13px;">${storeName}</div>`,
+        position: mapOption.center
+    });
+    infoWindow.open(map, marker);
+}
 
 // 관련 가게 슬라이드 표시
 function showViewList() {
@@ -353,7 +471,6 @@ function showViewList() {
         jsonArray.forEach(json => {
             msg += `<div class="slide">`;
             msg += `<img src="${json.rest_img_name || '/resources/images/noImage.png'}" alt="이미지 없음" onerror="this.src='/resources/images/noImage.png';">`;
-            msg += `<p>${json.rest_name}</p>`;
             msg += `</div>`;
         });
 
@@ -524,57 +641,6 @@ function renderCalendar(month) {
         calendarDays.appendChild(day);
     }
 }
-/*function renderCalendar(month) {
-    if (!calendarDays) return;
-    calendarDays.innerHTML = '';
-
-    const year = new Date().getFullYear();
-    const daysInMonth = new Date(year, month, 0).getDate(); // 수정: getTERMS OF SERVICEate() → getDate()
-    const firstDay = new Date(year, month - 1, 1).getDay();
-    const prevMonth = month === 1 ? 12 : month - 1;
-    const prevMonthYear = month === 1 ? year - 1 : year;
-    const daysInPrevMonth = new Date(prevMonthYear, prevMonth, 0).getDate(); // 수정: getTERMS OF SERVICEate() → getDate()
-    const prevMonthStart = daysInPrevMonth - firstDay + 1;
-
-    for (let i = 0; i < firstDay; i++) {
-        const day = document.createElement('div');
-        day.classList.add('day', 'disabled');
-        day.textContent = prevMonthStart + i;
-        calendarDays.appendChild(day);
-    }
-
-    for (let i = 1; i <= daysInMonth; i++) {
-        const day = document.createElement('div');
-        day.classList.add('day');
-        day.textContent = i;
-
-        const today = new Date();
-        const currentDate = new Date(year, month - 1, i);
-        if (currentDate < today.setHours(0, 0, 0, 0)) {
-            day.classList.add('disabled');
-        } else {
-            day.addEventListener('click', () => {
-                const days = document.querySelectorAll('.day:not(.disabled)');
-                days.forEach(d => d.classList.remove('selected'));
-                day.classList.add('selected');
-                selectedDate = day.textContent;
-                const resDate = `2025-<span class="math-inline">\{month\}\-</span>{selectedDate}`;
-                updateTimeSlots(restNo, resDate);
-            });
-        }
-
-        calendarDays.appendChild(day);
-    }
-
-    const totalDays = firstDay + daysInMonth;
-    const remainingDays = (7 - (totalDays % 7)) % 7;
-    for (let i = 1; i <= remainingDays; i++) {
-        const day = document.createElement('div');
-        day.classList.add('day', 'disabled');
-        day.textContent = i;
-        calendarDays.appendChild(day);
-    }
-}*/
 
 function resetSelections() {
     selectedDate = null;
@@ -1035,6 +1101,7 @@ function showAvgRate() {
         msg += `</div>`;
         msg += `<div class="store-item" id="age_rate">`;
         msg += `<span class="name">&lt;연령별 평점&gt;</span>`;
+        msg += `<span class="rating"></span>`;
         msg += `</div>`;
         
      // 연령대별 평점 가져오기

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
+import org.joonzis.domain.MenuVO;
 import org.joonzis.domain.ReserveRestDTO;
 import org.joonzis.domain.ReserveVO;
 import org.joonzis.domain.RestVO;
@@ -21,6 +22,9 @@ public interface RestMapper {
 	
 	// 가게 찾기
 	public List<RestVO> findByNo(int rest_no);
+
+	// 가게 메뉴 찾기
+	public List<MenuVO> getMenu(int rest_no);
 	
 	public RestVO getRest(int rest_no);
 	

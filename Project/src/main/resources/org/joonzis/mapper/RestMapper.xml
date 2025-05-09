@@ -111,6 +111,16 @@
         r.REST_NO = #{rest_no}
 	</select>
 	
+	<select id="getMenu" resultType="org.joonzis.domain.MenuVO">
+		SELECT
+	        MENU_NAME,
+	        MENU_PRICE
+    	FROM 
+        	MENU
+	    WHERE 
+    	    REST_NO = #{rest_no}
+	</select>
+	
 	<select id="getRest" resultType="org.joonzis.domain.RestVO">
 		SELECT 
 	        r.REST_NO,

@@ -13,6 +13,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.joonzis.domain.MemberVO;
+import org.joonzis.domain.MenuVO;
 import org.joonzis.domain.ReserveVO;
 import org.joonzis.domain.RestVO;
 import org.joonzis.service.MemberService;
@@ -105,6 +106,19 @@ public class SearchController {
 	    }
 	    
 	    return ResponseEntity.ok(storeList);
+	}
+	
+	// 상세 페이지 메뉴 데이터 가져오기
+	@GetMapping(value = "/view/menu/{rest_no}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<MenuVO>> getMenu(@PathVariable(value = "rest_no") int rest_no) {
+		List<MenuVO> menuList = service.getMenu(rest_no);
+		
+		if (menuList == null || menuList.isEmpty()) {
+			log.warn("No store found for rest_no: {}" + rest_no);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		return ResponseEntity.ok(menuList);
 	}
 	
 	// 예약하기

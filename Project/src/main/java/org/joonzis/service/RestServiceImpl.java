@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.joonzis.domain.MenuVO;
 import org.joonzis.domain.ReserveRestDTO;
 import org.joonzis.domain.ReserveVO;
 import org.joonzis.domain.RestVO;
@@ -46,6 +47,13 @@ public class RestServiceImpl implements RestService{
 	public List<RestVO> get(int rest_no) {
 		log.info("get..." + rest_no);
 		return mapper.findByNo(rest_no);
+	}
+	
+	// 가게 메뉴 찾기
+	@Override
+	public List<MenuVO> getMenu(int rest_no) {
+		log.info("get..." + rest_no);
+		return mapper.getMenu(rest_no);
 	}
 	
 	@Override

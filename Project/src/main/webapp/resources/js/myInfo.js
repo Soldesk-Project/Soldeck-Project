@@ -31,6 +31,8 @@ window.onload = () => {
 	    btn.addEventListener('click', () => {
 	      const type = btn.getAttribute("id");
 
+
+
 	      if (type === 'modifyBtn') {
 	        location.href = '/mypage/modifyInfo?mem_no=' + mem_no;
 	      }

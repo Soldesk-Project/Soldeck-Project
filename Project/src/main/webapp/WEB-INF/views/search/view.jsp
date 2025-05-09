@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="/resources/css/header.css">
 <link rel="stylesheet" href="/resources/css/footer.css">
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f95efd6df49141c0b98c0463ecfe5d9e"></script>
 </head>
 <body>
 	<jsp:include page="../layout/header.jsp"/>
@@ -15,8 +16,10 @@
         <div class="page-header" data-rest_no="${rest_no}">
         	<!-- 이미지 -->
             <div class="slideshow-container">
-                <div class="slides-wrapper"></div>
                 <a class="prev" onclick="moveSlide(-1)">❮</a>
+                <div class="slides-container"> 
+                <div class="slides-wrapper"></div>
+                </div>
                 <a class="next" onclick="moveSlide(1)">❯</a>
             </div>
 			<!-- 가게 내용 -->
@@ -24,8 +27,15 @@
 			    <div class="store-list">
 			    </div>
 			    <div class="store-details">
-			        <table class="store-table">
-			        </table>
+			    	<div class="store-tap">
+			    		<button class="tap-home active" data-target="store-info">홈</button>
+			    		<button class="tap-menu" data-target="store-menu">메뉴</button>
+			    	</div>
+			    	<div class="store-info"></div>
+			    	<div class="store-menu" style="display: none;"></div>
+			    </div>
+			    <div class="store-map">
+			    	<div id="map" style="width: 100%; height: 100%;"></div>
 			    </div>
             </div>
         </div>

@@ -2,6 +2,7 @@ package org.joonzis.service;
 
 import java.util.List;
 
+import org.joonzis.domain.MenuVO;
 import org.joonzis.domain.ReserveRestDTO;
 import org.joonzis.domain.ReserveVO;
 import org.joonzis.domain.RestVO;
@@ -18,6 +19,9 @@ public interface RestService {
 	
 	// 가게 찾기
 	public List<RestVO> get(int rest_no);
+
+	// 가게 메뉴 찾기
+	public List<MenuVO> getMenu(int rest_no);
 
 	public RestVO getRest(int rest_no);
 
