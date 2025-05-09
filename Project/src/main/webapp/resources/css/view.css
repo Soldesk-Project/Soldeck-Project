@@ -4,6 +4,7 @@
     width: 1200px;
     border: 1px solid;
     border-color: #000000;
+    border-radius: 50px;
 }
 
 /* --------------- 가게 정보단 --------------- */
@@ -261,15 +262,12 @@ a:hover {
   background-color: #f0f0f0;
 }
 .store-COMMENT {
-    padding: 10px 20px; /* 버튼 내부 여백 증가 */
-    font-size: 24px; /* 글자 크기 키우기 */
+    padding: 3px 10px; /* 버튼 내부 여백 증가 */
+    font-size: 18px; /* 글자 크기 키우기 */
     width: 150px; /* 버튼 너비 설정 */
     height: 44px; /* 버튼 높이 설정 */
     text-align: center;
-    border-radius: 4px; /* 부드러운 모서리 */
-    background-color: white; /* 배경색 (선택 사항) */
     color: black; /* 글자색 (선택 사항) */
-    border: 1px dotted #ddd;
     
 }
 .panel-body > div:nth-child(2) p {

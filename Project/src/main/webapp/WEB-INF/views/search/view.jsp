@@ -52,7 +52,7 @@
 	            <!-- 더보기 버튼 (기본적으로 숨김) -->
  			    <button class="more-btn" style="display: none;">더보기</button>
 	            <div>
-	            	<p class="store-COMMENT">COMMENT</p>
+	            	<p class="store-COMMENT">댓글</p>
 	            </div>
         	</div>
         </div>
