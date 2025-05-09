@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="../resources/css/footer.css">
 </head>
 <body>
+	<div class="wrapper">
 	<div class="container">
 		<a href="/">
 			<img src="../resources/images/logo.png" alt="로고" class="logo">
@@ -26,7 +27,7 @@
 			</div>
 		</div>
 	</div>
-
+	</div>
 	<%@ include file="../layout/footer.jsp" %>
 
 	<script type="text/javascript" src="/resources/js/findPw.js"></script>

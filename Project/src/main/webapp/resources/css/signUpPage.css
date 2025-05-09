@@ -14,6 +14,7 @@ body {
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 	width: 400px;
 	margin: 20px auto;
+	margin-bottom: 80px;
 }
 
 h1 {
@@ -135,7 +136,7 @@ input[type="tel"] {
 
 .interests {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	gap: 10px;
 	padding-left: 15px;
 }
@@ -182,7 +183,6 @@ input[type="tel"] {
     justify-content: center;
     margin-bottom: 20px;
     padding: 10px;
-    flex-direction: column;
 }
 
 .image-upload-container label {
@@ -194,15 +194,16 @@ input[type="tel"] {
 
 .image-upload-area {
     display: flex;
+    flex-direction:column;
     align-items: center;
     gap: 10px;
 }
 
 .image-preview {
-    width: 200px;
-    height: 200px;
+    width: 80px;
+    height: 80px;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 50%;
     overflow: hidden;
     flex-shrink: 0;
 }
@@ -212,24 +213,29 @@ input[type="tel"] {
     height: 100%;
     object-fit: cover;
 }
+#previewImage{
+	align-items: center;
+	justify-content: center;
+}
 
 .file-upload {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .file-upload label[for="profileImage"] {
     display: inline-block;
-    padding: 8px 12px;
     background-color: #f0f0f0;
     color: #333;
     border: 1px solid #ccc;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 11px;
     margin-bottom: 5px;
     text-align: center;
-    width: auto;
+    width: 65px;
+    font-weight: 500;
 }
 
 .file-upload input[type="file"] {

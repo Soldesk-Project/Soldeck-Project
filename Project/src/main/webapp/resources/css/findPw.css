@@ -1,10 +1,14 @@
-body {
-	font-family: sans-serif;
+body, html {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	min-height: vh;
+}
+.wrapper {
+	min-height: 90vh;
 	display: flex;
 	flex-direction: column;
-	min-height: 100vh;
 }
-
 .container {
 	text-align: center;
 	width: 100%;
