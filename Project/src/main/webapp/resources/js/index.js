@@ -160,237 +160,72 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-//오늘의 추천 픽 클릭 이벤트
+const userData = document.getElementById('user-data');
+const user_no = userData.dataset.user || '';
+
+document.addEventListener('DOMContentLoaded', () => {
+	fetchData();
+});
+
+// 가게 클릭 이벤트
 function setupEventListeners() {
-    const sliderWindows = document.querySelectorAll('.recommendation-slider-window');
-    if (!sliderWindows.length) {
-        console.error('recommendation-slider-window 요소를 찾을 수 없습니다.');
-        return;
-    }
-
-    sliderWindows.forEach(window => {
+    document.querySelectorAll('.recommendation-slider-window').forEach(window => {
         window.addEventListener('click', (event) => {
-            if (event.target.tagName === 'IMG' || event.target.tagName === 'P') {
-                if (event.target.tagName === 'IMG') {
-                    const imageSrc = event.target.src;
-                }
-                if (event.target.tagName === 'P') {
-                    const storeName = event.target.textContent;
-                }
+            const item = event.target.closest('.recommendation-item');
+            if (!item) return;
 
-                const item = event.target.closest('.recommendation-item');
-                if (!item) {
-                    console.error('recommendation-item 요소를 찾을 수 없습니다.');
-                    return;
-                }
-
-                const rest_no = item.dataset.rest_no;
+            const rest_no = item.dataset.rest_no;
+            if (rest_no) {
                 location.href = `/search/view?rest_no=${rest_no}`;
             }
         });
     });
 }
 
-const userData = document.getElementById('user-data');
-const user_no = userData.dataset.user || ''; // 검색어 추가
-/*if(user_no != ''){
-	LikeKateList();
-}
+// 병렬 fetch
+function fetchData() {
+    const headers = { 'Accept': 'application/json' };
 
-todayList();
-// 오늘의 추천 픽 보여주기
-function todayList() {
-	const imageUL = document.getElementById("today-slider");
+    const todayPromise = fetch('/search/index/todayData', { headers })
+        .then(res => res.ok ? res.json() : Promise.reject(res))
+        .catch(err => {
+            console.error("Today fetch error:", err);
+            return [];
+        });
 
-	let msg = '';
-	  getTodayList(jsonArray => {
-	  	  if (!Array.isArray(jsonArray)) {
-	  		  console.error('jsonArray가 배열이 아닙니다:', jsonArray);
-	      return;
-	  	  }
-		  
-		  for (let i = jsonArray.length - 1; i > 0; i--) {
-		      const j = Math.floor(Math.random() * (i + 1));
-		      [jsonArray[i], jsonArray[j]] = [jsonArray[j], jsonArray[i]];
-		  }
-
-		  const limitedArray = jsonArray.slice(0, 300);
-
-		  limitedArray.forEach(json => {
-		      const rest_no = json.rest_no || 'default';
-		      msg += `<div class="recommendation-item" data-rest_no="${rest_no}"><img src="${json.rest_img_name || ''}" alt="이미지 없음" onerror="this.src='/resources/images/noImage.png';">`;
-//		      msg += `<p>${json.rest_name || '이름 없음'}</p>`;
-		      msg += `</div>`;
-		  });
-
-		  imageUL.innerHTML = msg;
-		  setupEventListeners();
-	  });
-}
-
-// 오늘의 추천 픽 데이터 가져오기
-function getTodayList(callback) {
-	const url = `/search/index/todayData`;
-	fetch(url, {
-        headers: {
-        	'Accept': 'application/json'
-        }
-	})
-      .then(response => {
-          if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          return response.json();
-      })
-      .then(data => {
-          callback(data || []); // 데이터가 없으면 빈 배열 전달
-      })
-      .catch(err => {
-          console.error("Fetch error:", err.message);
-          callback([]); // 에러 발생 시 빈 배열 전달
-      });
-}
-	
-//유저 선호음식 추천 픽 보여주기
-function LikeKateList() {
-	const imageUL = document.getElementById("preference-slider");
-
-	let msg = '';
-	getLikeKateList(jsonArray => {
-	  	  if (!Array.isArray(jsonArray)) {
-	  		  console.error('jsonArray가 배열이 아닙니다:', jsonArray);
-	      return;
-	  	  }
-		  
-		  for (let i = jsonArray.length - 1; i > 0; i--) {
-		      const j = Math.floor(Math.random() * (i + 1));
-		      [jsonArray[i], jsonArray[j]] = [jsonArray[j], jsonArray[i]];
-		  }
-
-		  const limitedArray = jsonArray.slice(0, 300);
-
-		  limitedArray.forEach(json => {
-		      const rest_no = json.rest_no || 'default';
-		      msg += `<div class="recommendation-item" data-rest_no="${rest_no}"><img src="${json.rest_img_name || ''}" alt="이미지 없음" onerror="this.src='/resources/images/noImage.png';">`;
-//		      msg += `<p>${json.rest_name || '이름 없음'}</p>`;
-		      msg += `</div>`;
-		  });
-
-		  imageUL.innerHTML = msg;
-		  setupEventListeners();
-	  });
-}
-
-// 유저 선호음식 추천 픽 데이터 가져오기
-function getLikeKateList(callback) {
-	const url = `/search/index/likeKateData`;
-	fetch(url, {
-        headers: {
-        	'Accept': 'application/json'
-        }
-	})
-      .then(response => {
-          if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          return response.json();
-      })
-      .then(data => {
-          callback(data || []); // 데이터가 없으면 빈 배열 전달
-      })
-      .catch(err => {
-          console.error("Fetch error:", err.message);
-          callback([]); // 에러 발생 시 빈 배열 전달
-      });
-}
-*/
-
-//병렬 fetch로 today와 preference 데이터 가져오기
-function fetchRecommendations() {
-    const todayPromise = fetch(`/search/index/todayData`, {
-        headers: {
-            'Accept': 'application/json'
-        }
-    }).then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-    }).catch(err => {
-        console.error("Today fetch error:", err.message);
-        return [];
-    });
-
-    const preferencePromise = user_no !== '' ? fetch(`/search/index/likeKateData`, {
-        headers: {
-            'Accept': 'application/json'
-        }
-    }).then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-    }).catch(err => {
-        console.error("Preference fetch error:", err.message);
-        return [];
-    }) : Promise.resolve([]);
+    const preferencePromise = user_no
+        ? fetch('/search/index/likeKateData', { headers })
+            .then(res => res.ok ? res.json() : Promise.reject(res))
+            .catch(err => {
+                console.error("Preference fetch error:", err);
+                return [];
+            })
+        : Promise.resolve([]);
 
     Promise.all([todayPromise, preferencePromise]).then(([todayData, preferenceData]) => {
-        displayTodayList(todayData || []);
-        if (user_no !== '') {
-            displayLikeKateList(preferenceData || []);
+    	showList("today-slider", todayData);
+        if (user_no) {
+        	showList("preference-slider", preferenceData);
         }
+        setupEventListeners(); // 한 번만 호출
     });
 }
 
-// 오늘의 추천 픽 보여주기
-function displayTodayList(jsonArray) {
-    const imageUL = document.getElementById("today-slider");
-    let msg = '';
-    
-    if (!Array.isArray(jsonArray)) {
-        console.error('jsonArray가 배열이 아닙니다:', jsonArray);
+function showList(containerId, dataArray) {
+    const container = document.getElementById(containerId);
+    if (!container || !Array.isArray(dataArray)) {
+        console.error(`Invalid container or data for ${containerId}`);
         return;
     }
-    
-    for (let i = jsonArray.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [jsonArray[i], jsonArray[j]] = [jsonArray[j], jsonArray[i]];
-    }
-    
-    const limitedArray = jsonArray.slice(0, 300);
-    
-    limitedArray.forEach(json => {
-        const rest_no = json.rest_no || 'default';
-        msg += `<div class="recommendation-item" data-rest_no="${rest_no}"><img src="${json.rest_img_name || ''}" alt="이미지 없음" onerror="this.src='/resources/images/noImage.png';"></div>`;
-    });
-    
-    imageUL.innerHTML = msg;
-    setupEventListeners();
-}
 
-// 유저 선호음식 추천 픽 보여주기
-function displayLikeKateList(jsonArray) {
-    const imageUL = document.getElementById("preference-slider");
-    let msg = '';
-    
-    if (!Array.isArray(jsonArray)) {
-        console.error('jsonArray가 배열이 아닙니다:', jsonArray);
-        return;
-    }
-    
-    for (let i = jsonArray.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [jsonArray[i], jsonArray[j]] = [jsonArray[j], jsonArray[i]];
-    }
-    
-    const limitedArray = jsonArray.slice(0, 300);
-    
-    limitedArray.forEach(json => {
+    container.innerHTML = dataArray.map(json => {
         const rest_no = json.rest_no || 'default';
-        msg += `<div class="recommendation-item" data-rest_no="${rest_no}"><img src="${json.rest_img_name || ''}" alt="이미지 없음" onerror="this.src='/resources/images/noImage.png';"></div>`;
-    });
-    
-    imageUL.innerHTML = msg;
-    setupEventListeners();
+        const img_src = json.rest_img_name || '';
+        return `
+            <div class="recommendation-item" data-rest_no="${rest_no}">
+                <img src="${img_src}" alt="이미지 없음" onerror="this.src='/resources/images/noImage.png';">
+            </div>
+        `;
+//                <p>${json.rest_name || '이름 없음'}</p>; // 가게 이름 필요하면 return의 </div>위에 넣기
+    }).join('');
 }

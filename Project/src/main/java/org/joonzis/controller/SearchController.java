@@ -43,25 +43,21 @@ public class SearchController {
 	
 	@Autowired
 	private MemberService memberService;
-	
-	@GetMapping(value = "/search")
-	public String searchPage(@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword, Model model) {
-		log.info("search..." + "keyword : " + keyword);
-		model.addAttribute("keyword", keyword);
-		return "/search/search";
-	}
+		
 	// index페이지 취향 추천픽 데이터
 	@GetMapping(value = "/index/likeKateData", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<RestVO>> likeKateData(HttpSession session) {
 		MemberVO uesrInfo = (MemberVO) session.getAttribute("loggedInUser");
 		int mem_no = uesrInfo.getMem_no();
 		int foodKate[]=memberService.getFoodKateInfo(mem_no);
+		
 		List<String> foodList = new ArrayList<>();
 	    for (int f : foodKate) {
 	        String foodName = changeFoodNoToName(f);
 	        foodList.add(foodName);
 	    }
-		return new ResponseEntity<List<RestVO>>(service.likeKateData(foodList), HttpStatus.OK);
+	    
+	    return ResponseEntity.ok(service.likeKateData(foodList));
 	}
 	private String changeFoodNoToName(int no) {
 	    switch(no) {
@@ -78,64 +74,42 @@ public class SearchController {
 	@GetMapping(value = "/index/todayData", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<RestVO>> todayData() {
         List<RestVO> list = service.todayData();
+        
         list.forEach(rest -> {
             if (rest.getRest_img_name() == null || rest.getRest_img_name().isEmpty()) {
                 rest.setRest_img_name("/resources/images/noImage.png");
             }
         });
-        return new ResponseEntity<>(list, HttpStatus.OK);
+        
+        return ResponseEntity.ok(list);
     }
-	
-	// 지역 페이지
-	@GetMapping("/location")
-	public String location(@RequestParam(value = "region", required = false) String region,
-							@RequestParam(value = "category", required = false) String category,
-							Model model) {
-		log.info("location..." + " region : " + region + " category : " + category);
-		model.addAttribute("category", category);
-		model.addAttribute("region",region);
-		return "/search/location";
-	}
-	// JSON 데이터 반환 (AJAX 요청용)
-//	@GetMapping(value = "/location/data", produces = MediaType.APPLICATION_JSON_VALUE)
-//	public ResponseEntity<List<RestVO>> locationData(@RequestParam(value = "region", required = false) String region,
-//														@RequestParam(value = "category", required = false) String category) {
-//		log.info("locationData..." + " region : " + region + " category : " + category);
-//		return new ResponseEntity<List<RestVO>>(service.getFilteredList(region, category), HttpStatus.OK);
-//	}
 	
 	// 상세 페이지 이동
 	@GetMapping(value = "/view")
 	public String view(@RequestParam(value = "rest_no") int rest_no, Model model, HttpSession session) {
-	    log.info("view..." + rest_no);
 	    MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
-	    if (loggedInMember != null) {
-	        log.info("loggedInMember: " + loggedInMember);
-	        model.addAttribute("member", loggedInMember);
-	    } else {
-	        log.warn("No logged-in user found in session");
-	        model.addAttribute("member", new MemberVO()); // 비로그인 시 빈 MemberVO 객체
-	    }
+	    model.addAttribute("member", loggedInMember != null ? loggedInMember : new MemberVO());
 	    model.addAttribute("rest_no", rest_no);
-	    return "/search/view"; // /search/view.jsp 렌더링
+	    
+	    return "/search/view";
 	}
 
 	// 상세 페이지 데이터 가져오기
 	@GetMapping(value = "/view/{rest_no}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<RestVO>> getview(@PathVariable(value = "rest_no") int rest_no, HttpSession session) {
-	    log.info("getview..." + rest_no);
+	public ResponseEntity<List<RestVO>> getview(@PathVariable(value = "rest_no") int rest_no) {
 	    List<RestVO> storeList = service.get(rest_no);
+	    
 	    if (storeList == null || storeList.isEmpty()) {
 	        log.warn("No store found for rest_no: {}" + rest_no);
 	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	    }
-	    return new ResponseEntity<>(storeList, HttpStatus.OK);
+	    
+	    return ResponseEntity.ok(storeList);
 	}
 	
 	// 예약하기
 	@PostMapping("/reservations/add")
 	public ResponseEntity<Map<String, Object>> addReservation(@RequestBody ReserveVO reservation) {
-	    log.info("addReservation..." + reservation);
 	    try {
 	        service.addReserve(reservation);
 	        Map<String, Object> response = new HashMap<>();
@@ -156,7 +130,6 @@ public class SearchController {
     public ResponseEntity<Map<String, Object>> getReservedTimes(
             @RequestParam("rest_no") int rest_no,
             @RequestParam("res_date") String res_date) {
-		log.info("getReservedTimes..." + rest_no + res_date);
         try {
             List<String> reservedTimes = service.getReservedTimes(rest_no, res_date);
             Map<String, Object> response = new HashMap<>();
@@ -230,4 +203,25 @@ public class SearchController {
 	        return null; // 데이터가 없으면 null 반환
 	    }
 	}
+	
+//	@GetMapping(value = "/search")
+//	public String searchPage(@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword, Model model) {
+//		model.addAttribute("keyword", keyword);
+//		return "/search/search";
+//	} 
+//	@GetMapping("/location")
+//	public String location(@RequestParam(value = "region", required = false) String region,
+//							@RequestParam(value = "category", required = false) String category,
+//							Model model) {
+//		log.info("location..." + " region : " + region + " category : " + category);
+//		model.addAttribute("category", category);
+//		model.addAttribute("region",region);
+//		return "/search/location";
+//	}
+//	@GetMapping(value = "/location/data", produces = MediaType.APPLICATION_JSON_VALUE)
+//	public ResponseEntity<List<RestVO>> locationData(@RequestParam(value = "region", required = false) String region,
+//														@RequestParam(value = "category", required = false) String category) {
+//		log.info("locationData..." + " region : " + region + " category : " + category);
+//		return new ResponseEntity<List<RestVO>>(service.getFilteredList(region, category), HttpStatus.OK);
+//	}
 }

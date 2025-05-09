@@ -104,7 +104,6 @@
       </form>
 	</div>
   </div>
-  	<div id="user-data" data-user="${sessionScope.loggedInUser.mem_no}"></div>
   </div>
   
 	<jsp:include page="../layout/footer.jsp"/>
