@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.joonzis.domain.GroupVO;
 import org.joonzis.domain.MemberVO;
 import org.joonzis.service.GroupService;
+import org.joonzis.websoket.FriendSocketHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,9 @@ public class GroupController {
 	
 	@Autowired
 	private GroupService service;
+	
+	@Autowired
+	private FriendSocketHandler friendSocketHandler;
 	
 	// 그룹 생성 및 채팅방 생성
 	@ResponseBody
@@ -122,29 +126,26 @@ public class GroupController {
         return service.getSimpleSearch("%" + keyword + "%");
     }
     
-//    @PostMapping(value = "/follow", produces = "application/json;charset-UTF-8")
-//    @ResponseBody
-//    public ResponseEntity<String> follow(@RequestParam("mem_no") int receiverGroupNo, HttpSession session) {
-//        GroupVO group = (GroupVO) session.getAttribute("loggedInUser");
-//        
-//        if (group == null) {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다");
-//        }
-//        
-//        int senderGroupNo = group.getGroup_no();
-//
-//        boolean sent = service.sendGroupRequest(senderGroupNo, receiverGroupNo);
-//
-//        if (sent) {
-//            // 웹소켓 알림 전송
-//            //String msg = member.getMem_nick() + "님이 친구 요청을 보냈습니다.";
-//            GroupSocketHandler.sendGroupRequestAlert(receiverGroupNo, senderGroupNo, group.getMem_nick());
-//            return ResponseEntity.ok("요청이 전송되었습니다");
-//        } else {
-//            return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 요청을 보냈습니다");
-//        }
-//    }
+    @PostMapping(value = "/follow", produces = "application/json;charset-UTF-8")
+    @ResponseBody
+    public ResponseEntity<String> follow(@RequestParam("senderMemNo") int senderMemNo, HttpSession session) {
+    	
+    	MemberVO member = (MemberVO) session.getAttribute("loggedInUser");
+        
+        if (member == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다");
+        }
 
-	
+        boolean sent = service.insertGroupRequset(22, senderMemNo);
+
+        if (sent) {
+            // 웹소켓 알림 전송
+            //String msg = member.getMem_nick() + "님이 친구 요청을 보냈습니다.";
+        	friendSocketHandler.sendFriendRequestAlert(22, senderMemNo, member.getMem_nick());
+            return ResponseEntity.ok("요청이 전송되었습니다");
+        } else {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 요청을 보냈습니다");
+        }
+    }
 
 }

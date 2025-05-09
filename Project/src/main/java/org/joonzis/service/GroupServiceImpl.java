@@ -100,4 +100,13 @@ public class GroupServiceImpl implements GroupService {
 		mapper.removeGroup(group_no, mem_no);
 	}
 	
+	// 그룹 가입 요청 전송
+	@Override
+	public boolean insertGroupRequset(int group_no, int mem_no) {
+		if(mapper.checkRequestExist(group_no, mem_no) == 0) {
+			mapper.insertGroupRequset(group_no, mem_no);
+			return true;
+		}
+		return false;
+	}
 }

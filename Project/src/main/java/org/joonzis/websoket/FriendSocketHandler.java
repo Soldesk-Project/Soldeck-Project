@@ -20,7 +20,6 @@ public class FriendSocketHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-    	System.out.println("🔌 WebSocket 연결됨 - 세션 ID: " + session.getId());
     }
 
     @Override

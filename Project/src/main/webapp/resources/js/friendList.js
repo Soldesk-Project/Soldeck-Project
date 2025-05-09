@@ -189,6 +189,7 @@ function follow(friendMemNo, button) {
     })
     .then(res => res.text())
     .then(msg => {
+    	alert(msg);
         button.disabled = true;
         button.textContent = "요청됨";
     })
@@ -197,7 +198,6 @@ function follow(friendMemNo, button) {
         alert("요청을 처리하는 중 오류가 발생했습니다.");
     });
 }
-
 
 //친구 검색 결과 창
 document.addEventListener("DOMContentLoaded", function () {

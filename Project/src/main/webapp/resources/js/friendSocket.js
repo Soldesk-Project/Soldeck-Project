@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // 서버에서 받은 친구 요청 알림 처리
     const pendingRequest = JSON.parse(document.body.dataset.pendingRequest || '[]'); // 서버에서 전달한 pendingRequest 데이터를 가져옴
-    console.log(pendingRequest);
     pendingRequest.forEach(request => {
         displayFriendRequestAlert(request);
     });
@@ -18,10 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
         socket = new WebSocket("wss://6fe1-14-52-79-21.ngrok-free.app/friendSocket");
 
         socket.onopen = () => {
-            console.log("WebSocket 연결됨");
-            console.log("보낼 memNo:", senderMemNo);
             socket.send(senderMemNo.toString());  // 서버에 내 mem_no 전달
-            console.log("📤 WebSocket 메시지 전송됨");
         };
 
         // WebSocket 메시지 수신 시 처리

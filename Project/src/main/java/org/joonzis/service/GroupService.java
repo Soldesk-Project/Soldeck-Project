@@ -37,5 +37,7 @@ public interface GroupService {
 	//검색어가 포함된 채팅 목록 불러오기
 	public List<GroupVO> getSimpleSearch(String keyword);
 	
+	// 그룹 가입 요청 (group_req 테이블에 삽입)
+	boolean insertGroupRequset(int group_no, int mem_no);	
 
 }

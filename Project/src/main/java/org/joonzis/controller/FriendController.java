@@ -204,7 +204,6 @@ public class FriendController {
             e.printStackTrace();
         }
         
-        log.info(pendingRequestJson);
 
         // 세션에 저장
         if (pendingRequestJson != null) {

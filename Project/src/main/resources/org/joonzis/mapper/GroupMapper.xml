@@ -164,4 +164,15 @@
     	WHERE chat_title LIKE #{keyword}
 	</select>
 	
+	<select id="checkRequestExist" parameterType="map" resultType="int">
+	    SELECT COUNT(*) 
+	    FROM group_req 
+	    WHERE group_no = #{group_no} AND mem_no = #{mem_no}
+	</select>
+	
+	<insert id="insertGroupRequset" parameterType="map">
+	    INSERT INTO group_req (req_no, group_no, mem_no, req_status)
+	    VALUES (group_request_seq.nextval, #{group_no}, #{mem_no}, 'PENDING')
+	</insert>
+	
 </mapper>
