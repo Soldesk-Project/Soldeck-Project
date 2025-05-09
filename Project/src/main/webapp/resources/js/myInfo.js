@@ -24,7 +24,7 @@ window.onload = () => {
 	    console.error("mno input 요소를 찾을 수 없습니다.");
 	    return;
 	  }
-
+	  
 	  const mem_no = mnoInput.value;
 
 	  document.querySelectorAll('button').forEach(btn => {
