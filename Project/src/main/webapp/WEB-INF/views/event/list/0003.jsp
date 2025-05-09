@@ -14,9 +14,8 @@
 			<h1>룰렛 돌리기</h1>
 			<canvas id="canvas" width="500" height="500"></canvas>
 			<button id="spin" class="spin-btn">Spin</button>
-			<p>현재 내 포인트 : <span>0</span></p>
-		
-		
+			<p>현재 내 포인트 : <span>${point }</span></p>
+			<span>룰렛은 하루에 한 번만 가능합니다</span>
 		</div>	
 	</div>	
 	

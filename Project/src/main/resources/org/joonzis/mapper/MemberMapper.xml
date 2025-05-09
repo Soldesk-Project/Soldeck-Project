@@ -75,4 +75,13 @@
     	WHERE mem_id = #{mem_id}
 	</select>
 	
+	
+	<!-- 이벤트 테이블에 정보 삽입 -->
+	<insert id="insertEventInfo">
+		INSERT INTO EVENT_INFO (MEM_NO)
+			VALUES(event_info_seq.NEXTVAL)
+	</insert>
+	
+	
+	
 </mapper>

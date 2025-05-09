@@ -22,7 +22,7 @@
   font-size: 1.2rem;
 }
 #canvas{
-	border: 1px solid #333;
+	border: 1px solid gray;
 	display: block;
 	margin: 20px auto;
 }
@@ -38,7 +38,19 @@
 	border-radius: 4px;
 	cursor: pointer;
 	margin: 30px 20px; 
+	width: 100px;
+	height: 40px;
 }
 .spin-btn:hover {
 	box-shadow: 0 1px 3px rgba(0, 0, 0, .50);
 }
+
+
+#spin:disabled {
+  background: #ccc;
+  transform: none;
+  box-shadow: none;
+}
+
+
+

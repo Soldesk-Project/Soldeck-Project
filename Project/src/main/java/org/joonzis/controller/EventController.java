@@ -2,13 +2,24 @@ package org.joonzis.controller;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.joonzis.domain.EventVO;
+import org.joonzis.domain.GroupMemberDTO;
 import org.joonzis.domain.MemberVO;
+import org.joonzis.service.EventService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.extern.log4j.Log4j;
@@ -18,6 +29,11 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/event/*")
 public class EventController {
 
+	
+	@Autowired
+	private EventService eservice;
+	
+	
 	@GetMapping("/main")
 	public String main(Model model, HttpSession session) {
 		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
@@ -29,16 +45,58 @@ public class EventController {
 		return "/event/main";
 	}
 	
-	@GetMapping("/list/*")
-	public void eventTab() {
-		log.info("eventTab...");
+	@GetMapping("/list/0001")
+	public void eventTab1(Model model) {
+		log.info("eventTab...1");
+		model.addAttribute("ranking", eservice.getGame1Rank());
+	}
+	@GetMapping("/list/0002")
+	public void eventTab2() {
+		log.info("eventTab...2");
+	}
+	
+	@GetMapping("/list/0003")
+	public void eventTab4(Model model, HttpSession session) {
+		log.info("eventTab...3");
+		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
+		int mem_no = loggedInMember.getMem_no();
+		model.addAttribute("point", eservice.getPoint(mem_no));
+		log.info(eservice.getPoint(mem_no));
+	}
+
+	@GetMapping("/list/0004")
+	public void eventTab3() {
+		log.info("eventTab...4");
 	}
 	
 	
-	
-	
-	
-	
+	@PostMapping(value = "/event/savePoint", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Boolean> savePoint(@RequestBody EventVO vo, HttpSession session) {
+		log.info("savePoint...");
+		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
+		if (loggedInMember == null) {
+		    return new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED);
+		}
+		int mem_no = loggedInMember.getMem_no();
+		boolean result=eservice.savePoint(mem_no, vo.getPoint());
+		return new ResponseEntity<Boolean>(result,HttpStatus.OK);
+	}
+	@PostMapping(value = "/event/saveGameScore1", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Boolean> saveGameScore1(@RequestBody EventVO vo, HttpSession session) {
+		log.info("saveGameScore1...");
+		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
+		if (loggedInMember == null) {
+		    return new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED);
+		}
+		int mem_no = loggedInMember.getMem_no();
+		int gameScore1=eservice.getGameScore1(mem_no);
+		if (gameScore1<vo.getGame_score_1()) {
+			boolean result=eservice.saveGameScore1(mem_no, vo.getGame_score_1());
+			return new ResponseEntity<Boolean>(result,HttpStatus.OK);
+		}else {
+			return new ResponseEntity<Boolean>(false,HttpStatus.BAD_REQUEST);
+		}
+	}
 	
 	
 	

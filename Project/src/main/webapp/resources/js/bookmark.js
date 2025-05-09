@@ -37,14 +37,15 @@ document.querySelectorAll('button').forEach(btn => {
 });
 //-----가게 이름 이동------------------------------------------
 document.querySelectorAll(".info-text a").forEach(moveRestView => {
-	moveRestView.addEventListener('dbclick',e=>{//더블클릭으로 이동
+	moveRestView.addEventListener('click',e=>{//더블클릭으로 이동
 		e.preventDefault();
 		const view = moveRestView.closest(".view").querySelector("#restNo").value;
+		console.log(view);
 		location.href="../search/view?rest_no="+view;
 	});
 })
 document.querySelectorAll(".view-img img").forEach(moveRestView => {
-	moveRestView.addEventListener('dbclick',e=>{//더블클릭으로 이동
+	moveRestView.addEventListener('click',e=>{//더블클릭으로 이동
 		e.preventDefault();
 		const view = moveRestView.closest(".view").querySelector("#restNo").value;
 		location.href="../search/view?rest_no="+view;

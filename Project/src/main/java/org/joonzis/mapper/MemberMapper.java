@@ -36,4 +36,9 @@ public interface MemberMapper {
 	
 	MemberVO loginProcess(@Param("mem_id") String mem_id);
 	
+	
+	public void insertEventInfo(int mem_no);
+	
+	
+	
 }
