@@ -65,8 +65,8 @@
 	  		</div>
 				
 	  		<div class="change-bookmark-button">
-	  			<button type="button" class="change-btn" id="leftBtn">◀</button>
 	  			<button type="button" class="change-btn" id="rightBtn">▶</button>
+	  			<button type="button" class="change-btn" id="leftBtn">◀</button>
 	  		</div>
 	  		
 	  		<div class="list-main">
@@ -78,9 +78,6 @@
 				  	<c:forEach var="bm" items="${bookmarkList }">
 				  	<c:if test="${bm.is_public eq 'N'}">
 		            	<div class="view" data-adr="${bm.rest.rest_loc}">
-		               		<div class="view-img">
-		                		<img alt="res img" src="${bm.rest.rest_img_name }" class="view-res-image">
-			                </div>
 			                <div class="view-info">
 			                    <div><button type="button" class="bookmark" id="bookmarkBtn">★</button></div>
 			                    <div class="info-text">
@@ -93,6 +90,9 @@
 				                    <input type="hidden" class="is-public" value="${bm.is_public }">
 				                    <input type="hidden" class="rest-adr" value="${bm.rest.rest_loc}">
 			                    </div>
+			                </div>
+		               		<div class="view-img">
+		                		<img alt="res img" src="${bm.rest.rest_img_name }" class="view-res-image">
 			                </div>
 			            </div>
 			           <!--  -->
