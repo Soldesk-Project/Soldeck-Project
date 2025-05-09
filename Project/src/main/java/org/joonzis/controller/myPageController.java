@@ -77,6 +77,7 @@ public class myPageController {
 		model.addAttribute("foodList",foodList);
 		return "/mypage/myInfo";
 	}
+	
 	private String changeFoodNoToName(int no) {
 	    switch(no) {
 	        case 1: return "한식";

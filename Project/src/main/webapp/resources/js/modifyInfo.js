@@ -17,24 +17,27 @@ linkEle3.rel = 'stylesheet';
 linkEle3.href = CSS_FILE_PATH3;
 document.head.appendChild(linkEle3);
 //-----버튼 클릭 이벤트----------------------------------------------
-let f=document.forms[0];
+window.onload = () => {
+	const mnoInput = document.querySelector('input[name="mem_no"]');
+	
+	document.querySelectorAll('button').forEach(btn => {
+		btn.addEventListener('click', (e) => {
+			e.preventDefault();
+			let type = btn.getAttribute("id");
+			let mem_no=mnoInput.value;
+			
+			
+			if(type == 'profileUploadBtn'){
+				profileImageInput.click();
+			}else if(type=='modifyBtn'){
+				modify(mem_no);
+			}else if(type=='removeBtn'){
+				remove();
+			}
+		});
+	});
+};
 
-document.querySelectorAll('button').forEach(btn => {
-  btn.addEventListener('click', (e) => {
-	  e.preventDefault();
-	let type = btn.getAttribute("id");
-	let mem_no=f.mem_no.value
-
-
-    if(type == 'profileUploadBtn'){
-    	profileImageInput.click();
-    }else if(type=='modifyBtn'){
-    	modify(mem_no);
-    }else if(type=='removeBtn'){
-    	remove();
-    }
-  });
-});
 //-------------------------------------------------------------------------
 const modifyInfoForm = document.getElementById('modifyInfoForm');
 const passwordInput = document.getElementById('password');

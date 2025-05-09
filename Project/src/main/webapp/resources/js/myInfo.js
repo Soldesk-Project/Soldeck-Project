@@ -17,18 +17,25 @@ linkEle3.rel = 'stylesheet';
 linkEle3.href = CSS_FILE_PATH3;
 document.head.appendChild(linkEle3);
 //-----버튼 클릭 이벤트----------------------------------------------
-let f=document.forms[0];
+window.onload = () => {
+	  const mnoInput = document.querySelector('input[name="mno"]');
+	  
+	  if (!mnoInput) {
+	    console.error("mno input 요소를 찾을 수 없습니다.");
+	    return;
+	  }
 
-document.querySelectorAll('button').forEach(btn => {
-  btn.addEventListener('click', () => {
-    let type = btn.getAttribute("id");
-    let mem_no=f.mno.value;
+	  const mem_no = mnoInput.value;
 
-    if(type == 'modifyBtn'){
-    	location.href='/mypage/modifyInfo?mem_no='+mem_no;
-    }
-  });
-});
+	  document.querySelectorAll('button').forEach(btn => {
+	    btn.addEventListener('click', () => {
+	      const type = btn.getAttribute("id");
 
+	      if (type === 'modifyBtn') {
+	        location.href = '/mypage/modifyInfo?mem_no=' + mem_no;
+	      }
+	    });
+	  });
+	};
 
 
