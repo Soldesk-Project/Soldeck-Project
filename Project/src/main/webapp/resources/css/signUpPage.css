@@ -156,7 +156,7 @@ input[type="tel"] {
 }
 
 .submit {
-	background-color: #007bff;
+	background-color: #FF7D00;
 	color: white;
 	padding: 10px 15px;
 	border: none;
@@ -167,7 +167,7 @@ input[type="tel"] {
 }
 
 .submit:hover {
-	background-color: #0056b3;
+	background-color: #FF7D00;
 }
 
 .message {
