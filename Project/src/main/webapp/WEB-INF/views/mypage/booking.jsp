@@ -11,65 +11,65 @@
 <body>
   <jsp:include page="../layout/header.jsp"/>
   
-  <div class="container">
-	<div class="side-menu">
-  		<jsp:include page="../layout/sideMenu.jsp"/>
-	</div>
-	<div class="main-menu">
-		<div class="title">
-			<span>나의 예약 내역</span>
+	<div class="wrapper">
+	  <div class="container">
+		<div class="side-menu">
+	  		<jsp:include page="../layout/sideMenu.jsp"/>
 		</div>
-		<div class="main-list">
-			<div class="inner-main">
-				
-				<c:forEach var="rl" items="${reserveList }">
-				<div class="booking-list">
-					<div class="image-div">
-						<div class="booking-img">
-							<img src="${rl.rest_img_name }" alt="가게 사진" class="booking-res-image">
-						</div>
-					</div>
-					<div class="booking-info">
-						<div class="booking-schedule">
-							<div>
-								<input type="text" class="booking-date date" name="bookingDate" value="<fmt:formatDate value="${rl.res_date}" pattern='yyyy - MM - dd'/>" readonly="readonly">
-								<input type="text" class="booking-date time" name="bookingDateTime" value="${rl.res_time }" readonly="readonly">
-			                    <input type="hidden" class="reserve-no" value="${rl.res_no }">
-			                    <input type="hidden" class="member-no" value="${rl.mem_no }">
+		<div class="mainBoxDesign">
+		<div class="main-menu">
+			<div class="main-list">
+				<div class="inner-main">
+					
+					<c:forEach var="rl" items="${reserveList }">
+					<div class="booking-list">
+						<div class="image-div">
+							<div class="booking-img">
+								<img src="${rl.rest_img_name }" alt="가게 사진" class="booking-res-image">
 							</div>
-							<button type="button" class="booking-cancel-btn" id="bookingCancelBtn">예약취소</button>
 						</div>
-						<div class="border-div">
-		                    <div class="info-text">
-		            	        <div class="rest-info">
-			    	                <a href="#" draggable="false">
-				                    	<input type="text" class="res-name" value="${rl.rest_name }" readonly="readonly"><span class="input-size"></span>
-				                    </a>
-				                    <input type="text" class="res-addr" value="${rl.rest_adr }" readonly="readonly">
-			                    </div>
-								<div class="bookmark-div">
-									<button type="button" class="bookmark" id="bookmarkBtn">★</button>
+						<div class="booking-info">
+							<div class="booking-schedule">
+								<div>
+									<input type="text" class="booking-date date" name="bookingDate" value="<fmt:formatDate value="${rl.res_date}" pattern='yyyy - MM - dd'/>" readonly="readonly">
+									<input type="text" class="booking-date time" name="bookingDateTime" value="${rl.res_time }" readonly="readonly">
+				                    <input type="hidden" class="reserve-no" value="${rl.res_no }">
+				                    <input type="hidden" class="member-no" value="${rl.mem_no }">
 								</div>
-		                    </div>
-		                    <div class="memo-div">
-			                    <span>특이 사항</span>
-			                    <div>
-									<input type="text" class="booking-memo" value="${rl.res_memo }">
-									<button type="button" class="booking-memo-btn" id="saveMemoBtn">저장</button>
-				                    <input type="hidden" id="restNo" value="${rl.rest_no }">
-				                    <input type="hidden" id="isPublic" value="${rl.is_public }">
+								<button type="button" class="booking-cancel-btn" id="bookingCancelBtn">예약취소</button>
+							</div>
+							<div class="border-div">
+			                    <div class="info-text">
+			            	        <div class="rest-info">
+				    	                <a href="#" draggable="false">
+					                    	<input type="text" class="res-name" value="${rl.rest_name }" readonly="readonly"><span class="input-size"></span>
+					                    </a>
+					                    <input type="text" class="res-addr" value="${rl.rest_adr }" readonly="readonly">
+				                    </div>
+									<div class="bookmark-div">
+										<button type="button" class="bookmark" id="bookmarkBtn">★</button>
+									</div>
 			                    </div>
-		                    </div>
+			                    <div class="memo-div">
+				                    <span>특이 사항</span>
+				                    <div>
+										<input type="text" class="booking-memo" value="${rl.res_memo }">
+										<button type="button" class="booking-memo-btn" id="saveMemoBtn">저장</button>
+					                    <input type="hidden" id="restNo" value="${rl.rest_no }">
+					                    <input type="hidden" id="isPublic" value="${rl.is_public }">
+				                    </div>
+			                    </div>
+							</div>
 						</div>
 					</div>
+					</c:forEach>
+	
+	
 				</div>
-				</c:forEach>
-
-
 			</div>
 		</div>
+		</div>
 	</div>
-</div>
 
 	<div id="customConfirm" class="bookmark-check-modal">
 		<div class="inner-modal">
@@ -108,7 +108,10 @@
 		</div>
 	</div>
 	
-	<jsp:include page="../layout/footer.jsp"/>
+	<footer>
+		<jsp:include page="../layout/footer.jsp"/>
+	</footer>
+	</div>
 <script type="text/javascript" src="/resources/js/booking.js"></script>
 </body>
 </html>

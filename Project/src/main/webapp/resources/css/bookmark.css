@@ -1,27 +1,43 @@
 /*------------------ body / main menu -------------------------*/
-body, html {
-	height: 100%;
-	margin: 0;
-	padding: 0;
-	min-height: vh;
-}
 ::-webkit-scrollbar {
-  display: none;
+	display: none;
 }
-.container{
-	width: 1200px;
-	height: 800px;
-	margin: auto;
-	display: flex;
-	flex-direction: row;
-	
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  flex: 1;
+  width: 1200px;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  min-height: 0;
+}
+
 .side-menu{
 	width: 230px;
 	height: 100%;
-	float: left;
+	flex-shrink: 0;
 }
 .mainBoxDesign{
+	flex: 1;
+	min-width: 0;
 	border: 1px dashed;
 	border-radius: 20px;
 	margin-top: 13px;
@@ -76,13 +92,6 @@ body, html {
 	border-radius: 10px;
 	height: 565px;
 }
-.list-main{
-	width: 400px;
-	max-height: 565px; /* 필요에 따라 높이 조절 */
-	overflow-y: scroll;
-	scrollbar-width: none;
-	-ms-overflow-style: none; /* IE, Edge용 */
-}
 .list-title{
 	margin:10px;
 }
@@ -90,16 +99,32 @@ body, html {
 	font-size: 20px;
 	margin: 10px;
 }
-.list-content{
-	overflow: hidden;
-}
-.inner-content{
-	overflow: auto;
-}
-.view{
-	margin-bottom: 10px;
+.list-main {
+	flex: 1;
 	display: flex;
 	flex-direction: column;
+	overflow: hidden;
+	max-height: 565px
+}
+
+.list-content {
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.inner-content {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+  max-height: 100%;
+  position: relative; /* 중요 */
+}
+
+.view {
+  flex-shrink: 0;
+  position: relative;
+  height: auto;
 }
 .view.active{
 	border: 1px double #F7F3EA;

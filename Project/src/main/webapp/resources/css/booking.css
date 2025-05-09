@@ -1,45 +1,67 @@
 /*------------------ body / main menu -------------------------*/
-body{
- -ms-overflow-style: none;
- }
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 아래는 그대로 유지해도 됩니다 */
+.container {
+  width: 1200px;
+  height: 800px; /* 유지하고 싶다면 그대로 둬도 OK */
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  overflow-y: auto;
+}
 ::-webkit-scrollbar {
   display: none;
-}
-.container{
-	width: 1200px;
-	height: 1500px;
-	margin: auto;
 }
 .side-menu{
 	width: 230px;
 	height: 100%;
 	float: left;
 }
-.main-menu{
-	width: 80%;
-	float: right;
-	font-size: 20px;
-}
-.title{
-	width: 100%;
-	height: 60px;
-	align-items: center;
+.mainBoxDesign{
+	flex:1;
+	border: 1px dashed;
+	border-radius: 20px;
+	margin-top: 13px;
+	margin-bottom: 80px;
 	display: flex;
 }
-.title span{
-	margin: 10px;
+.main-menu{
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	max-height: 700px;
+	border-style: hidden;
+	border-radius: 10px;
 }
 .main-list{
-	border-radius: 20px;
-	margin: 15px 0; 
+	flex: 1;
 	overflow: hidden;
-	width: 100%;
-	height: 1300px;
+	min-height: 0;
 }
 .inner-main{
-	overflow: auto;
-	height: 100%;
-	background-color: #f0f0f0;
+	flex: 1;
+	overflow-y: auto;
+	min-height: 0;
+	max-height: 100%;
+	position: relative; /* 중요 */
 }
 /*.inner-main::-webkit-scrollbar {
 	display:inline;
@@ -50,11 +72,11 @@ body{
     border-radius: 10px;
 }*/
 .booking-list{
-	width: 940px;
-	height: 300px;
-	margin: 10px;
-    margin-bottom: 40px;	
+	flex-shrink: 0;
+	position: relative;
+	height: auto;
 	display: flex;
+	flex-direction: row;
 }
 .image-div{
 	text-align: center;
@@ -71,11 +93,7 @@ body{
 	margin-left: auto;
 }
 .border-div{
-	border:1px dashed;
-	background-color: white;
 	height: 240px;
-    box-sizing: border-box;
-    border-radius: 15px;
 }
 .booking-img{
 	width: 250px;
