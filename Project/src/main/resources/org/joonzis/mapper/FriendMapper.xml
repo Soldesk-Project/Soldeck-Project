@@ -78,6 +78,13 @@
         WHERE mem_no = #{senderMemNo}
           AND mem_no2 = #{receiverMemNo}
     </update>
+    
+    <!-- 요청 상태 초기화 -->
+    <delete id="deleteFriendRequest">
+    	DELETE FROM FRIEND_REQ
+    	WHERE mem_no = #{senderMemNo}
+    	  AND mem_no2 = #{receiverMemNo}
+    </delete>
 
     <!-- 친구 관계 등록 -->
     <insert id="insertFriendAfterRequestAccepted">
@@ -89,6 +96,18 @@
     	SELECT mem_no, mem_nick, mem_img
     	FROM MEMBER
     	WHERE mem_nick LIKE #{keyword}
+	</select>
+	
+	<!-- 오프라인 친구 요청 확인 -->
+	<select id="getPendingRequest" resultType="org.joonzis.domain.FriendReqVO">
+		SELECT fr.mem_no, 
+		       m.mem_nick, 
+		       fr.mem_no2, 
+		       fr.frd_req
+		FROM friend_req fr
+		JOIN member m ON fr.mem_no = m.mem_no
+		WHERE (fr.mem_no2 = #{mem_no} AND fr.frd_req = 'PENDING') 
+		   OR (fr.mem_no = #{mem_no} AND fr.frd_req = 'PENDING')
 	</select>
 	
 </mapper>

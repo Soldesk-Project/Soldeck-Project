@@ -193,3 +193,54 @@ h1,h2,h3,h4,h5,h6{
 	margin-top: 29px;
 	margin-bottom: 29px;
 }
+
+.friend-request-notification {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f5f9ff;
+  border: 1px solid #cce0ff;
+  padding: 12px 16px;
+  margin: 10px 0;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.notification-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.request-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.notification-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.accept-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.decline-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.accept-btn:hover,
+.decline-btn:hover {
+  opacity: 0.9;
+}

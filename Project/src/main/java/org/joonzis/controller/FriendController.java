@@ -5,13 +5,16 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.joonzis.domain.FriendReqVO;
 import org.joonzis.domain.FriendVO;
 import org.joonzis.domain.MemberVO;
 import org.joonzis.service.FriendService;
 import org.joonzis.service.MemberService;
 import org.joonzis.websoket.FriendSocketHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +23,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.log4j.Log4j;
 
@@ -104,7 +110,8 @@ public class FriendController {
         return fservice.getRandomFriendList(mem_no);  // JSON 응답
     }
     
-    @PostMapping(value = "/follow", produces = "application/json;charset-UTF-8")
+    // 친구 요청
+    @PostMapping(value = "/follow", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public ResponseEntity<String> follow(@RequestParam("friend_mem_no") int receiverMemNo, HttpSession session) {
         MemberVO member = (MemberVO) session.getAttribute("loggedInUser");
@@ -127,6 +134,7 @@ public class FriendController {
         }
     }
     
+    // 요청 수락
     @PostMapping("/accept")
     @ResponseBody
     public ResponseEntity<String> acceptRequest(@RequestParam("sender_mem_no") int senderMemNo,
@@ -138,10 +146,72 @@ public class FriendController {
         }
 
         int receiverMemNo = member.getMem_no();
-
         fservice.acceptFriendRequest(senderMemNo, receiverMemNo);
 
-        return ResponseEntity.ok("친구 수락 완료");
+        // UTF-8 인코딩 설정
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.parseMediaType("text/plain; charset=UTF-8"));
+        
+        List<FriendReqVO> pendingRequest = fservice.getPendingRequest(member.getMem_no());
+        
+        ObjectMapper objectMapper = new ObjectMapper();
+        String pendingRequestJson = null;
+
+        try {
+            pendingRequestJson = objectMapper.writeValueAsString(pendingRequest);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        
+        log.info(pendingRequestJson);
+
+        // 세션에 저장
+        if (pendingRequestJson != null) {
+        	session.setAttribute("pendingRequest", pendingRequestJson);
+        }
+
+        return new ResponseEntity<>("친구 수락 완료", headers, HttpStatus.OK);
+    }
+    
+    // 요청 거절
+    @PostMapping("/declineFriend")
+    @ResponseBody
+    public ResponseEntity<String> declineFriend(@RequestParam("sender_mem_no") int senderMemNo,
+    											HttpSession session){
+    	
+    	MemberVO member = (MemberVO) session.getAttribute("loggedInUser");
+
+        if (member == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다");
+        }
+        
+    	int receiverMemNo = member.getMem_no();
+    	
+    	fservice.declineFriendRequest(senderMemNo, receiverMemNo);
+    	
+        // UTF-8 인코딩 설정
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.parseMediaType("text/plain; charset=UTF-8"));
+        
+        List<FriendReqVO> pendingRequest = fservice.getPendingRequest(member.getMem_no());
+        
+        ObjectMapper objectMapper = new ObjectMapper();
+        String pendingRequestJson = null;
+
+        try {
+            pendingRequestJson = objectMapper.writeValueAsString(pendingRequest);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        
+        log.info(pendingRequestJson);
+
+        // 세션에 저장
+        if (pendingRequestJson != null) {
+        	session.setAttribute("pendingRequest", pendingRequestJson);
+        }
+
+        return new ResponseEntity<>("친구 거절 완료", headers, HttpStatus.OK);
     }
     
     @GetMapping(value = "/search", produces = "application/json")

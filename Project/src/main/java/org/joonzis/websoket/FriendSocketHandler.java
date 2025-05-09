@@ -20,8 +20,7 @@ public class FriendSocketHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        // 클라이언트가 연결되면 첫 메시지로 자신의 mem_no를 보내는 것으로 설정
-        // ex) socket.send("88");
+    	System.out.println("🔌 WebSocket 연결됨 - 세션 ID: " + session.getId());
     }
 
     @Override
@@ -35,12 +34,12 @@ public class FriendSocketHandler extends TextWebSocketHandler {
     }
 
  // senderMemNo와 senderNick을 받아서 JSON 형태로 구성
-    public void sendFriendRequestAlert(int targetMemNo, int senderMemNo, String senderNick) {
+    public void sendFriendRequestAlert(int targetMemNo, int mem_no, String mem_nick) {
         WebSocketSession session = userSessions.get(targetMemNo);
         if (session != null && session.isOpen()) {
             try {
                 String jsonMessage = String.format(
-                    "{\"senderMemNo\": %d, \"senderNick\": \"%s\"}", senderMemNo, senderNick);
+                    "{\"mem_no\": %d, \"mem_nick\": \"%s\"}", mem_no, mem_nick);
                 session.sendMessage(new TextMessage(jsonMessage));
             } catch (Exception e) {
                 e.printStackTrace();
