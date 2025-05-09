@@ -9,7 +9,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpSession;
 
+import org.joonzis.domain.FriendReqVO;
 import org.joonzis.domain.MemberVO;
+import org.joonzis.service.FriendService;
 import org.joonzis.service.MemberService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +28,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import lombok.extern.log4j.Log4j; 
 
 @Controller
@@ -38,6 +43,9 @@ public class LoginController {
 
     @Autowired
     private MemberService memberservice;
+    
+    @Autowired
+    private FriendService fservice;
 
     @Bean
     public InternalResourceViewResolver viewResolver() {
@@ -223,6 +231,24 @@ public class LoginController {
             // 로그인 성공 시 세션에 사용자 정보 및 세션 ID 저장
             newSession.setAttribute("loggedInUser", loggedInMember);
             loggedInSessions.put(mem_id, newSession);
+            
+            List<FriendReqVO> pendingRequest = fservice.getPendingRequest(loggedInMember.getMem_no());
+            
+            ObjectMapper objectMapper = new ObjectMapper();
+            String pendingRequestJson = null;
+
+            try {
+                pendingRequestJson = objectMapper.writeValueAsString(pendingRequest);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            
+            log.info(pendingRequestJson);
+
+            // 세션에 저장
+            if (pendingRequestJson != null) {
+                newSession.setAttribute("pendingRequest", pendingRequestJson);
+            }
             return "success";
         } else {
             return "fail";

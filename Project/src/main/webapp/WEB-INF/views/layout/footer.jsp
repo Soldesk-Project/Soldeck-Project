@@ -9,3 +9,11 @@
 	    <li><a href="../board/termsOfService"> | 이용약관 | </a></li>
 	</ul>
 </div>
+
+<!-- 서버에서 mem_no를 JavaScript로 전달 -->
+<script type="text/javascript">
+    document.body.dataset.memNo = "${sessionScope.loggedInUser.mem_no}";
+    document.body.dataset.pendingRequest = '${sessionScope.pendingRequest}';
+</script>
+
+<script type="text/javascript" src="/resources/js/friendSocket.js"></script>

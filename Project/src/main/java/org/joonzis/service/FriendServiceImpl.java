@@ -2,6 +2,7 @@ package org.joonzis.service;
 
 import java.util.List;
 
+import org.joonzis.domain.FriendReqVO;
 import org.joonzis.domain.FriendVO;
 import org.joonzis.domain.MemberVO;
 import org.joonzis.mapper.FriendMapper;
@@ -60,10 +61,30 @@ public class FriendServiceImpl implements FriendService {
         // 친구 테이블에 삽입 (양방향이면 두 번 삽입)
         mapper.insertFriendAfterRequestAccepted(senderMemNo, receiverMemNo);
         mapper.insertFriendAfterRequestAccepted(receiverMemNo, senderMemNo);
+        
+        // 수락 후 요청 테이블 삭제
+        mapper.deleteFriendRequest(senderMemNo, receiverMemNo);
 
+        return true;
+    }
+    
+    @Override
+    @Transactional
+    public boolean declineFriendRequest(int senderMemNo, int receiverMemNo) {
+        // 거절 시 요청 테이블 삭제
+    	mapper.deleteFriendRequest(senderMemNo, receiverMemNo);
+        
         return true;
     }
 	public List<MemberVO> getSimpleSearch(String keyword) {
 		return mapper.searchFriendByNickname("%" + keyword + "%");
 	}
+	
+	// 오프라인 친구 요청 조회
+	@Override
+	public List<FriendReqVO> getPendingRequest(int mem_no) {
+		return mapper.getPendingRequest(mem_no);
+	}
+	
+	
 }

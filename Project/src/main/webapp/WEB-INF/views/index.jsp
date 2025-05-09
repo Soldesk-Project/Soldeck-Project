@@ -32,17 +32,7 @@
 	<div class="select_box">
 		<div class="page-header">
 			<div class="location-select">
-				<select class="location-select_select">
-					<option value="">지역 선택</option>
-					<option value="서울">서울</option>
-					<option value="부산">부산</option>
-					<option value="대전">대전</option>
-					<option value="대구">대구</option>
-					<option value="울산">울산</option>
-					<option value="광주">광주</option>
-					<option value="인천">인천</option>
-					<option value="제주">제주</option>
-				</select>
+		
 		    </div>
 	  	</div>
 	   
