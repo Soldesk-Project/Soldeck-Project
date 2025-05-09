@@ -28,7 +28,7 @@ document.querySelectorAll('button').forEach(btn => {
 		let type = btn.getAttribute("id");
 
 		if(type == 'highScore'){
-			checkScore();
+			saveScore();
 		}
 	});
 });	
@@ -1995,10 +1995,29 @@ if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
 //-----공룡게임창 크기----------------------------------------    
 window.onload = function() {
 	runner.horizon.resize(600, 150);
-};
-//----- 최고점수 값 받아오기------------------------------------------------------------------
-function checkScore() {
+};	
+//----- 최고점수 갱신------------------------------------------------------------------
+function saveScore() {
 	console.log(highScoreValue);
+	fetch('/event/saveGameScore1',{
+		method : 'post',
+		headers : {
+		      'content-type' : 'application/json; charset=utf-8'
+	    },
+	    body : JSON.stringify({game_score_1 : highScoreValue})
+	})
+    .then(response => response.json())
+    .then(result => {
+      if(result) {
+          alert("점수 갱신 성공!");
+	          location.reload();
+        } else {
+          alert("기존 점수보다 낮거나 같아서 갱신되지 않았습니다.");
+        }
+    })
+    .catch(err => console.log(err));
+	
+	
 }
 
 

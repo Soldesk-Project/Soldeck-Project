@@ -31,6 +31,11 @@ public class MemberServiceImpl implements MemberService{
                 mapper.insertFoodKate(mem_no, food); // 테이블 이름 변경 확인
             }
         }
+        
+        //event 테이블에 정보 생성
+        mapper.insertEventInfo(member.getMem_no());
+        
+        
     }
 
 	@Override

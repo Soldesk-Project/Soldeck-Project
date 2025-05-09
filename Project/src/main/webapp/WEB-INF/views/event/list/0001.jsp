@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -65,6 +66,20 @@
 				<div class="high-score">
 					<button id="highScore">최고 점수 저장</button>
 				</div>
+			</div>
+			<div class="rank">
+				<h1>랭킹</h1>
+				<table>
+					<c:forEach var="rank" items="${ranking }" varStatus="status">
+						<c:if test="${rank.game_score_1>0 }">
+							<tr>
+								<td>${status.count}등</td>
+								<td>${rank.mem_nick }</td>
+								<td class="score-td">${rank.game_score_1 }</td>
+							</tr>
+						</c:if>
+					</c:forEach>
+				</table>
 			</div>
 		</div>
 	</div>	
