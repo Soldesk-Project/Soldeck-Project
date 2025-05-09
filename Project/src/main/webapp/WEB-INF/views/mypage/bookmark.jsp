@@ -15,6 +15,7 @@
 	<div class="side-menu">
   		<jsp:include page="../layout/sideMenu.jsp"/>
 	</div>
+	<div class="mainBoxDesign">
 	<div class="main-menu">
 	  
 		<div class="loc-btn">
@@ -38,9 +39,6 @@
 				  	<c:forEach var="bm" items="${bookmarkList }">
 				  	<c:if test="${bm.is_public eq 'Y'}">
 		            	<div class="view" data-adr="${bm.rest.rest_loc}">
-		               		<div class="view-img">
-		                		<img alt="res img" src="${bm.rest.rest_img_name }" class="view-res-image">
-			                </div>
 			                <div class="view-info">
 			                    <div><button type="button" class="bookmark" id="bookmarkBtn">★</button></div>
 			                    <div class="info-text">
@@ -54,6 +52,9 @@
 				                    <input type="hidden" class="rest-adr" value="${bm.rest.rest_loc}">
 				                    
 			                    </div>
+			                </div>
+			                <div class="view-img">
+		                		<img alt="res img" src="${bm.rest.rest_img_name }" class="view-res-image">
 			                </div>
 			            </div>
 			           <!--  -->
@@ -101,6 +102,7 @@
 				</div>
 	  		</div>
 	  	</div>
+	</div>
 	</div>
   </div>
 

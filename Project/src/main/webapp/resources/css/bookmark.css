@@ -6,8 +6,9 @@ body{
 }
 .container{
 	width: 1200px;
-	height: 1200px;
 	margin: auto;
+	display: flex;
+	flex-direction: row;
 	
 }
 .side-menu{
@@ -15,9 +16,18 @@ body{
 	height: 100%;
 	float: left;
 }
+.mainBoxDesign{
+	border: 1px dashed;
+	border-radius: 20px;
+	margin-top: 13px;
+	margin-bottom: 80px;
+	display: flex;
+}
 .main-menu{
-	width: 960px;
-	float: right;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
 }
 /*.inner-content::-webkit-scrollbar {
 	display:inline;
@@ -30,7 +40,10 @@ body{
 .loc-btn{
 	display: flex;
 	justify-content: center;
-	margin: 30px;
+	margin: 15px 30px;
+	border: 1px dashed;
+	border-radius: 10px;
+	padding: 15px;
 }
 .btn{
 	margin: 0px 10px;
@@ -52,16 +65,23 @@ body{
 .bookmark-list{
 	display: flex;
 	justify-content: space-between;
-	height: 1100px;
+	padding: 0px 10px;
+	margin: 15px 30px;
+	border: 1px dashed;
+	border-radius: 10px;
 }
 .list-main{
 	width: 400px;
+	max-height: 565px; /* 필요에 따라 높이 조절 */
+	overflow-y: scroll;
+	scrollbar-width: none;
+	-ms-overflow-style: none; /* IE, Edge용 */
 }
 .list-title{
 	margin:10px;
 }
 .list-title span{
-	font-size: 30px;
+	font-size: 20px;
 	margin: 10px;
 }
 .list-content{
@@ -69,23 +89,20 @@ body{
 }
 .inner-content{
 	overflow: auto;
-	
-	height: 1000px;
 }
 .view{
-	border: 1px solid gray;
-	border-radius: 15px;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 	display: flex;
-	background-color: #f0f0f0;
+	flex-direction: column;
 }
 .view.active{
-	background-color: #FF7D00;
+	border: 1px double #F7F3EA;
+	border-radius: 10px;
+	padding: 5px;
 }
 .view-img{
-	width: 130px;
-	height: 130px;
-	margin: 10px;
+	width: 100px;
+	height: 100px;
 	border-radius: 10px;
 	overflow: hidden;
 }
@@ -96,25 +113,19 @@ body{
 }
 .view-info{
 	width: 230px;
-    border: 1px dashed;
-    box-sizing: border-box;
-    border-radius: 10px;
-    height: 130px;
-    margin: auto;
-    background-color: white;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 }
 .info-text{
 	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	height: 128px;
+	flex-direction: row;
 }
 .info-text input{
 	outline: none;
 	border: none;
-	font-size: 1.1rem;
-	margin: 5px;
-	height: 25px;
+	font-size: 15px;
+	margin: 3px;
 	max-width: 170px;
 }
 .res-cate{
@@ -139,14 +150,10 @@ body{
     width: 50px;
 }
 .bookmark{
-	float: right;
-	margin: 0 10px;
-	width: 40px;
-	height: 40px;
 	background: none;
 	border: none;
 	cursor: pointer;
-	font-size: 2rem;
+	font-size: 20px;
 	color: #FFD700;
 	transition: color 0.2s;
 }
@@ -180,10 +187,6 @@ body{
 	transition: color 0.2s;
 	color: black;
 }
-
-
-
-
 
 /*-----------------------모달-------------------------------*/
 .bookmark-check-modal{
@@ -276,4 +279,8 @@ body{
 .side a:hover,
 .side-bookmark.active a {
     color: white !important;
+}
+/*------------------ 공통 작업 css --------------------*/
+span{
+	font-size: 15px;
 }
