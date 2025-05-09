@@ -101,17 +101,18 @@ b{
 }
 .info-profile-div{
 	border: 1px dashed;
-	border-radius: 20px;
+	border-radius: 50%;
 	overflow: hidden;
-	width: 100px;
-	height: 100px;
+	width: 90px;
+	height: 90px;
 	margin: 30px auto 0px;
 	display: flex;
 	flex-direction: column;
 }
 .info-profile{
-	height: 100%;
-	width: 100%;
+	height: 90px;
+	width: 90px;
+	border-radius: 50%;
 }
 fieldset{
 	width: 500px;

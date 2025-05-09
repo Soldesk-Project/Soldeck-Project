@@ -28,7 +28,7 @@
 		    			<input type="file" id="profileImageInput" class="previewImage" accept="image/*" name="profileImageInput">
 					</div>
 					<div class="info-profile-div-div">
-						<p id="text1">※이미지 크기는 최소 100*100px로 업로드해주시길 바랍니다. </p>
+						<p id="text1">※이미지 크기는 최소 90*90px로 업로드해주시길 바랍니다. </p>
 		            	<button type="button" class="profile-upload" id="profileUploadBtn">업로드</button>
 		            </div>
 	            </div>

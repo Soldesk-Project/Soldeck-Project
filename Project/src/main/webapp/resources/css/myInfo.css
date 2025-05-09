@@ -119,8 +119,9 @@ b{
 	flex-direction: column;
 }
 .info-profile{
-	height: 100%;
-	width: 100%;
+	height: 90px;
+	width: 90px;
+	border-radius: 50%;
 }
 fieldset{
 	width: 610px;
