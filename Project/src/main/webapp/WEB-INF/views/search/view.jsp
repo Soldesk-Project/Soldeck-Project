@@ -154,24 +154,29 @@
 	      <h3>시간 선택</h3>
 	      <div class="time-options">
 	        <button class="time-btn">11:00</button>
-	        <button class="time-btn">11:30</button>
 	        <button class="time-btn">12:00</button>
-	        <button class="time-btn">12:30</button>
 	        <button class="time-btn">13:00</button>
-	        <button class="time-btn">13:30</button>
+	        <button class="time-btn">15:00</button>
 	        <button class="time-btn">16:00</button>
-	        <button class="time-btn">16:30</button>
 	        <button class="time-btn">17:00</button>
-	        <button class="time-btn">17:30</button>
 	        <button class="time-btn">18:00</button>
-	        <button class="time-btn">18:30</button>
 	        <button class="time-btn">19:00</button>
-	        <button class="time-btn">19:30</button>
 	        <button class="time-btn">20:00</button>
-	        <button class="time-btn">20:30</button>
 	        <button class="time-btn">21:00</button>
-	        <button class="time-btn">21:30</button>
+	        <button class="time-btn">22:00</button>
+	        <button class="time-btn">23:00</button>
 	      </div>
+	    </div>
+	    <div class="personnel-selection">
+	    	<h3>인원 선택</h3>
+	    	<div class="personnel-options">
+		        <button class="personnel-btn">1인</button>
+		        <button class="personnel-btn">2인</button>
+		        <button class="personnel-btn">3인</button>
+		        <button class="personnel-btn">4인</button>
+		        <button class="personnel-btn">5인</button>
+		        <button class="personnel-btn">6인</button>
+	    	</div>
 	    </div>
 	    <!-- 모달 버튼 -->
 	    <div class="modal-buttons">
@@ -187,13 +192,6 @@
 			<button type="button" class="btn btn-sec" id="publicFavoriteBtn">공개</button>
 			<button type="button" class="btn btn-sec" id="privateFavoriteBtn">비공개</button>
 			<button type="button" class="btn btn-close" id="closeFavoriteModalBtn">취소</button>
-		</div>
-	</div>
-
-	<div class="modal_view" id="viewModal">
-		<div class="modal_view-content">
-			<div class="image-view">
-			</div>
 		</div>
 	</div>
 	

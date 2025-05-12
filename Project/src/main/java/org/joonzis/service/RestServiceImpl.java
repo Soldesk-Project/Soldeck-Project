@@ -76,6 +76,9 @@ public class RestServiceImpl implements RestService{
         if (reservation.getRes_time() == null) {
             throw new IllegalArgumentException("예약 시간(res_time)은 필수입니다.");
         }
+        if (reservation.getRes_personnel() == null) {
+        	throw new IllegalArgumentException("예약 인원(res_personnel)은 필수입니다.");
+        }
         
         // res_date 형식 검증
         String resDate = reservation.getRes_date();

@@ -25,6 +25,7 @@ const monthSelect = document.getElementById('monthSelect');
 const calendarDays = document.getElementById('calendarDays');
 let selectedDate = null;
 let selectedTime = null;
+let selectedPersonnel = null;
 let selectedMonth = new Date().getMonth() + 1; // 초기 월을 현재 월로 설정
 let isFavorite = false; // 초기 즐겨찾기 상태
 const favoriteModal = document.getElementById('favoriteModal');
@@ -43,6 +44,8 @@ const closeBtn = modal.querySelector('.close-btn');
 //JSP에서 시간 슬롯 가져오기
 const timeButtons = document.querySelectorAll('.time-options .time-btn');
 const timeSlots = Array.from(timeButtons).map(button => button.textContent.trim());
+
+const personnelButtons = document.querySelectorAll('.personnel-options .personnel-btn');
 
 const stars = document.querySelectorAll('#starRating .star');
 let ratingValue = 0;
@@ -120,6 +123,10 @@ document.addEventListener("DOMContentLoaded", function () {
     // 예약 버튼 (reservationModal 열기)
     if (reservationBtn) {
         reservationBtn.addEventListener('click', () => {
+        	if(mem_no == 0){
+                alert("로그인을 해주세요.");
+                return;
+            }
             reservationModal.style.display = 'flex';
             selectedMonth = new Date().getMonth() + 1; // 현재 월로 설정
             if (monthSelect) monthSelect.value = selectedMonth.toString();
@@ -150,12 +157,23 @@ document.addEventListener("DOMContentLoaded", function () {
             selectedTime = btn.textContent;
         });
     });
+    
+    // 인원 선택 버튼
+    const personnelButtons = document.querySelectorAll('.personnel-btn');
+    personnelButtons.forEach(btn => {
+    	btn.addEventListener('click', () => {
+    		if (btn.disabled) return; // 비활성화된 버튼은 클릭 무시
+    		personnelButtons.forEach(b => b.classList.remove('selected'));
+    		btn.classList.add('selected');
+    		selectedPersonnel = btn.textContent;
+    	});
+    });
 
     // 예약 확인 버튼
     if (confirmReservationBtn) {
         confirmReservationBtn.addEventListener('click', () => {
-            if (!selectedDate || !selectedTime || !selectedMonth) {
-                alert('날짜와 시간을 선택해주세요.');
+            if (!selectedDate || !selectedTime || !selectedMonth || !selectedPersonnel) {
+                alert('날짜와 시간, 인원을 선택해주세요.');
                 return;
             }
             const resDate = `2025-${selectedMonth}-${selectedDate}`; // 예: "2025-4-24"
@@ -169,6 +187,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 mem_no: mem_no,
                 res_date: resDate,
                 res_time: selectedTime,
+                res_personnel: selectedPersonnel,
                 res_memo: '예약 메모'
             };
             fetch('/search/reservations/add', {
@@ -188,7 +207,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 return response.json();
             })
             .then(data => {
-                alert(`예약이 완료되었습니다!\n날짜: 2025년 ${selectedMonth}월 ${selectedDate}일\n시간: ${selectedTime}`);
+                alert(`예약이 완료되었습니다!\n날짜: 2025년 ${selectedMonth}월 ${selectedDate}일\n시간: ${selectedTime}\n인원 : ${selectedPersonnel}`);
                 reservationModal.style.display = 'none';
                 resetSelections();
                 updateTimeSlots(restNo, resDate); // 시간 슬롯 갱신
@@ -645,12 +664,15 @@ function renderCalendar(month) {
 function resetSelections() {
     selectedDate = null;
     selectedTime = null;
+    selectedPersonnel = null;
     selectedMonth = new Date().getMonth() + 1; // 현재 월로 초기화
     if (monthSelect) monthSelect.value = selectedMonth.toString();
     const days = document.querySelectorAll('.day:not(.disabled)');
     days.forEach(day => day.classList.remove('selected'));
     const timeButtons = document.querySelectorAll('.time-btn');
     timeButtons.forEach(btn => btn.classList.remove('selected'));
+    const personnelButtons = document.querySelectorAll('.personnel-btn');
+    personnelButtons.forEach(btn => btn.classList.remove('selected'));
     renderCalendar(selectedMonth);
 }
 
@@ -673,10 +695,12 @@ function updateTimeSlots(restNo, resDate) {
     .then(data => {
         if (data.status === 'success') {
             const reservedTimes = data.reservedTimes || [];
+            
             timeButtons.forEach(button => {
                 const time = button.textContent.trim();
                 button.disabled = false; // 기본적으로 활성화
                 button.classList.remove('disabled');
+                
                 if (reservedTimes.includes(time)) {
                     button.disabled = true;
                     button.classList.add('disabled');
@@ -689,6 +713,7 @@ function updateTimeSlots(restNo, resDate) {
     })
     .catch(err => {
         console.error('예약된 시간 조회 실패:', err.message);
+        console.log('에러 상세:', err); // 추가
         timeButtons.forEach(button => {
             button.disabled = false;
             button.classList.remove('disabled');

@@ -13,5 +13,5 @@ import lombok.ToString;
 @ToString
 public class ReserveVO {
 	private int res_no, mem_no, rest_no;
-	private String res_date, res_time, res_memo; 
+	private String res_date, res_time, res_memo, res_personnel; 
 }

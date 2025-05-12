@@ -141,7 +141,7 @@
 	</select>
 	
 	<insert id="addReserve" parameterType="org.joonzis.domain.ReserveVO">
-        INSERT INTO RESERVE (RES_NO, MEM_NO, REST_NO, RES_DATE, RES_TIME, RES_MEMO)
+        INSERT INTO RESERVE (RES_NO, MEM_NO, REST_NO, RES_DATE, RES_TIME, RES_MEMO, RES_PERSONNEL)
         VALUES (
             SEQ_RESERVE.NEXTVAL, 
             #{mem_no, jdbcType=INTEGER}, 
@@ -153,7 +153,8 @@
                 NULL
             </if>,
             #{res_time, jdbcType=VARCHAR}, 
-            #{res_memo, jdbcType=VARCHAR}
+            #{res_memo, jdbcType=VARCHAR},
+            #{res_personnel, jdbcType=VARCHAR}
         )
     </insert>
     
