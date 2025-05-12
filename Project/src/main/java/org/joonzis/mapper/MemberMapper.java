@@ -36,8 +36,12 @@ public interface MemberMapper {
 	MemberVO loginProcess(@Param("mem_id") String mem_id);
 	
 	public void insertEventInfo(int mem_no);
-	public boolean deleteMemberInfo(int mem_no);
-	
-	
-	
+	public int deleteMemberInfo(int mem_no);
+	public int deleteReservesByMemNo(int mem_no);
+	public int deleteCommentsByMemNo(int mem_no);
+	public int deleteFoodKateByMemNo(int mem_no);
+	public int deleteBookmarksByMemNo(int mem_no);
+	public int deleteFriendRequestsByMemNo(int mem_no);
+	public int deleteFriendsByMemNo(int mem_no);
+	public int deleteGroupsByMemNo(int mem_no);
 }

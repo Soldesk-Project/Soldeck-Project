@@ -87,9 +87,9 @@ function validatePassword() {
 
 function validateNickname() {
     const nicknameValue = nicknameInput.value.trim();
-    if (nicknameValue.length < 2) {
-        nicknameCheckMessage.textContent = '별명은 최소 2자 이상 입력해주세요.';
-        return false;
+    if (nicknameValue.length < 2 || nicknameValue.length > 8) {
+    	nicknameCheckMessage.textContent = '별명은 2자 이상 8자 이하로 입력해주세요.';
+    	return false;
     } else {
         nicknameCheckMessage.textContent = '';
         return true;
@@ -245,27 +245,31 @@ async function modify(mem_no){
 }
 
 async function remove(mem_no){
-	if (confirm("정말로 계정을 삭제하시겠습니까?")) {
-		if (confirm("정말로 삭제하시겠습니까? 다시 한번 신중하게 생각해주세요.")) {
-			try {
-				const response = await fetch('/mypage/removeMember?mem_no='+mem_no, {
-					method: 'POST'
-				});
-				if (!response.ok) {
-					const errorText = await response.text();
-					throw new Error('탈퇴에 실패하였습니다: ' + errorText);
-				}
-				const result = await response.text();
-				console.log('탈퇴 성공:', result);
-				location.href = '/logout';
-			} catch (error) {
-				console.error('탈퇴 실패:', error.message);
-				alert('회원 탈퇴 처리 중 오류가 발생했습니다.');
-			}
-		} else {
-			alert("회원 탈퇴를 취소하셨습니다.");
-		}
-	} else {
-		alert("회원 탈퇴를 취소하셨습니다.");
-	}
+    if (confirm("정말로 계정을 삭제하시겠습니까?")) {
+        if (confirm("정말로 삭제하시겠습니까? 다시 한번 신중하게 생각해주세요.")) {
+            try {
+                const response = await fetch('/mypage/removeMember?mem_no='+mem_no, {
+                    method: 'POST'
+                });
+                console.log("Response Status:", response.status);
+                console.log("Response OK:", response.ok);
+                const responseText = await response.text(); // 응답 텍스트 받기
+                console.log("Response Text:", responseText);
+
+                if (!response.ok) {
+                    throw new Error('탈퇴 실패: 서버 응답 상태 ' + response.status + ', 내용: ' + responseText);
+                }
+                console.log('탈퇴 성공:', responseText);
+                alert(responseText); // 성공 메시지 표시
+                location.href = '/';
+            } catch (error) {
+                console.error('탈퇴 실패:', error.message);
+                alert('회원 탈퇴 처리 중 오류가 발생했습니다: ' + error.message);
+            }
+        } else {
+            alert("회원 탈퇴를 취소하셨습니다.");
+        }
+    } else {
+        alert("회원 탈퇴를 취소하셨습니다.");
+    }
 }

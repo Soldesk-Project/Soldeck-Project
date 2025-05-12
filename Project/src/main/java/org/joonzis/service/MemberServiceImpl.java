@@ -84,9 +84,17 @@ public class MemberServiceImpl implements MemberService{
 		}
 		return null;
 	}
+	@Transactional
 	@Override
 	public boolean removeMember(int mem_no) {
-		return mapper.deleteMemberInfo(mem_no);
+		mapper.deleteReservesByMemNo(mem_no);
+        mapper.deleteCommentsByMemNo(mem_no);
+        mapper.deleteFoodKateByMemNo(mem_no);
+        mapper.deleteBookmarksByMemNo(mem_no);
+        mapper.deleteFriendRequestsByMemNo(mem_no);
+        mapper.deleteFriendsByMemNo(mem_no);
+        mapper.deleteGroupsByMemNo(mem_no);
+        return mapper.deleteMemberInfo(mem_no) == 1;
 	}
 	
 }

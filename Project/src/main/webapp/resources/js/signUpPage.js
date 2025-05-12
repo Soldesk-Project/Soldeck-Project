@@ -166,10 +166,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function validateNickname() {
         const nicknameValue = nicknameInput.value.trim();
-        if (nicknameValue.length < 2) {
-            nicknameCheckMessage.textContent = '별명은 최소 2자 이상 입력해주세요.';
-            return false;
-        } else {
+        if (nicknameValue.length < 2 || nicknameValue.length > 8) {
+        	nicknameCheckMessage.textContent = '별명은 2자 이상 8자 이하로 입력해주세요.';
+        	return false;
+        }else {
             nicknameCheckMessage.textContent = '';
             return true;
         }

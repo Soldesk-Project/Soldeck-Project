@@ -88,6 +88,32 @@
 	<delete id="deleteMemberInfo" parameterType="int">
 		DELETE FROM MEMBER WHERE MEM_NO = #{mem_no}
 	</delete>
-	
-	
+
+	<delete id="deleteReservesByMemNo" parameterType="int">
+    	DELETE FROM RESERVE WHERE MEM_NO = #{mem_no}
+	</delete>
+
+	<delete id="deleteCommentsByMemNo" parameterType="int">
+    	DELETE FROM "COMMENT" WHERE MEM_NO = #{mem_no}
+	</delete>
+
+	<delete id="deleteFoodKateByMemNo" parameterType="int">
+    	DELETE FROM FOOD_KATE WHERE MEM_NO = #{mem_no}
+	</delete>
+
+	<delete id="deleteBookmarksByMemNo" parameterType="int">
+    	DELETE FROM BOOKMARK WHERE MEM_NO = #{mem_no}
+	</delete>
+
+	<delete id="deleteFriendRequestsByMemNo" parameterType="int">
+    	DELETE FROM FRIEND_REQ WHERE MEM_NO = #{mem_no} OR MEM_NO2 = #{mem_no}
+	</delete>
+
+	<delete id="deleteFriendsByMemNo" parameterType="int">
+    	DELETE FROM FRIEND WHERE MEM_NO = #{mem_no} OR FRIEND_MEM_NO = #{mem_no}
+	</delete>
+
+	<delete id="deleteGroupsByMemNo" parameterType="int">
+    	DELETE FROM "GROUP" WHERE MEM_NO = #{mem_no}
+	</delete>
 </mapper>

@@ -188,10 +188,13 @@ input[readonly] {
 .message {
 	color: red;
 	font-size: 0.9em;
-	float: left;
+	display: block;
+	margin-top: 5px;
 }
 .phone-error{
-	margin: 55px -493px
+	margin: 55px -493px;
+	display: block;
+	margin-top: 5px;
 }
 b{
 	font-size: 17px;
