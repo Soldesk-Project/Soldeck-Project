@@ -1598,9 +1598,8 @@ distance).substr(-this.config.MAX_DISTANCE_UNITS);
 this.highScore = ['10', '11', ''].concat(highScoreStr.split(''));
 
 	for (let i = 0; i < highScoreStr.length; i++) {
-		if (highScoreStr[i]!=0) {
-			highScoreValue=highScoreValue+highScoreStr[i];
-		}
+		highScoreValue=highScoreValue+highScoreStr[i];
+		
 	}
 },
 /**
@@ -1998,6 +1997,7 @@ window.onload = function() {
 };	
 //----- 최고점수 갱신------------------------------------------------------------------
 function saveScore() {
+	highScoreValue=parseInt(highScoreValue);
 	console.log(highScoreValue);
 	fetch('/event/saveGameScore1',{
 		method : 'post',
@@ -2010,10 +2010,11 @@ function saveScore() {
     .then(result => {
       if(result) {
           alert("점수 갱신 성공!");
-	          location.reload();
+          location.reload();
         } else {
           alert("기존 점수보다 낮거나 같아서 갱신되지 않았습니다.");
         }
+      highScoreValue='';
     })
     .catch(err => console.log(err));
 	

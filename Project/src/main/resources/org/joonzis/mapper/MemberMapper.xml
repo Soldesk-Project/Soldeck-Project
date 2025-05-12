@@ -88,4 +88,6 @@
 	<delete id="deleteMemberInfo" parameterType="int">
 		DELETE FROM MEMBER WHERE MEM_NO = #{mem_no}
 	</delete>
+	
+	
 </mapper>
