@@ -41,4 +41,7 @@ public interface GroupService {
 	boolean insertGroupRequset(int group_no, int mem_no);	
 	
 	void getGroupOwnerMemNo(int group_no);
+	
+	public List<GroupVO> getGroupListByMember(int mem_no);
+
 }

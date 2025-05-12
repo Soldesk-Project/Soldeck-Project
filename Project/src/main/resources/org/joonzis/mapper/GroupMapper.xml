@@ -179,4 +179,16 @@
 		SELECT mem_no FROM "GROUP" WHERE group_no = #{groupNo}
 	</select>
 	
+	<select id="getGroupListByMember" resultType="org.joonzis.domain.GroupVO">
+    	SELECT
+		    g.GROUP_NO,
+		    g.CHAT_TITLE
+		    FROM 
+		        "GROUP" g
+		    LEFT JOIN 
+		        GROUP_MEM m ON g.GROUP_NO = m.GROUP_NO
+		    WHERE
+		        m.MEM_NO = #{mem_no}
+	</select>
+	
 </mapper>

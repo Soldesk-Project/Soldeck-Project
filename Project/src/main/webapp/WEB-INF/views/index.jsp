@@ -112,6 +112,24 @@
 				</div> -->
 			</c:if>
         </div>
+        
+        <c:if test="${sessionScope.loggedInUser != null}">
+	        <div class="commu-tap">
+	        	<div class="taps">
+		        	<div class="tap-friend active" data-tab="friend">친구</div>
+		        	<div class="tap-group" data-tab="group">모임</div>
+	        	</div>
+	        	<div class="tap-content">
+		        	<div class="content-friend show"></div>
+		        	<div class="content-group">모임</div>
+	        	</div>
+	        	<div class="tap-move">
+		        	<div class="move-friend show">전체 친구 보기</div>
+		        	<div class="move-group">전체 모임 보기</div>
+	        	</div>
+	        </div>
+        </c:if>
+        
 		<div class="popup" id="popup">
 	            <div class="popup-content">
 	                <span class="popup-close" id="popup-close">&times;</span>

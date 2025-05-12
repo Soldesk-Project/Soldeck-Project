@@ -165,6 +165,8 @@ const user_no = userData.dataset.user || '';
 
 document.addEventListener('DOMContentLoaded', () => {
 	fetchData();
+	showFriend();
+	showGroup();
 });
 
 // 가게 클릭 이벤트
@@ -228,4 +230,118 @@ function showList(containerId, dataArray) {
         `;
 //                <p>${json.rest_name || '이름 없음'}</p>; // 가게 이름 필요하면 return의 </div>위에 넣기
     }).join('');
+}
+
+document.querySelectorAll('.taps > div').forEach(tap => {
+	  tap.addEventListener('click', () => {
+	    const tabType = tap.getAttribute('data-tab');
+
+	    // 탭 스타일 업데이트
+	    document.querySelectorAll('.taps > div').forEach(t => t.classList.remove('active'));
+	    tap.classList.add('active');
+
+	    // 콘텐츠 전환
+	    document.querySelectorAll('.tap-content > div').forEach(content => {
+	      content.classList.remove('show');
+	    });
+	    document.querySelector(`.content-${tabType}`).classList.add('show');
+
+	    // 이동 버튼 전환
+	    document.querySelectorAll('.tap-move > div').forEach(move => {
+	      move.classList.remove('show');
+	    });
+	    document.querySelector(`.move-${tabType}`).classList.add('show');
+	  });
+	});
+
+// 탭 클릭 이벤트
+document.querySelectorAll('.tap-move > div').forEach(move => {
+	  move.addEventListener('click', () => {
+	    if (move.classList.contains('move-friend')) {
+	      window.location.href = '/friendlist/friendList';
+	    } else if (move.classList.contains('move-group')) {
+	      window.location.href = '/grouplist/groupList';
+	    }
+	  });
+	});
+function getFriend(callback) {
+    const url = `/friendlist/friendListData`;
+    fetch(url, {
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        callback(data || {});
+    })
+    .catch(err => {
+        console.error("Fetch error:", err.message);
+        callback({});
+    });
+}
+
+function showFriend() {
+    const friend = document.querySelector('.content-friend');
+    if (!friend) {
+        console.error('친구 정보(.content-friend show)를 찾을 수 없습니다.');
+        return;
+    }
+    
+    getFriend(jsonArray => {
+        let msg = '';
+        jsonArray.forEach(json => {
+            msg += `<div class="friends">`;
+            msg += 	`<div class="friend">${json.friendMember.mem_nick}</div>`;
+            msg += `</div>`;
+        });
+
+        friend.innerHTML = msg;
+    });
+}
+
+function getGroup(callback) {
+    const url = `/grouplist/memberGroupListData`;
+    fetch(url, {
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        callback(data || {});
+    })
+    .catch(err => {
+        console.error("Fetch error:", err.message);
+        callback({});
+    });
+}
+
+function showGroup() {
+    const group = document.querySelector('.content-group');
+    if (!group) {
+        console.error('그룹 정보(.content-group)를 찾을 수 없습니다.');
+        return;
+    }
+    
+    getGroup(jsonArray => {
+        let msg = '';
+        jsonArray.forEach(json => {
+            msg += `<div class="groups">`;
+            msg += 	`<div class="group">${json.chat_title}</div>`;
+            msg += `</div>`;
+        });
+
+        group.innerHTML = msg;
+    });
 }

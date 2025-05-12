@@ -125,6 +125,18 @@ public class GroupController {
     public List<GroupVO> searchGroup(@RequestParam("keyword") String keyword) {
         return service.getSimpleSearch("%" + keyword + "%");
     }
+	
+	@GetMapping(value = "/memberGroupListData", produces = "application/json")
+	@ResponseBody
+	public List<GroupVO> memberGroupListData(HttpSession session) {
+		 MemberVO member = (MemberVO) session.getAttribute("loggedInUser");
+	     if (member == null) {
+	        return Collections.emptyList();
+	    }
+	
+	    int mem_no = member.getMem_no();
+	    return service.getGroupListByMember(mem_no);
+	}
     
     @PostMapping(value = "/follow", produces = "application/json;charset-UTF-8")
     @ResponseBody

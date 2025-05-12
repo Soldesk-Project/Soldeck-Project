@@ -114,4 +114,9 @@ public class GroupServiceImpl implements GroupService {
 	public void getGroupOwnerMemNo(int group_no) {
 		mapper.getGroupOwnerMemNo(group_no);
 	}
+	
+	@Override
+	public List<GroupVO> getGroupListByMember(int mem_no) {
+		return mapper.getGroupListByMember(mem_no);
+	}
 }

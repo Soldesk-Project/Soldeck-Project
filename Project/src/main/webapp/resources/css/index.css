@@ -259,3 +259,98 @@ body {
     text-align: center;
     line-height: 20px;
 }
+
+/* commu-tap 배너 스타일 */
+.commu-tap {
+    position: fixed; /* 뷰포트에 고정 */
+    top: 55%; /* 수직 중앙 */
+    right: 50px; /* 오른쪽에서 20px 떨어짐 */
+    transform: translateY(-50%); /* 수직 중앙 정렬 조정 */
+    width: 200px; /* 원하는 너비 */
+    z-index: 1000; /* 다른 콘텐츠 위에 표시 */
+}
+
+/* 탭 스타일 */
+.taps {
+    display: flex;
+    flex-direction: row;
+}
+
+.tap-friend, .tap-group {
+	flex: 5;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #fff;
+    border: 1px solid black;
+    border-bottom: none;
+}
+.tap-group {
+	border-left: none;
+}
+
+.tap-friend:hover, .tap-group:hover {
+    background-color: #e0e0e0;
+}
+
+.taps > div.active {
+  font-weight: bold;
+  color: blue;
+  border: 2px solid black;
+}
+
+/* 탭 콘텐츠 스타일 */
+.tap-content {
+	height: 300px;
+	border: 1px solid black;
+	border-top: none;
+	overflow: overlay;	
+	background-color: white;
+}
+
+.content-friend, .content-group {
+	height: 100%;
+    border-radius: 4px;
+}
+
+/* 이동 버튼 스타일 */
+.tap-move {
+	border: 1px solid black;
+	border-top: none;
+}
+.move-friend, .move-group {
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border-bottom: none;
+}
+
+.move-friend:hover, .move-group:hover {
+    background-color: #0056b3;
+}
+
+.tap-content > div,
+.tap-move > div {
+  display: none;
+}
+
+.tap-content > .show,
+.tap-move > .show {
+  display: block;
+}
+
+.friends, .groups {
+	border: 1px solid black;
+	height: 10%;
+	border-left: none;
+	border-right: none;
+}
+.friends + .friends, .groups + .groups{
+  border-top: none; /* 왼쪽 border 제거 */
+}
+
+.friend, .group{
+	height: 100%;
+}

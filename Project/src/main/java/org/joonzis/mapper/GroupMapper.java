@@ -61,4 +61,6 @@ public interface GroupMapper {
     
     // 그룹 요청 응답 후 테이블 비우기
     void deleteGroupRequest(@Param("group_no") int group_no, @Param("mem_no") int mem_no);
+    
+	public List<GroupVO> getGroupListByMember(int mem_no);
 }
