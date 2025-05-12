@@ -175,4 +175,8 @@
 	    VALUES (group_request_seq.nextval, #{group_no}, #{mem_no}, 'PENDING')
 	</insert>
 	
+	<select id="getGroupOwnerMemNo" resultType="int">
+		SELECT mem_no FROM "GROUP" WHERE group_no = #{groupNo}
+	</select>
+	
 </mapper>

@@ -43,11 +43,15 @@ public interface GroupMapper {
 	
 	//채팅 가입하기 버튼
 	void insertGroup(@Param("group_no") int group_no, @Param("mem_no") int mem_no);
+	
 	//검색 시 채팅목록 불러오기
 	List<GroupVO> searchGroupBygroupname(@Param("keyword") String keyword);
 	
 	// 그룹 가입 요청 (group_req 테이블에 삽입)
 	boolean insertGroupRequset(@Param("group_no") int group_no, @Param("mem_no") int mem_no);
+	
+	// 그룹 생성자 회원번호 가져오기
+	int getGroupOwnerMemNo(@Param("group_no") int group_no);
 	
 	// 그룹 요청 중복 확인 (그룹 요청이 이미 존재하는지 확인)
     int checkRequestExist(@Param("group_no") int group_no, @Param("mem_no") int mem_no);

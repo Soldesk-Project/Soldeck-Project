@@ -109,4 +109,9 @@ public class GroupServiceImpl implements GroupService {
 		}
 		return false;
 	}
+
+	@Override
+	public void getGroupOwnerMemNo(int group_no) {
+		mapper.getGroupOwnerMemNo(group_no);
+	}
 }

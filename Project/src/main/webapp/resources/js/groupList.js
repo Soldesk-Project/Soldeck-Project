@@ -89,6 +89,9 @@ fetch("/grouplist/groupListRecommendData", {
 	      .join('');
 
 	    const introduce = group.group_memo || "";
+	    
+	    const groupNo = group.group_no;
+	    console.log(groupNo);
 
 	    const el = document.createElement("div");
 	    el.classList.add("friend-box");
@@ -128,7 +131,7 @@ fetch("/grouplist/groupListRecommendData", {
 	});
 
 
-//친구 요청 버튼 클릭 시
+//그룹 참여 요청 버튼 클릭 시
 function follow(groupMemNo, button) {
 	const senderMemNo = document.body.dataset.memNo;
     fetch("/grouplist/follow", {
@@ -148,7 +151,7 @@ function follow(groupMemNo, button) {
         button.textContent = "요청됨";
     })
     .catch(error => {
-        console.error("친구 요청 실패", error);
+        console.error("그룹 요청 실패", error);
         alert("요청을 처리하는 중 오류가 발생했습니다.");
     });
 }

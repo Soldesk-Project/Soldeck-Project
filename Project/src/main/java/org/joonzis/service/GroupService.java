@@ -39,5 +39,6 @@ public interface GroupService {
 	
 	// 그룹 가입 요청 (group_req 테이블에 삽입)
 	boolean insertGroupRequset(int group_no, int mem_no);	
-
+	
+	void getGroupOwnerMemNo(int group_no);
 }
