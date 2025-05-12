@@ -33,11 +33,10 @@ public interface MemberMapper {
 	public int[] getFoodKateInfo(@Param("mem_no") int mem_no);
 	public boolean modify(MemberVO vo);
 	public int deleteFoodKate(@Param("mem_no") int mem_no);
-	
 	MemberVO loginProcess(@Param("mem_id") String mem_id);
 	
-	
 	public void insertEventInfo(int mem_no);
+	public boolean deleteMemberInfo(int mem_no);
 	
 	
 	

@@ -32,7 +32,7 @@ window.onload = () => {
 			}else if(type=='modifyBtn'){
 				modify(mem_no);
 			}else if(type=='removeBtn'){
-				remove();
+				remove(mem_no);
 			}
 		});
 	});
@@ -242,4 +242,30 @@ async function modify(mem_no){
     } catch (error) {
         console.error('수정 실패:', error.message);
     }
+}
+
+async function remove(mem_no){
+	if (confirm("정말로 계정을 삭제하시겠습니까?")) {
+		if (confirm("정말로 삭제하시겠습니까? 다시 한번 신중하게 생각해주세요.")) {
+			try {
+				const response = await fetch('/mypage/removeMember?mem_no='+mem_no, {
+					method: 'POST'
+				});
+				if (!response.ok) {
+					const errorText = await response.text();
+					throw new Error('탈퇴에 실패하였습니다: ' + errorText);
+				}
+				const result = await response.text();
+				console.log('탈퇴 성공:', result);
+				location.href = '/logout';
+			} catch (error) {
+				console.error('탈퇴 실패:', error.message);
+				alert('회원 탈퇴 처리 중 오류가 발생했습니다.');
+			}
+		} else {
+			alert("회원 탈퇴를 취소하셨습니다.");
+		}
+	} else {
+		alert("회원 탈퇴를 취소하셨습니다.");
+	}
 }

@@ -22,5 +22,6 @@ public interface MemberService {
     public int deleteFoodKate(int mem_no);
     public void insertFoodKate(int mem_no, int food_no);
 	MemberVO loginProcess(String mem_id, String mem_pw);
+	public boolean removeMember(int mem_no);
 	
 }

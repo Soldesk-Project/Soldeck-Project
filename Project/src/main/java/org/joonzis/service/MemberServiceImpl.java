@@ -82,8 +82,11 @@ public class MemberServiceImpl implements MemberService{
 		if (member != null && member.getMem_pw().equals(mem_pw)) {
 			return member;
 		}
-
 		return null;
+	}
+	@Override
+	public boolean removeMember(int mem_no) {
+		return mapper.deleteMemberInfo(mem_no);
 	}
 	
 }

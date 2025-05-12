@@ -162,6 +162,24 @@ public class myPageController {
 	    return "redirect:/mypage/myInfo";
 	}
 	
+	@PostMapping("/removeMember")
+	public String removeMember(@RequestParam("mem_no") int mem_no, HttpSession session, RedirectAttributes rttr) {
+	    log.info("removeMember... mem_no: " + mem_no);
+
+	    // 1. 회원 번호(mem_no)를 이용하여 데이터베이스에서 회원 정보 삭제
+	    boolean isRemoved = service.removeMember(mem_no);
+
+	    if (isRemoved) {
+	        // 2. 탈퇴 성공 시 세션 무효화
+	        session.invalidate();
+	        rttr.addFlashAttribute("result", "removeSuccess");
+	        return "redirect:/"; // 탈퇴 후 메인 페이지 또는 다른 페이지로 리다이렉트
+	    } else {
+	        // 3. 탈퇴 실패 시 에러 메시지 전달 (선택 사항)
+	        rttr.addFlashAttribute("result", "removeFail");
+	        return "redirect:/mypage/myInfo"; // 탈퇴 실패 시 마이페이지로 다시 이동 (또는 다른 에러 페이지)
+	    }
+	}
 	
 	@GetMapping("/bookmark")
 	public String bookmark(Model model, HttpSession session) {
