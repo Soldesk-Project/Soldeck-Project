@@ -51,10 +51,12 @@
 									</div>
 			                    </div>
 			                    <div class="memo-div">
-				                    <span>특이 사항</span>
-				                    <div>
-										<input type="text" class="booking-memo" value="${rl.res_memo }">
-										<button type="button" class="booking-memo-btn" id="saveMemoBtn">저장</button>
+				                    <span class="memo-title">특이 사항 메모</span>
+				                    <div class="memo-content">
+										<span class="booking-memo">${rl.res_memo }</span>
+										<input type="text" class="booking-memo-modify" value="${rl.res_memo }">
+										<button type="button" class="booking-memo-btn" id="modifyMemoBtn">수정</button>
+										<button type="button" class="check-memo" id="saveMemoBtn">저장</button>
 					                    <input type="hidden" id="restNo" value="${rl.rest_no }">
 					                    <input type="hidden" id="isPublic" value="${rl.is_public }">
 				                    </div>

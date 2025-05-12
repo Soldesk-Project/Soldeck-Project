@@ -626,6 +626,7 @@ this.distanceMeter.setHighScore(this.highestScore);
 }
 // Reset the time clock.
 this.time = getTimeStamp();
+saveScore();
 },
 stop: function() {
 this.activated = false;
