@@ -276,11 +276,11 @@ body {
     border: 1px solid black;
     background-color: white;
     box-sizing: border-box;
+    border-radius: 15px;
 }
 /* 랭크 헤더 */
 .rank-header {
     display: flex;
-    flex-direction: row;
     border-bottom: 1px solid black;
 }
 .header-rating, .header-review {
@@ -293,10 +293,22 @@ body {
 .header-rating:hover, .header-review:hover {
     background-color: #e0e0e0;
 }
+.rank-header > .header-rating:hover {
+  border-radius: 15px 0 0 0;
+}
+.rank-header > .header-review:hover {
+  border-radius: 0 15px 0 0;
+}
 .rank-header > div.active {
   font-weight: bold;
   color: blue;
   border: 2px solid black;
+}
+.rank-header > .header-rating.active {
+  border-radius: 15px 0 0 0;
+}
+.rank-header > .header-review.active {
+  border-radius: 0 15px 0 0;
 }
 .header-rating {
 	border-right: 1px solid black;
@@ -320,14 +332,9 @@ body {
 .rank-content .reviews:last-child {
   border-bottom: none;
 } 
-.content-rating, .content-review {
-    border-radius: 4px;
-}
-
 .rank-content > div{
   display: none;
 }
-
 .rank-content > .show{
   display: block;
 }
@@ -339,7 +346,8 @@ body {
     box-sizing: border-box;
     cursor: pointer;
 }
-.ratings + .ratings, .reviews + .reviews{
+.ratings + .ratings,
+.reviews + .reviews {
   border-top: none;
 }
 

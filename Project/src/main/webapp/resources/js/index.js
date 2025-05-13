@@ -300,7 +300,7 @@ function showRating() {
         let msg = '';
         jsonArray.forEach(json => {
             msg += `<div class="ratings">`;
-            msg += 	`<div class="rating" data-rest_no="${json.rest_no}">${json.rest_name} : ${json.avg_rate}</div>`;
+            msg += 	`<div class="rating" data-rest_no="${json.rest_no}">${json.rest_name} : ${json.avg_rate}점</div>`;
             msg += `</div>`;
         });
 

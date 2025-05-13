@@ -34,8 +34,13 @@
 			    	<div class="store-info"></div>
 			    	<div class="store-menu" style="display: none;"></div>
 			    </div>
-			    <div class="store-map">
-			    	<div id="map" style="width: 100%; height: 100%;"></div>
+			    <div class="store-function">
+				    <div class="store-map">
+				    	<div id="map" style="width: 100%; height: 100%;"></div>
+				    </div>
+				    <div class="store-reserve">
+		            	<button type="button" class="btn btn-fir" id="reservationBtn">예약</button>
+		            </div>
 			    </div>
             </div>
         </div>
@@ -43,17 +48,16 @@
         <div class="panel-body">
         	<div class="comment-image-container">
         		<div class="image-wrapper"></div>
-        		
 			</div>
         	<div>
-	            <div class="store-reserve">
+	            <!-- <div class="store-reserve">
 	            	<button type="button" class="btn btn-fir" id="reservationBtn">예약</button>
-	            </div>
+	            </div> -->
 	            <!-- 더보기 버튼 (기본적으로 숨김) -->
  			    <button class="more-btn" style="display: none;">더보기</button>
-	            <div>
+	            <!-- <div>
 	            	<p class="store-COMMENT">댓글</p>
-	            </div>
+	            </div> -->
         	</div>
         </div>
         
@@ -61,7 +65,7 @@
             <div class="panel-footer-header">
                 <div class="panle-footer-input">
                     <div class="textarea-wrapper">
-                        <textarea rows="15" cols="100" class="text_comm" name="comment" id="comment"></textarea>
+                        <textarea rows="20" cols="100" class="text_comm" name="comment" id="comment"></textarea>
                         <div class="star-rating" id="starRating">
 		                    <div class="star" data-value="1"></div>
 		                    <div class="star" data-value="2"></div>

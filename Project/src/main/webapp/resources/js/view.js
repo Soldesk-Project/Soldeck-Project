@@ -298,13 +298,13 @@ function renderStoreDetails(data) {
             <div class="info-label">영업 시간 :</div>
             <div class="info-value">${storeData.rest_bh || '정보 없음'}</div>
         </div>
-        <div class="info-item">
+    	<div class="info-item">
+	    	<div class="info-label">가게 연락처 :</div>
+	    	<div class="info-value">${storeData.rest_phone || '정보 없음'}</div>
+    	</div>
+        <div class="info-item" id="rest_add">
             <div class="info-label">가게 주소 :</div>
             <div class="info-value">${storeData.rest_adr || '정보 없음'}</div>
-        </div>
-        <div class="info-item">
-            <div class="info-label">가게 연락처 :</div>
-            <div class="info-value">${storeData.rest_phone || '정보 없음'}</div>
         </div>
         <div class="tabel_favor">
             <button id="favoriteBtn"></button>
@@ -475,12 +475,6 @@ function showViewList() {
     }
 
     getList(jsonArray => {
-        if (!jsonArray || jsonArray.length === 0) {
-            imageUL.innerHTML = '<div class="slide">관련 가게가 없습니다.</div>';
-            initializeSlides();
-            return;
-        }
-
         for (let i = jsonArray.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [jsonArray[i], jsonArray[j]] = [jsonArray[j], jsonArray[i]];
@@ -533,7 +527,7 @@ function initializeSlides() {
     const totalSlides = slides.length;
 
     if (totalSlides === 0) {
-        slidesWrapper.innerHTML = '<div class="slide">관련 가게가 없습니다.</div>';
+        slidesWrapper.innerHTML = '<div class="slide">이미지 준비중 입니다.</div>';
         return;
     }
 
@@ -721,6 +715,51 @@ function updateTimeSlots(restNo, resDate) {
     });
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+    const textarea = document.getElementById('comment');
+    const maxChars = 500; // 최대 문자 수
+    const maxLines = 20; // 최대 줄 수
+
+    textarea.setAttribute('rows', maxLines); // rows 속성을 20으로 고정
+
+    textarea.addEventListener('input', function () {
+        // 1. 문자 수 제한
+        if (textarea.value.length > maxChars) {
+            textarea.value = textarea.value.substring(0, maxChars);
+        }
+
+        // 2. 줄 수 제한 (실제 줄 바꿈 기준)
+        let lines = textarea.value.split('\n');
+        if (lines.length > maxLines) {
+            textarea.value = lines.slice(0, maxLines).join('\n');
+        }
+
+        // 3. 자동 줄 바꿈 포함한 줄 수 계산 및 제한
+        const lineHeight = parseFloat(getComputedStyle(textarea).lineHeight) || 20; // 줄 높이 (기본값 20px)
+        const totalHeight = textarea.scrollHeight; // 스크롤 높이
+        const calculatedLines = Math.floor(totalHeight / lineHeight); // 실제 렌더링 줄 수
+
+        if (calculatedLines > maxLines) {
+            // 줄 수 초과 시 마지막 줄 잘라내기
+            let text = textarea.value;
+            while (Math.floor(textarea.scrollHeight / lineHeight) > maxLines && text.length > 0) {
+                text = text.substring(0, text.length - 1);
+                textarea.value = text;
+            }
+        }
+    });
+
+    // 키보드 입력 시 줄 바꿈 제한
+    textarea.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+            const lines = textarea.value.split('\n');
+            if (lines.length >= maxLines) {
+                e.preventDefault(); // Enter 키 입력 방지
+            }
+        }
+    });
+});
+
 // 코멘트 목록 조회 및 표시 -----------------------------------------------
 function fetchComments() {
     const commentList = document.querySelector(".panel-footer-body ul.chat");
@@ -730,11 +769,6 @@ function fetchComments() {
     }
 
     getComments(data => {
-        if (!data || data.length === 0) {
-            commentList.innerHTML = '<li><div class="chat-full">코멘트가 없습니다.</div></li>';
-            return;
-        }
-
         const seenComNos = new Set();
         let msg = '';
         data.forEach(comment => {
