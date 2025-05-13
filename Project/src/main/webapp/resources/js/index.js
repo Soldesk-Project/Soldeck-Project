@@ -319,7 +319,7 @@ function showFriend() {
                     console.log(roomNo);
 
                     // 해당 채팅방으로 이동
-                    location.href = `/chat/privateChatRoom/${roomNo}`;
+                    location.href = `/chat/privateRoom/${roomNo}`;
                 } else {
                     alert("친구 번호가 없습니다.");
                 }

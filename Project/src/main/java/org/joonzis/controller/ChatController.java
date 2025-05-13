@@ -121,7 +121,7 @@ public String chatMain(HttpSession session, Model model) {
 	
 	// 개인 채팅방
 	@GetMapping("/privateRoom/{roomNo}")
-	public String goPrivateChatRoom(@PathVariable("roomNo") int friendNo, HttpSession session, Model model) {
+	public String goPrivateChatRoom(@PathVariable("roomNo") String roomNo, HttpSession session, Model model) {
 	    MemberVO loginUser = (MemberVO) session.getAttribute("loggedInUser");
 	    if (loginUser == null) {
 	        return "redirect:/login/loginPage";
@@ -130,38 +130,44 @@ public String chatMain(HttpSession session, Model model) {
 	    int myNo = loginUser.getMem_no();
 	    String myNick = loginUser.getMem_nick();
 
-	    // 친구 정보 조회
-	    MemberVO friend = privateChatService.getMemberByNo(friendNo);
-	    
-	    System.out.println(friend);
-	    
-	    
-	    if (friend == null) {
+	    // friendNo를 roomNo에서 추출
+	    String myNoStr = String.valueOf(myNo);
+	    String friendNoStr;
+
+	    if (roomNo.startsWith(myNoStr)) {
+	        friendNoStr = roomNo.substring(myNoStr.length());
+	    } else if (roomNo.endsWith(myNoStr)) {
+	        friendNoStr = roomNo.substring(0, roomNo.length() - myNoStr.length());
+	    } else {
+	        // 내가 포함되지 않은 roomNo면 잘못된 요청
 	        return "redirect:/error/404";
 	    }
 
-	    // 채팅방 존재 여부 확인
-	    Integer existingRoom = privateChatService.checkExistingRoom(myNo, friendNo);
+	    int friendNo = Integer.parseInt(friendNoStr);
 
-	    // 채팅방이 없으면 새로 생성
-	    int roomNo;
-	    if (existingRoom == null || existingRoom == 0) {
-	        roomNo = privateChatService.createPrivateChatRoom(myNo, friendNo);
-	    } else {
-	        roomNo = existingRoom;
-	    }
+	    // 나머지 로직 동일
+	    MemberVO friend = privateChatService.getMemberByNo(friendNo);
+	    if (friend == null) return "redirect:/error/404";
 
-	    // 채팅 내역 가져오기
-	    List<PrivateChatLogVO> chatLogs = privateChatService.getChatLogsByRoomNo(roomNo);
+	    Integer existingRoom = privateChatService.checkExistingRoom(
+	        Math.min(myNo, friendNo),
+	        Math.max(myNo, friendNo)
+	    );
+
+	    int room = (existingRoom == null || existingRoom == 0)
+	        ? privateChatService.createPrivateChatRoom(myNo, friendNo)
+	        : existingRoom;
+
+	    List<PrivateChatLogVO> chatLogs = privateChatService.getChatLogsByRoomNo(room);
 
 	    model.addAttribute("chatLogs", chatLogs);
 	    model.addAttribute("currentNick", myNick);
 	    model.addAttribute("currentNo", myNo);
 	    model.addAttribute("friendNick", friend.getMem_nick());
 	    model.addAttribute("friendNo", friendNo);
-	    model.addAttribute("roomNo", roomNo);
+	    model.addAttribute("roomNo", room);
 
-	    return "chat/privateChatRoom"; // 친구 채팅용 JSP
+	    return "chat/privateChatRoom";
 	}
 
 }

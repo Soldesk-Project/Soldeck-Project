@@ -40,7 +40,7 @@
 
     <!-- 채팅 내역 저장 -->
     <insert id="insertPrivateChatLog">
-        INSERT INTO PRIVATE_CHAT_LOG (CHAT_NO, ROOM_NO, SENDER_NO, CHAT_LOG, CHAT_TIME)
+        INSERT INTO PRIVATE_CHAT_LOG (CHAT_NO, ROOM_NO, MEM_NO, CHAT_LOG, CHAT_TIME)
         VALUES (PRIVATE_CHAT_LOG_SEQ.NEXTVAL, #{roomNo}, #{senderNo}, #{chatLog}, SYSDATE)
     </insert>
 
