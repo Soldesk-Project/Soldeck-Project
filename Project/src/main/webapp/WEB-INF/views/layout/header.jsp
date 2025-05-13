@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="header">
 	<div class="nav-left">
-		<a href="/"><img src="/resources/images/logo.png" alt="logo" style="width: 70px;"></a>
+		<a href="/" draggable="false"><img src="/resources/images/logo.png" alt="logo" style="width: 70px;" draggable="false"></a>
 	</div>
 	<div class="nav-center">
 		<input type="search" placeholder="검색어를 입력하세요." id="search">
