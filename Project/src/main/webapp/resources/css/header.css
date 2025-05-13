@@ -48,7 +48,6 @@ a:hover {
 	position: relative;
 	display: inline-block;
 }
-
 #search {
 	border: 4px solid #FF7D00;
 	border-radius: 25px;
@@ -72,13 +71,26 @@ a:hover {
   height: 27px;
   filter: brightness(0) saturate(100%) invert(52%) sepia(92%) saturate(2043%) hue-rotate(-8deg) brightness(104%) contrast(104%);
 }
+#alarmBtn {
+	padding-top: 5px;
+	padding-left: 1px;
+	background: none;
+	border: none;
+	cursor: pointer; 
+}
+/* 아이콘 이미지 크기 */
+#alarmBtn img {
+  width: 20px;
+  height: 20px;
+  filter: brightness(0) saturate(100%) invert(52%) sepia(92%) saturate(2043%) hue-rotate(-8deg) brightness(104%) contrast(104%);
+}
 .nickAndF{
 	display: flex;
 	flex-direction: row;
 }
 /* 커뮤니티 아이콘 버튼 */
 .communityIcon{
-	margin-left: 10px;
+	margin-left: 3px;
 }
 #communityBtn {
 background: none;
@@ -194,4 +206,45 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 .searchLayout input[type="search"]:hover::placeholder {
   opacity: 0; 
+}
+
+/* ----------- 알림 모달 창 -------------*/
+
+.modal {
+  display: none; /* 기본은 숨김 */
+  position: fixed;
+  z-index: 2000;
+  left: 650px;
+  top: -100px;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: transparent;
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 120px auto;
+  padding: 20px;
+  border-radius: 8px;
+  width: 250px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.modal-content h3 {
+  margin-top: 0;
+}
+
+.modal-content ul {
+  padding-left: 20px;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 24px;
+  cursor: pointer;
+}
+.close:hover {
+  color: #000;
 }

@@ -28,6 +28,11 @@
 			<div class="nickAndmypage">
 				<div class="nickAndF">
 					<div class="nickname">${member.mem_nick}님</div>
+	    			<div class="alarmIcon">
+	    				<button id="alarmBtn" type="button">
+	    					<img alt="요청알림" src="/resources/images/alarmIcon.png">
+	    				</button>
+	    			</div>
 					<div class="communityIcon">
 	    				<a href="community/communityMain">
 						<button id="communityBtn" type="button">
@@ -52,6 +57,16 @@
 
 
 </div>
+
+<!-- 알림 모달 창 -->
+<div id="alarmModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h3>알림 목록</h3>
+    <ul id="alarmList"></ul>
+  </div>
+</div>
+
 <script>
 // 검색 관련 스크립트
 let headerSearchKeyword = '';
@@ -151,4 +166,47 @@ form.style.display = 'none';
 });
 
 </c:if>
+
+// 알림 모달 창 열고 닫기 js
+document.addEventListener('DOMContentLoaded', function () {
+  const alarmBtn = document.getElementById("alarmBtn");
+  const modal = document.getElementById("alarmModal");
+  const closeBtn = document.querySelector(".modal .close");
+  const alarmList = document.getElementById("alarmList");
+
+  if (alarmBtn && modal && closeBtn && alarmList) {
+    alarmBtn.addEventListener("click", function () {
+      // 모달 먼저 열기
+      modal.style.display = "block";
+
+      // 기존 알림 목록 초기화
+      alarmList.innerHTML = "<li>불러오는 중...</li>";
+
+      // AJAX 요청으로 알림 가져오기
+      fetch("/alarm/list")
+        .then(response => response.json())
+        .then(data => {
+          alarmList.innerHTML = "";
+          if (data.length === 0) {
+            alarmList.innerHTML = "<li>새로운 알림이 없습니다.</li>";
+          } else {
+            data.forEach(alarm => {
+              const li = document.createElement("li");
+              li.textContent = alarm;
+              alarmList.appendChild(li);
+            });
+          }
+        })
+        .catch(err => {
+          alarmList.innerHTML = "알림을 불러오지 못했습니다.";
+          console.error(err);
+        });
+    });
+
+    closeBtn.addEventListener("click", () => modal.style.display = "none");
+    window.addEventListener("click", e => {
+      if (e.target === modal) modal.style.display = "none";
+    });
+  }
+});
 </script>
