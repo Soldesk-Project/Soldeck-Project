@@ -34,6 +34,17 @@ public class GroupController {
 	@Autowired
 	private FriendSocketHandler friendSocketHandler;
 	
+	 @GetMapping("/main") // 그룹 메인 페이지 요청 처리
+	    public String groupMain(HttpSession session, Model model) {
+	        log.info("그룹 메인 페이지 요청");
+	        MemberVO member = (MemberVO) session.getAttribute("loggedInUser");
+	        if (member == null) {
+	            return "redirect:/login/loginPage"; // 로그인 안 되어 있으면 로그인 페이지로 리다이렉트
+	        }
+	        model.addAttribute("mem_no", member.getMem_no()); // JS에서 mem_no 활용 가능
+	        return "grouplist/groupList"; // 그룹 목록 페이지 JSP 파일 경로
+	    }
+	
 	// 그룹 생성 및 채팅방 생성
 	@ResponseBody
 	@PostMapping("/createGroup")

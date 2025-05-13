@@ -34,6 +34,20 @@ public class ChatController {
 	@Autowired
 	ChatLogService chatService;
 	
+	@GetMapping("/main") // 채팅 메인 페이지 요청 처리
+    public String chatMain(HttpSession session, Model model) {
+        log.info("채팅 메인 페이지 요청");
+        MemberVO member = (MemberVO) session.getAttribute("loggedInUser");
+        if (member == null) {
+            return "redirect:/login/loginPage"; // 로그인 안 되어 있으면 로그인 페이지로 리다이렉트
+        }
+
+        int mem_no = member.getMem_no();
+        List<GroupMemberDTO> groups = service.getAllGroups(mem_no);
+        model.addAttribute("groupList", groups); // 참여하고 있는 그룹 목록을 모델에 추가
+        return "chat/chatRoom";
+    }
+	
 	@GetMapping("/chatRoom/{groupNo}")
 	public String goChatRoom(@PathVariable("groupNo") int groupNo, HttpSession session, Model model) {
 		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");

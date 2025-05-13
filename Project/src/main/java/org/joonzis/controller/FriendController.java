@@ -43,10 +43,16 @@ public class FriendController {
 	@Autowired
 	private FriendSocketHandler friendSocketHandler;
 	
-	//@GetMapping("/friendList")
-	//public void getFriendList() {
-	//	log.info("친구 페이지");
-	//}
+	@GetMapping("/main") // 친구 목록 데이터 HTML 조각 반환 (AJAX 전용)
+    public String getFriendListHTML(HttpSession session, Model model) {
+        log.info("친구 목록 HTML 요청 (AJAX)");
+        MemberVO member = (MemberVO) session.getAttribute("loggedInUser");
+        if (member == null) {
+            return "redirect:/login/loginPage"; // 또는 에러 응답
+        }
+        model.addAttribute("friendList", fservice.getFriendList(member.getMem_no()));
+        return "friendlist/friendList";
+    }
 	
 	@PostMapping("/friend/memoUpdate")
 	public String updateMemo(@RequestParam("mem_id") String memId,

@@ -36,7 +36,27 @@ window.onload = () => {
 			}
 		});
 	});
+	// "수정 리셋" 버튼 클릭 이벤트 리스너 추가
+	const resetButton = document.querySelector('button[type="reset"]');
+	if (resetButton) {
+		resetButton.addEventListener('click', resetForm);
+	}
 };
+//-----수정 폼 리셋 함수--------------------------------------------
+function resetForm() {
+	modifyInfoForm.reset(); // 폼의 모든 입력 필드를 초기 상태로 되돌립니다.
+
+	// 에러 메시지 초기화
+	passwordErrorMessage.textContent = '';
+	nicknameCheckMessage.textContent = '';
+	emailCheckMessage.textContent = '';
+	phoneErrorMessage.textContent = '';
+	interestErrorMessage.textContent = '';
+
+	// 프로필 이미지 초기화 (src 속성을 원래 값으로 되돌리거나 기본 이미지로 설정)
+	const originalImageSrc = previewImage.getAttribute('src'); // 또는 기본 이미지 경로
+	previewImage.src = originalImageSrc;
+}
 
 //-------------------------------------------------------------------------
 const modifyInfoForm = document.getElementById('modifyInfoForm');

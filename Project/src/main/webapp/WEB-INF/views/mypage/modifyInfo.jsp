@@ -146,6 +146,7 @@
 	          </div>
 	          <div class="btn-div">
 	            <button type="button" class="modify-btn" id="modifyBtn">수정 완료</button>
+	            <button type="reset" class="reset-btn">수정 리셋</button>
 	            <button type="button" class="remove-btn" id="removeBtn">회원 탈퇴</button>
 	          </div>
         </div>
