@@ -114,25 +114,7 @@
 			</c:if>
         </div>
         
-        <!-- 커뮤니티 탭 -->
-        <c:if test="${sessionScope.loggedInUser != null}">
-	        <div class="commu-tap">
-	        	<div class="taps">
-		        	<div class="tap-friend active" data-tab="friend">친구</div>
-		        	<div class="tap-group" data-tab="group">모임</div>
-	        	</div>
-	        	<div class="tap-content">
-		        	<div class="content-friend show"></div>
-		        	<div class="content-group">모임</div>
-	        	</div>
-	        	<div class="tap-move">
-		        	<div class="move-friend show">전체 친구 보기</div>
-		        	<div class="move-group">전체 모임 보기</div>
-	        	</div>
-	        </div>
-        </c:if>
         <!-- 랭킹 탭 -->
-        <c:if test="${sessionScope.loggedInUser == null}">
         <div class="rank-tap">
         	<div class="rank-header">
 	        	<div class="header-rating active" data-tab="rating">평점</div>
@@ -143,7 +125,6 @@
 	        	<div class="content-review"></div>
         	</div>
         </div>
-        </c:if>
         
 		<div class="popup" id="popup">
 	            <div class="popup-content">
@@ -157,7 +138,7 @@
 
 	<script type="text/javascript" src="/resources/js/index.js"></script>
 	<script type="text/javascript">
-    	const currentNo = ${currentNo};  // JSP에서 전달된 currentNo를 JavaScript로 사용
+            const currentNo = ${currentNo}; // JSP에서 전달된 currentNo를 JavaScript로 사용
 	</script>
     <%@ include file="../views/layout/footer.jsp" %>
 </body>

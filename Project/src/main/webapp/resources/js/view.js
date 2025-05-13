@@ -795,7 +795,7 @@ function fetchComments() {
                     const imageUrl = `${attach.att_path}/${encodeURIComponent(fileName)}`;
                     attachHtml += `
                         <div class="attachment">
-                            <img src="${imageUrl}" alt="${attach.att_name}" class="comment-image" style="max-width: 100px; margin: 5px;">
+                            <img src="${imageUrl}" alt="${attach.att_name}" class="comment-image">
                         </div>
                     `;
                 });

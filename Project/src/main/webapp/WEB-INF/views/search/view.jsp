@@ -50,14 +50,8 @@
         		<div class="image-wrapper"></div>
 			</div>
         	<div>
-	            <!-- <div class="store-reserve">
-	            	<button type="button" class="btn btn-fir" id="reservationBtn">예약</button>
-	            </div> -->
 	            <!-- 더보기 버튼 (기본적으로 숨김) -->
  			    <button class="more-btn" style="display: none;">더보기</button>
-	            <!-- <div>
-	            	<p class="store-COMMENT">댓글</p>
-	            </div> -->
         	</div>
         </div>
         
@@ -92,7 +86,7 @@
              </div>
              <div class="panel-footer-body">
                 <ul class="chat">
-                   <li data-com_no="1">
+                   <!-- <li data-com_no="1">
                       <div class="chat-full">
                          <div class="chat-header">
                          	<img alt="프로필" src="">
@@ -109,7 +103,7 @@
                          <div class="chat-footer" id="chat_abc">
                          </div>
                       </div>
-                   </li>
+                   </li> -->
                 </ul>
              </div>
         </div>

@@ -272,6 +272,8 @@ a:hover {
 }
 .attachment {
 	height: 100%;
+	border: 1px solid;
+	box-sizing: border-box;
 }
 .panel-body > div:nth-child(2) {
     display: flex;
@@ -617,58 +619,27 @@ a:hover {
 
  /* 이미지 영역 */
  .chat-body {
-        /* margin-top: 10px; */
-    }
+    margin-bottom: 15px;
+}
 .comment-attachments {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        /* margin-top: 10px; */
-    }
-    .comment-image {
-        max-width: 100px;
-        height: auto;
-        border-radius: 5px;
-    }
-    .chat-footer p {
-        margin: 10px;
-        white-space: pre-wrap;
-    }
-.image-con {
-  display: flex;
-  flex: 1; /* 남은 공간을 채우도록 설정 */
-  height: 100%;
-  gap: 5px; /* 이미지 간 간격 */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    height: 120px;
+    overflow: overlay;
 }
-.image {
-  flex: 0 0 25%; /* 4개 이미지가 동일한 너비로 나뉨 (100% / 4 = 25%) */
-  height: 100%;
-  border: 1px solid #000000;
-  box-sizing: border-box; /* 테두리 포함 크기 계산 */
+.comment-attachments .attachment {
+	width: 160px;
+	height: 96%;
 }
-.image img {
-  width: 100%;
-  height: 100%;
-  object-fit: inherit;
+.comment-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
 }
-.btn-com {
-  display: flex;
-  align-items: center;
-}
-.btn-com .btn {
-  background-color: white;
-  color: black;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  margin-left: 30px;
-  margin-right: 10px;
-  padding: 8px 15px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-.btn-com .btn:hover {
-  background-color: #f0f0f0;
+.chat-footer p {
+    margin: 10px;
+    white-space: pre-wrap;
 }
 .chat-footer{
   border: 1px solid #ddd;
