@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="../resources/css/footer.css">
 <body>
     <%@ include file="../views/layout/header.jsp" %>
-
+	
+	<div class="bodyWrapper">
 	<div class="content">
 		<div class="image-section">
 			<button class="slide-btn prev" onclick="moveSlider('image', -1)">&#10094;</button>
@@ -152,7 +153,7 @@
 	    </div>
 	    <div id="user-data" data-user="${sessionScope.loggedInUser.mem_no}"></div>
     </div>
-
+	</div>
 
 	<script type="text/javascript" src="/resources/js/index.js"></script>
 	<script type="text/javascript">

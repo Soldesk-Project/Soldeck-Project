@@ -1,41 +1,55 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="header">
-	<div class="nav-left">
+	<div class="logoLayout">
 		<a href="/" draggable="false"><img src="/resources/images/logo.png" alt="logo" style="width: 70px;" draggable="false"></a>
 	</div>
-	<div class="nav-center">
-		<input type="search" placeholder="검색어를 입력하세요." id="search">
+	<div class="searchLayout">
+		<div class="searchWrapper">
+			<input type="search" placeholder="검색어를 입력하세요." id="search">
+			<button id="searchBtn" type="button">
+				<img alt="검색버튼" src="/resources/images/searchImg.png">
+			</button>
+		</div>
 	</div>
 
     <c:if test="${sessionScope.loggedInUser != null}">
     	<c:set var="member" value="${sessionScope.loggedInUser}" />
     	
-        <div class="profileBox">
-        	<div class="profileBox1">
-        		<div class="profile_img_box">
-					<img src="/resources/upload/${member.mem_img}" alt="프로필" width="80" height="80"
-                	 onerror="if (!this.dataset.error) { this.dataset.error = true; this.src='/resources/images/profile.png'; }">
-				</div>
-				<!-- <div><img src='../resources/images/profile_line.png' alt="라인"></div>  -->
+    <div class="profileBox">
+       	<div class="profileBox1">
+       		<div class="profile_img_box">
+				<img src="/resources/upload/${member.mem_img}" alt="프로필" width="80" height="80"
+               	 onerror="if (!this.dataset.error) { this.dataset.error = true; this.src='/resources/images/profile.png'; }">
 			</div>
-			<div class="profileBox2">
-				<div class="nickAndmypage">
+			<!-- <div><img src='../resources/images/profile_line.png' alt="라인"></div>  -->
+		</div>
+		<div class="profileBox2">
+			<div class="nickAndmypage">
+				<div class="nickAndF">
 					<div class="nickname">${member.mem_nick}님</div>
-					<div class="mypageAndlouout">
-						<div class="mypage_text"><a href="/mypage/myInfo">마이페이지</a></div>
-						<form id="logoutForm" action="/login/logout" method="POST" style="display: none;"></form>
-						<div><a href="#" onclick="document.getElementById('logoutForm').submit();">로그아웃</a></div>
-					</div>
+					<div class="communityIcon">
+	    				<a href="community/communityMain">
+						<button id="communityBtn" type="button">
+							<img alt="검색버튼" src="/resources/images/communityIcon.png">
+						</button>    
+	    				</a>
+	    			</div>
+    			</div>
+				<div class="mypageAndlouout">
+					<div class="mypage_text"><a href="/mypage/myInfo">마이페이지</a></div>
+					<form id="logoutForm" action="/login/logout" method="POST" style="display: none;"></form>
+					<div><a href="#" onclick="document.getElementById('logoutForm').submit();">로그아웃</a></div>
 				</div>
 			</div>
 		</div>
+	</div>
     </c:if>
 
 	<c:if test="${empty sessionScope.loggedInUser}">
     	<a href="javascript:void(0)" id="login">로그인</a>
     </c:if>
-    <div><a href="community/communityMain">커뮤티티이동</a></div>
+
 
 </div>
 <script>
@@ -76,6 +90,18 @@ handleSearch(event);
 }, { capture: false });
 } else {
 console.error("searchInput 요소를 찾을 수 없습니다.");
+}
+
+const searchButton = document.getElementById('searchBtn');
+if (searchButton) {
+  searchButton.addEventListener('click', function () {
+    const input = document.getElementById('search');
+    if (input) {
+      handleSearch({ target: input });
+    }
+  });
+} else {
+  console.error("searchBtn 요소를 찾을 수 없습니다.");
 }
 
 // 로그인 링크 클릭 시 현재 URL 전달

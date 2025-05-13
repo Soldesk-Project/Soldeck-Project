@@ -17,34 +17,79 @@ a:hover {
   
 }
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: rgba(255, 254, 252, 0.2);
-  width: 1200px; /* 레이아웃의 너비를 고정 */
-  margin: 30px auto 10px auto; /* 화면 가운데 정렬 */
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: rgba(255, 254, 252, 0.2);
+	width: 1200px; /* 레이아웃의 너비를 고정 */
+	height: 90px;
+	margin: 30px auto 10px auto; /* 화면 가운데 정렬 */
 }
-.nav-left,
-.nav-center,
-.nav-right,
-.nav-right1 {
+.logoLayout,
+.searchLayout,
+.profileBox {
   display: flex;
   align-items: center;
-}
-.nav-center {
-  flex: 1;
-  justify-content: center;
 }
 #logo, #search, #profile, #login {
   text-decoration: none;
   color: black;
   padding: 8px 12px;
 }
+.searchLayout {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  justify-content: center;
+}
+/* input과 버튼을 포개기 위한 래퍼 */
+.searchWrapper {
+	position: relative;
+	display: inline-block;
+}
+
 #search {
-  border: 4px solid #FF7D00;
-  border-radius: 25px;
-  padding: 6px 40px;
-  text-align: left;
+	border: 4px solid #FF7D00;
+	border-radius: 25px;
+	padding: 6px 40px 6px 30px;
+	text-align: left;
+}
+/* 검색 아이콘 버튼 */
+/* 버튼이 input 위에 겹치게 */
+#searchBtn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+/* 아이콘 이미지 크기 */
+#searchBtn img {
+  width: 27px;
+  height: 27px;
+  filter: brightness(0) saturate(100%) invert(52%) sepia(92%) saturate(2043%) hue-rotate(-8deg) brightness(104%) contrast(104%);
+}
+.nickAndF{
+	display: flex;
+	flex-direction: row;
+}
+/* 커뮤니티 아이콘 버튼 */
+.communityIcon{
+	margin-left: 10px;
+}
+#communityBtn {
+background: none;
+border: none;
+cursor: pointer;
+}
+/* 아이콘 이미지 크기 */
+#communityBtn img {
+  width: 27px;
+  height: 27px;
+  filter: brightness(0) saturate(100%) invert(52%) sepia(92%) saturate(2043%) hue-rotate(-8deg) brightness(104%) contrast(104%);
 }
 input[type="search"]::-webkit-search-cancel-button {
     -webkit-appearance: none;
@@ -72,58 +117,29 @@ input[type="search"]::-webkit-search-cancel-button {
 	justify-content: center;
 }
 #login {
-  /*border: 2px solid #FF7D00;*/
   border-radius: 16px;
   padding: px 12px;
   background-color: #FF7D00;
   color: white;
+  margin-right: 15px;
 }
 #login:hover{
   background-color: #e96c00;
 }
-.nav-left {
+.logoLayout {
   justify-content: flex-start;
   padding-left: 100px;
 }
-.nav-right1 {
+.profileBox {
   justify-content: flex-start;
   margin-right: 30px;
-}
-/* Modal 스타일 */
-.main-modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.8);
-}
-.main-modal-content {
-    background-color: white;
-    margin: 15% auto;
-    padding: 20px;
-    border-radius: 10px;
-    width: 200px;
-    text-align: center;
-}
-
-.modal-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
 }
 .mypageAndlouout{
 	display: flex;
 	flex-direction: row;
 	text-decoration: none;
-	gap : 10px;
-	
+	gap : 10px;	
 }
-
 .profile-icon {
     width: 40px;
     height: 40px;
@@ -133,7 +149,7 @@ input[type="search"]::-webkit-search-cancel-button {
 .profileBox{
 	height: 75px;
 	border-radius: 20px;
-	padding: 5px 25px 5px 10px; 
+	padding: 5px 15px 5px 10px; 
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -155,55 +171,7 @@ input[type="search"]::-webkit-search-cancel-button {
     font-weight: 500;
     font-size: 19px;
 }
-.close {
-    cursor: pointer;
-    font-size: 24px;
-}
-
-.modal-menu {
-    list-style: none;
-    padding: 0;
-}
-
-.modal-menu li {
-    padding: 10px 0;
-    border-top: 1px solid #ddd;
-}
-
-.modal-menu li:last-child {
-    border-bottom: 1px solid #ddd;
-}
-
-.modal-menu li a {
-    text-decoration: none;
-    color: black;
-    display: block;
-}
-
-.modal-menu li a:hover {
-    background-color: #f0f0f0;
-}
-#caption {
-  margin: auto;
-  text-align: center;
-  color: #fff;
-  padding: 10px;
-}
-.close {
-  position: absolute;
-  top: 15px;
-  right: 35px;
-  color: white;
-  font-size: 30px;
-  font-weight: bold;
-  cursor: pointer;
-}
-.close:hover,
-.close:focus {
-  text-decoration: none;
-  cursor: pointer;
-}
-.nav-center input[type="search"] {
+.searchLayout input[type="search"] {
   width: 500px;
   height: 55px;
   border: 3px solid #000000;
@@ -212,22 +180,18 @@ input[type="search"]::-webkit-search-cancel-button {
   font-size: 20px;
   transition: all 0.1s ease; /* 스타일 변경 효과 */
 }
-.nav-center input[type="search"]:focus {
+.searchLayout input[type="search"]:focus {
   outline: none;
   box-sizing: border-box;
 }
-.nav-center input[type="search"]::placeholder {
+.searchLayout input[type="search"]::placeholder {
   color: #000000;
   font-style: normal
 }
-/*.nav-center input[type="search"]:hover {
-  box-shadow: 0px 3px 5px #000010;
-  outline: none;
-}*/
-.nav-center input[type="search"]::placeholder {
+.searchLayout input[type="search"]::placeholder {
   color: gray;
   transition: opacity ease;
 }
-.nav-center input[type="search"]:hover::placeholder {
+.searchLayout input[type="search"]:hover::placeholder {
   opacity: 0; 
 }
