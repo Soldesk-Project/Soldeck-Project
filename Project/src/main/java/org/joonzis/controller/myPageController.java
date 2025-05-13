@@ -58,38 +58,6 @@ public class myPageController {
     private String uploadFolderPath;
 	
 	@GetMapping("/myInfo")
-	public String myInfo(Model model, HttpSession session) {
-		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
-		if (loggedInMember == null) {
-			// 로그인되지 않은 경우 처리 (예: 로그인 페이지로 리다이렉트)
-			return "redirect:/login/loginPage";
-		}
-		int mem_no = loggedInMember.getMem_no();
-
-		log.info("myInfo..."+mem_no);
-		int foodKate[]=service.getFoodKateInfo(mem_no);
-		List<String> foodList = new ArrayList<>();
-	    for (int f : foodKate) {
-	        String foodName = changeFoodNoToName(f);
-	        foodList.add(foodName);
-	    }
-		
-		model.addAttribute("member",service.getMemberInfo(mem_no));
-		model.addAttribute("foodList",foodList);
-		return "/mypage/myInfo";
-	}
-	
-	private String changeFoodNoToName(int no) {
-	    switch(no) {
-	        case 1: return "한식";
-	        case 2: return "중식";
-	        case 3: return "일식";
-	        case 4: return "양식";
-	        case 5: return "베트남음식";
-	        default: return "";
-	    }
-	}
-	@GetMapping("/modifyInfo")
 	public String modifyInfo(Model model, HttpSession session) {
 		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
 		if (loggedInMember == null) {
@@ -108,6 +76,36 @@ public class myPageController {
 	    model.addAttribute("foodList",foodList);	    
 		return "/mypage/modifyInfo";
 	}
+	
+	private String changeFoodNoToName(int no) {
+	    switch(no) {
+	        case 1: return "한식";
+	        case 2: return "중식";
+	        case 3: return "일식";
+	        case 4: return "양식";
+	        case 5: return "베트남음식";
+	        default: return "";
+	    }
+	}
+//	@GetMapping("/modifyInfo")
+//	public String modifyInfo(Model model, HttpSession session) {
+//		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
+//		if (loggedInMember == null) {
+//			return "redirect:/login/loginPage";
+//		}
+//		int mem_no = loggedInMember.getMem_no();
+//		
+//		log.info("modifyInfo..."+mem_no);
+//		int foodKate[]=service.getFoodKateInfo(mem_no);
+//		List<String> foodList = new ArrayList<>();
+//	    for (int f : foodKate) {
+//	        String foodName = changeFoodNoToName(f);
+//	        foodList.add(foodName);
+//	    }
+//	    model.addAttribute("member",service.getMemberInfo(mem_no));
+//	    model.addAttribute("foodList",foodList);	    
+//		return "/mypage/modifyInfo";
+//	}
 	@Transactional
 	@PostMapping("modifyInfo")
 	public String modifyInfo(MemberVO vo, RedirectAttributes rttr,

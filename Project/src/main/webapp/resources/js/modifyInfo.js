@@ -54,7 +54,8 @@ function resetForm() {
 	interestErrorMessage.textContent = '';
 
 	// 프로필 이미지 초기화 (src 속성을 원래 값으로 되돌리거나 기본 이미지로 설정)
-	const originalImageSrc = previewImage.getAttribute('src'); // 또는 기본 이미지 경로
+	const previewImage = document.getElementById('profileImage');
+	const originalImageSrc = previewImage.dataset.originalSrc;
 	previewImage.src = originalImageSrc;
 }
 

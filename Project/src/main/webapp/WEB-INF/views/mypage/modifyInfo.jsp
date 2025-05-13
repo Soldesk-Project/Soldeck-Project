@@ -24,7 +24,9 @@
         	<div class="info_personal_box">
 	        	<div class="info-profile-div-box">
 		        	<div class="info-profile-div">
-		    			<img class="info-profile" id="profileImage" src="${member.mem_img}" alt="유저 프로필">
+		    			<img class="info-profile" id="profileImage" src="/resources/upload/${member.mem_img}" alt="유저 프로필" width="80" height="80"
+		    				onerror="if (!this.dataset.error) { this.dataset.error = true; this.src='/resources/images/profile.png'; }"
+		    				data-original-src="/resources/upload/${member.mem_img}">
 		    			<input type="file" id="profileImageInput" class="previewImage" accept="image/*" name="profileImageInput">
 					</div>
 					<div class="info-profile-div-div">

@@ -87,11 +87,11 @@
 			<div class="formGroup">
 				<label for="phone1">연락처</label>
 				<div class="phone-inputs">
-					<input type="tel" id="phone1" name="phone1" placeholder="010" maxlength="3" required>
+					<label>010</label>
 					<span>-</span>
-					<input type="tel" id="phone2" name="phone2" placeholder="1234" maxlength="4" required>
+					<input type="tel" id="phone1" name="phone1" placeholder="1234" maxlength="4" required>
 					<span>-</span>
-					<input type="tel" id="phone3" name="phone3" placeholder="5678" maxlength="4" required>
+					<input type="tel" id="phone2" name="phone2" placeholder="5678" maxlength="4" required>
 				</div>
 			<div id="phoneErrorMessage" class="message error"></div>
 			</div>

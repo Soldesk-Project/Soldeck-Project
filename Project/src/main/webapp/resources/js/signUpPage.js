@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const emailInput = document.getElementById('email');
     const phone1Input = document.getElementById('phone1');
     const phone2Input = document.getElementById('phone2');
-    const phone3Input = document.getElementById('phone3');
     const phoneErrorMessage = document.getElementById('phoneErrorMessage');
     const idCheckMessage = document.getElementById('idCheckMessage');
     const nicknameCheckMessage = document.getElementById('nicknameCheckMessage');
@@ -32,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const regPw = /^[0-9a-zA-Z]{8,16}$/;
     const regName = /^[가-힣]{2,6}$/;
     const regEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-    const regPhone = /^\d{2,3}\d{3,4}\d{4}$/; // 숫자만 입력하는 형식으로 변경
+    const regPhone = /^\d{3,4}\d{4}$/;
 
     profileImageInput.addEventListener('change', function() {
 		const file = this.files[0];
@@ -214,10 +213,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function validatePhone() {
         const phone1Value = phone1Input.value.trim();
         const phone2Value = phone2Input.value.trim();
-        const phone3Value = phone3Input.value.trim();
 
-        if (!/^\d{2,3}$/.test(phone1Value) || !/^\d{3,4}$/.test(phone2Value) || !/^\d{4}$/.test(phone3Value)) {
-            phoneErrorMessage.textContent = '올바른 전화번호 형식이 아닙니다. (숫자만 입력해주세요)';
+        if (!/^\d{3,4}$/.test(phone1Value) || !/^\d{4}$/.test(phone2Value)) {
+            phoneErrorMessage.textContent = '올바른 전화번호 형식이 아닙니다. 숫자만 입력해주세요.';
             return false;
         } else {
             phoneErrorMessage.textContent = '';
@@ -250,7 +248,6 @@ document.addEventListener('DOMContentLoaded', function() {
     emailInput.addEventListener('input', validateEmail);
     phone1Input.addEventListener('input', validatePhone);
     phone2Input.addEventListener('input', validatePhone);
-    phone3Input.addEventListener('input', validatePhone);
     interestCheckboxes.forEach(checkbox => {
     checkbox.addEventListener('change', limitInterestSelection);
     });
@@ -298,7 +295,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const formData = new FormData(registrationForm);
 
             // 분리된 전화번호 값을 하이픈으로 연결하여 'phone' 키로 FormData에 추가
-            const phoneNumber = phone1Input.value + phone2Input.value + phone3Input.value;
+            const phoneNumber = '010' + phone1Input.value + phone2Input.value;
             formData.append('phone', phoneNumber);
             
             console.log('Sending FormData:', formData); // 콘솔에 FormData 객체 확인
