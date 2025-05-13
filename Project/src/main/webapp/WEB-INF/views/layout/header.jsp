@@ -35,6 +35,7 @@
 	<c:if test="${empty sessionScope.loggedInUser}">
     	<a href="javascript:void(0)" id="login">로그인</a>
     </c:if>
+    <div><a href="community/communityMain">커뮤티티이동</a></div>
 
 </div>
 <script>

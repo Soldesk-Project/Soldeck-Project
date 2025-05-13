@@ -20,7 +20,7 @@ document.head.appendChild(linkEle3);
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-const items = ["꽝", "10", "30", "50", "100", "200", "500", "1000"];
+const items = ["꽝", "꽝", "꽝", "꽝", "50", "100", "200", "500"];
 const colors = ["#00B8D4", "#FF7D00", "#00B8D4", "#FF7D00", "#00B8D4", "#FF7D00", "#00B8D4", "#FF7D00"];
 
 const centerX = canvas.width / 2;
@@ -68,50 +68,50 @@ function drawRoulette() {
 
 const spinBtn = document.getElementById("spin");
 
-//오늘 날짜를 'YYYY-MM-DD' 형식으로 반환
-function getToday() {
-const now = new Date();
-return now.toISOString().slice(0, 10);
-}
-
-//룰렛 사용 가능 여부 체크
-function canSpinToday() {
-const lastSpinDate = localStorage.getItem('lastSpinDate');
-return lastSpinDate !== getToday();
-}
+////오늘 날짜를 'YYYY-MM-DD' 형식으로 반환
+//function getToday() {
+//const now = new Date();
+//return now.toISOString().slice(0, 10);
+//}
+//
+////룰렛 사용 가능 여부 체크
+//function canSpinToday() {
+//const lastSpinDate = localStorage.getItem('lastSpinDate');
+//return lastSpinDate !== getToday();
+//}
 
 //수정된 spinRoulette 함수
 function spinRoulette() {
-if (spinning) return;
-
-if (!canSpinToday()) {
- alert("오늘은 이미 룰렛을 돌렸습니다. 내일 다시 시도하세요!");
- return;
-}
+//if (spinning) return;
+//
+//if (!canSpinToday()) {
+// alert("오늘은 이미 룰렛을 돌렸습니다. 내일 다시 시도하세요!");
+// return;
+//}
 
 spinning = true;
 spinVelocity = Math.random() * 0.2 + 0.25;
 animateSpin();
 
 // 룰렛을 돌렸으니 오늘 날짜 저장
-localStorage.setItem('lastSpinDate', getToday());
+//localStorage.setItem('lastSpinDate', getToday());
 
 // 버튼 비활성화 및 텍스트 변경
-spinBtn.disabled = true;
-spinBtn.textContent = "내일 다시";
+//spinBtn.disabled = true;
+//spinBtn.textContent = "내일 다시";
+//}
+//
+	//페이지 로드 시 버튼 상태 설정
+//	window.addEventListener('DOMContentLoaded', () => {
+//	if (!canSpinToday()) {
+//	 spinBtn.disabled = true;
+//	 spinBtn.textContent = "내일 다시";
+//	} else {
+//	 spinBtn.disabled = false;
+//	 spinBtn.textContent = "SPIN";
+//	}
+//	});
 }
-
-//페이지 로드 시 버튼 상태 설정
-window.addEventListener('DOMContentLoaded', () => {
-if (!canSpinToday()) {
- spinBtn.disabled = true;
- spinBtn.textContent = "내일 다시";
-} else {
- spinBtn.disabled = false;
- spinBtn.textContent = "SPIN";
-}
-});
-
 function animateSpin() {
   if (spinVelocity > 0.005) {
     spinAngle += spinVelocity;

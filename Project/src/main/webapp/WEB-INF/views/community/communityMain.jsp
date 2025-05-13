@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="rootPath" value="${pageContext.request.contextPath}"/>
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>커뮤니티 메인</title>
-    <link rel="stylesheet" href="${rootPath}/resources/css/header.css">
-    <link rel="stylesheet" href="${rootPath}/resources/css/communityMain.css">
-    <link rel="stylesheet" href="${rootPath}/resources/css/footer.css">
+    <link rel="stylesheet" href="/resources/css/header.css">
+    <link rel="stylesheet" href="/resources/css/communityMain.css">
+    <link rel="stylesheet" href="/resources/css/footer.css">
 </head>
 <body>
 <%@ include file="../layout/header.jsp" %>
@@ -24,13 +24,6 @@
 
     <div class="community-content-area"  id="communityContent">
         <jsp:include page="${includePage}.jsp"></jsp:include>
-    </div>
-
-    <div class="popup" id="popup">
-        <div class="popup-content">
-            <span class="popup-close" id="popup-close">&times;</span>
-            <img alt="pop-up" src="${rootPath}/resources/images/popup.png" class="pop-up_image">
-        </div>
     </div>
 </div>
 <%@ include file="../layout/footer.jsp" %>

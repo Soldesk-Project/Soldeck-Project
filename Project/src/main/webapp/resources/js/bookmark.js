@@ -118,31 +118,93 @@ function outBookmark() {
 		  .catch(e=>console.log(e));
 }
 //-----버튼 지역별 목록-----------------------------------------------------------
+//document.addEventListener('DOMContentLoaded', ()=>{
+//    const allBtn = document.getElementById('all');
+//    allBtn.classList.add('active');
+//    document.querySelectorAll('.view').forEach(view => {
+//        view.style.display = '';
+//    });
+//    allBtn.addEventListener('click',()=>{
+//    	allBtn.classList.add('active');
+//    	document.querySelectorAll('.view').forEach(view => {
+//            view.style.display = '';
+//        });
+//    	document.querySelectorAll('.btn').forEach(btn=>{
+//    		btn.classList.remove('active');
+//    	});
+//    });
+//    document.querySelectorAll('.btn').forEach(btn=>{
+//        btn.addEventListener('click', function(){
+//            if (this.classList.contains('active')) {
+//                this.classList.remove('active');
+//                allBtn.classList.add('active');
+//                document.querySelectorAll('.view').forEach(view=>{
+//                    view.style.display='';
+//                });
+//                return;
+//            }
+//            document.querySelectorAll('.btn').forEach(activeBtn=>{
+//                activeBtn.classList.remove('active');
+//                allBtn.classList.remove('active');
+//            });
+//            btn.classList.add('active');
+//            let region = this.value;
+//            document.querySelectorAll('.view').forEach(view=>{
+//                if (view.dataset.adr == region) {
+//                    view.style.display = '';
+//                } else {
+//                    view.style.display = 'none';
+//                }
+//            });
+//        });
+//    });
+//});
+
 document.addEventListener('DOMContentLoaded', ()=>{
-    document.querySelectorAll('.btn').forEach(btn=>{
+    const allBtn = document.getElementById('all');
+    let btns = document.querySelectorAll('.btn');
+    let views= document.querySelectorAll('.view');
+    
+    function allViews() {
+    	views.forEach(view => {
+    		view.style.display = '';
+    	});
+	}
+    function clearBtn() {
+		btns.forEach(btn=>{
+			allBtn.classList.remove('active');
+			btn.classList.remove('active');
+		});
+	}
+    
+    allViews();
+    allBtn.classList.add('active');
+    
+    allBtn.addEventListener('click',()=>{
+    	clearBtn();
+    	allBtn.classList.add('active');
+    	allViews();
+    });
+    
+    btns.forEach(btn=>{
         btn.addEventListener('click', function(){
-        	if (this.classList.contains('active')) {
-				this.classList.remove('active');
-				document.querySelectorAll('.view').forEach(view=>{
-					view.style.display='';
-				})
-        		return;
-			}
-        	document.querySelectorAll('.btn').forEach(activeBtn=>{
-        		activeBtn.classList.remove('active');
-        	})
-        	btn.classList.add('active');
-            let region = this.value;
-            document.querySelectorAll('.view').forEach(view=>{
-                if (view.dataset.adr == region) {
-                    view.style.display = '';
-                } else {
-                    view.style.display = 'none';
-                }
+            if (this.classList.contains('active')) {
+            	clearBtn();
+                allBtn.classList.add('active');
+                allViews();
+                return;
+            }
+            
+            clearBtn();
+            btn.classList.add('active');
+            
+            views.forEach(view=>{
+            	view.style.display=(view.dataset.adr == this.value)?'':'none';
             });
         });
     });
 });
+
 //-----가게 선택시 정보 가져오기---------------------------------------------------------------
 let isPublic;
 

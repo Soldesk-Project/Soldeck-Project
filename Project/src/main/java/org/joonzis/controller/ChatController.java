@@ -159,6 +159,44 @@ public String chatMain(HttpSession session, Model model) {
 	        : existingRoom;
 
 	    List<PrivateChatLogVO> chatLogs = privateChatService.getChatLogsByRoomNo(room);
+	    
+	    if (chatLogs == null) {
+	        System.out.println("chatLogs가 null입니다.");
+	    } else {
+	        System.out.println("chatLogs 크기: " + chatLogs.size());
+	    }
+	    
+	    chatLogs.forEach(chatLog -> {
+	        if (chatLog == null) {
+	            System.out.println("chatLog가 null입니다."); // 디버깅용
+	            return;
+	        }
+
+	        String log = chatLog.getChatLog();
+	        if (log != null && log.contains(":")) {
+	            String[] parts = log.split(":", 2);
+	            if (parts.length == 2) {
+	                chatLog.setSender(parts[0]);
+	                chatLog.setMsg(parts[1]);
+	            }
+	        } else {
+	            System.out.println("유효하지 않은 chatLog 포맷: " + log);
+	            chatLog.setSender("알 수 없음");
+	            chatLog.setMsg(log != null ? log : "");
+	        }
+	    });
+	    
+	    // List<ChatLogVO>를 JSON으로 변환
+	    ObjectMapper objectMapper = new ObjectMapper();
+	    String chatLogsJson = "";
+	    try {
+	        chatLogsJson = objectMapper.writeValueAsString(chatLogs);
+	    } catch (JsonProcessingException e) {
+	        e.printStackTrace();
+	        chatLogsJson = "[]"; // 예외 발생 시 빈 배열로 설정
+	    }
+	    
+	    model.addAttribute("chatLogsJson", chatLogsJson);
 
 	    model.addAttribute("chatLogs", chatLogs);
 	    model.addAttribute("currentNick", myNick);

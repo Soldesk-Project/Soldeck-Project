@@ -788,7 +788,7 @@ function fetchComments() {
 
             msg += `
                 <li data-com_no="${comment.com_no}">
-                    <div class="chat-full">
+                    <div class="chat-full" id="comment-${comment.com_no }">
                         <div class="chat-header">
                             <img src="${profileImg}" alt="프로필" class="profile-img" onerror="this.src='/resources/images/profile.png'">
                             <strong>${nickName}</strong>
@@ -1206,6 +1206,7 @@ function addFavorite(isPublic) {
     });
 }
 
+
 function removeFavorite() {
     fetch(`/mypage/favorites/remove/${restNo}`, {
         method: 'DELETE'
@@ -1231,3 +1232,19 @@ function updateFavoriteButtonUI() {
         console.error("favoriteBtnElement를 찾을 수 없습니다.");
     }
 }
+
+
+setTimeout(function() {
+	if (location.hash) {
+		const target = document.getElementById(location.hash.substring(1));
+		if (target) {
+		  target.scrollIntoView({ behavior: 'smooth' });
+		}
+	}
+}, 300);
+
+
+
+
+
+

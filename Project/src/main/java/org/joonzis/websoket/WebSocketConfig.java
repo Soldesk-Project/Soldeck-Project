@@ -24,5 +24,9 @@ public class WebSocketConfig implements WebSocketConfigurer {
         // 친구 요청 알림용 WebSocket 경로 추가
         registry.addHandler(friendSocketHandler, "/friendSocket")
                 .setAllowedOrigins("*");
+        
+        // 친구 요청 알림용 WebSocket 경로 추가
+        registry.addHandler(chatWebSocketHandler, "/chat/{roomNo}")
+                .setAllowedOrigins("*");
     }
 }

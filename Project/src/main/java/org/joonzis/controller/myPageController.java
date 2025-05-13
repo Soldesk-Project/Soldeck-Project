@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.joonzis.domain.BookMarkVO;
+import org.joonzis.domain.CommentDTO;
 import org.joonzis.domain.CommentVO;
 import org.joonzis.domain.GroupMemberDTO;
 import org.joonzis.domain.MemberVO;
@@ -320,7 +321,7 @@ public class myPageController {
 		MemberVO mvo = (MemberVO) session.getAttribute("loggedInUser");
 		int mem_no = mvo.getMem_no();
 		log.info("review..."+mem_no);
-		List<CommentVO> comment = cservice.getCommentList(mem_no);
+		List<CommentDTO> comment = cservice.getCommentList(mem_no);
 		model.addAttribute("commentList", comment);
 		return "/mypage/review";
 	}

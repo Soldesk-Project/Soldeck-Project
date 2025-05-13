@@ -51,6 +51,22 @@ document.querySelectorAll(".remove-btn").forEach(removeBtn => {
 	});
 })
 let memNo=document.querySelector(".mem-no").value;
+//-----댓글 링크 이동 ------------------------------
+let restNo;
+document.querySelectorAll(".rest-review-info").forEach(moveView => {
+	moveView.addEventListener('click',e=>{
+		e.preventDefault();
+		restNo=moveView.closest(".rest-info").querySelector(".rest-no").value;	
+		comNo=moveView.closest(".review-content").querySelector(".com-no").value;	
+		location.href='/search/view?rest_no='+restNo+'#comment-'+comNo;
+		window.addEventListener('load', () => {
+			const target = document.getElementById('comment-' + comNo);
+			if (target) {
+				target.scrollIntoView({ behavior: 'smooth' });
+			}
+	    });
+	});
+})
 //-----리뷰 삭제 함수---------------------------------------------------
 function removeReview() {
 	console.log(comNo);
