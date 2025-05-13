@@ -12,7 +12,7 @@
     width: 100%;
     background-color: #e0e0e0;
     justify-content: flex-start;
-    padding: 15px 20px;
+	height: 60px;
     align-items: center;
 }
 
@@ -27,7 +27,7 @@
     border-radius: 3px;
     background-color: #eee;
     cursor: pointer;
-    margin-left: 5px;
+    margin-left: 10px;
     font-size: 0.9em;
 }
 

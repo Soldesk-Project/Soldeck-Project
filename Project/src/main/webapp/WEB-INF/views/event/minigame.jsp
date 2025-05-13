@@ -17,7 +17,7 @@
 							<img alt="이벤트 사진" src="../resources/images/event.png" class="event-img">
 						</div>
 						<div class="event-list-title">
-							<span>이벤트 명 1</span>
+							<span>Chrome T-rex</span>
 						</div>
 						<div class="event-list-time">
 							<span>이벤트 기간</span>
@@ -31,35 +31,7 @@
 							<img alt="이벤트 사진" src="../resources/images/event.png" class="event-img">
 						</div>
 						<div class="event-list-title">
-							<span>이벤트 명 2</span>
-						</div>
-						<div class="event-list-time">
-							<span>이벤트 기간</span>
-							 : 2025.04.01 ~
-						</div>
-					</a>
-				</li>
-				<li>
-					<a href="/list/0003">
-						<div class="event-list-img">
-							<img alt="이벤트 사진" src="../resources/images/event.png" class="event-img">
-						</div>
-						<div class="event-list-title">
-							<span>이벤트 명 3</span>
-						</div>
-						<div class="event-list-time">
-							<span>이벤트 기간</span>
-							 : 2025.04.01 ~
-						</div>
-					</a>
-				</li>
-				<li>
-					<a href="/list/0004">
-						<div class="event-list-img">
-							<img alt="이벤트 사진" src="../resources/images/event.png" class="event-img">
-						</div>
-						<div class="event-list-title">
-							<span>이벤트 명 4</span>
+							<span>Snake Game</span>
 						</div>
 						<div class="event-list-time">
 							<span>이벤트 기간</span>

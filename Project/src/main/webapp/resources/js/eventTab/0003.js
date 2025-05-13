@@ -68,50 +68,28 @@ function drawRoulette() {
 
 const spinBtn = document.getElementById("spin");
 
-////오늘 날짜를 'YYYY-MM-DD' 형식으로 반환
-//function getToday() {
-//const now = new Date();
-//return now.toISOString().slice(0, 10);
-//}
-//
-////룰렛 사용 가능 여부 체크
-//function canSpinToday() {
-//const lastSpinDate = localStorage.getItem('lastSpinDate');
-//return lastSpinDate !== getToday();
-//}
 
 //수정된 spinRoulette 함수
 function spinRoulette() {
-//if (spinning) return;
-//
-//if (!canSpinToday()) {
-// alert("오늘은 이미 룰렛을 돌렸습니다. 내일 다시 시도하세요!");
-// return;
-//}
+	if (spinning) return;
 
-spinning = true;
-spinVelocity = Math.random() * 0.2 + 0.25;
-animateSpin();
-
-// 룰렛을 돌렸으니 오늘 날짜 저장
-//localStorage.setItem('lastSpinDate', getToday());
-
-// 버튼 비활성화 및 텍스트 변경
-//spinBtn.disabled = true;
-//spinBtn.textContent = "내일 다시";
-//}
-//
-	//페이지 로드 시 버튼 상태 설정
-//	window.addEventListener('DOMContentLoaded', () => {
-//	if (!canSpinToday()) {
-//	 spinBtn.disabled = true;
-//	 spinBtn.textContent = "내일 다시";
-//	} else {
-//	 spinBtn.disabled = false;
-//	 spinBtn.textContent = "SPIN";
-//	}
-//	});
+	spinning = true;
+	spinVelocity = Math.random() * 0.2 + 0.25;
+	animateSpin();
 }
+
+//페이지 로드 시 버튼 상태 설정
+window.addEventListener('DOMContentLoaded', () => {
+	let myPoint=document.querySelector('.my-point').innerText;
+	if (myPoint<100) {
+		spinBtn.disabled = true;
+	 spinBtn.textContent = "포인트가 부족합니다";
+	} else {
+		spinBtn.disabled = false;
+	 spinBtn.textContent = "SPIN";
+	}
+});
+
 function animateSpin() {
   if (spinVelocity > 0.005) {
     spinAngle += spinVelocity;
@@ -127,7 +105,12 @@ function animateSpin() {
     if (selected < 0) selected += items.length;
     setTimeout(() => {
       alert("결과: " + items[selected]);
-      savePoint(items[selected]);
+      console.log(items[selected]-100);
+      if (items[selected]>0) {
+    	  savePoint(items[selected]-100);
+      }else{
+    	  savePoint(-100);
+      }
     }, 300);
   }
 }
@@ -141,7 +124,7 @@ document.getElementById("spin").addEventListener("click", spinRoulette);
 
 function savePoint(point) {
 	console.log(point);
-	if(point>0){
+	if(point!=null){
 		fetch('/event/savePoint',{
 			method : 'post',
 			headers : {

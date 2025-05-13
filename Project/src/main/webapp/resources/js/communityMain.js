@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     break;
                 case 'event':
                     urlKey = 'event';
-                    jsPath = '/resources/js/event.js';
+                    jsPath = '/resources/js/mainEvent.js';
                     break;
                 case 'minigame':
                     urlKey = 'minigame';

@@ -9,3 +9,33 @@
 	border: 1px solid;
 	margin-bottom: 30px;
 }
+
+
+
+
+
+
+
+
+    .calendar { display: inline-block; }
+    .calendar table { border-collapse: collapse; width: 350px; }
+    .calendar th, .calendar td {
+      width: 14.2%; height: 40px;
+      border: 1px solid #ccc;
+      text-align: center;
+      vertical-align: middle;
+      cursor: pointer;
+      font-size: 16px;
+      position: relative;
+      background: #fff;
+      transition: background 0.2s;
+    }
+    .calendar th { background: #f2f2f2; cursor: default; }
+    .calendar td.today { background: #e0f7fa; }
+    .calendar td.checked { background: #81d4fa; color: #fff; font-weight: bold; }
+    .calendar td:active { background: #b3e5fc; }
+    .calendar .month-title { text-align: center; font-size: 20px; margin-bottom: 10px; }
+    .calendar .checkmark {
+      position: absolute; right: 5px; bottom: 2px;
+      font-size: 18px; color: #1976d2;
+    }

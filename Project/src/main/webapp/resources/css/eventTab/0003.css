@@ -47,6 +47,7 @@
 
 
 #spin:disabled {
+	width: 150px;
   background: #ccc;
   transform: none;
   box-shadow: none;

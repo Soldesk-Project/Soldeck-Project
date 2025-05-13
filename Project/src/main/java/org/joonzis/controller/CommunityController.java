@@ -41,6 +41,14 @@ public class CommunityController {
 	            return "event/main";
 	        case "minigame":
 	            return "event/minigame";
+	        case "0001":
+	        	return "event/list/0001";
+	        case "0002":
+	        	return "event/list/0002";
+	        case "0003":
+	        	return "event/list/0003";
+	        case "0004":
+	        	return "event/list/0004";
 	        default:
 	            return "error/404";
 	    }
