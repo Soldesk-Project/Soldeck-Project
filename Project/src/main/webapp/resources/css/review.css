@@ -56,42 +56,55 @@ input, textarea{
 	overflow: hidden;
 }
 .review-content{
-	width: 730px;
+	width: 765px;
 	height: auto;
 	margin: 10px;
 	border: 1px solid;
 	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
 }
 img{
 	width: 100%;
 	height: 100%;
 }
 .appraisal-div{
-	width: 730px;
+	width: 765px;
 	height: 50px;
 	display: flex;
 	align-items: center;
+	justify-content: flex-end;
 }	
-.appraisal-div span, input{
+.appraisal-div span{
 	font-size: 20px;
-	text-align: center;
 	margin: 0 10px;
 }
-.score{
-	margin: 5px 0 0 0;
-	width: 50px;
-	height: 40px;
+span.rest-name{
+	margin-right: auto;
 }
 .comment{
 	font-size:15px;
+	font-family: inherit;
 	margin: 0 10px;
-	height: 50px;
-	width: 700px;
-	resize: none;
+	height: 45px;
+	white-space: pre-wrap;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+.rest-info{
+	margin: auto 10px;
+}
+.rest-info a{
+	color: black;
+}
+.rest-info a:hover{
+	color: #303030	;	
+	text-decoration: none;
 }
 .remove-btn{
-	margin-right: 30px;
-    margin-left: auto;
+	margin: 0 20px;
     background-color: #FF7D00;
     color: white;
     padding: 0px 15px;
@@ -101,6 +114,7 @@ img{
     width: 60px;
     height: 30px;
 }
+/*
 details {
     margin-bottom: 10px;
 }
@@ -128,7 +142,7 @@ summary {
 	font-size: 50px;
 	margin: 0 20px;
 }
-
+*/
 /*------------------ 모달 -------------------------*/
 .delete-comment-modal{
     padding: 20px;

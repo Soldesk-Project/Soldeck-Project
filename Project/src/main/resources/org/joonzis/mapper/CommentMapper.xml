@@ -89,32 +89,24 @@
 	</select>
 	
 	<!-- 내 코멘트 목록 조회 -->
-	<select id="getCommentList" parameterType="int" resultMap="commentListMap">
-	    SELECT 
+	<select id="getCommentList" parameterType="int" resultType="org.joonzis.domain.CommentDTO">
+	   SELECT 
 		    c.com_no, c.rest_no, c.mem_no, c.com_con, c.com_rate,
-		    a.att_uuid, a.att_path, a.att_name
+		    r.rest_name,
+		    i.rest_img_name
 		FROM 
 		    "COMMENT" c
 		LEFT JOIN
-		    attach a ON c.com_no = a.com_no
+		    restaurant r ON c.rest_no=r.rest_no
+		LEFT JOIN
+		    rest_img i ON c.rest_no=i.rest_no
 		WHERE
-		    c.mem_no = #{mem_no}
+		    c.mem_no = #{mem_no} 
+	    AND
+		    i.rest_img_no=1
 		ORDER BY
-		   	c.com_date DESC
+		    c.com_date DESC
 	</select>
-	<resultMap id="commentListMap" type="org.joonzis.domain.CommentVO">
-	    <id property="com_no" column="com_no"/>
-	    <result property="rest_no" column="rest_no"/>
-	    <result property="mem_no" column="mem_no"/>
-	    <result property="com_con" column="com_con"/>
-	    <result property="com_rate" column="com_rate"/>
-	    <collection property="com_attachList" ofType="org.joonzis.domain.AttachVO"  notNullColumn="att_uuid">
-	        <result property="att_uuid" column="att_uuid"/>
-	        <result property="att_path" column="att_path"/>
-	        <result property="att_name" column="att_name"/>
-	        <result property="com_no" column="com_no"/>
-	    </collection>
-	</resultMap>
 	
 	<!-- 코멘트 연령별 평균 평점 -->
 	<select id="getAgeAvgRate" resultType="org.joonzis.domain.CommentVO">

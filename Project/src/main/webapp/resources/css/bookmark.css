@@ -72,7 +72,7 @@ body {
 	border-radius: 10px;
 	padding: 15px;
 }
-.btn{
+.btn, .all-btn{
 	margin: 0px 10px;
     border: 1px dashed #FF7D00;
     border-radius: 15px;
@@ -85,7 +85,7 @@ body {
     justify-content: center;
     
 }
-.btn:hover, .btn.active{
+.btn:hover, .btn.active, .all-btn:hover, .all-btn.active{
 	background-color: #FF7D00;
 	color: white;
 }

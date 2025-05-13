@@ -20,57 +20,26 @@
 			<c:forEach var="co" items="${commentList}">
 				<div class="review-list">
 					<div class="img-div">
-						<c:choose>
-							<c:when test="${not empty co.com_attachList}">
-								<img alt="" src="${co.com_attachList[0].att_path}/${co.com_attachList[0].att_uuid}_${fn:replace(co.com_attachList[0].att_name, ' ', '%20')}">
-							</c:when>
-							<c:otherwise>
-								<img alt="" src="../resources/images/noImage.png">
-							</c:otherwise>
-						</c:choose>
+						<img alt="" src="${co.rest_img_name}">
 					</div>
 					<div class="review-content">
 						<div class="appraisal">
 							<div class="appraisal-div">
+								<span class="rest-name">${co.rest_name }</span>
 								<span>평점</span>
-								<input type="text" name="score" class="score" value="${co.com_rate }" readonly="readonly">
+								<span class="score">${co.com_rate }</span>
 								<input type="hidden" class="com-no" value="${co.com_no }">
 								<input type="hidden" class="mem-no" value="${co.mem_no }">
 								<button type="button" class="remove-btn" id="removeBtn">삭제</button>
 							</div>
 						</div>
 						<div class="review-comment">
-							<textarea name="comment" class="comment" readonly="readonly">${co.com_con }</textarea>
+							<pre class="comment">${co.com_con }</pre>
 						</div>
-						<span>▶ 댓글 위치로 이동</span>
-						<!-- 
-						<details>
-							<summary>사진 전체 보기</summary>
-								<div class="comment-img-all">
-									<c:choose>
-										<c:when test="${not empty co.com_attachList}">
-											<c:forEach var="attach" items="${co.com_attachList}" varStatus="status">
-												<c:if test="${status.index < 3 }">
-												    <div class="comment-img">
-												         <img alt="첨부 이미지" src="${attach.att_path}/${attach.att_uuid}_${fn:replace(attach.att_name, ' ', '%20')}">
-												    </div>
-												</c:if>
-											</c:forEach>
-											<c:if test="${fn:length(co.com_attachList) > 3}">
-											    <div class="more-img">
-											         <span>· · ·</span>
-											    </div>
-											</c:if>
-										</c:when>
-										<c:otherwise>
-										    <div class="comment-img">
-												<img alt="" src="../resources/images/noImage.png">
-										    </div>
-										</c:otherwise>
-									</c:choose>
-								</div>
-						</details>
-						 -->
+						<div class="rest-info">
+							<input type="hidden" class="rest-no" value="${co.rest_no }">	
+							<a href="#" class="rest-review-info">▶ 댓글 위치로 이동</a>
+						</div>
 					</div>
 				</div>
 			</c:forEach>

@@ -20,6 +20,7 @@
 		<div class="main-menu">
 		  
 			<div class="loc-btn">
+				<button type="button" class="all-btn" id="all" value="전체">전체</button>
 				<button type="button" class="btn" id="seoulBtn" value="서울">서울</button>
 				<button type="button" class="btn" id="incheonBtn" value="인천">인천</button>
 				<button type="button" class="btn" id="daejeonBtn" value="대전">대전</button>

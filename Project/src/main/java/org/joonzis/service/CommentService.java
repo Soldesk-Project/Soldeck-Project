@@ -2,6 +2,7 @@ package org.joonzis.service;
 
 import java.util.List;
 
+import org.joonzis.domain.CommentDTO;
 import org.joonzis.domain.CommentVO;
 import org.joonzis.domain.RestVO;
 
@@ -20,7 +21,7 @@ public interface CommentService {
     public double getAvgRate(int rest_no);
     
     // 내 댓글 조회
-    public List<CommentVO> getCommentList(int mem_no);
+    public List<CommentDTO> getCommentList(int mem_no);
     
     // 코멘트 연령별 평균 평점
     public List<CommentVO> getAgeAvgRate(int rest_no);
