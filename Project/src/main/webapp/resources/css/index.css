@@ -343,14 +343,22 @@ body {
 
 .friends, .groups {
 	border: 1px solid black;
-	height: 10%;
+	height: 17%;
 	border-left: none;
 	border-right: none;
+	display: flex;
+	justify-content: center;
 }
 .friends + .friends, .groups + .groups{
   border-top: none; /* 왼쪽 border 제거 */
+  width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
 }
 
 .friend, .group{
 	height: 100%;
+	display: flex;
+	align-items: center;
+	
 }

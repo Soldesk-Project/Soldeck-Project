@@ -132,29 +132,29 @@ fetch("/grouplist/groupListRecommendData", {
 
 
 //그룹 참여 요청 버튼 클릭 시
-function follow(groupMemNo, button) {
-	const senderMemNo = document.body.dataset.memNo;
-    fetch("/grouplist/follow", {
-        method: "POST",
-        credentials: "include",  // 세션 정보 포함
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: new URLSearchParams({
-        	senderMemNo: senderMemNo
-        })
-    })
-    .then(res => res.text())
-    .then(msg => {
-    	alert(msg);
-        button.disabled = true;
-        button.textContent = "요청됨";
-    })
-    .catch(error => {
-        console.error("그룹 요청 실패", error);
-        alert("요청을 처리하는 중 오류가 발생했습니다.");
-    });
-}
+//function follow(groupMemNo, button) {
+//	const senderMemNo = document.body.dataset.memNo;
+//    fetch("/grouplist/follow", {
+//        method: "POST",
+//        credentials: "include",  // 세션 정보 포함
+//        headers: {
+//            "Content-Type": "application/x-www-form-urlencoded"
+//        },
+//        body: new URLSearchParams({
+//        	senderMemNo: senderMemNo
+//        })
+//    })
+//    .then(res => res.text())
+//    .then(msg => {
+//    	alert(msg);
+//        button.disabled = true;
+//        button.textContent = "요청됨";
+//    })
+//    .catch(error => {
+//        console.error("그룹 요청 실패", error);
+//        alert("요청을 처리하는 중 오류가 발생했습니다.");
+//    });
+//}
 
 //팔로우 버튼 클릭 시 친구 요청 보내기
 //function acceptFriend(senderMemNo) {

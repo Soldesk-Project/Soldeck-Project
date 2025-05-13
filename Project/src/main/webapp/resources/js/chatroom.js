@@ -1,7 +1,6 @@
 /* 보내기 버튼 엔터 이벤트 */
 document.getElementById('msg').addEventListener('keydown', function(event) {
   if (event.key === 'Enter') {
-    console.log(1); // 콘솔 확인용
     sendMessage();
   }
 });
@@ -9,21 +8,34 @@ document.getElementById('msg').addEventListener('keydown', function(event) {
 /* 서버에서 전달된 JSON 형식의 채팅 로그 */
 const chatBox = document.getElementById("chat-box");
 
-// 채팅 로그 표시 (초기 로딩)
-chatLogs.forEach(chat => {
-  const alignClass = chat.sender === currentNick ? "my-message" : "other-message";
-  const messageDiv = document.createElement("div");
-  const sender = chat.sender;
-  const msg = chat.msg;
-  messageDiv.className = alignClass;
-  messageDiv.textContent = sender + ": " + msg; // sender와 msg로 출력
-  chatBox.appendChild(messageDiv);
-});
+function linkify(text) {
+	if (!text) return ""; 
+	  const urlPattern = /(https?:\/\/[^\s]+)/g;
+	  return text.replace(urlPattern, function (url) {
+	    return `<a href="${url}" target="_blank">${url}</a>`;
+	  });
+	}
+
+	// 채팅 로그 표시 (초기 로딩)
+	chatLogs.forEach(chat => {
+	  const alignClass = chat.sender === currentNick ? "my-message" : "other-message";
+	  const messageDiv = document.createElement("div");
+	  const sender = chat.sender;
+	  const msg = chat.msg;
+
+	  messageDiv.className = alignClass;
+
+	  // 하이퍼링크 변환 처리
+	  const linkedMsg = linkify(msg);
+	  messageDiv.innerHTML = `<strong>${sender}:</strong> ${linkedMsg}`;
+
+	  chatBox.appendChild(messageDiv);
+	});
 
 // 웹소켓 연결
 const pathParts = window.location.pathname.split('/');
 const groupNo = pathParts[pathParts.length - 1]; // '21' 추출
-const ws = new WebSocket("wss://6fe1-14-52-79-21.ngrok-free.app/chat/" + groupNo);
+const ws = new WebSocket("wss://ff70-14-52-79-21.ngrok-free/chat/" + groupNo);
 
 ws.onopen = function(event) {
   document.body.insertAdjacentHTML("beforeend", "<div>웹소켓 연결 성공!</div>");
@@ -50,6 +62,7 @@ ws.onmessage = function (event) {
       const fileData = data.fileData;
       const alignClass = sender === currentNick ? "my-message" : "other-message";
       const messageDiv = document.createElement("div");
+      const linkedMsg = linkify(msg);
 
       messageDiv.className = alignClass;
 
@@ -61,7 +74,7 @@ ws.onmessage = function (event) {
         messageDiv.appendChild(imgElement);
       } else {
         // 텍스트 메시지 처리
-        messageDiv.textContent = sender + ": " + msg;
+    	  messageDiv.innerHTML = `<strong>${sender}:</strong> ${linkedMsg}`;
       }
 
       chatBox.appendChild(messageDiv);

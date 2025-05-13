@@ -24,4 +24,34 @@
 	<select id="getChatsByGroupNo" resultMap="ChatLogMap">
 	    SELECT * FROM GROUP_CHAT_LOG WHERE GROUP_NO = #{groupNo}
 	</select>
+	
+	<!-- 1:1 채팅방 생성 (방 존재 여부 확인 후) -->
+    <select id="checkExistingRoom" resultType="int">
+        SELECT ROOM_NO
+        FROM PRIVATE_CHAT_ROOM
+        WHERE (USER1_NO = #{user1No} AND USER2_NO = #{user2No})
+           OR (USER1_NO = #{user2No} AND USER2_NO = #{user1No})
+    </select>
+
+    <insert id="createPrivateChatRoom" useGeneratedKeys="true" keyProperty="roomNo">
+        INSERT INTO PRIVATE_CHAT_ROOM (ROOM_NO, USER1_NO, USER2_NO)
+        VALUES (PRIVATE_CHAT_ROOM_SEQ.NEXTVAL, #{user1No}, #{user2No})
+    </insert>
+
+    <!-- 채팅 내역 저장 -->
+    <insert id="insertPrivateChatLog">
+        INSERT INTO PRIVATE_CHAT_LOG (ROOM_NO, SENDER_NO, CHAT_LOG)
+        VALUES (#{roomNo}, #{senderNo}, #{chatLog})
+    </insert>
+
+    <!-- 1:1 채팅 내역 가져오기 -->
+    <select id="getChatLogsByRoomNo" resultType="org.joonzis.domain.PrivateChatLogVO">
+        SELECT * FROM PRIVATE_CHAT_LOG
+        WHERE ROOM_NO = #{roomNo}
+        ORDER BY CHAT_TIME ASC
+    </select>
+    
+    <select id="getMemberByNo" resultType="org.joonzis.domain.MemberVO">
+		SELECT * FROM MEMBER WHERE MEM_NO = #{friendNo}
+	</select>
 </mapper>

@@ -106,8 +106,7 @@
 		       fr.frd_req
 		FROM friend_req fr
 		JOIN member m ON fr.mem_no = m.mem_no
-		WHERE (fr.mem_no2 = #{mem_no} AND fr.frd_req = 'PENDING') 
-		   OR (fr.mem_no = #{mem_no} AND fr.frd_req = 'PENDING')
+		WHERE fr.mem_no2 = #{mem_no} AND fr.frd_req = 'PENDING'
 	</select>
 	
 </mapper>
