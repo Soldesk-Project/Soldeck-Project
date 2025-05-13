@@ -107,8 +107,8 @@ public class ChatController {
 	}
 	
 	// 개인 채팅방
-	@GetMapping("/privateRoom/{friendNo}")
-	public String goPrivateChatRoom(@PathVariable("friendNo") int friendNo, HttpSession session, Model model) {
+	@GetMapping("/privateRoom/{roomNo}")
+	public String goPrivateChatRoom(@PathVariable("roomNo") int friendNo, HttpSession session, Model model) {
 	    MemberVO loginUser = (MemberVO) session.getAttribute("loggedInUser");
 	    if (loginUser == null) {
 	        return "redirect:/login/loginPage";
@@ -121,6 +121,7 @@ public class ChatController {
 	    MemberVO friend = privateChatService.getMemberByNo(friendNo);
 	    
 	    System.out.println(friend);
+	    
 	    
 	    if (friend == null) {
 	        return "redirect:/error/404";

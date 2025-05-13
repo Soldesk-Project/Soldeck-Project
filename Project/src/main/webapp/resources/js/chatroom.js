@@ -35,7 +35,7 @@ function linkify(text) {
 // 웹소켓 연결
 const pathParts = window.location.pathname.split('/');
 const groupNo = pathParts[pathParts.length - 1]; // '21' 추출
-const ws = new WebSocket("wss://ff70-14-52-79-21.ngrok-free/chat/" + groupNo);
+const ws = new WebSocket("wss://335a-14-52-79-21.ngrok-free.app/chat/" + groupNo);
 
 ws.onopen = function(event) {
   document.body.insertAdjacentHTML("beforeend", "<div>웹소켓 연결 성공!</div>");
@@ -103,19 +103,65 @@ function insertEmoji(emoji) {
 }
 
 //메세지 보내는 함수 (텍스트 메시지, 이미지, 이모티콘 모두 전송)
+//function sendMessage() {
+//  const input = document.getElementById("msg");
+//  const fileInput = document.getElementById("fileInput");
+//  const message = input.value;
+//
+//  if (message.trim() !== "" || fileInput.files.length > 0) {
+//    const chatMessage = {
+//      type: "chat",
+//      sender: currentNick,
+//      mem_no: mem_no,
+//      msg: message
+//      // file: fileInput.files[0] ? fileInput.files[0] : null, // 파일이 있으면 파일을 포함
+//    };
+//
+//    if (chatMessage.file) {
+//      // 이미지 파일을 base64로 인코딩하여 전송
+//      const reader = new FileReader();
+//      reader.onload = function (event) {
+//        chatMessage.fileData = event.target.result; // base64 인코딩된 파일 데이터
+//        ws.send(JSON.stringify(chatMessage)); // 서버로 메시지 전송
+//      };
+//      reader.readAsDataURL(chatMessage.file); // 파일을 base64로 읽음
+//    } else {
+//      ws.send(JSON.stringify(chatMessage)); // 텍스트 메시지만 전송
+//    }
+//
+//    // 메시지 입력창 초기화
+//    input.value = "";
+//    //fileInput.value = "";
+//  }
+//}
+
+//메세지 보내는 함수 (그룹채팅, 개인채팅 구분)
 function sendMessage() {
   const input = document.getElementById("msg");
   const fileInput = document.getElementById("fileInput");
   const message = input.value;
+  //개인 채팅 여부 판단 (URL에 "privateRoom" 포함 여부)
+  const isPrivate = window.location.pathname.includes("/privateRoom");
+  
+  //✅ roomNo 추출 (URL 마지막 숫자)
+  const roomNo = isPrivate ? parseInt(window.location.pathname.split("/").pop()) : null;
 
   if (message.trim() !== "" || fileInput.files.length > 0) {
-    const chatMessage = {
-      type: "chat",
-      sender: currentNick,
-      mem_no: mem_no,
-      msg: message
-      // file: fileInput.files[0] ? fileInput.files[0] : null, // 파일이 있으면 파일을 포함
-    };
+	  const chatMessage = {
+			  type: "chat",
+			  sender: currentNick,
+			  mem_no: mem_no,
+			  msg: message,
+			  chat_type: isPrivate ? "private" : "group", // 여기서 개인 채팅인지 여부를 명시
+			  room_no: isPrivate ? roomNo : undefined
+			};
+
+    // 개인 채팅일 경우 room_no 추가
+    if (groupNo) {
+      chatMessage.room_no = groupNo;  // 그룹채팅에서는 groupNo 사용
+    } else {
+      chatMessage.room_no = roomNo;  // 개인 채팅에서는 roomNo 사용
+    }
 
     if (chatMessage.file) {
       // 이미지 파일을 base64로 인코딩하여 전송
@@ -131,6 +177,6 @@ function sendMessage() {
 
     // 메시지 입력창 초기화
     input.value = "";
-    fileInput.value = "";
+    //fileInput.value = "";
   }
 }

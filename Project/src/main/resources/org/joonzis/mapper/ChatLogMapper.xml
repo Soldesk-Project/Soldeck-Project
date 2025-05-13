@@ -33,15 +33,15 @@
            OR (USER1_NO = #{user2No} AND USER2_NO = #{user1No})
     </select>
 
-    <insert id="createPrivateChatRoom" useGeneratedKeys="true" keyProperty="roomNo">
+    <insert id="createPrivateChatRoom">
         INSERT INTO PRIVATE_CHAT_ROOM (ROOM_NO, USER1_NO, USER2_NO)
-        VALUES (PRIVATE_CHAT_ROOM_SEQ.NEXTVAL, #{user1No}, #{user2No})
+        VALUES (#{roomNo}, #{user1No}, #{user2No})
     </insert>
 
     <!-- 채팅 내역 저장 -->
     <insert id="insertPrivateChatLog">
-        INSERT INTO PRIVATE_CHAT_LOG (ROOM_NO, SENDER_NO, CHAT_LOG)
-        VALUES (#{roomNo}, #{senderNo}, #{chatLog})
+        INSERT INTO PRIVATE_CHAT_LOG (CHAT_NO, ROOM_NO, SENDER_NO, CHAT_LOG, CHAT_TIME)
+        VALUES (PRIVATE_CHAT_LOG_SEQ.NEXTVAL, #{roomNo}, #{senderNo}, #{chatLog}, SYSDATE)
     </insert>
 
     <!-- 1:1 채팅 내역 가져오기 -->

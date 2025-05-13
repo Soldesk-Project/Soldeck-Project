@@ -18,10 +18,10 @@ public interface ChatLogMapper {
 	public Integer checkExistingRoom(@Param("user1No") int user1No, @Param("user2No") int user2No);
     
     // 1:1 채팅방 생성
-    public int createPrivateChatRoom(@Param("user1No") int user1No, @Param("user2No") int user2No);
+    public int createPrivateChatRoom(@Param("roomNo") int roomNo, @Param("user1No") int user1No, @Param("user2No") int user2No);
     
     // 채팅 내역 저장
-    public void insertPrivateChatLog(int roomNo, int senderNo, String chatLog);
+    void insertPrivateChatLog(@Param("roomNo") int roomNo, @Param("senderNo") int senderNo, @Param("chatLog") String chatLog);
     
     // 1:1 채팅 내역 조회
     public List<PrivateChatLogVO> getChatLogsByRoomNo(int roomNo);
