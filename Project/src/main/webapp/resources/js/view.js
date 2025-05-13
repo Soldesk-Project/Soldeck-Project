@@ -286,7 +286,7 @@ function renderStoreDetails(data) {
     store_latitude = storeData.latitude;
     store_longitude = storeData.longitude;
     storeDetails.innerHTML = `
-    	<div class="info-item">
+    	<div class="info-item" id="rest_name">
             <div class="info-label">가게 이름 :</div>
             <div class="info-value">${storeData.rest_name || '정보 없음'}</div>
         </div>

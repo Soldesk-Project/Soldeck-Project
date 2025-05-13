@@ -113,6 +113,7 @@
 			</c:if>
         </div>
         
+        <!-- 커뮤니티 탭 -->
         <c:if test="${sessionScope.loggedInUser != null}">
 	        <div class="commu-tap">
 	        	<div class="taps">
@@ -128,6 +129,19 @@
 		        	<div class="move-group">전체 모임 보기</div>
 	        	</div>
 	        </div>
+        </c:if>
+        <!-- 랭킹 탭 -->
+        <c:if test="${sessionScope.loggedInUser == null}">
+        <div class="rank-tap">
+        	<div class="rank-header">
+	        	<div class="header-rating active" data-tab="rating">평점</div>
+	        	<div class="header-review" data-tab="review">리뷰</div>
+        	</div>
+        	<div class="rank-content">
+	        	<div class="content-rating show"></div>
+	        	<div class="content-review"></div>
+        	</div>
+        </div>
         </c:if>
         
 		<div class="popup" id="popup">

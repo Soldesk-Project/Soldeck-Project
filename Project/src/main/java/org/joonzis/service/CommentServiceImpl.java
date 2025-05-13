@@ -8,6 +8,7 @@ import javax.servlet.ServletContext;
 
 import org.joonzis.domain.AttachVO;
 import org.joonzis.domain.CommentVO;
+import org.joonzis.domain.RestVO;
 import org.joonzis.mapper.AttachMapper;
 import org.joonzis.mapper.CommentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -136,14 +137,14 @@ public class CommentServiceImpl implements CommentService {
 		return mapper.getAgeAvgRate(rest_no);
 	}
 	
+	@Override
+	public List<RestVO> getRestAvgRate() {
+		return mapper.getRestAvgRate();
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
+	@Override
+	public List<RestVO> getRestReviewCount() {
+		return mapper.getRestReviewCount();
+	}
 	
 }

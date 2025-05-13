@@ -59,6 +59,34 @@
 	<select id="getAvgRate" resultType="double">
 		SELECT ROUND(AVG(COM_RATE), 1) FROM "COMMENT" WHERE REST_NO = #{rest_no}
 	</select>
+	<!-- 가게 평점 평균 상위 -->
+	<select id="getRestAvgRate" resultType="org.joonzis.domain.RestVO">
+		<![CDATA[
+        SELECT r.rest_no, r.rest_name, c.avg_rate
+        FROM (
+            SELECT rest_no, ROUND(AVG(com_rate), 1) AS avg_rate
+            FROM "COMMENT"
+            GROUP BY rest_no
+            ORDER BY avg_rate DESC
+        ) c
+        JOIN "RESTAURANT" r ON c.rest_no = r.rest_no
+        WHERE ROWNUM <= 10
+    ]]>
+	</select>
+	<!-- 가게 리뷰 개수 상위 -->
+	<select id="getRestReviewCount" resultType="org.joonzis.domain.RestVO">
+		<![CDATA[
+		SELECT r.rest_no, r.rest_name, c.com_count
+			FROM (
+			    SELECT rest_no, COUNT(*) AS com_count
+			    FROM "COMMENT"
+			    GROUP BY rest_no
+			    ORDER BY com_count DESC
+			) c
+			JOIN "RESTAURANT" r ON c.rest_no = r.rest_no
+			WHERE ROWNUM <= 10
+		 ]]>
+	</select>
 	
 	<!-- 내 코멘트 목록 조회 -->
 	<select id="getCommentList" parameterType="int" resultMap="commentListMap">

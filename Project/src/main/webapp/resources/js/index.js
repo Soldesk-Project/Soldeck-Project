@@ -165,12 +165,15 @@ const user_no = userData.dataset.user || '';
 
 document.addEventListener('DOMContentLoaded', () => {
 	fetchData();
+	showRating();
+	showReview();
 	showFriend();
 	showGroup();
+	rankRestEventListeners();
 });
 
 // 가게 클릭 이벤트
-function setupEventListeners() {
+function showRestEventListeners() {
     document.querySelectorAll('.recommendation-slider-window').forEach(window => {
         window.addEventListener('click', (event) => {
             const item = event.target.closest('.recommendation-item');
@@ -209,7 +212,7 @@ function fetchData() {
         if (user_no) {
         	showList("preference-slider", preferenceData);
         }
-        setupEventListeners(); // 한 번만 호출
+        showRestEventListeners(); // 한 번만 호출
     });
 }
 
@@ -230,6 +233,119 @@ function showList(containerId, dataArray) {
         `;
 //                <p>${json.rest_name || '이름 없음'}</p>; // 가게 이름 필요하면 return의 </div>위에 넣기
     }).join('');
+}
+
+// 탭 클릭 이벤트
+document.querySelectorAll('.rank-header > div').forEach(tap => {
+  tap.addEventListener('click', () => {
+    const tabType = tap.getAttribute('data-tab');
+
+    // 탭 스타일 업데이트
+    document.querySelectorAll('.rank-header > div').forEach(t => t.classList.remove('active'));
+    tap.classList.add('active');
+
+    // 콘텐츠 전환
+    document.querySelectorAll('.rank-content > div').forEach(content => {
+      content.classList.remove('show');
+    });
+    document.querySelector(`.content-${tabType}`).classList.add('show');
+  });
+});
+
+// 가게 클릭 이벤트
+function rankRestEventListeners() {
+    document.querySelectorAll('.rank-content').forEach(window => {
+        window.addEventListener('click', (event) => {
+            const item = event.target.closest('.review, .rating');
+            if (!item) return;
+
+            const rest_no = item.dataset.rest_no;
+            if (rest_no) {
+                location.href = `/search/view?rest_no=${rest_no}`;
+            }
+        });
+    });
+}
+
+function getRating(callback) {
+    const url = `/comment/restAvgRate`;
+    fetch(url, {
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        callback(data || {});
+    })
+    .catch(err => {
+        console.error("Fetch error:", err.message);
+        callback({});
+    });
+}
+
+function showRating() {
+    const rating = document.querySelector('.content-rating');
+    if (!rating) {
+        console.error('평점 정보(.content-rating show)를 찾을 수 없습니다.');
+        return;
+    }
+    
+    getRating(jsonArray => {
+        let msg = '';
+        jsonArray.forEach(json => {
+            msg += `<div class="ratings">`;
+            msg += 	`<div class="rating" data-rest_no="${json.rest_no}">${json.rest_name} : ${json.avg_rate}</div>`;
+            msg += `</div>`;
+        });
+
+        rating.innerHTML = msg;
+    });
+}
+function getReview(callback) {
+	const url = `/comment/restReviewCount`;
+	fetch(url, {
+		headers: {
+			'Accept': 'application/json'
+		}
+	})
+	.then(response => {
+		if (!response.ok) {
+			throw new Error(`HTTP error! status: ${response.status}`);
+		}
+		return response.json();
+	})
+	.then(data => {
+		callback(data || {});
+	})
+	.catch(err => {
+		console.error("Fetch error:", err.message);
+		callback({});
+	});
+}
+
+function showReview() {
+	const review = document.querySelector('.content-review');
+	if (!review) {
+		console.error('리뷰 정보(.content-review)를 찾을 수 없습니다.');
+		return;
+	}
+	
+	getReview(jsonArray => {
+		let msg = '';
+		jsonArray.forEach(json => {
+			msg += `<div class="reviews">`;
+			msg += 	`<div class="review" data-rest_no="${json.rest_no}">${json.rest_name} : ${json.com_count}</div>`;
+			msg += `</div>`;
+		});
+		
+		review.innerHTML = msg;
+	});
 }
 
 document.querySelectorAll('.taps > div').forEach(tap => {
@@ -254,7 +370,7 @@ document.querySelectorAll('.taps > div').forEach(tap => {
 	  });
 	});
 
-// 탭 클릭 이벤트
+//탭 클릭 이벤트
 document.querySelectorAll('.tap-move > div').forEach(move => {
 	  move.addEventListener('click', () => {
 	    if (move.classList.contains('move-friend')) {
@@ -265,118 +381,118 @@ document.querySelectorAll('.tap-move > div').forEach(move => {
 	  });
 	});
 function getFriend(callback) {
-    const url = `/friendlist/friendListData`;
-    fetch(url, {
-        headers: {
-            'Accept': 'application/json'
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(data => {
-        callback(data || {});
-    })
-    .catch(err => {
-        console.error("Fetch error:", err.message);
-        callback({});
-    });
+  const url = `/friendlist/friendListData`;
+  fetch(url, {
+      headers: {
+          'Accept': 'application/json'
+      }
+  })
+  .then(response => {
+      if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+  })
+  .then(data => {
+      callback(data || {});
+  })
+  .catch(err => {
+      console.error("Fetch error:", err.message);
+      callback({});
+  });
 }
 
 function showFriend() {
-    const friend = document.querySelector('.content-friend');
-    if (!friend) {
-        console.error('친구 정보(.content-friend)를 찾을 수 없습니다.');
-        return;
-    }
+  const friend = document.querySelector('.content-friend');
+  if (!friend) {
+      console.error('친구 정보(.content-friend)를 찾을 수 없습니다.');
+      return;
+  }
 
-    // body에서 memNo 값을 가져오기
-    const myNo = document.body.dataset.memNo;
+  // body에서 memNo 값을 가져오기
+  const myNo = document.body.dataset.memNo;
 
-    getFriend(jsonArray => {
-        let msg = '';
-        jsonArray.forEach(json => {
-            const friendNick = json.friendMember.mem_nick;
-            const friendNo = json.friendMember.mem_no;
+  getFriend(jsonArray => {
+      let msg = '';
+      jsonArray.forEach(json => {
+          const friendNick = json.friendMember.mem_nick;
+          const friendNo = json.friendMember.mem_no;
 
-            msg += `<div class="friends">`;
-            msg += `  <div class="friend" data-friend-no="${friendNo}">${friendNick}</div>`;
-            msg += `</div>`;
-        });
+          msg += `<div class="friends">`;
+          msg += `  <div class="friend" data-friend-no="${friendNo}">${friendNick}</div>`;
+          msg += `</div>`;
+      });
 
-        friend.innerHTML = msg;
+      friend.innerHTML = msg;
 
-        // 친구 닉네임 클릭 이벤트 바인딩
-        document.querySelectorAll('.friend').forEach(friendEl => {
-            friendEl.addEventListener('click', e => {
-                const friendNo = friendEl.dataset.friendNo;
-                if (friendNo) {
-                    // roomNo 계산 (두 사용자의 번호를 합친 값)
-                    const roomNo = myNo < friendNo ? `${myNo}${friendNo}` : `${friendNo}${myNo}`;
-                    console.log(roomNo);
+      // 친구 닉네임 클릭 이벤트 바인딩
+      document.querySelectorAll('.friend').forEach(friendEl => {
+          friendEl.addEventListener('click', e => {
+              const friendNo = friendEl.dataset.friendNo;
+              if (friendNo) {
+                  // roomNo 계산 (두 사용자의 번호를 합친 값)
+                  const roomNo = myNo < friendNo ? `${myNo}${friendNo}` : `${friendNo}${myNo}`;
+                  console.log(roomNo);
 
-                    // 해당 채팅방으로 이동
-                    location.href = `/chat/privateRoom/${roomNo}`;
-                } else {
-                    alert("친구 번호가 없습니다.");
-                }
-            });
-        });
-    });
+                  // 해당 채팅방으로 이동
+                  location.href = `/chat/privateChatRoom/${roomNo}`;
+              } else {
+                  alert("친구 번호가 없습니다.");
+              }
+          });
+      });
+  });
 }
 
 
 
 function getGroup(callback) {
-    const url = `/grouplist/memberGroupListData`;
-    fetch(url, {
-        headers: {
-            'Accept': 'application/json'
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(data => {
-        callback(data || {});
-    })
-    .catch(err => {
-        console.error("Fetch error:", err.message);
-        callback({});
-    });
+  const url = `/grouplist/memberGroupListData`;
+  fetch(url, {
+      headers: {
+          'Accept': 'application/json'
+      }
+  })
+  .then(response => {
+      if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+  })
+  .then(data => {
+      callback(data || {});
+  })
+  .catch(err => {
+      console.error("Fetch error:", err.message);
+      callback({});
+  });
 }
 
 function showGroup() {
-    const group = document.querySelector('.content-group');
-    if (!group) {
-        console.error('그룹 정보(.content-group)를 찾을 수 없습니다.');
-        return;
-    }
-    
-    getGroup(jsonArray => {
-        let msg = '';
-        jsonArray.forEach(json => {
-            msg += `<div class="groups">`;
-            msg += 	`<div class="group">${json.chat_title}</div>`;
-            msg += `<input type="hidden" class="group_no" value="${json.group_no}">`
-            msg += `</div>`;
-        });
+  const group = document.querySelector('.content-group');
+  if (!group) {
+      console.error('그룹 정보(.content-group)를 찾을 수 없습니다.');
+      return;
+  }
+  
+  getGroup(jsonArray => {
+      let msg = '';
+      jsonArray.forEach(json => {
+          msg += `<div class="groups">`;
+          msg += 	`<div class="group">${json.chat_title}</div>`;
+          msg += `<input type="hidden" class="group_no" value="${json.group_no}">`
+          msg += `</div>`;
+      });
 
-        group.innerHTML = msg;
-        //-----그룹 이름 클릭 시 채팅방으로 이동--------------------------------------------
-        document.querySelectorAll(".group").forEach(moveChatRoom => {
-        	moveChatRoom.addEventListener('click',e=>{
-        		e.preventDefault();
-        		// 현재 input 기준으로 가장 가까운 div에서 groupNo를 찾기
-        		const groupNo = moveChatRoom.nextElementSibling.value;
-        		location.href="../chat/chatRoom/" + groupNo;
-        	});
-        })
-    });
+      group.innerHTML = msg;
+      //-----그룹 이름 클릭 시 채팅방으로 이동--------------------------------------------
+      document.querySelectorAll(".group").forEach(moveChatRoom => {
+      	moveChatRoom.addEventListener('click',e=>{
+      		e.preventDefault();
+      		// 현재 input 기준으로 가장 가까운 div에서 groupNo를 찾기
+      		const groupNo = moveChatRoom.nextElementSibling.value;
+      		location.href="../chat/chatRoom/" + groupNo;
+      	});
+      })
+  });
 }

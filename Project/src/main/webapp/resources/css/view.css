@@ -156,7 +156,13 @@ a:hover {
     align-items: center;
     padding-bottom: 25px; /* 원래 td의 padding-bottom */
 }
-
+#rest_name {
+	font-weight: bold;
+	font-size: 28px;
+}
+#rest_name > :first-child {
+	flex: 0 0 135px;
+}
 .info-label {
     flex: 0 0 100px; /* 레이블 너비 고정, 필요 시 조정 가능 */
     font-weight: bold; /* 레이블 강조 */

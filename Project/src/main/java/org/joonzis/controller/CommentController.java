@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.joonzis.domain.AttachVO;
 import org.joonzis.domain.CommentVO;
 import org.joonzis.domain.MemberVO;
+import org.joonzis.domain.RestVO;
 import org.joonzis.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -91,10 +92,22 @@ public class CommentController {
     	return new ResponseEntity<>(service.getAvgRate(rest_no), HttpStatus.OK);
     }
     
-    // 코멘트 평균 평점
+    // 연령별 코멘트 평균 평점
     @GetMapping(value = "/ageRate/{rest_no}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CommentVO>> getAgeAvgRate(@PathVariable("rest_no") int rest_no) {
     	log.info("getAgeAvgRate..." + rest_no);
     	return new ResponseEntity<List<CommentVO>>(service.getAgeAvgRate(rest_no), HttpStatus.OK);
+    }
+    
+    // 가게 평균 평점
+    @GetMapping(value = "/restAvgRate", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<RestVO>> getRestAvgRate() {
+    	return new ResponseEntity<>(service.getRestAvgRate(), HttpStatus.OK);
+    }
+    
+    // 가게 리뷰 카운트
+    @GetMapping(value = "/restReviewCount", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<RestVO>> getRestReviewCount() {
+    	return new ResponseEntity<>(service.getRestReviewCount(), HttpStatus.OK);
     }
 }
