@@ -44,16 +44,4 @@ document.addEventListener('DOMContentLoaded', function() {
             this.classList.add('active');
         });
     });
-
-    // 팝업 처리
-    var popup = document.getElementById('popup');
-    var closeBtn = document.getElementById('popup-close');
-
-    setTimeout(function() {
-        popup.style.display = 'block';
-    }, 1000);
-
-    closeBtn.addEventListener('click', function() {
-        popup.style.display = 'none';
-    });
 });

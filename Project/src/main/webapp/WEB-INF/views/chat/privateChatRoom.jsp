@@ -54,7 +54,7 @@
   <script type="text/javascript">
     const currentNick = "${currentNick}";
     const mem_no = "${currentNo}";
-    const chatLogs = ${chatLogs};  // 서버에서 전달된 JSON 데이터
+    const chatLogs = JSON.parse('${chatLogsJson}');
 
     // chatroom.js는 여기서 로드되도록 함
     const script = document.createElement('script');

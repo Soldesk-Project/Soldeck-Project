@@ -11,8 +11,6 @@ pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="../resources/css/footer.css">
 </head>
 <body style="overflow-y: scroll;" data-mem-no="${sessionScope.loggedInUser.mem_no}">
-
-	<jsp:include page="../layout/header.jsp"/>
 	
 	<!-- 알림 표시 영역 -->
 	<div id="notificationContainer" style="position: fixed; top: 10px; right: 10px; z-index: 9999;"></div>
@@ -51,7 +49,5 @@ pageEncoding="UTF-8"%>
 		</div>
 	</div>
 	<script src="/resources/js/friendList.js"></script>
-	<jsp:include page="../layout/footer.jsp"/>
-	
 </body>
 </html>

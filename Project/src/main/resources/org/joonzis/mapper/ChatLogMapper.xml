@@ -25,6 +25,14 @@
 	    SELECT * FROM GROUP_CHAT_LOG WHERE GROUP_NO = #{groupNo}
 	</select>
 	
+	<resultMap id="PrivateChatLogMap" type="org.joonzis.domain.PrivateChatLogVO">
+	    <id property="chatNo" column="CHAT_NO"/>
+	    <result property="roomNo" column="ROOM_NO"/>
+	    <result property="senderNo" column="MEM_NO"/>
+	    <result property="chatLog" column="CHAT_LOG"/>
+	    <result property="chatTime" column="CHAT_TIME"/>
+	</resultMap>
+	
 	<!-- 1:1 채팅방 생성 (방 존재 여부 확인 후) -->
     <select id="checkExistingRoom" resultType="int">
         SELECT ROOM_NO
@@ -45,7 +53,7 @@
     </insert>
 
     <!-- 1:1 채팅 내역 가져오기 -->
-    <select id="getChatLogsByRoomNo" resultType="org.joonzis.domain.PrivateChatLogVO">
+    <select id="getChatLogsByRoomNo" resultMap="PrivateChatLogMap">
         SELECT * FROM PRIVATE_CHAT_LOG
         WHERE ROOM_NO = #{roomNo}
         ORDER BY CHAT_TIME ASC
