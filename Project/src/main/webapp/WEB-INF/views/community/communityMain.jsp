@@ -22,9 +22,10 @@
         <button type="button" class="major-category-button" data-major="minigame">미니게임</button>
     </div>
 
-    <div class="community-content-area"  id="communityContent">
-        <jsp:include page="${includePage}.jsp"></jsp:include>
-    </div>
+    <div class="community-content-area" id="communityContent">
+	    <!-- 기본으로 친구 리스트 출력 -->
+	</div>
+
 </div>
 <%@ include file="../layout/footer.jsp" %>
 

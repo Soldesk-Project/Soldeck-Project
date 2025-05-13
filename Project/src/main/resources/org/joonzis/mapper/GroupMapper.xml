@@ -154,6 +154,16 @@
 	    ]]>
 	</select>
 	
+	<select id="getgroupList" resultType="org.joonzis.domain.GroupVO">
+		SELECT g.*
+		FROM "GROUP" g
+		WHERE g.group_no IN (
+		    SELECT gm.group_no
+		    FROM group_mem gm
+		    WHERE gm.mem_no = #{mem_no}
+		)
+	</select>
+	
 	<!-- 모임 검색 -->
 	<select id="searchGroupBygroupname" parameterType="String" resultType="org.joonzis.domain.GroupVO">
     	SELECT group_no, chat_title, group_img

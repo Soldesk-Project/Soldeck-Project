@@ -1,47 +1,74 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const majorCategoryButtons = document.querySelectorAll('.major-category-button');
     const contentArea = document.getElementById('communityContent');
-    
+
     majorCategoryButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             const major = this.dataset.major;
-            let url = '';
+            let jsPath = '';
+            let urlKey = '';
+
+            console.log('Selected category:', major); // 선택된 카테고리 로그
 
             switch (major) {
                 case 'friend':
-                    url = '/friendlist/main';
+                    urlKey = 'friend';
+                    jsPath = '/resources/js/friendList.js';
                     break;
                 case 'group':
-                    url = '/grouplist/main';
+                    urlKey = 'group';
+                    jsPath = '/resources/js/groupList.js';
                     break;
                 case 'chat':
-                    url = '/chat/main';
+                    urlKey = 'chat';
+                    jsPath = '/resources/js/chatroom.js';
                     break;
                 case 'event':
-                    url = '/event/eventMain';
+                    urlKey = 'event';
+                    jsPath = '/resources/js/event.js';
                     break;
                 case 'minigame':
-                	url = '/event/eventMain';
+                    urlKey = 'minigame';
+                    jsPath = '/resources/js/minigame.js';
                     break;
+                default:
+                    console.error('Unknown category:', major);
+                    return;
             }
 
-            if (url) {
-                // AJAX 요청을 통해 해당 URL의 내용을 가져와 contentArea에 삽입
-                fetch(url)
-                    .then(response => response.text())
-                    .then(data => {
-                        contentArea.innerHTML = data;
-                        // 필요한 경우 추가적인 JavaScript 로직 처리 (예: 이벤트 바인딩)
-                    })
-                    .catch(error => {
-                        console.error('콘텐츠 로딩 실패:', error);
-                        contentArea.innerHTML = '<p>콘텐츠를 로드하는 데 실패했습니다.</p>';
-                    });
-            }
+            // 서버에서 JSP 조각을 가져와서 communityContent에 삽입
+            fetch("/community/content?url=" + urlKey)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("HTTP error " + response.status);
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    contentArea.innerHTML = data;
 
-            // 클릭된 버튼을 활성화하고 다른 버튼 비활성화
+                    // JS 파일 로드
+                    if (jsPath) {
+                        const script = document.createElement('script');
+                        script.src = jsPath;
+                        script.onload = () => console.log(jsPath + ' 로드 완료');
+                        document.body.appendChild(script);
+                    }
+                })
+                .catch(error => {
+                    console.error('콘텐츠 로딩 실패:', error);
+                    contentArea.innerHTML = '<p>콘텐츠를 로드하는 데 실패했습니다.</p>';
+                });
+
+            // 버튼 UI 처리
             majorCategoryButtons.forEach(btn => btn.classList.remove('active'));
             this.classList.add('active');
         });
     });
+
+    // 페이지 로딩 시 기본 카테고리(친구) 자동 클릭
+    const defaultButton = document.querySelector('.major-category-button.active');
+    if (defaultButton) {
+        defaultButton.click();
+    }
 });

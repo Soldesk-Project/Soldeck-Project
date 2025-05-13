@@ -31,7 +31,7 @@ public interface GroupMapper {
 									   @Param("mem_no")	int mem_no);
 	
 	//유저가 속한 채팅 목록 불러오기
-	List<GroupVO> getgroupList(@Param("group_no") int mem_no);
+	List<GroupVO> getgroupList(@Param("mem_no") int mem_no);
 	//속한 모임 중 탈퇴하기
 	void removeGroup(@Param("group_no") int group_no, @Param("mem_no") int mem_no);
 	//랜덤으로 추천되는 채팅 목록 불러오기

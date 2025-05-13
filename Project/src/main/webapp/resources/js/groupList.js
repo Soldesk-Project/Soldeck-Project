@@ -91,7 +91,6 @@ fetch("/grouplist/groupListRecommendData", {
 	    const introduce = group.group_memo || "";
 	    
 	    const groupNo = group.group_no;
-	    console.log(groupNo);
 
 	    const el = document.createElement("div");
 	    el.classList.add("friend-box");

@@ -2,13 +2,10 @@ package org.joonzis.controller;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.joonzis.domain.EventVO;
-import org.joonzis.domain.GroupMemberDTO;
 import org.joonzis.domain.MemberVO;
 import org.joonzis.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,17 +40,6 @@ public class EventController {
         log.info("eventMain...");
         return "/event/main";
     }
-	
-	@GetMapping("/main")
-	public String main(Model model, HttpSession session) {
-		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
-		if (loggedInMember == null) {
-			// 로그인되지 않은 경우 처리 (예: 로그인 페이지로 리다이렉트)
-			return "redirect:/login/loginPage?redirectUrl=" + URLEncoder.encode("/event/main", StandardCharsets.UTF_8);
-		}
-		log.info("main...");
-		return "/event/main";
-	}
 	
 	@GetMapping("/list/0001")
 	public void eventTab1(Model model) {
