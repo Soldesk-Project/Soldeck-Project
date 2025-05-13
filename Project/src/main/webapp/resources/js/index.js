@@ -289,21 +289,46 @@ function getFriend(callback) {
 function showFriend() {
     const friend = document.querySelector('.content-friend');
     if (!friend) {
-        console.error('친구 정보(.content-friend show)를 찾을 수 없습니다.');
+        console.error('친구 정보(.content-friend)를 찾을 수 없습니다.');
         return;
     }
-    
+
+    // body에서 memNo 값을 가져오기
+    const myNo = document.body.dataset.memNo;
+
     getFriend(jsonArray => {
         let msg = '';
         jsonArray.forEach(json => {
+            const friendNick = json.friendMember.mem_nick;
+            const friendNo = json.friendMember.mem_no;
+
             msg += `<div class="friends">`;
-            msg += 	`<div class="friend">${json.friendMember.mem_nick}</div>`;
+            msg += `  <div class="friend" data-friend-no="${friendNo}">${friendNick}</div>`;
             msg += `</div>`;
         });
 
         friend.innerHTML = msg;
+
+        // 친구 닉네임 클릭 이벤트 바인딩
+        document.querySelectorAll('.friend').forEach(friendEl => {
+            friendEl.addEventListener('click', e => {
+                const friendNo = friendEl.dataset.friendNo;
+                if (friendNo) {
+                    // roomNo 계산 (두 사용자의 번호를 합친 값)
+                    const roomNo = myNo < friendNo ? `${myNo}${friendNo}` : `${friendNo}${myNo}`;
+                    console.log(roomNo);
+
+                    // 해당 채팅방으로 이동
+                    location.href = `/chat/privateChatRoom/${roomNo}`;
+                } else {
+                    alert("친구 번호가 없습니다.");
+                }
+            });
+        });
     });
 }
+
+
 
 function getGroup(callback) {
     const url = `/grouplist/memberGroupListData`;
@@ -339,12 +364,19 @@ function showGroup() {
         jsonArray.forEach(json => {
             msg += `<div class="groups">`;
             msg += 	`<div class="group">${json.chat_title}</div>`;
+            msg += `<input type="hidden" class="group_no" value="${json.group_no}">`
             msg += `</div>`;
         });
 
         group.innerHTML = msg;
+        //-----그룹 이름 클릭 시 채팅방으로 이동--------------------------------------------
+        document.querySelectorAll(".group").forEach(moveChatRoom => {
+        	moveChatRoom.addEventListener('click',e=>{
+        		e.preventDefault();
+        		// 현재 input 기준으로 가장 가까운 div에서 groupNo를 찾기
+        		const groupNo = moveChatRoom.nextElementSibling.value;
+        		location.href="../chat/chatRoom/" + groupNo;
+        	});
+        })
     });
 }
-
-
-

@@ -282,6 +282,7 @@ public class myPageController {
 	@PostMapping(value = "/booking/memoUpdate", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> updateReserveMemo(@RequestBody ReserveVO vo) {
 		log.info("updateReserveMemo..."+vo.getRes_no());
+		log.info("updateReserveMemo..."+vo.getRes_memo());
 		boolean result=rservice.updateReserveMemo(vo.getRes_no(), vo.getRes_memo());
 		return new ResponseEntity<Boolean>(result,HttpStatus.OK);
 	}

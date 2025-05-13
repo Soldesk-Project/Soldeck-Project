@@ -86,11 +86,20 @@ document.querySelectorAll(".booking-cancel-btn").forEach(bookingCancelBtn => {
 })
 // 메모저장 버튼 -> 예약 번호
 let memo;
-document.querySelectorAll(".booking-memo-btn").forEach(saveMemo => {
+document.querySelectorAll(".booking-memo-btn").forEach(modifyMemo => {
+	modifyMemo.addEventListener('click',e=>{
+		e.preventDefault();
+		modifyMemo.closest(".booking-info").querySelector(".booking-memo").style.display='none';
+		modifyMemo.closest(".booking-info").querySelector(".booking-memo-modify").style.display='inline';
+		modifyMemo.closest(".booking-info").querySelector(".booking-memo-btn").style.display='none';
+		modifyMemo.closest(".booking-info").querySelector(".check-memo").style.display='inline';
+	});
+})
+document.querySelectorAll(".check-memo").forEach(saveMemo => {
 	saveMemo.addEventListener('click',e=>{
 		e.preventDefault();
-		resNo = saveMemo.closest(".sec-2").querySelector(".reserve-no").value;
-		memo=saveMemo.closest(".sec-2").querySelector(".booking-memo").value;
+		resNo = saveMemo.closest(".booking-info").querySelector(".reserve-no").value;
+		memo = saveMemo.closest(".booking-info").querySelector(".booking-memo-modify").value;
 		checkMemo();
 	});
 })

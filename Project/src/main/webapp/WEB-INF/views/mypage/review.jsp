@@ -42,6 +42,8 @@
 						<div class="review-comment">
 							<textarea name="comment" class="comment" readonly="readonly">${co.com_con }</textarea>
 						</div>
+						<span>▶ 댓글 위치로 이동</span>
+						<!-- 
 						<details>
 							<summary>사진 전체 보기</summary>
 								<div class="comment-img-all">
@@ -68,6 +70,7 @@
 									</c:choose>
 								</div>
 						</details>
+						 -->
 					</div>
 				</div>
 			</c:forEach>

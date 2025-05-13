@@ -7,10 +7,11 @@ import javax.servlet.http.HttpSession;
 
 import org.joonzis.domain.ChatLogVO;
 import org.joonzis.domain.GroupMemberDTO;
-import org.joonzis.domain.GroupVO;
 import org.joonzis.domain.MemberVO;
+import org.joonzis.domain.PrivateChatLogVO;
 import org.joonzis.service.ChatLogService;
 import org.joonzis.service.GroupService;
+import org.joonzis.service.PrivateChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,20 +35,23 @@ public class ChatController {
 	@Autowired
 	ChatLogService chatService;
 	
-	@GetMapping("/main") // 채팅 메인 페이지 요청 처리
-    public String chatMain(HttpSession session, Model model) {
-        log.info("채팅 메인 페이지 요청");
-        MemberVO member = (MemberVO) session.getAttribute("loggedInUser");
-        if (member == null) {
-            return "redirect:/login/loginPage"; // 로그인 안 되어 있으면 로그인 페이지로 리다이렉트
-        }
-
-        int mem_no = member.getMem_no();
-        List<GroupMemberDTO> groups = service.getAllGroups(mem_no);
-        model.addAttribute("groupList", groups); // 참여하고 있는 그룹 목록을 모델에 추가
-        return "chat/chatRoom";
-    }
+	@Autowired
+	PrivateChatService privateChatService;
 	
+	@GetMapping("/main") // 채팅 메인 페이지 요청 처리
+public String chatMain(HttpSession session, Model model) {
+    log.info("채팅 메인 페이지 요청");
+    MemberVO member = (MemberVO) session.getAttribute("loggedInUser");
+    if (member == null) {
+        return "redirect:/login/loginPage"; // 로그인 안 되어 있으면 로그인 페이지로 리다이렉트
+    }
+
+    int mem_no = member.getMem_no();
+    List<GroupMemberDTO> groups = service.getAllGroups(mem_no);
+    model.addAttribute("groupList", groups); // 참여하고 있는 그룹 목록을 모델에 추가
+    return "chat/chatRoom";
+}
+	// 그룹채팅방
 	@GetMapping("/chatRoom/{groupNo}")
 	public String goChatRoom(@PathVariable("groupNo") int groupNo, HttpSession session, Model model) {
 		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
@@ -113,6 +117,51 @@ public class ChatController {
 	    model.addAttribute("groupList", groups);
 
 	    return "chat/chatRoom";
+	}
+	
+	// 개인 채팅방
+	@GetMapping("/privateRoom/{roomNo}")
+	public String goPrivateChatRoom(@PathVariable("roomNo") int friendNo, HttpSession session, Model model) {
+	    MemberVO loginUser = (MemberVO) session.getAttribute("loggedInUser");
+	    if (loginUser == null) {
+	        return "redirect:/login/loginPage";
+	    }
+
+	    int myNo = loginUser.getMem_no();
+	    String myNick = loginUser.getMem_nick();
+
+	    // 친구 정보 조회
+	    MemberVO friend = privateChatService.getMemberByNo(friendNo);
+	    
+	    System.out.println(friend);
+	    
+	    
+	    if (friend == null) {
+	        return "redirect:/error/404";
+	    }
+
+	    // 채팅방 존재 여부 확인
+	    Integer existingRoom = privateChatService.checkExistingRoom(myNo, friendNo);
+
+	    // 채팅방이 없으면 새로 생성
+	    int roomNo;
+	    if (existingRoom == null || existingRoom == 0) {
+	        roomNo = privateChatService.createPrivateChatRoom(myNo, friendNo);
+	    } else {
+	        roomNo = existingRoom;
+	    }
+
+	    // 채팅 내역 가져오기
+	    List<PrivateChatLogVO> chatLogs = privateChatService.getChatLogsByRoomNo(roomNo);
+
+	    model.addAttribute("chatLogs", chatLogs);
+	    model.addAttribute("currentNick", myNick);
+	    model.addAttribute("currentNo", myNo);
+	    model.addAttribute("friendNick", friend.getMem_nick());
+	    model.addAttribute("friendNo", friendNo);
+	    model.addAttribute("roomNo", roomNo);
+
+	    return "chat/privateChatRoom"; // 친구 채팅용 JSP
 	}
 
 }

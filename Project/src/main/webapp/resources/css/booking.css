@@ -158,8 +158,13 @@ body {
 	height: 100px;
 	flex-direction: column;
 }
-.memo-div span{
+.memo-title{
 	margin: 10px;
+	font-size: 20px;
+}
+.memo-content{
+	display: flex;
+	align-items: center;
 }
 .input-size {
 	position: absolute;
@@ -170,7 +175,9 @@ body {
 	padding: 0 4px;
 	box-sizing: content-box;
 }
-
+.booking-memo{
+	margin: 10px;
+}
 .bookmark-div{
 	margin-left:auto;
 }
@@ -195,17 +202,18 @@ body {
 .booking-cancel-btn{
 	margin: 10px 20px;
 }
-.booking-memo{
+.booking-memo-modify{
 	height: 40px;
 	width: 468px;
 	margin: 0 10px;
+	display: none;
 }
-.booking-memo-btn{
+.booking-memo-btn, .check-memo{
 	margin: 3px 20px;
-	float: right;
+	margin-left: auto;
 }
 .booking-memo-btn,
-.booking-cancel-btn{
+.booking-cancel-btn, .check-memo{
 	background-color: #FF7D00;
 	color: white;
 	padding: 10px 15px;
@@ -214,6 +222,9 @@ body {
 	cursor: pointer;
 	width: 100px;
 	height: 40px;
+}
+#saveMemoBtn{
+	display: none;
 }
 /*-----------------------모달-------------------------------*/
 #customConfirm{
