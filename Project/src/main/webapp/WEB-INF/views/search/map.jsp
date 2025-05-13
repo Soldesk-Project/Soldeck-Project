@@ -13,7 +13,7 @@
 	<div id="sidebar">
 	<div id="sidebar-head">
 		<div id="toggleArrow">&lt;</div> <!-- 화살표 버튼 추가! -->
-	    <a href="/"><img src="/resources/images/logo.png" alt="logo" style="width: 70px;"></a>
+	    <a href="/" draggable="false"><img src="/resources/images/logo.png" alt="logo" style="width: 70px;" draggable="false"></a>
 	    <input type="text" class="search-box" id="search-box" placeholder="검색어를 입력하세요" style="width:100%"/>
 	</div>
 	<div id="sidebar-body">
