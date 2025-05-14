@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
                 .then(data => {
                     contentArea.innerHTML = data;
-
+                    deleteScript();
                     // JS 파일 로드
                     if (jsPath) {
                         const script = document.createElement('script');
@@ -72,3 +72,26 @@ document.addEventListener('DOMContentLoaded', function () {
         defaultButton.click();
     }
 });
+
+
+function deleteScript() {
+	
+	const scriptPaths = [
+		  '/resources/js/friendList.js',
+		  '/resources/js/groupList.js',
+		  '/resources/js/chatroom.js',
+		  '/resources/js/mainEvent.js',
+		  '/resources/js/minigame.js',
+		  '/resources/js/eventTab/0001.js',
+		  '/resources/js/eventTab/0002.js',
+		  '/resources/js/eventTab/0003.js',
+		  '/resources/js/eventTab/0004.js'
+		];
+
+		scriptPaths.forEach(path => {
+		  const scriptTag = document.querySelector(`script[src="${path}"]`);
+		  if (scriptTag && scriptTag.parentNode) {
+		    scriptTag.parentNode.removeChild(scriptTag);
+		  }
+		});
+}
