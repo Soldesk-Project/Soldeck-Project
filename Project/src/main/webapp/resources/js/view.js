@@ -41,7 +41,7 @@ const moreBtn = panelbody.querySelector('.more-btn');
 const modal = document.querySelector('.modal2');
 const modalImageContainer = modal.querySelector('.modal-image-container');
 const closeBtn = modal.querySelector('.close-btn');
-//JSP에서 시간 슬롯 가져오기
+// JSP에서 시간 슬롯 가져오기
 const timeButtons = document.querySelectorAll('.time-options .time-btn');
 const timeSlots = Array.from(timeButtons).map(button => button.textContent.trim());
 
@@ -67,10 +67,22 @@ function updateStars(rating) {
         }
     });
 }
+
+//시간과 인원 선택 초기화 함수
+function resetTimeAndPersonnel() {
+    selectedTime = null;
+    selectedPersonnel = null;
+    timeButtons.forEach(btn => {
+        btn.classList.remove('selected');
+        btn.disabled = false; // 모든 시간 버튼 활성화
+        btn.classList.remove('disabled');
+    });
+    personnelButtons.forEach(btn => btn.classList.remove('selected'));
+}
+
 // 초기화 및 이벤트 리스너 설정
 document.addEventListener("DOMContentLoaded", function () {
-	showCommentsImage();
-
+	
 	  // 이미지 더보기 모달 외부 클릭 시 닫기
 	  modal.addEventListener('click', (e) => {
 	    if (e.target === modal) {
@@ -86,7 +98,9 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("page-header 요소를 찾을 수 없습니다.");
         restNo = null;
     }
-
+    
+    showCommentsImage();
+    
     // 중복된 store-details 요소 정리
     const storeDetailsElements = document.querySelectorAll('.store-details');
     if (storeDetailsElements.length > 1) {
@@ -144,6 +158,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (monthSelect) {
         monthSelect.addEventListener('change', (e) => {
             selectedMonth = parseInt(e.target.value);
+            resetTimeAndPersonnel(); // 시간과 인원 초기화
             renderCalendar(selectedMonth);
         });
     }
@@ -176,7 +191,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 alert('날짜와 시간, 인원을 선택해주세요.');
                 return;
             }
-            const resDate = `2025-${selectedMonth}-${selectedDate}`; // 예: "2025-4-24"
+            const resDate = `2025-${selectedMonth}-${selectedDate}`; // 예:
+																		// "2025-4-24"
             // resDate 형식 검증
             if (!/^\d{4}-\d{1,2}-\d{1,2}$/.test(resDate)) {
                 alert('유효한 날짜 형식이 아닙니다.');
@@ -350,7 +366,7 @@ function get(callback) {
     });
 }
 let menuLoaded = false;
-//가게 메뉴 정보 렌더링
+// 가게 메뉴 정보 렌더링
 function storeMenu() {
     const storeMenus = document.querySelector('.store-menu');
     if (!storeMenus) {
@@ -404,7 +420,7 @@ function getMenu(callback) {
     });
 }
 
-//탭 전환 로직
+// 탭 전환 로직
 document.addEventListener('DOMContentLoaded', () => {
     const buttons = document.querySelectorAll('.store-tap button');
     const contents = document.querySelectorAll('.store-info, .store-menu');
@@ -628,6 +644,7 @@ function renderCalendar(month) {
                 days.forEach(d => d.classList.remove('selected'));
                 day.classList.add('selected');
                 selectedDate = day.textContent;
+                resetTimeAndPersonnel(); // 시간과 인원 초기화
                 const resDate = `2025-${month}-${selectedDate}`;
                 updateTimeSlots(restNo, resDate);
             });
@@ -636,6 +653,7 @@ function renderCalendar(month) {
             if (year === todayYear && month === todayMonth && i === todayDate) {
                 day.classList.add('selected');
                 selectedDate = i.toString();
+                resetTimeAndPersonnel(); // 시간과 인원 초기화
                 const resDate = `2025-${month}-${selectedDate}`;
                 updateTimeSlots(restNo, resDate); // 시간 슬롯 즉시 업데이트
             }
@@ -667,10 +685,11 @@ function resetSelections() {
     timeButtons.forEach(btn => btn.classList.remove('selected'));
     const personnelButtons = document.querySelectorAll('.personnel-btn');
     personnelButtons.forEach(btn => btn.classList.remove('selected'));
+    resetTimeAndPersonnel(); // 시간과 인원 초기화
     renderCalendar(selectedMonth);
 }
 
-//시간 슬롯 비활성화 함수
+// 시간 슬롯 비활성화 함수
 function updateTimeSlots(restNo, resDate) {
     fetch(`/search/reservations/times?rest_no=${restNo}&res_date=${resDate}`, {
         method: 'GET',
@@ -715,6 +734,7 @@ function updateTimeSlots(restNo, resDate) {
     });
 }
 
+// 댓글 입력 제한
 document.addEventListener('DOMContentLoaded', function () {
     const textarea = document.getElementById('comment');
     const maxChars = 500; // 최대 문자 수
@@ -735,9 +755,13 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         // 3. 자동 줄 바꿈 포함한 줄 수 계산 및 제한
-        const lineHeight = parseFloat(getComputedStyle(textarea).lineHeight) || 20; // 줄 높이 (기본값 20px)
+        const lineHeight = parseFloat(getComputedStyle(textarea).lineHeight) || 20; // 줄 높이
+																					// (기본값
+																					// 20px)
         const totalHeight = textarea.scrollHeight; // 스크롤 높이
-        const calculatedLines = Math.floor(totalHeight / lineHeight); // 실제 렌더링 줄 수
+        const calculatedLines = Math.floor(totalHeight / lineHeight); // 실제
+																		// 렌더링 줄
+																		// 수
 
         if (calculatedLines > maxLines) {
             // 줄 수 초과 시 마지막 줄 잘라내기
@@ -787,7 +811,8 @@ function fetchComments() {
 
             // 첨부 파일 처리
             let attachHtml = '';
-            const attachList = comment.com_attachList || []; // null이면 빈 배열로 초기화
+            const attachList = comment.com_attachList || []; // null이면 빈 배열로
+																// 초기화
             if (attachList.length > 0) {
                 attachHtml = '<div class="comment-attachments">';
                 attachList.forEach(attach => {
@@ -982,7 +1007,7 @@ function handleCommentDelete(e) {
         .then(data => {
             e.target.disabled = false;
             e.target.textContent = 'X';
-            alert('코멘트가 삭제되었습니다.');
+            /* alert('코멘트가 삭제되었습니다.'); */
             fetchComments();
             showAvgRate();
             showCommentsImage();
@@ -1060,7 +1085,7 @@ function uploadComment() {
         updateStars(0);
         window.uploadedFiles = []; // 초기화
         document.querySelector('.uploadResult ul').innerHTML = '';
-        alert("코멘트가 등록되었습니다.");
+        /* alert("코멘트가 등록되었습니다."); */
     })
     .catch(err => {
         console.error("Upload error:", err.message);
@@ -1116,7 +1141,8 @@ function getAgeAvgRate(callback) {
         return response.json();
     })
     .then(data => {
-        // 데이터 예: [{ ageGroup: 10, avgRating: 4.5 }, { ageGroup: 20, avgRating: 3.8 }, ...]
+        // 데이터 예: [{ ageGroup: 10, avgRating: 4.5 }, { ageGroup: 20, avgRating:
+		// 3.8 }, ...]
         let ageAvgHtml = '';
         const ageGroups = [10, 20, 30, 40];
 
@@ -1187,7 +1213,7 @@ function handleFavoriteClick() {
     if (window.isFavorite) {
         removeFavorite();
         if (favoriteBtnElement) {
-            favoriteBtnElement.style.backgroundColor = '';
+            favoriteBtnElement.style.backgroundColor = 'white';
             favoriteBtnElement.textContent = '즐겨찾기';
             window.isFavorite = false;
         } else {
@@ -1261,6 +1287,9 @@ function updateFavoriteButtonUI() {
 	const favoriteBtnElement = document.getElementById('favoriteBtn');
     if (favoriteBtnElement) {
         favoriteBtnElement.textContent = window.isFavorite ? '즐겨찾기 해제' : '즐겨찾기';
+        if(favoriteBtnElement.textContent == '즐겨찾기 해제'){
+        	favoriteBtnElement.style.backgroundColor = 'yellow';
+        }
         // 필요하다면 아이콘 변경 등의 추가 UI 업데이트
     } else {
         console.error("favoriteBtnElement를 찾을 수 없습니다.");
