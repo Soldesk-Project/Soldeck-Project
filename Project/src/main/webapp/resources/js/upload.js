@@ -153,6 +153,16 @@
                 // 해당 요소 삭제
                 const targetLi = e.target.closest('li');
                 targetLi.remove();
+                
+                // window.uploadedFiles에서 해당 파일 제거
+                if (window.uploadedFiles) {
+                    window.uploadedFiles = window.uploadedFiles.filter(file => {
+                        const fileName = file.att_uuid + '_' + file.att_name;
+                        const imageUrl = file.att_path + '/' + encodeURIComponent(fileName);
+                        return imageUrl !== targetFile;
+                    });
+                }
+                
                 // 코멘트 목록 갱신 (view.js와 통합)
                 if (typeof fetchComments === 'function') {
                     fetchComments();
