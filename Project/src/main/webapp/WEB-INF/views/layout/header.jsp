@@ -35,11 +35,9 @@
 	    				</button>
 	    			</div>
 					<div class="communityIcon">
-	    				<a href="community/communityMain">
-						<button id="communityBtn" type="button">
-							<img alt="검색버튼" src="/resources/images/communityIcon.png">
-						</button>    
-	    				</a>
+	    				<a href="${pageContext.request.contextPath}/community/communityMain" id="communityBtn">
+							<img alt="커뮤니티" src="/resources/images/communityIcon.png">
+						</a>
 	    			</div>
     			</div>
 				<div class="mypageAndlouout">
