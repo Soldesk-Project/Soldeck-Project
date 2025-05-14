@@ -87,25 +87,7 @@ public class myPageController {
 	        default: return "";
 	    }
 	}
-//	@GetMapping("/modifyInfo")
-//	public String modifyInfo(Model model, HttpSession session) {
-//		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
-//		if (loggedInMember == null) {
-//			return "redirect:/login/loginPage";
-//		}
-//		int mem_no = loggedInMember.getMem_no();
-//		
-//		log.info("modifyInfo..."+mem_no);
-//		int foodKate[]=service.getFoodKateInfo(mem_no);
-//		List<String> foodList = new ArrayList<>();
-//	    for (int f : foodKate) {
-//	        String foodName = changeFoodNoToName(f);
-//	        foodList.add(foodName);
-//	    }
-//	    model.addAttribute("member",service.getMemberInfo(mem_no));
-//	    model.addAttribute("foodList",foodList);	    
-//		return "/mypage/modifyInfo";
-//	}
+
 	@Transactional
 	@PostMapping("modifyInfo")
 	public String modifyInfo(MemberVO vo, RedirectAttributes rttr,

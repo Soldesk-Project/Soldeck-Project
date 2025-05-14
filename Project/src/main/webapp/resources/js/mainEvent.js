@@ -1,12 +1,12 @@
-//-----CSS 파일 추가-----------------------------------------
-(function() {
-	
-	const CSS_FILE_PATH = '/resources/css/mainEvent.css';
-	let linkEle = document.createElement('link');
-	linkEle.rel = 'stylesheet';
-	linkEle.href = CSS_FILE_PATH;
-	document.head.appendChild(linkEle);
-})();
+////-----CSS 파일 추가-----------------------------------------
+//(function() {
+//	
+//	const CSS_FILE_PATH = '/resources/css/mainEvent.css';
+//	let linkEle = document.createElement('link');
+//	linkEle.rel = 'stylesheet';
+//	linkEle.href = CSS_FILE_PATH;
+//	document.head.appendChild(linkEle);
+//})();
 //-----이벤트 클릭 이동-------------------------------------------
 document.querySelectorAll(".main-menu a").forEach(event=>{
 	event.addEventListener('click', e=>{

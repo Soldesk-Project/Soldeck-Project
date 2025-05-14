@@ -1,22 +1,32 @@
-//-----CSS 파일 추가-----------------------------------------
-(function() {
-	
-	const CSS_FILE_PATH = '/resources/css/eventTab/0002.css';
-	let linkEle = document.createElement('link');
-	linkEle.rel = 'stylesheet';
-	linkEle.href = CSS_FILE_PATH;
-	document.head.appendChild(linkEle);
-})();
+////-----CSS 파일 추가-----------------------------------------
+//(function() {
+//	
+//	const CSS_FILE_PATH = '/resources/css/eventTab/0002.css';
+//	let linkEle = document.createElement('link');
+//	linkEle.rel = 'stylesheet';
+//	linkEle.href = CSS_FILE_PATH;
+//	document.head.appendChild(linkEle);
+//})();
 
-
+window.cleanupEventTab0001 = function() {
+	  if (window.runner && typeof window.runner.stopListening === 'function') {
+	    window.runner.stopListening();
+	    window.runner = null;
+	  }
+	  delete window.Runner;
+	};
 //-----키 락-----------------------------------------------------
+(function() {
 window.addEventListener('keydown', function(e) {
 	if ([37, 38, 39, 40].indexOf(e.keyCode) > -1) {
 		e.preventDefault();
 	}
 });
-	
+
+
+
 //----- 게임 ------------------------------------------------------------------
+	
 const canvas = document.getElementById("game-board");
 const ctx = canvas.getContext("2d");
 const scale = 20;
@@ -177,13 +187,10 @@ document.querySelector(".save-score").addEventListener("click", saveScore);
 function saveScore() {
 	console.log(highScore);
 	
-	
-	
-	
 }
 
 
-
+})();
 
 
 

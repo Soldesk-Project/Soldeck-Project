@@ -1,14 +1,34 @@
 //-----CSS 파일 추가-----------------------------------------
+//(function() {
+//	
+//	const CSS_FILE_PATH = '/resources/css/eventTab/0003.css';
+//	let linkEle = document.createElement('link');
+//	linkEle.rel = 'stylesheet';
+//	linkEle.href = CSS_FILE_PATH;
+//	document.head.appendChild(linkEle);
+//})();
+
+
+window.cleanupEventTab0001 = function() {
+	if (window.runner && typeof window.runner.stopListening === 'function') {
+		window.runner.stopListening();
+		window.runner = null;
+	}
+	delete window.Runner;
+};
 (function() {
 	
-	const CSS_FILE_PATH = '/resources/css/eventTab/0003.css';
-	let linkEle = document.createElement('link');
-	linkEle.rel = 'stylesheet';
-	linkEle.href = CSS_FILE_PATH;
-	document.head.appendChild(linkEle);
-})();
-
+	window.addEventListener('keydown', function(e) {
+		if ([37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+			e.preventDefault();
+		}
+	});	
+	
+	
+	
+	
 //----- 게임 ------------------------------------------------------------------
+	
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
@@ -133,3 +153,6 @@ function savePoint(point) {
 	}
 }
 
+
+
+})();

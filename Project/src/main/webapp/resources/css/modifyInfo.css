@@ -65,6 +65,7 @@ b{
 	align-items : center;
 	width: 400px;
 	height: 44px;
+	flex-wrap: wrap;
 }
 .info-rest{
 	float: left;
@@ -157,6 +158,17 @@ fieldset{
 	height: 40px;
 	margin: auto;
 }
+.modify-finish-btn{
+	background-color: #FF7D00;
+	color: white;
+	padding: 10px 15px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	width: 100px;
+	height: 40px;
+	margin: auto;
+}
 .reset-btn{
 	background-color: #FF7D00;
 	color: white;
@@ -202,11 +214,14 @@ input[readonly] {
 	font-size: 0.9em;
 	display: block;
 	margin-top: 5px;
+	flex-basis: 100%;
 }
 .phone-error{
-	margin: 55px -493px;
+	margin: 5px 0 0 0;
 	display: block;
-	margin-top: 5px;
+	font-size: 0.9em;
+	color: red;
+	flex-basis: 100%;
 }
 b{
 	font-size: 17px;

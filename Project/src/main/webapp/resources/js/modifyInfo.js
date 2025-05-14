@@ -19,6 +19,23 @@ document.head.appendChild(linkEle3);
 //-----버튼 클릭 이벤트----------------------------------------------
 window.onload = () => {
 	const mnoInput = document.querySelector('input[name="mem_no"]');
+	const profileUploadDiv = document.querySelector('.info-profile-div-div');
+	const passwordInput = document.getElementById('password');
+	const nicknameInput = document.getElementById('nickName');
+	const emailInput = document.getElementById('email');
+	const phone1Input = document.getElementById('phone1');
+	const phone2Input = document.getElementById('phone2');
+	const phone3Input = document.getElementById('phone3');
+	const modifyFinishBtn = document.getElementById('modifyFinishBtn');
+	const resetBtn = document.getElementById('resetBtn');
+	const removeBtn = document.getElementById('removeBtn');
+	const modifyBtn = document.getElementById('modifyBtn');
+	
+	// 초기 상태 설정 (modifyBtn 클릭 전 숨김)
+	profileUploadDiv.style.display = 'none';
+	modifyFinishBtn.style.display = 'none';
+	resetBtn.style.display = 'none';
+	removeBtn.style.display = 'none';
 	
 	document.querySelectorAll('button').forEach(btn => {
 		btn.addEventListener('click', (e) => {
@@ -26,20 +43,36 @@ window.onload = () => {
 			let type = btn.getAttribute("id");
 			let mem_no=mnoInput.value;
 			
-			
 			if(type == 'profileUploadBtn'){
 				profileImageInput.click();
-			}else if(type=='modifyBtn'){
+			}else if(type=='modifyFinishBtn'){
 				modify(mem_no);
 			}else if(type=='removeBtn'){
 				remove(mem_no);
+			}else if (type === 'modifyBtn') { // 수정 버튼 클릭 시
+				// 1. 프로필 업로드 영역 보이기
+				profileUploadDiv.style.display = 'flex';
+
+				// 2. 입력 필드의 readonly 속성 해제
+				passwordInput.readOnly = false;
+				nicknameInput.readOnly = false;
+				emailInput.readOnly = false;
+				phone2Input.readOnly = false;
+				phone3Input.readOnly = false;
+
+				// 3. 수정 완료, 리셋, 탈퇴 버튼 보이기
+				modifyFinishBtn.style.display = 'inline-block';
+				resetBtn.style.display = 'inline-block';
+				removeBtn.style.display = 'inline-block';
+
+				// 4. 수정 버튼 숨기기
+				modifyBtn.style.display = 'none';
 			}
 		});
 	});
 	// "수정 리셋" 버튼 클릭 이벤트 리스너 추가
-	const resetButton = document.querySelector('button[type="reset"]');
-	if (resetButton) {
-		resetButton.addEventListener('click', resetForm);
+	if (resetBtn) {
+		resetBtn.addEventListener('click', resetForm);
 	}
 };
 //-----수정 폼 리셋 함수--------------------------------------------
@@ -57,25 +90,52 @@ function resetForm() {
 	const previewImage = document.getElementById('profileImage');
 	const originalImageSrc = previewImage.dataset.originalSrc;
 	previewImage.src = originalImageSrc;
+	
+	// readonly 속성 다시 설정 (수정 버튼이 다시 눌릴 때를 대비)
+	const passwordInput = document.getElementById('password');
+	const nicknameInput = document.getElementById('nickName');
+	const emailInput = document.getElementById('email');
+	const phone2Input = document.getElementById('phone2');
+	const phone3Input = document.getElementById('phone3');
+
+	passwordInput.readOnly = true;
+	nicknameInput.readOnly = true;
+	emailInput.readOnly = true;
+	phone2Input.readOnly = true;
+	phone3Input.readOnly = true;
+
+	// 버튼 상태 다시 설정 (수정 버튼 보이고, 완료/리셋/탈퇴 숨김)
+	const profileUploadDiv = document.querySelector('.info-profile-div-div');
+	const modifyFinishBtn = document.getElementById('modifyFinishBtn');
+	const resetBtn = document.getElementById('resetBtn');;
+	const removeBtn = document.getElementById('removeBtn');
+	const modifyBtn = document.getElementById('modifyBtn');
+
+	profileUploadDiv.style.display = 'none';
+	modifyFinishBtn.style.display = 'none';
+	resetBtn.style.display = 'none';
+	removeBtn.style.display = 'none';
+	modifyBtn.style.display = 'inline-block';
 }
 
 //-------------------------------------------------------------------------
 const modifyInfoForm = document.getElementById('modifyInfoForm');
-const passwordInput = document.getElementById('password');
-const nicknameInput = document.getElementById('nickName');
-const emailInput = document.getElementById('email');
-const phone1Input = document.getElementById('phone1');
-const phone2Input = document.getElementById('phone2');
-const phone3Input = document	.getElementById('phone3');
+const passwordInputGlobal = document.getElementById('password');
+const nicknameInputGlobal = document.getElementById('nickName');
+const emailInputGlobal = document.getElementById('email');
+const phone1InputGlobal = document.getElementById('phone1');
+const phone2InputGlobal = document.getElementById('phone2');
+const phone3InputGlobal = document.getElementById('phone3');
 const idCheckMessage = document.getElementById('idCheckMessage');
 const passwordErrorMessage = document.getElementById('passwordErrorMessage');
 const nicknameCheckMessage = document.getElementById('nicknameCheckMessage');
 const emailCheckMessage = document.getElementById('emailCheckMessage');
 const phoneErrorMessage = document.getElementById('phoneErrorMessage');
 const interestCheckboxes = document.querySelectorAll('.foods');
-const interestErrorMessage = document.getElementById('interestErrorMessage');
+const interestErrorMessageGlobal = document.getElementById('interestErrorMessage');
 const profileImageInput = document.getElementById('profileImageInput');
 const previewImage = document.getElementById('profileImage');
+const resetBtnGlobal = document.getElementById('resetBtn');
 
 // 정규식
 const regPw = /^[0-9a-zA-Z]{8,16}$/;
@@ -96,7 +156,7 @@ profileImageInput.addEventListener('change',function(){
 });
 //-----유효성 검사 함수--------------------------------------------------
 function validatePassword() {
-    const passwordValue = passwordInput.value.trim();
+    const passwordValue = passwordInputGlobal.value.trim();
     if (!regPw.test(passwordValue)) {
         passwordErrorMessage.textContent = '비밀번호는 8~16자의 영문 대/소문자와 숫자로만 입력해주세요.';
         return false;
@@ -107,7 +167,7 @@ function validatePassword() {
 }
 
 function validateNickname() {
-    const nicknameValue = nicknameInput.value.trim();
+    const nicknameValue = nicknameInputGlobal.value.trim();
     if (nicknameValue.length < 2 || nicknameValue.length > 8) {
     	nicknameCheckMessage.textContent = '별명은 2자 이상 8자 이하로 입력해주세요.';
     	return false;
@@ -118,7 +178,7 @@ function validateNickname() {
 }
 
 function validateEmail() {
-    const emailValue = emailInput.value.trim();
+    const emailValue = emailInputGlobal.value.trim();
     if (!regEmail.test(emailValue)) {
         emailCheckMessage.textContent = '올바른 이메일 주소 형식이 아닙니다.';
         return false;
@@ -130,12 +190,11 @@ function validateEmail() {
 
 
 function validatePhone() {
-    const phone1Value = phone1Input.value.trim();
-    const phone2Value = phone2Input.value.trim();
-    const phone3Value = phone3Input.value.trim();
+    const phone2Value = phone2InputGlobal.value.trim();
+    const phone3Value = phone3InputGlobal.value.trim();
 
-    if (!/^\d{2,3}$/.test(phone1Value) || !/^\d{3,4}$/.test(phone2Value) || !/^\d{4}$/.test(phone3Value)) {
-        phoneErrorMessage.textContent = '올바른 전화번호 형식이 아닙니다. (숫자만 입력해주세요)';
+    if (!/^\d{3,4}$/.test(phone2Value) || !/^\d{4}$/.test(phone3Value)) {
+        phoneErrorMessage.textContent = '올바른 전화번호 형식이 아닙니다.';
         return false;
     } else {
         phoneErrorMessage.textContent = '';
@@ -160,20 +219,19 @@ function limitInterestSelection() {
 
     if (checkedCount > 3) {
         this.checked = false; // 현재 체크된 체크박스 해제
-        interestErrorMessage.textContent = '관심분야는 최대 3개까지 선택 가능합니다.';
+        interestErrorMessageGlobal.textContent = '관심분야는 최대 3개까지 선택 가능합니다.';
     } else {
-        interestErrorMessage.textContent = ''; // 3개 이하 선택 시 에러 메시지 초기화
+        interestErrorMessageGlobal.textContent = ''; // 3개 이하 선택 시 에러 메시지 초기화
     }
 }
 //-----정보 수정 검증-----------------------------------------------
 document.addEventListener('DOMContentLoaded',()=>{
 
-    passwordInput.addEventListener('input', validatePassword);
-    nicknameInput.addEventListener('input', validateNickname);
-    emailInput.addEventListener('input', validateEmail);
-    phone1Input.addEventListener('input', validatePhone);
-    phone2Input.addEventListener('input', validatePhone);
-    phone3Input.addEventListener('input', validatePhone);
+    passwordInputGlobal.addEventListener('input', validatePassword);
+    nicknameInputGlobal.addEventListener('input', validateNickname);
+    emailInputGlobal.addEventListener('input', validateEmail);
+    phone2InputGlobal.addEventListener('input', validatePhone);
+    phone3InputGlobal.addEventListener('input', validatePhone);
     interestCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('change', limitInterestSelection);
     });
@@ -183,7 +241,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     		passwordInput: passwordErrorMessage,
     		nicknameInput: nicknameCheckMessage,
     		emailInput: emailCheckMessage,
-    		interestCheckboxes: interestErrorMessage,
+    		interestCheckboxes: interestErrorMessageGlobal,
     		phone1Input: phoneErrorMessage,
     		phone2Input: phoneErrorMessage,
     		phone3Input: phoneErrorMessage
@@ -224,13 +282,13 @@ async function modify(mem_no){
     });
 
     if (checkedCount === 0) {
-        interestErrorMessage.textContent = '관심분야를 최소 1개 선택해주세요.';
+        interestErrorMessageGlobal.textContent = '관심분야를 최소 1개 선택해주세요.';
         return;
     } else if (checkedCount > 3) {
-        interestErrorMessage.textContent = '관심분야는 최대 3개까지 선택 가능합니다.';
+        interestErrorMessageGlobal.textContent = '관심분야는 최대 3개까지 선택 가능합니다.';
         return;
     } else {
-        interestErrorMessage.textContent = '';
+        interestErrorMessageGlobal.textContent = '';
     }
     
     if (!isPasswordValid || !isNicknameValid ||
@@ -241,7 +299,7 @@ async function modify(mem_no){
     const formData = new FormData(modifyInfoForm);
 
     // 분리된 전화번호 값을 하이픈으로 연결하여 'phone' 키로 FormData에 추가
-    const phoneNumber = phone1Input.value + phone2Input.value + phone3Input.value;
+    const phoneNumber = phone1InputGlobal.value + phone2InputGlobal.value + phone3InputGlobal.value;
     formData.append('mem_phone', phoneNumber);
     
     for (let [key, value] of formData.entries()) {

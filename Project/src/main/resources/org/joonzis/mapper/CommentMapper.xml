@@ -62,19 +62,47 @@
 	<!-- 가게 평점 평균 상위 -->
 	<select id="getRestAvgRate" resultType="org.joonzis.domain.RestVO">
 		<![CDATA[
-        SELECT r.rest_no, r.rest_name, c.avg_rate
-        FROM (
-            SELECT rest_no, ROUND(AVG(com_rate), 1) AS avg_rate
-            FROM "COMMENT"
-            GROUP BY rest_no
-            ORDER BY avg_rate DESC
-        ) c
-        JOIN "RESTAURANT" r ON c.rest_no = r.rest_no
-        WHERE ROWNUM <= 10
+        SELECT *
+			FROM (
+			    SELECT r.rest_no, r.rest_name, r.rest_cate, c.avg_rate, c.com_count, i.rest_img_name
+			    FROM (
+			        SELECT rest_no, 
+			               ROUND(AVG(com_rate), 1) AS avg_rate,
+			               COUNT(*) AS com_count
+			        FROM "COMMENT"
+			        GROUP BY rest_no
+			    ) c
+			    JOIN "RESTAURANT" r ON c.rest_no = r.rest_no
+			    JOIN "REST_IMG" i ON r.rest_no = i.rest_no
+			    WHERE i.rest_img_no = 1
+			    ORDER BY c.avg_rate DESC, c.com_count DESC
+			)
+			WHERE ROWNUM <= 10
     ]]>
 	</select>
+
 	<!-- 가게 리뷰 개수 상위 -->
 	<select id="getRestReviewCount" resultType="org.joonzis.domain.RestVO">
+		<![CDATA[
+		SELECT *
+			FROM (
+			    SELECT r.rest_no, r.rest_name, r.rest_cate, c.avg_rate, c.com_count, i.rest_img_name
+			    FROM (
+			        SELECT rest_no,
+			            ROUND(AVG(com_rate), 1) AS avg_rate,
+			            COUNT(*) AS com_count
+			        FROM "COMMENT"
+			            GROUP BY rest_no
+			    ) c
+			    JOIN "RESTAURANT" r ON c.rest_no = r.rest_no
+			    JOIN "REST_IMG" i ON r.rest_no = i.rest_no
+			    WHERE i.rest_img_no = 1
+			    ORDER BY c.com_count DESC, c.avg_rate DESC
+			)
+			WHERE ROWNUM <= 10
+		 ]]>
+	</select>
+<!-- 	<select id="getRestReviewCount" resultType="org.joonzis.domain.RestVO">
 		<![CDATA[
 		SELECT r.rest_no, r.rest_name, c.com_count
 			FROM (
@@ -86,7 +114,7 @@
 			JOIN "RESTAURANT" r ON c.rest_no = r.rest_no
 			WHERE ROWNUM <= 10
 		 ]]>
-	</select>
+	</select> -->
 	
 	<!-- 내 코멘트 목록 조회 -->
 	<select id="getCommentList" parameterType="int" resultType="org.joonzis.domain.CommentDTO">

@@ -33,6 +33,10 @@
 		WHERE ROWNUM<=10
 	]]>
 	</select>
+	<select id="getMyGame1Rank" resultType="org.joonzis.domain.EventVO">
+		SELECT * FROM EVENT_INFO
+		WHERE MEM_NO=#{mem_no}
+	</select>
 	
 	<update id="saveGameScore1">
 		UPDATE EVENT_INFO

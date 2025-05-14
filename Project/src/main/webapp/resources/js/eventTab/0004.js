@@ -1,12 +1,12 @@
 //-----CSS 파일 추가-----------------------------------------
-(function() {
-	
-	const CSS_FILE_PATH = '/resources/css/eventTab/0004.css';
-	let linkEle = document.createElement('link');
-	linkEle.rel = 'stylesheet';
-	linkEle.href = CSS_FILE_PATH;
-	document.head.appendChild(linkEle);
-})();
+//(function() {
+//	
+//	const CSS_FILE_PATH = '/resources/css/eventTab/0004.css';
+//	let linkEle = document.createElement('link');
+//	linkEle.rel = 'stylesheet';
+//	linkEle.href = CSS_FILE_PATH;
+//	document.head.appendChild(linkEle);
+//})();
 
 //----- 게임 ------------------------------------------------------------------
 

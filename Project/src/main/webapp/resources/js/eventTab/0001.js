@@ -1,12 +1,103 @@
 //-----CSS 파일 추가-----------------------------------------
-(function() {
+//(function() {
+//	
+//	const CSS_FILE_PATH = '/resources/css/eventTab/0001.css';
+//	let linkEle = document.createElement('link');
+//	linkEle.rel = 'stylesheet';
+//	linkEle.href = CSS_FILE_PATH;
+//	document.head.appendChild(linkEle);
+//})();
+
+//----------------------------------------------------------------------------
+
+fetch('/event/list/0001')
+.then(response => response.json())
+.then(data => {
+	const container = document.querySelector(".rank");
+	let ranking = `
+		<h1>랭킹</h1>
+		<table>
+			<tr>
+				<td>등수</td>
+				<td>닉네임</td>
+				<td>점수</td>
+			</tr>`;
+
+	  data.forEach((rank, idx) => {
+		  if (rank.game_score_1>0 ){
+			  ranking+= `
+						<tr>
+							<td>${idx+1}등</td>
+							<td>${rank.mem_nick }</td>
+							<td class="score-td">${rank.game_score_1 }</td>
+						</tr>
+				  	`;
+		  }
+
+	  });
+	  ranking+=`</table>`;
+	  container.innerHTML=ranking;
+  })
+  .catch(error => console.error("랭킹  로드 실패:", error));
+
+
+fetch('/event/list/0001/myScore')
+.then(response => response.json())
+.then(data => {
+	console.log(data);
+	const container = document.querySelector(".rank");
+	let ranking = `
+		<h1>내 점수</h1>
+		<table>
+		<tr>
+		<td>등수</td>
+		<td>닉네임</td>
+		<td>점수</td>
+		</tr>`;
 	
-	const CSS_FILE_PATH = '/resources/css/eventTab/0001.css';
-	let linkEle = document.createElement('link');
-	linkEle.rel = 'stylesheet';
-	linkEle.href = CSS_FILE_PATH;
-	document.head.appendChild(linkEle);
-})();
+	data.forEach((rank, idx) => {
+		if (rank.game_score_1>0 ){
+			ranking+= `
+				<tr>
+				<td>${idx+1}등</td>
+				<td>${rank.mem_nick }</td>
+				<td class="score-td">${rank.game_score_1 }</td>
+				</tr>
+				`;
+		}
+		
+	});
+	ranking+=`</table>`;
+	container.innerHTML=ranking;
+})
+.catch(error => console.error("랭킹 로드 실패:", error));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//----------------------------------------------------------------------------
+window.cleanupEventTab0001 = function() {
+	  if (window.runner && typeof window.runner.stopListening === 'function') {
+	    window.runner.stopListening();
+	    window.runner = null;
+	  }
+	  delete window.Runner;
+	};
+
+
 //-----스페이스 락-----------------------------------------------------
 window.addEventListener('keydown', function(e) {
 	if (e.keyCode === 32 && e.target === document.body) {
@@ -14,18 +105,19 @@ window.addEventListener('keydown', function(e) {
   	}
 });
 //----- 버튼-----------------------------------------------------------------
-document.querySelectorAll('button').forEach(btn => {
-	btn.addEventListener('click', () => {
-		let type = btn.getAttribute("id");
-
-		if(type == 'highScore'){
-			saveScore();
-		}
-	});
-});	
+//document.querySelectorAll('button').forEach(btn => {
+//	btn.addEventListener('click', () => {
+//		let type = btn.getAttribute("id");
+//
+//		if(type == 'highScore'){
+//			saveScore();
+//		}
+//	});
+//});	
 	
 //-----크롬 공룡 게임----------------------------------------------------
-	
+(function() {
+		
 let highScoreValue='';	
 	
 
@@ -2001,10 +2093,10 @@ function saveScore() {
     .then(response => response.json())
     .then(result => {
       if(result) {
-          alert("점수 갱신 성공!");
-          location.reload();
+          console.log("점수 갱신 성공!");
+//          location.reload();
         } else {
-          alert("기존 점수보다 낮거나 같아서 갱신되지 않았습니다.");
+          console.log("기존 점수보다 낮거나 같아서 갱신되지 않았습니다.");
         }
       highScoreValue='';
     })
@@ -2013,4 +2105,4 @@ function saveScore() {
 	
 }
 
-
+})();

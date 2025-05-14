@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="/resources/css/mainEvent.css">
 <title>Insert title here</title>
 </head>
 <body>
@@ -12,40 +13,12 @@
 		<div class="main-menu">
 			<ul>
 				<li>
-					<a href="/list/0001">
-						<div class="event-list-img">
-							<img alt="이벤트 사진" src="../resources/images/event.png" class="event-img">
-						</div>
-						<div class="event-list-title">
-							<span>이벤트 명 1</span>
-						</div>
-						<div class="event-list-time">
-							<span>이벤트 기간</span>
-							 : 2025.04.01 ~
-						</div>
-					</a>
-				</li>
-				<li>
-					<a href="/list/0002">
-						<div class="event-list-img">
-							<img alt="이벤트 사진" src="../resources/images/event.png" class="event-img">
-						</div>
-						<div class="event-list-title">
-							<span>이벤트 명 2</span>
-						</div>
-						<div class="event-list-time">
-							<span>이벤트 기간</span>
-							 : 2025.04.01 ~
-						</div>
-					</a>
-				</li>
-				<li>
 					<a href="/list/0003">
 						<div class="event-list-img">
 							<img alt="이벤트 사진" src="../resources/images/event.png" class="event-img">
 						</div>
 						<div class="event-list-title">
-							<span>이벤트 명 3</span>
+							<span>룰렛 돌리기</span>
 						</div>
 						<div class="event-list-time">
 							<span>이벤트 기간</span>
@@ -59,7 +32,7 @@
 							<img alt="이벤트 사진" src="../resources/images/event.png" class="event-img">
 						</div>
 						<div class="event-list-title">
-							<span>이벤트 명 4</span>
+							<span>출석체크</span>
 						</div>
 						<div class="event-list-time">
 							<span>이벤트 기간</span>

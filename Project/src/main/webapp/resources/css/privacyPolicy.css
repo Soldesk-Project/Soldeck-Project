@@ -6,7 +6,7 @@ margin: 20px auto;
 #privacyPolicyNavigation {
 	display: grid;
 	grid-template-columns: repeat(2, 500px);
-	grid-gap: 5px;
+	grid-gap: 10px;
 	margin-bottom: 20px;
 }
 
@@ -35,7 +35,7 @@ margin: 20px auto;
 #privacyPolicyContent {
 	border: 1px solid #ddd;
 	padding: 20px;
-	width: 940px;
+	width: 1200px;
 }
 
 #privacyPolicyContent .section {
@@ -54,7 +54,7 @@ margin: 20px auto;
 
 #firstTable th, #firstTable td {
 	border: 1px solid #ddd;
-	padding: 8px;
+	padding: 9px;
 	text-align: left;
 }
 
@@ -64,29 +64,30 @@ margin: 20px auto;
 }
 
 #firstTable td:nth-child(1) {
-	width: 130px;
+	width: 180px;
 	text-align: center;
 }
 
 #firstTable td:nth-child(2) {
-	width: 50px;
+	width: 60px;
 	text-align: center;
 }
 
 #firstTable td:nth-child(3) {
-	width: 270px;
+	width: 300px;
 }
 
 #firstTable td:nth-child(4) {
-	width: 320px;
+	width: 360px;
 }
 
 #firstTable td:nth-child(5) {
-	width: 160px;
+	width: 200px;
 }
 
 /* 두 번째 테이블 스타일 */
 #secondTable {
+	width: 100%;
 	border-collapse: collapse;
 	font-size: 80%;
 	text-align: center;
@@ -94,50 +95,51 @@ margin: 20px auto;
 
 #secondTable th, #secondTable td{
 	border: 1px solid #ddd;
-	padding: 8px;
+	padding: 9px;
 }
 
 #secondTable th{
 	background-color: #f2f2f2;
 }
 #secondTable td:nth-child(1) {
-	width: 400px;
+	width: 430px;
 }
 
 #secondTable td:nth-child(2) {
-	width: 400px;
+	width: 580px;
 }
 
 #secondTable td:nth-child(3) {
-	width: 140px;
+	width: 130px;
 }
 /* 세 번째 테이블 스타일 */
 #thirdTable {
+	width: 100%;
 	border-collapse: collapse;
 	font-size: 80%;
 }
 #thirdTable th, #thirdTable td {
 	border: 1px solid #ddd;
-	padding: 8px;
+	padding: 9px;
 	text-align: center;
 }
 #thirdTable th {
 	background-color: #f2f2f2;
 }
 #thirdTable td:nth-child(1) {
-	width: 190px;
+	width: 245px;
 }
 
 #thirdTable td:nth-child(2) {
-	width: 310px;
+	width: 350px;
 }
 
 #thirdTable td:nth-child(3) {
-	width: 310px;
+	width: 350px;
 }
 
 #thirdTable td:nth-child(4) {
-	width: 130px;
+	width: 175px;
 }
 /* 네 번째 테이블 스타일 */
 #fourthTable {

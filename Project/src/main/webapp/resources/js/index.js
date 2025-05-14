@@ -254,7 +254,7 @@ document.querySelectorAll('.rank-header > div').forEach(tap => {
 function rankRestEventListeners() {
     document.querySelectorAll('.rank-content').forEach(window => {
         window.addEventListener('click', (event) => {
-            const item = event.target.closest('.review, .rating');
+            const item = event.target.closest('.reviews, .ratings, .rating_img, .review_img');
             if (!item) return;
 
             const rest_no = item.dataset.rest_no;
@@ -279,6 +279,7 @@ function getRating(callback) {
         return response.json();
     })
     .then(data => {
+    	console.log(data);
         callback(data || {});
     })
     .catch(err => {
@@ -288,23 +289,40 @@ function getRating(callback) {
 }
 
 function showRating() {
-    const rating = document.querySelector('.content-rating');
-    if (!rating) {
-        console.error('평점 정보(.content-rating show)를 찾을 수 없습니다.');
-        return;
-    }
-    
-    getRating(jsonArray => {
-        let msg = '';
-        jsonArray.forEach(json => {
-            msg += `<div class="ratings">`;
-            msg += 	`<div class="rating" data-rest_no="${json.rest_no}">${json.rest_name} : ${json.avg_rate}점</div>`;
-            msg += `</div>`;
-        });
+	const rating = document.querySelector('.content-rating');
+	if (!rating) {
+		console.error('평점 정보(.content-rating show)를 찾을 수 없습니다.');
+		return;
+	}
+	let rate = 1;
+	getRating(jsonArray => {
+		let imagesHtml = '<div class="rating-images">';
+		let infoHtml = '<div class="rating-infos">';
+		
+		jsonArray.forEach(json => {
+			// 이미지 영역
+			imagesHtml += `<div class="rating_img" data-rest_no="${json.rest_no}">`;
+			imagesHtml += `<img src="${json.rest_img_name || '/resources/images/noImage.png'}" alt="이미지 없음" onerror="this.src='/resources/images/noImage.png';">`;
+			imagesHtml += `</div>`;
 
-        rating.innerHTML = msg;
-    });
+			// 정보 영역
+			infoHtml += `<div class="ratings" data-rest_no="${json.rest_no}">`;
+			infoHtml += 	`<div class="rating_rate">${rate}.</div>`;
+			infoHtml += 	`<div class="rating_name">${json.rest_name}</div>`;
+			infoHtml += 	`<div class="rating_avg_rate">${json.avg_rate}점</div>`;
+			infoHtml += 	`<div class="rating_cate">${json.rest_cate}</div>`;
+			infoHtml += `</div>`;
+			rate += 1;
+		});
+
+		imagesHtml += '</div>';
+		infoHtml += '</div>';
+
+		// 최종 조합
+		rating.innerHTML = imagesHtml + infoHtml;
+	});
 }
+
 function getReview(callback) {
 	const url = `/comment/restReviewCount`;
 	fetch(url, {
@@ -319,6 +337,7 @@ function getReview(callback) {
 		return response.json();
 	})
 	.then(data => {
+		console.log(data);
 		callback(data || {});
 	})
 	.catch(err => {
@@ -326,8 +345,42 @@ function getReview(callback) {
 		callback({});
 	});
 }
-
 function showReview() {
+	const review = document.querySelector('.content-review');
+	if (!review) {
+		console.error('리뷰 정보(.content-review)를 찾을 수 없습니다.');
+		return;
+	}
+	let rate = 1;
+	getReview(jsonArray => {
+		let imagesHtml = '<div class="review-images">';
+		let infoHtml = '<div class="review-infos">';
+		
+		jsonArray.forEach(json => {
+			// 이미지 영역
+			imagesHtml += `<div class="review_img" data-rest_no="${json.rest_no}">`;
+			imagesHtml += `<img src="${json.rest_img_name || '/resources/images/noImage.png'}" alt="이미지 없음" onerror="this.src='/resources/images/noImage.png';">`;
+			imagesHtml += `</div>`;
+
+			// 정보 영역
+			infoHtml += `<div class="reviews" data-rest_no="${json.rest_no}">`;
+			infoHtml += 	`<div class="review_rate">${rate}.</div>`;
+			infoHtml += 	`<div class="review_name">${json.rest_name}</div>`;
+			infoHtml += 	`<div class="review_count">${json.com_count}개</div>`;
+			infoHtml += 	`<div class="review_cate">${json.rest_cate}</div>`;
+			infoHtml += `</div>`;
+			rate += 1;
+		});
+
+		imagesHtml += '</div>';
+		infoHtml += '</div>';
+
+		// 최종 조합
+		review.innerHTML = imagesHtml + infoHtml;
+	});
+}
+
+/*function showReview() {
 	const review = document.querySelector('.content-review');
 	if (!review) {
 		console.error('리뷰 정보(.content-review)를 찾을 수 없습니다.');
@@ -337,14 +390,15 @@ function showReview() {
 	getReview(jsonArray => {
 		let msg = '';
 		jsonArray.forEach(json => {
-			msg += `<div class="reviews">`;
-			msg += 	`<div class="review" data-rest_no="${json.rest_no}">${json.rest_name} : ${json.com_count}</div>`;
+			msg += `<div class="reviews" data-rest_no="${json.rest_no}">`;
+			msg += 	`<div class="review_name">${json.rest_name}</div>`;
+			msg += 	`<div class="review_count">${json.com_count}개</div>`;
+			msg += 	`<div class="review_cate">${json.rest_cate}</div>`;
 			msg += `</div>`;
 		});
-		
 		review.innerHTML = msg;
 	});
-}
+}*/
 
 //날짜 시간 자동 나오게 하기
 function updateDateTime() {
