@@ -245,3 +245,16 @@ h1,h2,h3,h4,h5,h6{
 .decline-btn:hover {
   opacity: 0.9;
 }
+
+.friend-tab-button.active {
+  background-color: #007bff; /* 활성화된 탭 버튼 스타일 */
+  color: white;
+}
+
+.friendTabPane {
+  display: none; /* 기본적으로 모든 콘텐츠는 숨김 */
+}
+
+.friendTabPane.active {
+  display: block; /* active 클래스가 있는 콘텐츠만 표시 */
+}

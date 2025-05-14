@@ -1,15 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
     const majorCategoryButtons = document.querySelectorAll('.major-category-button');
     const contentArea = document.getElementById('communityContent');
-
     majorCategoryButtons.forEach(button => {
         button.addEventListener('click', function () {
             const major = this.dataset.major;
             let jsPath = '';
             let urlKey = '';
-
             console.log('Selected category:', major); // 선택된 카테고리 로그
-
             switch (major) {
                 case 'friend':
                     urlKey = 'friend';
@@ -35,7 +32,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.error('Unknown category:', major);
                     return;
             }
-
             // 서버에서 JSP 조각을 가져와서 communityContent에 삽입
             fetch("/community/content?url=" + urlKey)
                 .then(response => {
@@ -49,31 +45,36 @@ document.addEventListener('DOMContentLoaded', function () {
                     deleteScript();
                     // JS 파일 로드
                     if (jsPath) {
-                        const script = document.createElement('script');
-                        script.src = jsPath;
-                        script.onload = () => console.log(jsPath + ' 로드 완료');
-                        document.body.appendChild(script);
+                        if (!document.querySelector(`script[src="${jsPath}"]`)) {
+                            const script = document.createElement('script');
+                            script.src = jsPath;
+                            script.onload = () => console.log(jsPath + ' 로드 완료');
+                            document.body.appendChild(script);
+                        } else {
+                        	deleteScript();
+                        	const script = document.createElement('script');
+                            script.src = jsPath;
+                            script.onload = () => console.log(jsPath + ' 로드 완료');
+                            document.body.appendChild(script);
+                            console.log(jsPath + ' 이미 로드됨');
+                        }
                     }
                 })
                 .catch(error => {
                     console.error('콘텐츠 로딩 실패:', error);
                     contentArea.innerHTML = '<p>콘텐츠를 로드하는 데 실패했습니다.</p>';
                 });
-
             // 버튼 UI 처리
             majorCategoryButtons.forEach(btn => btn.classList.remove('active'));
             this.classList.add('active');
         });
     });
-
     // 페이지 로딩 시 기본 카테고리(친구) 자동 클릭
     const defaultButton = document.querySelector('.major-category-button.active');
     if (defaultButton) {
         defaultButton.click();
     }
 });
-
-
 function deleteScript() {
 	
 	const scriptPaths = [
@@ -87,7 +88,6 @@ function deleteScript() {
 		  '/resources/js/eventTab/0003.js',
 		  '/resources/js/eventTab/0004.js'
 		];
-
 		scriptPaths.forEach(path => {
 		  const scriptTag = document.querySelector(`script[src="${path}"]`);
 		  if (scriptTag && scriptTag.parentNode) {

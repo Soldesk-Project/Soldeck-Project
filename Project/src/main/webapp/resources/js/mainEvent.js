@@ -7,7 +7,6 @@
 	linkEle.href = CSS_FILE_PATH;
 	document.head.appendChild(linkEle);
 })();
-
 //-----이벤트 클릭 이동-------------------------------------------
 document.querySelectorAll(".main-menu a").forEach(event=>{
 	event.addEventListener('click', e=>{
@@ -17,7 +16,6 @@ document.querySelectorAll(".main-menu a").forEach(event=>{
 		
 		let jsPath = '';
         let urlKey = '';
-        
         switch (tab) {
         case '/list/0001':
             urlKey = '0001';
@@ -50,15 +48,22 @@ document.querySelectorAll(".main-menu a").forEach(event=>{
         })
         .then(data => {
             contentArea.innerHTML = data;
-            deleteScript();
             // JS 파일 로드
             if (jsPath) {
-        		const script = document.createElement('script');
-        		script.src = jsPath;
-        		script.onload = () => console.log(jsPath + ' 로드 완료');
-        		document.body.appendChild(script);
+                if (!document.querySelector(`script[src="${jsPath}"]`)) {
+                    const script = document.createElement('script');
+                    script.src = jsPath;
+                    script.onload = () => console.log(jsPath + ' 로드 완료');
+                    document.body.appendChild(script);
+                } else {
+                	deleteScript();
+                	const script = document.createElement('script');
+                    script.src = jsPath;
+                    script.onload = () => console.log(jsPath + ' 로드 완료');
+                    document.body.appendChild(script);
+                    console.log(jsPath + ' 이미 로드됨');
+                }
             }
-            
         })
         .catch(error => {
             console.error('콘텐츠 로딩 실패:', error);
@@ -67,7 +72,6 @@ document.querySelectorAll(".main-menu a").forEach(event=>{
 		
 	})
 })
-
 function deleteScript() {
 	
 	const scriptPaths = [
@@ -81,7 +85,6 @@ function deleteScript() {
 		  '/resources/js/eventTab/0003.js',
 		  '/resources/js/eventTab/0004.js'
 		];
-
 		scriptPaths.forEach(path => {
 		  const scriptTag = document.querySelector(`script[src="${path}"]`);
 		  if (scriptTag && scriptTag.parentNode) {
@@ -89,4 +92,3 @@ function deleteScript() {
 		  }
 		});
 }
-

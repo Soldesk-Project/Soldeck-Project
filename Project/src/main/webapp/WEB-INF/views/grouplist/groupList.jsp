@@ -10,7 +10,7 @@
 		<div class="searchBox">
 			<p class="searchTitle">모임 검색</p>
 			<input type="text" id="searchInput" placeholder="모임 검색">
-		<button id="searchButton">검색</button>
+		<button id="groupSearchButton">검색</button>
 		</div>
 		<div id="searchResultContainer"></div>
 		<div class="groupWrapper">
