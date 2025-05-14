@@ -10,9 +10,20 @@
 	<link rel="stylesheet" href="../resources/css/index.css">
     <link rel="stylesheet" href="../resources/css/footer.css">
 <body>
-    <%@ include file="../views/layout/header.jsp" %>
 	
+    <%@ include file="../views/layout/header.jsp" %>
 	<div class="bodyWrapper">
+	
+	<!-- banner layout -->
+	<div class="banner_gap">
+    	<div class="banner1">
+    		<a href="/"><img alt="배너1" src="resources/images/banner.svg"></a>
+    	</div>
+    	<div class="banner2">
+    		<a href="/"><img alt="배너2" src="resources/images/banner.svg"></a>
+    	</div>
+    </div>
+	
 	<div class="content">
 		<div class="image-section">
 			<button class="slide-btn prev" onclick="moveSlider('image', -1)">&#10094;</button>
@@ -94,37 +105,10 @@
 			    	<button class="slide-btn next" onclick="moveSlider('preference', 1)">&#10095;</button>
 				</div>
 
-            	<!-- <h2 class="indexTitle"># 친구 추천 pick</h2>
-				<div class="recommendation-slider-wrapper">
-			    	<button class="slide-btn prev" onclick="moveSlider('friend', -1)">&#10094;</button>
-			
-			    	<div class="recommendation-slider-window">
-			        	<div class="recommendation-slider-track" id="friend-slider">
-			            	<div class="recommendation-item"><img src="friend1.jpg" alt="친구 추천 1" onclick="showFirendpickfood()"></div>
-			            	<div class="recommendation-item"><img src="friend2.jpg" alt="친구 추천 2" onclick="showFirendpickfood()"></div>
-			            	<div class="recommendation-item"><img src="friend3.jpg" alt="친구 추천 3" onclick="showFirendpickfood()"></div>
-			            	<div class="recommendation-item"><img src="friend4.jpg" alt="친구 추천 4" onclick="showFirendpickfood()"></div>
-			            	<div class="recommendation-item"><img src="friend5.jpg" alt="친구 추천 4" onclick="showFirendpickfood()"></div>
-			            	<div class="recommendation-item"><img src="friend6.jpg" alt="친구 추천 4" onclick="showFirendpickfood()"></div>
-			        	</div>
-			    	</div>
-			
-			    	<button class="slide-btn next" onclick="moveSlider('friend', 1)">&#10095;</button>
-				</div> -->
 			</c:if>
         </div>
         
-        <!-- 랭킹 탭 -->
-        <div class="rank-tap">
-        	<div class="rank-header">
-	        	<div class="header-rating active" data-tab="rating">평점</div>
-	        	<div class="header-review" data-tab="review">리뷰</div>
-        	</div>
-        	<div class="rank-content">
-	        	<div class="content-rating show"></div>
-	        	<div class="content-review"></div>
-        	</div>
-        </div>
+        
         
 		<div class="popup" id="popup">
 	            <div class="popup-content">
@@ -134,6 +118,25 @@
 	    </div>
 	    <div id="user-data" data-user="${sessionScope.loggedInUser.mem_no}"></div>
     </div>
+    
+    <!-- 랭킹 탭 -->
+        <div class="rank_layout">
+			<div class="rank_text">
+	        	<div class="resRank_text">가게랭킹</div>
+	       		<div id="today-datetime"></div>
+	        </div>
+	        <div class="rank-tap">
+	        	<div class="rank-header">
+		        	<div class="header-rating active" data-tab="rating">평점</div>
+		        	<div class="header-review" data-tab="review">리뷰</div>
+	        	</div>
+	        	<div class="rank-content">
+	        		<div class="content-rating show"></div>
+	        		<div class="content-review"></div>
+	        	</div>
+	        </div>
+        </div>
+    
 	</div>
 
 	<script type="text/javascript" src="/resources/js/index.js"></script>

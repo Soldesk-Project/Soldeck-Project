@@ -345,3 +345,27 @@ function showReview() {
 		review.innerHTML = msg;
 	});
 }
+
+//날짜 시간 자동 나오게 하기
+function updateDateTime() {
+    const now = new Date();
+
+    // 날짜와 시간 구성
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1;
+    const day = now.getDate();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+
+    const formatted = `${year}년 ${month}월 ${day}일 ${hours}:${minutes}:${seconds}`;
+
+    // 출력
+    document.getElementById("today-datetime").textContent = formatted;
+  }
+
+  // 최초 실행
+  updateDateTime();
+
+  // 1초마다 갱신
+  setInterval(updateDateTime, 1000);

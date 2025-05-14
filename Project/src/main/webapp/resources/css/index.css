@@ -7,19 +7,26 @@ img, a img {
 body {
     font-family: sans-serif;
     margin: 0;
-    display: flex; 
-    flex-direction: column;
     min-height: 100vh;
 }
+.bodyWrapper{
+	display: flex;
+	flex-direction: row;
+	margin-top: 120px;
+}
 .content {
-	margin : auto;
+	margin : 10px 0px 38px 0px;
 	width : 1200px;
     padding: 20px;
     text-align: center;
     flex: 1;
     background-color: rgb();
+    min-width: 1200px;
+    flex-shrink: 0;     /* Flexbox 축소 방지 */
 }
-
+.banner_gap, .rank_layout {
+  flex-shrink: 0;
+}
 /* 슬라이드 쇼 스타일 */
 .image-section {
     position: relative;
@@ -242,7 +249,7 @@ body {
     right: 20px;
     padding: 15px;
     display: none;
-    z-index: 999;
+    z-index: 2000;
 }
 .pop-up_image{
 	width: 70px;
@@ -264,45 +271,66 @@ body {
     text-align: center;
     line-height: 20px;
 }
-
+/* 배너 레이아웃 */
+.banner_gap{
+	display: flex;
+	flex-direction: column;
+	z-index: 1000;
+	gap: 100px;
+	margin-left: 70px;
+	padding-top: 30px;
+}
+/* rank_text flex 가로 정렬 지정*/
+.rank_layout{
+	display: flex;
+	flex-direction: column;
+	z-index: 1000;
+	gap: 10px;
+	margin-right: 70px;
+	padding-top: 30px;
+}
+.rank_text{
+	display: flex;
+	flex-direction: row;
+	gap: 10px;
+}
+.resRank_text{
+	font-size: 14px;
+}
+#today-datetime{
+	font-size: 13px;
+	color: #7f7f7f
+}
 /* rank-tap 배너 스타일 */
 .rank-tap {
-    position: fixed; /* 뷰포트에 고정 */
-    top: 35%; /* 수직 중앙 */
-    right: 50px; /* 오른쪽에서 20px 떨어짐 */
-    transform: translateY(-50%); /* 수직 중앙 정렬 조정 */
-    width: 250px; /* 원하는 너비 */
-    z-index: 1000; /* 다른 콘텐츠 위에 표시 */
-    border: 1px solid black;
+    width: 250px;
+    height: 600px;
     background-color: white;
     box-sizing: border-box;
-    border-radius: 15px;
+    border-radius: 20px;
+    border: 1px solid #f0f0f0;
 }
 /* 랭크 헤더 */
 .rank-header {
     display: flex;
-    border-bottom: 1px solid black;
 }
 .header-rating, .header-review {
 	flex: 1;
     padding: 11px;
-    text-align: center;
     cursor: pointer;
     
 }
 .header-rating:hover, .header-review:hover {
-    background-color: #e0e0e0;
+    background-color: rgba(240, 240, 240, 0.2);
+    font-weight: 500;
+    font-size: 17px;
+    border: none;
 }
 .rank-header > .header-rating:hover {
   border-radius: 15px 0 0 0;
 }
 .rank-header > .header-review:hover {
   border-radius: 0 15px 0 0;
-}
-.rank-header > div.active {
-  font-weight: bold;
-  color: blue;
-  border: 2px solid black;
 }
 .rank-header > .header-rating.active {
   border-radius: 15px 0 0 0;
@@ -311,10 +339,8 @@ body {
   border-radius: 0 15px 0 0;
 }
 .header-rating {
-	border-right: 1px solid black;
 }
 .header-review {
-	border-left: 1px solid black;
 }
 /* 랭크 콘텐츠 */
 .rank-content {
@@ -322,6 +348,7 @@ body {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  text-align: justify;
 }
 .rank-content .ratings:first-child,
 .rank-content .reviews:first-child {
@@ -339,12 +366,13 @@ body {
   display: block;
 }
 .ratings, .reviews {
-	border-top: 1px solid black;
-	border-bottom: 1px solid black;
 	height: 30px;
     min-height: 0; /* flex 아이템이 최소 높이를 0으로 설정 */
     box-sizing: border-box;
     cursor: pointer;
+}
+.rating{
+	margin-left: 5px;
 }
 .ratings + .ratings,
 .reviews + .reviews {

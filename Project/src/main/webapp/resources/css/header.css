@@ -6,6 +6,7 @@ img, a img {
 }
 .body{
 	background-color: #606060;
+	overflow-x: hidden; /* 좌우 밀림 방지 */
 }
 a {
   color: #606060; /* 원하는 색상으로 변경 */
@@ -14,17 +15,55 @@ a {
 a:hover {
   color: #303030; /* 원하는 색상으로 변경 */
   text-decoration: underline; /* 밑줄 제거 (선택 사항) */
-  
 }
+/* 헤더 영역 전체 */
 .header {
-	position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 90px;
+  background-color: white; /* 배경 없으면 뒤에 내용 비침 */
+  z-index: 10000;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* 살짝 그림자 주면 시각적 분리됨 */
+  justify-content: center; /* header_inner 가운데 정렬 */
+}
+
+.header_inner {
+	width: 1200px;
 	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	background-color: rgba(255, 254, 252, 0.2);
-	width: 1200px; /* 레이아웃의 너비를 고정 */
-	height: 90px;
-	margin: 30px auto 10px auto; /* 화면 가운데 정렬 */
+	justify-content: space-between; /* 내부 요소 가로 배치 */
+	align-items: center; /* 수직 정렬 */
+	box-sizing: border-box;
+	margin: 0px 370px;
+}
+/* 여백 간섭 제거 */
+.logoLayout {
+	margin-left: 0;
+	padding-left: 0;
+	margin-right: 30px;
+}
+
+.profileBox {
+	margin-right: 0;
+}
+
+/* 검색창 확장 가능 */
+.searchLayout {
+	justify-content: center;
+	min-width: 0;
+	position: relative;
+	max-width: 500px;
+	flex: 0 0 auto;
+	margin-right: auto;
+}
+/* 각 구성 요소 여백 정리 */
+.logoLayout {
+  padding-left: 0;
+  margin-left: 0;
+}
+.profileBox {
+  margin-right: 0;
 }
 .logoLayout,
 .searchLayout,
@@ -37,12 +76,7 @@ a:hover {
   color: black;
   padding: 8px 12px;
 }
-.searchLayout {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  justify-content: center;
-}
+
 /* input과 버튼을 포개기 위한 래퍼 */
 .searchWrapper {
 	position: relative;
@@ -140,11 +174,8 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 .logoLayout {
   justify-content: flex-start;
-  padding-left: 100px;
-}
-.profileBox {
-  justify-content: flex-start;
-  margin-right: 30px;
+  margin-left: 0px;
+  padding-left: 0px;
 }
 .mypageAndlouout{
 	display: flex;
@@ -159,6 +190,7 @@ input[type="search"]::-webkit-search-cancel-button {
     border-radius: 50%;
 }
 .profileBox{
+	justify-content: flex-start;
 	height: 75px;
 	border-radius: 20px;
 	padding: 5px 15px 5px 10px; 
@@ -213,7 +245,7 @@ input[type="search"]::-webkit-search-cancel-button {
 .modal {
   display: none; /* 기본은 숨김 */
   position: fixed;
-  z-index: 2000;
+  z-index: 20000;
   left: 650px;
   top: -100px;
   width: 100%;

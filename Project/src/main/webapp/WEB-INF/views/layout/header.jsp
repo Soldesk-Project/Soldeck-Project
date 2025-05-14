@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="header">
+<div class="header_inner">
 	<div class="logoLayout">
 		<a href="/" draggable="false"><img src="/resources/images/logo.png" alt="logo" style="width: 70px;" draggable="false"></a>
 	</div>
@@ -55,7 +56,7 @@
     	<a href="javascript:void(0)" id="login">로그인</a>
     </c:if>
 
-
+</div>
 </div>
 
 <!-- 알림 모달 창 -->
