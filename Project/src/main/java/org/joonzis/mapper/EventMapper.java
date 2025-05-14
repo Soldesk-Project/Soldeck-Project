@@ -11,6 +11,8 @@ public interface EventMapper {
 	public int getPoint(int mem_no);
 	public List<EventVO> getGame1Rank();
 	public EventVO getMyGame1Rank(@Param("mem_no") int mem_no);
+	public List<EventVO> getGame2Rank();
+	public EventVO getMyGame2Rank(@Param("mem_no") int mem_no);
 	public boolean saveGameScore1(@Param("mem_no") int mem_no, @Param("game_score_1") int game_score_1);
-	public int getGameScore1(int mem_no);
+	public boolean saveGameScore2(@Param("mem_no") int mem_no, @Param("game_score_2") int game_score_1);
 }

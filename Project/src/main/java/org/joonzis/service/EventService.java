@@ -11,8 +11,10 @@ public interface EventService {
 	public int getPoint(int mem_no);
 	public List<EventVO> getGame1Rank();
 	public EventVO getMyGame1Rank(int mem_no);
+	public List<EventVO> getGame2Rank();
+	public EventVO getMyGame2Rank(int mem_no);
 	public boolean saveGameScore1(int mem_no, int game_score_1);
-	public int getGameScore1(int mem_no);
+	public boolean saveGameScore2(int mem_no, int game_score_2);
 	
 	
 	

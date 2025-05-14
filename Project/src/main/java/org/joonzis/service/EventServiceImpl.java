@@ -61,12 +61,20 @@ public class EventServiceImpl implements EventService{
 		return mapper.getMyGame1Rank(mem_no);
 	}
 	@Override
+	public List<EventVO> getGame2Rank() {
+		return mapper.getGame2Rank();
+	}
+	@Override
+	public EventVO getMyGame2Rank(int mem_no) {
+		return mapper.getMyGame2Rank(mem_no);
+	}
+	@Override
 	public boolean saveGameScore1(int mem_no, int game_score_1) {
 		return mapper.saveGameScore1(mem_no, game_score_1);
 	}
 	@Override
-	public int getGameScore1(int mem_no) {
-		return mapper.getGameScore1(mem_no);
+	public boolean saveGameScore2(int mem_no, int game_score_2) {
+		return mapper.saveGameScore2(mem_no, game_score_2);
 	}
 	
 	

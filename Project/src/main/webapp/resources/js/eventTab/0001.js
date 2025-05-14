@@ -45,32 +45,27 @@ fetch('/event/list/0001/myScore')
 .then(response => response.json())
 .then(data => {
 	console.log(data);
-	const container = document.querySelector(".rank");
+	const container = document.querySelector(".myRank");
 	let ranking = `
 		<h1>내 점수</h1>
 		<table>
 		<tr>
-		<td>등수</td>
-		<td>닉네임</td>
-		<td>점수</td>
+			<td>닉네임</td>
+			<td>점수</td>
 		</tr>`;
-	
-	data.forEach((rank, idx) => {
-		if (rank.game_score_1>0 ){
-			ranking+= `
-				<tr>
-				<td>${idx+1}등</td>
-				<td>${rank.mem_nick }</td>
-				<td class="score-td">${rank.game_score_1 }</td>
-				</tr>
-				`;
-		}
+	if (data.game_score_1>0 ){
+		ranking+= `
+			<tr>
+				<td>${data.mem_nick }</td>
+				<td class="score-td myScore">${data.game_score_1 }</td>
+			</tr>
+			`;
+	}
 		
-	});
 	ranking+=`</table>`;
 	container.innerHTML=ranking;
 })
-.catch(error => console.error("랭킹 로드 실패:", error));
+.catch(error => console.error("내 점수 로드 실패:", error));
 
 
 
@@ -2081,26 +2076,30 @@ window.onload = function() {
 };	
 //----- 최고점수 갱신------------------------------------------------------------------
 function saveScore() {
+	let myGameScore=document.querySelector('.myScore').innerText;
 	highScoreValue=parseInt(highScoreValue);
 	console.log(highScoreValue);
-	fetch('/event/saveGameScore1',{
-		method : 'post',
-		headers : {
-		      'content-type' : 'application/json; charset=utf-8'
-	    },
-	    body : JSON.stringify({game_score_1 : highScoreValue})
-	})
-    .then(response => response.json())
-    .then(result => {
-      if(result) {
-          console.log("점수 갱신 성공!");
-//          location.reload();
-        } else {
-          console.log("기존 점수보다 낮거나 같아서 갱신되지 않았습니다.");
-        }
-      highScoreValue='';
-    })
-    .catch(err => console.log(err));
+	console.log(myGameScore);
+	if (myGameScore<highScoreValue) {
+		fetch('/event/saveGameScore1',{
+			method : 'post',
+			headers : {
+			      'content-type' : 'application/json; charset=utf-8'
+		    },
+		    body : JSON.stringify({game_score_1 : highScoreValue})
+		})
+	    .then(response => response.json())
+	    .then(result => {
+	      if(result) {
+	          console.log("점수 갱신 성공!");
+	//          location.reload();
+	        } else {
+	          console.log("기존 점수보다 낮거나 같아서 갱신되지 않았습니다.");
+	        }
+	      highScoreValue='';
+	    })
+	    .catch(err => console.log(err));
+	}
 	
 	
 }

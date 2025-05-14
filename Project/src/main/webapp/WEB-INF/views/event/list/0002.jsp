@@ -16,15 +16,20 @@
 			    <canvas id="game-board" width="400px" height="400px"></canvas>
 			    <div class="buttons">
 				  <button class="start-btn">시작</button>
-				  <button class="save-score">최고 점수 저장</button>
 				</div>
 			    
 			    <div class="score-div">
 				    <p class="score">점수: <span id="score">0</span></p> <br>
-				    <p class="highScore">최고점수: <span id="highScore">0</span></p>
+				</div>
+				<div class="ranking-info">
+					<div class="rank">
+						
+					</div>
+					<div class="myRank">
+						
+					</div>
 				</div>
 			</div>
-		
 		
 		
 		

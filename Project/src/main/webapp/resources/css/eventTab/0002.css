@@ -64,3 +64,17 @@ canvas {
 .score-div p{
 	margin: 0 20px;
 }
+
+.ranking-info{
+    display: flex;
+    text-align: center;
+}
+.rank, .myRank{
+	margin: 0 30px;
+}
+.rank td, .myRank td{
+	padding: 5px 20px;
+}
+.score-td{
+	text-align: right;
+}

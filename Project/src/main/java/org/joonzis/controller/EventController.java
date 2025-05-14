@@ -57,9 +57,19 @@ public class EventController {
 		int mem_no = loggedInMember.getMem_no();
 		return eservice.getMyGame1Rank(mem_no);
 	}
-	@GetMapping("/list/0002")
-	public void eventTab2() {
+	@GetMapping(value = "/list/0002", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<EventVO> eventTab2() {
 		log.info("eventTab...2");
+		return eservice.getGame2Rank();
+	}
+	@GetMapping(value = "/list/0002/myScore", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public EventVO eventTab2MyScore(HttpSession session) {
+		log.info("eventTab...2-2");
+		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
+		int mem_no = loggedInMember.getMem_no();
+		return eservice.getMyGame2Rank(mem_no);
 	}
 	
 	@GetMapping("/list/0003")
@@ -96,13 +106,19 @@ public class EventController {
 		    return new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED);
 		}
 		int mem_no = loggedInMember.getMem_no();
-		int gameScore1=eservice.getGameScore1(mem_no);
-		if (gameScore1<vo.getGame_score_1()) {
-			boolean result=eservice.saveGameScore1(mem_no, vo.getGame_score_1());
-			return new ResponseEntity<Boolean>(result,HttpStatus.OK);
-		}else {
-			return new ResponseEntity<Boolean>(false,HttpStatus.BAD_REQUEST);
+		boolean result=eservice.saveGameScore1(mem_no, vo.getGame_score_1());
+		return new ResponseEntity<Boolean>(result,HttpStatus.OK);
+	}
+	@PostMapping(value = "/event/saveGameScore2", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Boolean> saveGameScore2(@RequestBody EventVO vo, HttpSession session) {
+		log.info("saveGameScore1...");
+		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
+		if (loggedInMember == null) {
+			return new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED);
 		}
+		int mem_no = loggedInMember.getMem_no();
+		boolean result=eservice.saveGameScore2(mem_no, vo.getGame_score_2());
+		return new ResponseEntity<Boolean>(result,HttpStatus.OK);
 	}
 	
 	

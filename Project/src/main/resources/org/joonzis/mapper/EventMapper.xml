@@ -34,9 +34,42 @@
 	]]>
 	</select>
 	<select id="getMyGame1Rank" resultType="org.joonzis.domain.EventVO">
-		SELECT * FROM EVENT_INFO
-		WHERE MEM_NO=#{mem_no}
+		SELECT 
+			M.MEM_NICK,
+			E.GAME_SCORE_1
+		FROM
+			EVENT_INFO E 
+		INNER JOIN
+			MEMBER M ON E.MEM_NO=M.MEM_NO
+		WHERE E.MEM_NO=#{mem_no}
 	</select>
+
+
+	<select id="getGame2Rank" resultType="org.joonzis.domain.EventVO">
+	<![CDATA[	
+		SELECT * FROM 
+			(SELECT 
+				M.MEM_NICK,
+				E.GAME_SCORE_2
+			FROM 
+				EVENT_INFO E 
+			INNER JOIN
+				MEMBER M ON E.MEM_NO=M.MEM_NO
+			ORDER BY GAME_SCORE_2 DESC)
+		WHERE ROWNUM<=10
+	]]>
+	</select>
+	<select id="getMyGame2Rank" resultType="org.joonzis.domain.EventVO">
+		SELECT 
+			M.MEM_NICK,
+			E.GAME_SCORE_2
+		FROM
+			EVENT_INFO E 
+		INNER JOIN
+			MEMBER M ON E.MEM_NO=M.MEM_NO
+		WHERE E.MEM_NO=#{mem_no}
+	</select>
+	
 	
 	<update id="saveGameScore1">
 		UPDATE EVENT_INFO
@@ -45,10 +78,16 @@
 		WHERE
 			MEM_NO=#{mem_no}
 	</update>
+	<update id="saveGameScore2">
+		UPDATE EVENT_INFO
+		SET
+			GAME_SCORE_2=#{game_score_2}
+		WHERE
+			MEM_NO=#{mem_no}
+	</update>
 	
-	<select id="getGameScore1" resultType="int">
-		SELECT GAME_SCORE_1 FROM EVENT_INFO WHERE MEM_NO=#{mem_no}
-	</select>
+	
+	
 	
 	
 	

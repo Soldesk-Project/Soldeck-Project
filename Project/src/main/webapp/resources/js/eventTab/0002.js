@@ -7,7 +7,81 @@
 //	linkEle.href = CSS_FILE_PATH;
 //	document.head.appendChild(linkEle);
 //})();
+//-----------------------------------------------------------------------------------
 
+fetch('/event/list/0002')
+.then(response => response.json())
+.then(data => {
+	console.log(data);
+	const container = document.querySelector(".rank");
+	let ranking = `
+		<h1>랭킹</h1>
+		<table>
+			<tr>
+				<td>등수</td>
+				<td>닉네임</td>
+				<td>점수</td>
+			</tr>`;
+
+	  data.forEach((rank, idx) => {
+		  if (rank.game_score_2>0 ){
+			  ranking+= `
+						<tr>
+							<td>${idx+1}등</td>
+							<td>${rank.mem_nick }</td>
+							<td class="score-td">${rank.game_score_2 }</td>
+						</tr>
+				  	`;
+		  }
+
+	  });
+	  ranking+=`</table>`;
+	  container.innerHTML=ranking;
+  })
+  .catch(error => console.error("랭킹  로드 실패:", error));
+
+
+fetch('/event/list/0002/myScore')
+.then(response => response.json())
+.then(data => {
+	console.log(data);
+	const container = document.querySelector(".myRank");
+	let ranking = `
+		<h1>내 점수</h1>
+		<table>
+		<tr>
+			<td>닉네임</td>
+			<td>점수</td>
+		</tr>`;
+	if (data.game_score_2>0 ){
+		ranking+= `
+			<tr>
+				<td>${data.mem_nick }</td>
+				<td class="score-td myScore">${data.game_score_2 }</td>
+			</tr>
+			`;
+	}
+		
+	ranking+=`</table>`;
+	container.innerHTML=ranking;
+})
+.catch(error => console.error("내 점수 로드 실패:", error));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//-----------------------------------------------------------------------------------
 window.cleanupEventTab0001 = function() {
 	  if (window.runner && typeof window.runner.stopListening === 'function') {
 	    window.runner.stopListening();
@@ -15,6 +89,11 @@ window.cleanupEventTab0001 = function() {
 	  }
 	  delete window.Runner;
 	};
+window.addEventListener('keydown', function(e) {
+	if (e.keyCode === 32 && e.target === document.body) {
+	  	e.preventDefault();
+  	}
+});
 //-----키 락-----------------------------------------------------
 (function() {
 window.addEventListener('keydown', function(e) {
@@ -33,7 +112,7 @@ const scale = 20;
 const rows = canvas.height / scale;
 const columns = canvas.width / scale;
 let score = 0;
-let highScore=document.querySelector("#highScore").textContent;
+let highScore=0;
 
 let snake;
 let fruit;
@@ -58,7 +137,6 @@ function startGame() {
       if (snake.eat(fruit)) {
         score++;
         document.getElementById("score").textContent = score;
-        document.getElementById("highScore").textContent = highScore;
         fruit.pickLocation();
       }
 
@@ -75,10 +153,10 @@ function stopGame() {
 function gameOver() {
 	if (score>highScore) {
 		highScore=score;
-		document.getElementById("highScore").textContent = highScore;
 	}
   snake.reset();
   stopGame();
+  saveScore();
 }
 
 function Snake() {
@@ -182,12 +260,33 @@ window.addEventListener("keydown", (event) => {
 });
 
 document.querySelector(".start-btn").addEventListener("click", startGame);
-document.querySelector(".save-score").addEventListener("click", saveScore);
 
 function saveScore() {
+	let myGameScore=document.querySelector('.myScore').innerText;
 	console.log(highScore);
+	console.log(myGameScore);
 	
-}
+	if (myGameScore<highScore) {
+		fetch('/event/saveGameScore2',{
+			method : 'post',
+			headers : {
+			      'content-type' : 'application/json; charset=utf-8'
+		    },
+		    body : JSON.stringify({game_score_2 : highScore})
+		})
+	    .then(response => response.json())
+	    .then(result => {
+	      if(result) {
+	          console.log("점수 갱신 성공!");
+	//          location.reload();
+	        } else {
+	          console.log("기존 점수보다 낮거나 같아서 갱신되지 않았습니다.");
+	        }
+	      highScore=0;
+	    })
+	    .catch(err => console.log(err));
+		}
+	}
 
 
 })();

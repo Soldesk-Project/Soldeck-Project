@@ -55,12 +55,14 @@
 				<div class="text">
 					<span>space를 눌러 게임 시작</span>
 				</div>
-				<div class="high-score">
-					<button id="highScore">최고 점수 저장</button>
+				<div class="ranking-info">
+					<div class="rank">
+						
+					</div>
+					<div class="myRank">
+						
+					</div>
 				</div>
-			</div>
-			<div class="rank">
-				
 			</div>
 		</div>
 	</div>	
