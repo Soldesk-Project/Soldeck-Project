@@ -131,55 +131,55 @@ fetch("/grouplist/groupListRecommendData", {
 
 
 //그룹 참여 요청 버튼 클릭 시
-//function follow(groupMemNo, button) {
-//	const senderMemNo = document.body.dataset.memNo;
-//    fetch("/grouplist/follow", {
-//        method: "POST",
-//        credentials: "include",  // 세션 정보 포함
-//        headers: {
-//            "Content-Type": "application/x-www-form-urlencoded"
-//        },
-//        body: new URLSearchParams({
-//        	senderMemNo: senderMemNo
-//        })
-//    })
-//    .then(res => res.text())
-//    .then(msg => {
-//    	alert(msg);
-//        button.disabled = true;
-//        button.textContent = "요청됨";
-//    })
-//    .catch(error => {
-//        console.error("그룹 요청 실패", error);
-//        alert("요청을 처리하는 중 오류가 발생했습니다.");
-//    });
-//}
+function follow(groupMemNo, button) {
+	const senderMemNo = document.body.dataset.memNo;
+   fetch("/grouplist/follow", {
+       method: "POST",
+       credentials: "include",  // 세션 정보 포함
+       headers: {
+           "Content-Type": "application/x-www-form-urlencoded"
+       },
+       body: new URLSearchParams({
+       	senderMemNo: senderMemNo
+       })
+   })
+   .then(res => res.text())
+   .then(msg => {
+   	alert(msg);
+       button.disabled = true;
+       button.textContent = "요청됨";
+   })
+   .catch(error => {
+       console.error("그룹 요청 실패", error);
+       alert("요청을 처리하는 중 오류가 발생했습니다.");
+   });
+}
 
 //팔로우 버튼 클릭 시 친구 요청 보내기
-//function acceptFriend(senderMemNo) {
-//     fetch("/friendlist/accept", {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/x-www-form-urlencoded"
-//       },
-//       body: new URLSearchParams({ sender_mem_no: senderMemNo })
-//     })
-//     .then(res => res.text())
-//     .then(res => {
-//        if (res.ok) {
-//           alert("팔로우 완료!");
-//           button.disabled = true;
-//           button.textContent = "팔로잉";
-//        } else {
-//           alert("팔로우에 실패했습니다.");
-//        }
-//     });
-//   }
+function acceptFriend(senderMemNo) {
+    fetch("/friendlist/accept", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: new URLSearchParams({ sender_mem_no: senderMemNo })
+    })
+    .then(res => res.text())
+    .then(res => {
+       if (res.ok) {
+          alert("팔로우 완료!");
+          button.disabled = true;
+          button.textContent = "팔로잉";
+       } else {
+          alert("팔로우에 실패했습니다.");
+       }
+    });
+  }
 
 
 //모임 검색 결과 창
 document.addEventListener("DOMContentLoaded", function () {
-     const searchBtn = document.getElementById("searchButton");
+     const searchBtn = document.getElementById("groupSearchButton");
      const input = document.getElementById("searchInput");
      const resultContainer = document.getElementById("searchResultContainer");
 

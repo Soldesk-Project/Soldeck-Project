@@ -36,7 +36,7 @@ function linkify(text) {
 const pathParts = window.location.pathname.split('/');
 const groupNo = pathParts[pathParts.length - 1]; // '21' 추출
 
-const ws = new WebSocket("wss://335a-14-52-79-21.ngrok-free.app/chat/" + groupNo);
+const ws = new WebSocket("wss://f73f-14-52-79-21.ngrok-free.app/chat/" + groupNo);
 
 ws.onopen = function(event) {
   document.body.insertAdjacentHTML("beforeend", "<div>웹소켓 연결 성공!</div>");
