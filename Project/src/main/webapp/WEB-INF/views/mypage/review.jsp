@@ -51,8 +51,8 @@
  
 	<div id="customConfirm" class="delete-comment-modal">
 		<div class="inner-modal">
-	    	<p>댓글을 삭제하시겠습니까?</p>
-			<div class="modal-content">
+	    	<p>정말 삭제하시겠습니까?</p>
+			<div class="modal-content_review">
 			    <button class="yes-btn" id="deleteCommentBtn">예</button>
 				<button class="cancle-modal-btn" id="cancelModalBtn">아니오</button>
 		    </div>

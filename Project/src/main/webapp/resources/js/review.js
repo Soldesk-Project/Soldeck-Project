@@ -33,6 +33,8 @@ document.querySelectorAll('button').forEach(btn => {
 });
 //-----즐겨찾기 삭제 확인 모달-------------------------------------------
 const modal = document.querySelector('.delete-comment-modal');
+const innerModal = document.querySelector('.inner-modal');
+
 function openModal(){
   modal.style.display = 'block';
   document.body.style.overflow = 'hidden';
@@ -41,6 +43,19 @@ function closeModal(){
   modal.style.display = 'none';
   document.body.style.overflow = 'auto';
 }
+//모달 밖 아무곳이나 눌렀을 때 창 닫히기
+modal.addEventListener('click', function (e) {
+	if (!innerModal.contains(e.target)) {
+		closeModal();
+	  }
+});
+//ESC눌렀을 때 창 닫히기 
+document.addEventListener('keydown', function (e) {
+	  // ESC 키 눌렀을 때
+	  if (e.key === 'Escape') {
+	    closeModal(); // 기존 닫기 함수 호출
+	  }
+	});
 
 //-----버튼 누를 때 댓글 번호 가져오기 ------------------------------
 let comNo;

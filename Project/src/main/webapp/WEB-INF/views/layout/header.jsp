@@ -94,9 +94,8 @@ console.log("searchInput이 비활성화되어 있습니다. 활성화합니다.
 searchInput.disabled = false;
 }
 searchInput.removeEventListener("change", handleSearch);
-searchInput.removeEventListener("keypress", handleSearch);
-searchInput.addEventListener("change", handleSearch);
-searchInput.addEventListener("keypress", function(event) {
+searchInput.removeEventListener("keydown", handleSearch);
+searchInput.addEventListener("keydown", function(event) {
 event.stopPropagation();
 if (event.key === 'Enter') {
 handleSearch(event);

@@ -36,20 +36,15 @@ body {
   flex-direction: row;
   min-height: 0;
 }
-
-.side-menu{
-	width: 230px;
-	height: 100%;
-	flex-shrink: 0;
-}
 .mainBoxDesign{
 	flex: 1;
 	min-width: 0;
-	border: 1px dashed;
 	border-radius: 20px;
-	margin-top: 13px;
+	margin-top: 12px;
 	margin-bottom: 80px;
 	display: flex;
+	background-color: white;
+	border: 1px solid rgb(255, 125, 0);
 }
 .main-menu{
 	width: 100%;
@@ -69,13 +64,14 @@ body {
 	display: flex;
 	justify-content: center;
 	margin: 15px 30px;
-	border: 1px dashed;
 	border-radius: 10px;
 	padding: 15px;
+	background-color: white;
+	border: 1px solid rgb(255, 125, 0);
 }
 .btn, .all-btn{
 	margin: 0px 10px;
-    border: 1px dashed #FF7D00;
+    border: 1px solid #FF7D00;
     border-radius: 15px;
     width: 55px;
     height: 35px;
@@ -95,9 +91,10 @@ body {
 	justify-content: space-between;
 	padding: 0px 10px;
 	margin: 15px 30px;
-	border: 1px dashed;
 	border-radius: 10px;
 	height: 565px;
+	background-color: white;
+	border: 1px solid rgb(255, 125, 0);
 }
 .list-title{
 	margin:10px;
@@ -277,13 +274,15 @@ body {
 }
 
 /*------------------ 사이드 메뉴 css -------------------------*/
-
+.side-menu{
+	width: 200px;
+	display: flex;
+}
 .side{
     list-style-type: none;
     position: fixed;
     width: 182px;
-    padding: 15px;
-    margin: 0;
+    padding: 0px 0px;
     border-radius: 20px;
 }
 .side a{
@@ -311,12 +310,17 @@ body {
 	border-radius: 0 0 15px 15px;
 }
 .side li:hover,
-.side-bookmark.active {
-    background-color: #FF7D00;
+.side-modifyinfo.active {
+    background-color: rgba(255, 254, 252, 0.5);
     font-weight: bold;
 }
 .side a:hover,
-.side-bookmark.active a {
-    color: white !important;
+.side-modifyinfo.active a {
+    color: #FF7D00 !important;
 }
-/*------------------ 공통 작업 css --------------------*/
+
+#text1{
+	font-size: 12px;
+	text-align: left;
+	margin: 0px 10px 5px;
+}
