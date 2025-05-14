@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="/resources/css/eventTab/0001.css">
 <meta name="description" content="Ripped T-Rex/Dino game of Chromium">
 <meta property="og:title" content="Play the hidden T-Rex Dinosaur game of Chromium .">
 <meta property="og:type" content="article">
@@ -59,18 +60,7 @@
 				</div>
 			</div>
 			<div class="rank">
-				<h1>랭킹</h1>
-				<table>
-					<c:forEach var="rank" items="${ranking }" varStatus="status">
-						<c:if test="${rank.game_score_1>0 }">
-							<tr>
-								<td>${status.count}등</td>
-								<td>${rank.mem_nick }</td>
-								<td class="score-td">${rank.game_score_1 }</td>
-							</tr>
-						</c:if>
-					</c:forEach>
-				</table>
+				
 			</div>
 		</div>
 	</div>	

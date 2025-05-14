@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="/resources/css/eventTab/0004.css">
 <title>Insert title here</title>
 </head>
 <body>

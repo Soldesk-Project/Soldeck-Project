@@ -2,6 +2,7 @@ package org.joonzis.controller;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.extern.log4j.Log4j;
 
@@ -41,10 +43,19 @@ public class EventController {
         return "/event/main";
     }
 	
-	@GetMapping("/list/0001")
-	public void eventTab1(Model model) {
+	@GetMapping(value = "/list/0001", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<EventVO> eventTab1() {
 		log.info("eventTab...1");
-		model.addAttribute("ranking", eservice.getGame1Rank());
+		return eservice.getGame1Rank();
+	}
+	@GetMapping(value = "/list/0001/myScore", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public EventVO eventTab1MyScore(HttpSession session) {
+		log.info("eventTab...1-1");
+		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
+		int mem_no = loggedInMember.getMem_no();
+		return eservice.getMyGame1Rank(mem_no);
 	}
 	@GetMapping("/list/0002")
 	public void eventTab2() {

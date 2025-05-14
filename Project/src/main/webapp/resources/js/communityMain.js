@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
         group: '/resources/js/groupList.js',
         chat: '/resources/js/chatroom.js',
         event: '/resources/js/mainEvent.js',
-        minigame: '/resources/js/minigame.js'
+        minigame: '/resources/js/mainEvent.js'
     };
 
     function loadContent(category) {
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     majorCategoryButtons.forEach(button => {
         button.addEventListener('click', function () {
-            const category = this.dataset.major;
+        	const category = this.dataset.major;
 
             if (!scriptMap.hasOwnProperty(category)) {
                 console.error('정의되지 않은 카테고리:', category);
@@ -74,7 +74,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             loadContent(category);
-
             // 버튼 UI 상태 업데이트
             majorCategoryButtons.forEach(btn => btn.classList.remove('active'));
             this.classList.add('active');
