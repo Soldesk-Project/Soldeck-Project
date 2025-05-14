@@ -12,18 +12,9 @@
 <meta property="og:image" content="http://img.thecodepost.org/2015/01/trex.png">
 <meta property="og:site_name" content="The Code Post">
 <meta property="og:description" content="Google Chrome has a hidden T-Rex game only for offline mode. But now, you can enjoy it any time and on any device, but you gotta stay online!!!">
-
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="@thecodepost">
-<meta name="twitter:creator" content="@thecodepost">
-<meta name="twitter:title" content="Check out the cool hidden game from Google Chrome!">
-<meta name="twitter:description" content="Check out the cool hidden game from Google Chrome!">
-<meta name="twitter:image:src" content="http://img.thecodepost.org/2015/01/trex.png">
-
 <title>Insert title here</title>
 </head>
 <body>
-	<jsp:include page="../../layout/header.jsp"/>
   
 	<div class="container">
 		<div class="main-menu">
@@ -84,8 +75,6 @@
 		</div>
 	</div>	
 	
-	<jsp:include page="../../layout/footer.jsp"/>
-<script type="text/javascript" src="/resources/js/eventTab/0001.js"></script>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 </body>
 </html>
