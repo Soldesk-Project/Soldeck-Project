@@ -7,7 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<jsp:include page="../../layout/header.jsp"/>
   
 	<div class="container">
 		<div class="main-menu">
@@ -19,7 +18,6 @@
 		</div>	
 	</div>	
 	
-	<jsp:include page="../../layout/footer.jsp"/>
 <script type="text/javascript" src="/resources/js/eventTab/0003.js"></script>
 </body>
 </html>
