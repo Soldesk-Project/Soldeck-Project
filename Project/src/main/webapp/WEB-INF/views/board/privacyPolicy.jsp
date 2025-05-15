@@ -77,44 +77,44 @@
 				<table id="secondTable">
 					<thead>
 						<tr>
-							<th>보유 항목</th>
-							<th>근거 법령</th>
-							<th>보유 기간</th>
+							<th class="item">보유 항목</th>
+							<th class="law">근거 법령</th>
+							<th class="duration">보유 기간</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td>계약 또는 청약 철회, 대금 결제, 재화 등 의 공급 기록</td>
-							<td rowspan="3">전자 상거래 등에서 의 소비자 보호 에 관한 법률 제 6 조 및 시행령 제 6 조 제 1 항</td>
-							<td>5 년</td>
+							<td class="item">계약 또는 청약 철회, 대금 결제, 재화 등 의 공급 기록</td>
+							<td class="law" rowspan="3">전자 상거래 등에서 의 소비자 보호 에 관한 법률 제 6 조 및 시행령 제 6 조 제 1 항</td>
+							<td class="duration">5 년</td>
 						</tr>
 						<tr>
-							<td>소비자 의 불만 또는 분쟁 처리 에 관한 기록</td>
-							<td>3 년</td>
+							<td class="item">소비자 의 불만 또는 분쟁 처리 에 관한 기록</td>
+							<td class="duration">3 년</td>
 						</tr>
 						<tr>
-							<td>표시 / 광고 에 관한 기록</td>
-							<td>6 개월</td>
+							<td class="item">표시 / 광고 에 관한 기록</td>
+							<td class="duration">6 개월</td>
 						</tr>
 						<tr>
-							<td>세법 이 규정 하는 모든 거래 에 관한 장부 및 증빙 서류</td>
-							<td>국세 기본법</td>
-							<td>5 년</td>
+							<td class="item">세법 이 규정 하는 모든 거래 에 관한 장부 및 증빙 서류</td>
+							<td class="law">국세 기본법</td>
+							<td class="duration">5 년</td>
 						</tr>
 						<tr>
-							<td>전자 금융 거래 에 관한 기록</td>
-							<td>전자 금융 거래법 제 22 조 제 1 항 및 시행령 제 12 조 제 1 항</td>
-							<td>5 년</td>
+							<td class="item">전자 금융 거래 에 관한 기록</td>
+							<td class="law">전자 금융 거래법 제 22 조 제 1 항 및 시행령 제 12 조 제 1 항</td>
+							<td class="duration">5 년</td>
 						</tr>
 						<tr>
-							<td>서비스 방문 기록</td>
-							<td>통신 비밀 보호법 제 15 조의 2 및 시행령 제 41 조 제 2 항 제 2 호</td>
-							<td>3 개월</td>
+							<td class="item">서비스 방문 기록</td>
+							<td class="law">통신 비밀 보호법 제 15 조의 2 및 시행령 제 41 조 제 2 항 제 2 호</td>
+							<td class="duration">3 개월</td>
                         </tr>
                         <tr>
-                            <td>신용 정보 의 수집 · 처리 및 이용 등에 관한 기록</td>
-                            <td>신용 정보 의 이용 및 보호 에 관한 법률 제 20 조 제 2 항</td>
-                            <td>3 년</td>
+                            <td class="item">신용 정보 의 수집 · 처리 및 이용 등에 관한 기록</td>
+                            <td class="law">신용 정보 의 이용 및 보호 에 관한 법률 제 20 조 제 2 항</td>
+                            <td class="duration">3 년</td>
                         </tr>
                     </tbody>
                 </table>

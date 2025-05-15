@@ -5,9 +5,10 @@ margin: 20px auto;
 
 #privacyPolicyNavigation {
 	display: grid;
-	grid-template-columns: repeat(2, 500px);
+	grid-template-columns: repeat(2, 1fr);
 	grid-gap: 10px;
 	margin-bottom: 20px;
+	width: 1200px;
 }
 
 #privacyPolicyNavigation a {
@@ -22,7 +23,6 @@ margin: 20px auto;
 	position: relative;
 	text-align: center;
 	cursor: pointer;
-	width: 450px;
 }
 
 #privacyPolicyNavigation a .arrow {
@@ -34,8 +34,8 @@ margin: 20px auto;
 
 #privacyPolicyContent {
 	border: 1px solid #ddd;
-	padding: 20px;
-	width: 1200px;
+	padding: 29px;
+	width: 1140px;
 }
 
 #privacyPolicyContent .section {
@@ -47,7 +47,7 @@ margin: 20px auto;
 }
 /* 첫 번째 테이블 스타일 */
 #firstTable {
-	width: 100%;
+	/*width: 100%;*/
 	border-collapse: collapse;
 	font-size: 80%;
 }
@@ -64,12 +64,12 @@ margin: 20px auto;
 }
 
 #firstTable td:nth-child(1) {
-	width: 180px;
+	width: 130px;
 	text-align: center;
 }
 
 #firstTable td:nth-child(2) {
-	width: 60px;
+	width: 50px;
 	text-align: center;
 }
 
@@ -82,15 +82,16 @@ margin: 20px auto;
 }
 
 #firstTable td:nth-child(5) {
-	width: 200px;
+	width: 240px;
 }
 
 /* 두 번째 테이블 스타일 */
 #secondTable {
-	width: 100%;
+	/*width: 100%;*/
 	border-collapse: collapse;
 	font-size: 80%;
 	text-align: center;
+	table-layout: fixed;
 }
 
 #secondTable th, #secondTable td{
@@ -101,20 +102,20 @@ margin: 20px auto;
 #secondTable th{
 	background-color: #f2f2f2;
 }
-#secondTable td:nth-child(1) {
-	width: 430px;
+#secondTable td.item {
+    width: 400px;
 }
 
-#secondTable td:nth-child(2) {
-	width: 580px;
+#secondTable td.law {
+    width: 550px;
 }
 
-#secondTable td:nth-child(3) {
-	width: 130px;
+#secondTable td.duration {
+    width: 190px;
 }
 /* 세 번째 테이블 스타일 */
 #thirdTable {
-	width: 100%;
+	/*width: 100%;*/
 	border-collapse: collapse;
 	font-size: 80%;
 }
@@ -127,11 +128,11 @@ margin: 20px auto;
 	background-color: #f2f2f2;
 }
 #thirdTable td:nth-child(1) {
-	width: 245px;
+	width: 210px;
 }
 
 #thirdTable td:nth-child(2) {
-	width: 350px;
+	width: 210px;
 }
 
 #thirdTable td:nth-child(3) {
@@ -139,7 +140,7 @@ margin: 20px auto;
 }
 
 #thirdTable td:nth-child(4) {
-	width: 175px;
+	width: 350px;
 }
 /* 네 번째 테이블 스타일 */
 #fourthTable {
@@ -161,5 +162,5 @@ margin: 20px auto;
 }
 
 #fourthTable td:nth-child(2) {
-	width: 690px;
+	width: 915px;
 }
