@@ -130,13 +130,16 @@ if (loginLink) {
         window.location.href = redirectUrl;
     });
 } else {
+	<c:if test="${sessionScope.loggedInUser != null}">
+		if(${member.mem_no} != 0) return;
+	</c:if>
     console.error("loginLink 요소를 찾을 수 없습니다.");
 }
 
 });
 
 // 로그아웃 관련 스크립트 (로그인 상태에서만 실행)
-<c:if test="${sessionScope.loggedInUser != null}">
+/* <c:if test="${sessionScope.loggedInUser != null}">
 document.addEventListener('DOMContentLoaded', function() {
 const logoutLink = document.querySelector('#myModal .modal-menu li:last-child a');
 if (logoutLink) {
@@ -162,8 +165,7 @@ form.style.display = 'none';
         console.error("로그아웃 링크를 찾을 수 없습니다.");
     }
 });
-
-</c:if>
+</c:if> */
 
 // 알림 모달 창 열고 닫기 js
 document.addEventListener('DOMContentLoaded', function () {

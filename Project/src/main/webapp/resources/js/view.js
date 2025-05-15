@@ -846,6 +846,7 @@ function handleFavoriteClick() {
 
 function checkInitialFavoriteStatus() {
 	// 서버에 현재 사용자가 해당 식당을 즐겨찾기했는지 요청
+	if (mem_no == 0) return;
     fetch(`/mypage/favorites/status/${restNo}`, {
         headers: {
             'Accept': 'application/json'

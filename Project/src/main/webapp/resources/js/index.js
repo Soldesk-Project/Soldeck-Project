@@ -170,6 +170,44 @@ document.addEventListener('DOMContentLoaded', () => {
 	rankRestEventListeners();
 });
 
+let slideIndices = {
+    image: 0,
+    today: 0,
+    preference: 0
+};
+
+function moveSlider(type, direction) {
+    const sliderTrack = document.getElementById(type + '-slider');
+    if (!sliderTrack) return;
+
+    const items = sliderTrack.querySelectorAll('.recommendation-item');
+    if (items.length === 0) return;
+
+    const container = sliderTrack.parentElement; // .recommendation-slider-window
+    const containerWidth = container.clientWidth;
+
+    const itemStyle = getComputedStyle(items[0]);
+    const itemWidth = items[0].offsetWidth;
+    const marginLeft = parseInt(itemStyle.marginLeft);
+    const marginRight = parseInt(itemStyle.marginRight);
+    const totalItemWidth = itemWidth + marginLeft + marginRight;
+
+    const visibleCount = Math.floor(containerWidth / totalItemWidth);
+    const moveCount = 3; // 한번에 이동할 개수 설정 (3개)
+
+    // 인덱스 증감 폭을 moveCount 만큼
+    slideIndices[type] += direction * moveCount;
+
+    // 범위 제한
+    if (slideIndices[type] < 0) slideIndices[type] = 0;
+    if (slideIndices[type] > items.length - visibleCount) {
+        slideIndices[type] = items.length - visibleCount;
+    }
+
+    sliderTrack.style.transform = `translateX(${-totalItemWidth * slideIndices[type]}px)`;
+}
+
+
 // 가게 클릭 이벤트
 function showRestEventListeners() {
     document.querySelectorAll('.recommendation-slider-window').forEach(window => {
@@ -223,13 +261,21 @@ function showList(containerId, dataArray) {
 
     container.innerHTML = dataArray.map(json => {
         const rest_no = json.rest_no || 'default';
-        const img_src = json.rest_img_name || '';
+        const rawUrl = json.rest_img_name || '';
+
+        // 썸네일 파라미터 조정 (C400x400 크기, 품질 q60)
+        let thumbnailUrl = rawUrl;
+        if (rawUrl.includes('cthumb')) {
+            thumbnailUrl = rawUrl.replace(/C\d+x\d+\.q\d+/, 'C400x400.q60');
+        }
+
+        const finalUrl = thumbnailUrl || '/resources/images/noImage.png';
+
         return `
             <div class="recommendation-item" data-rest_no="${rest_no}">
-                <img src="${img_src}" alt="이미지 없음" onerror="this.src='/resources/images/noImage.png';">
+                <img src="${finalUrl}" alt="이미지 없음" onerror="this.src='/resources/images/noImage.png';">
             </div>
         `;
-//                <p>${json.rest_name || '이름 없음'}</p>; // 가게 이름 필요하면 return의 </div>위에 넣기
     }).join('');
 }
 
@@ -279,7 +325,6 @@ function getRating(callback) {
         return response.json();
     })
     .then(data => {
-    	console.log(data);
         callback(data || {});
     })
     .catch(err => {
@@ -337,7 +382,6 @@ function getReview(callback) {
 		return response.json();
 	})
 	.then(data => {
-		console.log(data);
 		callback(data || {});
 	})
 	.catch(err => {
