@@ -31,6 +31,7 @@
 						<div class="booking-info">
 							<div class="booking-schedule">
 								<div>
+									<input type="text" class="booking-date personnel" name="bookingDatePersonnel" value="${rl.res_personnel}" readonly="readonly">
 									<input type="text" class="booking-date date" name="bookingDate" value="<fmt:formatDate value="${rl.res_date}" pattern='yyyy - MM - dd'/>" readonly="readonly">
 									<input type="text" class="booking-date time" name="bookingDateTime" value="${rl.res_time }" readonly="readonly">
 				                    <input type="hidden" class="reserve-no" value="${rl.res_no }">

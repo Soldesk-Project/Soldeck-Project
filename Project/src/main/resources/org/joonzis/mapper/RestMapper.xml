@@ -188,6 +188,7 @@
 		    e.RES_DATE,
 		    e.RES_TIME,
 		    e.RES_MEMO,
+		    e.RES_PERSONNEL,
 		    r.REST_NO,
 		    r.REST_NAME,
 		    r.REST_ADR,

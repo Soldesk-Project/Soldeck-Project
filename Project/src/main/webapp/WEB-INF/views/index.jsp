@@ -140,9 +140,6 @@
 	</div>
 
 	<script type="text/javascript" src="/resources/js/index.js"></script>
-	<script type="text/javascript">
-            const currentNo = ${currentNo}; // JSP에서 전달된 currentNo를 JavaScript로 사용
-	</script>
     <%@ include file="../views/layout/footer.jsp" %>
 </body>
 </html>
