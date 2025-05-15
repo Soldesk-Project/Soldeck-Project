@@ -32,6 +32,7 @@
 							<div class="booking-schedule">
 								<div>
 									<input type="text" class="booking-date personnel" name="bookingDatePersonnel" value="${rl.res_personnel}" readonly="readonly">
+								<div class="booking-time-box">
 									<input type="text" class="booking-date date" name="bookingDate" value="<fmt:formatDate value="${rl.res_date}" pattern='yyyy - MM - dd'/>" readonly="readonly">
 									<input type="text" class="booking-date time" name="bookingDateTime" value="${rl.res_time }" readonly="readonly">
 				                    <input type="hidden" class="reserve-no" value="${rl.res_no }">
@@ -74,7 +75,7 @@
 		</div>
 	</div>
 
-	<div id="customConfirm" class="bookmark-check-modal">
+	<div id="customConfirm" class="bookmark-check-modal modal-popup">
 		<div class="inner-modal">
 	    	<p>즐겨찾기를 삭제하시겠습니까?</p>
 			<div class="bookmark-modal-content">
@@ -83,7 +84,7 @@
 		    </div>
 		</div>
 	</div>
-	<div id="customConfirm" class="bookmark-add-modal">
+	<div id="customConfirm" class="bookmark-add-modal modal-popup">
 		<div class="inner-modal">
 	    	<p>즐겨찾기를 추가하시겠습니까?</p>
 			<div class="bookmark-modal-content">
@@ -92,7 +93,7 @@
 		    </div>
 		</div>
 	</div>
-	<div id="customConfirm" class="booking-cancel-modal">
+	<div id="customConfirm" class="booking-cancel-modal modal-popup">
 		<div class="inner-modal">
 	    	<p>예약을 취소하시겠습니까?</p>
 			<div class="bookmark-modal-content">
@@ -101,7 +102,7 @@
 		    </div>
 		</div>
 	</div>
-	<div id="customConfirm" class="save-memo-modal">
+	<div id="customConfirm" class="save-memo-modal modal-popup">
 		<div class="inner-modal">
 	    	<p>메모를 저장하시겠습니까?</p>
 			<div class="bookmark-modal-content">
