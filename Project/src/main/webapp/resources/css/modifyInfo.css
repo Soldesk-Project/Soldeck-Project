@@ -71,7 +71,7 @@ b{
 	margin-bottom: 10px;
 	display: flex;
 	flex-direction: column;
-	width: 420px;
+	width: 414px;
 	flex-wrap: wrap;
 	height: auto;
 }
@@ -80,30 +80,30 @@ b{
 	margin-bottom: 10px;
 	margin: 10px 0;
 	display: flex;
-	width: 400px;
+	width: 420px;
 	height: auto;
 	align-items: center;
 }
 .info-rest{
 	float: left;
-	width: 372px;
+	width: 370px;
 	height: 32px;
 }
 .info-birth{
 	text-align: center;
-	width: 110px;
+	width: 116px;
 	height: 32px;
-	margin-right: 10px;
+	margin-right: 29px;
 	padding: 0;
 }
 .info-gender{
 	float: left;
-	width: 330px;
+	width: 370px;
 	height: 32px;
 }
 .info-phone{
 	padding: 0;
-	width: 95px;
+	width: 116px;
 	height: 32px;
 	float: left;
 	text-align: center;
@@ -114,7 +114,7 @@ b{
 }
 .info-name{
 	float: left;
-	width: 330px;
+	width: 370px;
 	height: 32px;
 }
 .info-profile-div{
@@ -133,10 +133,18 @@ b{
 	border-radius: 50%;
 }
 fieldset{
-	width: 500px;
+	width: 390px;
 	margin: 0;
 	border-style: none;
 }
+.foods {
+	margin-right: 4px;
+}
+
+fieldset > label {
+  margin-right: 10px;
+}
+
 .info-profile-div-box{
 	display: flex;
 	flex-direction: column;
