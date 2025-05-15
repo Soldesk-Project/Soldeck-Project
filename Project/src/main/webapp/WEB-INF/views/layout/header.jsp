@@ -209,4 +209,13 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 });
+
+document.addEventListener('keydown', function (e) {
+	  if (e.key === 'Escape') {
+	    const modal = document.getElementById("alarmModal");
+	    if (modal && modal.style.display === "block") {
+	      modal.style.display = "none";
+	    }
+	  }
+	});
 </script>

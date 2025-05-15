@@ -49,8 +49,11 @@ document.addEventListener('DOMContentLoaded', ()=> {
 		const isPublic = isPublicInputs[index].value;
 		if (isPublic === 'Y'||isPublic==='N') {
 			btn.classList.remove('active');
+			
+			btn.classList.add('bookmarked'); // 북마크된 상태 표시
 		} else {
 			btn.classList.add('active');
+			btn.classList.remove('bookmarked'); // 북마크 해제 상태 표시
 		}
 	});
 });
@@ -180,6 +183,13 @@ function deleteBookmark() {
 		  .then(response => response.json())
 		  .then(data=>{
 		  	console.log(data);
+		  	document.querySelectorAll('.bookmark').forEach(btn => {
+				const targetRestNo = btn.closest('.booking-info').querySelector('#restNo').value;
+				if (targetRestNo === restNo) {
+					btn.classList.remove('bookmarked');
+					btn.classList.add('active'); // 다시 추가 가능한 상태
+				}
+			});
 		  	location.reload();
 		  })
 		  .catch(e=>console.log(e));
@@ -199,6 +209,13 @@ function addBookmark() {
 		  .then(response => response.json())
 		  .then(data=>{
 		  	console.log(data);
+		  	document.querySelectorAll('.bookmark').forEach(btn => {
+				const targetRestNo = btn.closest('.booking-info').querySelector('#restNo').value;
+				if (targetRestNo === restNo) {
+					btn.classList.remove('active');
+					btn.classList.add('bookmarked'); // ✅ 상태 표시용 클래스
+				}
+			});
 		  	location.reload();
 		  })
 		  .catch(e=>console.log(e));
@@ -249,11 +266,67 @@ function saveMemo() {
 		  .catch(e=>console.log(e));
 }
 
+//버튼위치마다 모달 창이 옆에 뜨게끔 하는 js
+function showModalToLeft(modalSelector, triggerBtn) {
+	  const modal = document.querySelector(modalSelector);
+	  if (!modal) return;
 
+	  const rect = triggerBtn.getBoundingClientRect();
+	  modal.style.top = `${rect.top + window.scrollY}px`;
+	  modal.style.left = `${rect.left + window.scrollX - modal.offsetWidth - 8}px`; // 왼쪽에 띄움
+	  modal.style.display = 'block';
+	}
 
+	document.addEventListener('DOMContentLoaded', function () {
+	  // 모달 닫기 함수
+	  function hideAllModals() {
+	    document.querySelectorAll('.modal-popup').forEach(modal => {
+	      modal.style.display = 'none';
+	    });
+	  }
 
+	  // 예약취소 버튼
+	  document.querySelectorAll('#bookingCancelBtn').forEach(btn => {
+	    btn.addEventListener('click', function (e) {
+	      e.preventDefault();
+	      hideAllModals();
+	      showModalToLeft('.booking-cancel-modal', this);
+	    });
+	  });
 
+	  // 즐겨찾기 버튼
+	  document.querySelectorAll('#bookmarkBtn').forEach(btn => {
+	    btn.addEventListener('click', function (e) {
+	      e.preventDefault();
+	      hideAllModals();
+	      const isBookmarked = this.classList.contains('bookmarked');
+	      const modalClass = isBookmarked ? '.bookmark-check-modal' : '.bookmark-add-modal';
+	      showModalToLeft(modalClass, this);
+	    });
+	  });
 
+	  // 메모 저장 버튼
+	  document.querySelectorAll('#saveMemoBtn').forEach(btn => {
+	    btn.addEventListener('click', function (e) {
+	      e.preventDefault();
+	      hideAllModals();
+	      showModalToLeft('.save-memo-modal', this);
+	    });
+	  });
 
+	  // 모달 외부 클릭 시 닫기
+	  document.addEventListener('click', function (e) {
+	    const isModalClick = e.target.closest('.modal-popup');
+	    const isTrigger = e.target.closest('#bookingCancelBtn, #bookmarkBtn, #saveMemoBtn');
+	    if (!isModalClick && !isTrigger) {
+	      hideAllModals();
+	    }
+	  });
 
-
+	  // 아니오 버튼 닫기 처리
+	  document.querySelectorAll('#cancelModalBtn').forEach(btn => {
+	    btn.addEventListener('click', () => {
+	      hideAllModals();
+	    });
+	  });
+	});

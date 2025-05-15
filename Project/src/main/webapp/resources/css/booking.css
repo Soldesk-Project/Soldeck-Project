@@ -38,7 +38,7 @@ body {
 }
 .mainBoxDesign{
 	flex:1;
-	border: 1px solid rgb(255, 125, 0);
+	border: 1px solid #ebebeb;
 	border-radius: 20px;
 	margin-top: 13px;
 	margin-bottom: 80px;
@@ -84,7 +84,8 @@ body {
 	text-align: center;
 	width: 270px;
 	height: 270px;
-	margin-top:auto;
+	margin-top:10px;
+	margin-left:10px;
 	border-radius: 10px;
     background-color: white;
     box-shadow: 3px 3px 8px 1px rgba(0, 0, 0, 0.2);
@@ -93,9 +94,10 @@ body {
 	width: 640px;
 	height: 300px;
 	margin-left: auto;
+	margin-top: 10px;
 }
 .border-div{
-	height: 240px;
+	height: 200px;
 }
 .booking-img{
 	width: 250px;
@@ -116,15 +118,19 @@ body {
 	justify-content: end;
 	text-align: center;
 }
+.booking-time-box{
+	width: 215px;
+	height: 45px;
+	border-bottom: 1px solid #ebebeb;
+}
 .booking-date{
 	height: 30px;
-	margin: 15px 10px;
+	margin: 15px 5px 0px;
 	padding: 0;
     text-align: center;
-    font-size: 17px;
     outline: none;
-	border: 1px solid;
 	box-sizing: border-box;
+	border: none;
 	border-radius: 15px;
 }
 .personnel{
@@ -137,7 +143,7 @@ body {
 	width: 70px;
 }
 .info-text{
-	height: 130px;
+	height: 100px;
 	display: flex;
 }
 .rest-info{
@@ -145,6 +151,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	border-bottom: 1px solid #ebebeb;
 }
 .rest-info input{
 	margin: 10px;
@@ -165,7 +172,7 @@ body {
 }
 .memo-title{
 	margin: 10px;
-	font-size: 20px;
+	font-size: 16px;
 }
 .memo-content{
 	display: flex;
@@ -181,7 +188,8 @@ body {
 	box-sizing: content-box;
 }
 .booking-memo{
-	margin: 10px;
+	margin: 0px 10px;
+	font-size: 15px;
 }
 .bookmark-div{
 	margin-left:auto;
@@ -213,12 +221,18 @@ body {
 	margin: 0 10px;
 	display: none;
 }
-.booking-memo-btn, .check-memo{
+.check-memo{
 	margin: 3px 20px;
 	margin-left: auto;
+	background-color: #FF7D00;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	width: 50px;
+	height: 25px;
 }
-.booking-memo-btn,
-.booking-cancel-btn, .check-memo{
+.booking-cancel-btn{
 	background-color: #FF7D00;
 	color: white;
 	padding: 10px 15px;
@@ -228,12 +242,23 @@ body {
 	width: 100px;
 	height: 40px;
 }
+.booking-memo-btn{
+	width: 50px;
+	height: 25px;
+	margin: 3px 20px;
+	margin-left: auto;
+	background-color: #FF7D00;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 12px;
+}
 #saveMemoBtn{
 	display: none;
 }
 /*-----------------------모달-------------------------------*/
 #customConfirm{
-    padding: 20px;
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     display: none;
@@ -242,6 +267,7 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
 	background: rgba(0,0,0,0.2);
+	background: rgba(0,0,0,0.01);
   	z-index: 999;
 }
 .inner-modal{
@@ -249,8 +275,10 @@ body {
 	background: #fff;
 	padding: 20px 25px;
 	border-radius: 8px;
-	box-shadow: 0 4px 24px rgba(0,0,0,0.2);
-	min-width: 300px;
+	min-width: 200px;
+	max-height: 100px;
+	display: flex;
+	flex-direction: column;
 }
 .bookmark-modal-content{
 	display: flex;
@@ -258,8 +286,8 @@ body {
 	justify-content: center;
 }
 .yes-btn{
-    background-color: #FF7D00;
-    color: white;
+    background-color: white;
+    color: black;
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
@@ -269,8 +297,8 @@ body {
     margin: auto;
 }
 #cancelModalBtn{
-	background-color: #e53935;
-    color: white;
+	background-color: white;
+    color: black;
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
@@ -279,7 +307,14 @@ body {
     height: 40px;
     margin: auto;
 }
-
+.modal-popup {
+    position: absolute;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    display: none;
+    z-index: 1000;
+}
 /*------------------ 사이드 메뉴 css -------------------------*/
 .side-menu{
 	width: 200px;
@@ -296,14 +331,14 @@ body {
 	display: block;
     width: 100%;
     height: 100%;
-    color: #FF7D00;
+    color: black;
     padding: 20px;
     text-decoration: none;
     box-sizing: border-box;
 }
 .side li{
 	box-sizing: border-box;
-    border: 2px solid #FF7D00;
+    border: 2px solid #ebebeb;
     display: block;
 	text-align: center;
 	text-decoration: none;
@@ -324,6 +359,7 @@ body {
 .side a:hover,
 .side-modifyinfo.active a {
     color: #FF7D00 !important;
+    text-decoration: none;
 }
 
 #text1{
