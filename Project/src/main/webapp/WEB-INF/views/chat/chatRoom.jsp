@@ -61,6 +61,6 @@
     script.src = "/resources/js/chatroom.js";
     document.body.appendChild(script);
   </script>
-  
+
 </body>
 </html>

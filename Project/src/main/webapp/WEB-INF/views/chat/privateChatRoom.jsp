@@ -52,15 +52,23 @@
 
   <!-- JavaScript 파일 연결 -->
   <script type="text/javascript">
-    const currentNick = "${currentNick}";
-    const mem_no = "${currentNo}";
-    const chatLogs = JSON.parse('${chatLogsJson}');
-
-    // chatroom.js는 여기서 로드되도록 함
-    const script = document.createElement('script');
-    script.src = "/resources/js/chatroom.js";
-    document.body.appendChild(script);
-  </script>
+  if(window.chatContext){
+	  window.cleanupEventTab0001();
+  }
   
+  window.chatContext = {
+		  currentNick : "${currentNick}",
+		  mem_no : "${currentNo}",
+		  chatLogs : JSON.parse('${chatLogsJson}')
+  }
+  
+  window.cleanupEventTab0001 = function() {
+	  if (window.chatContext && typeof window.chatContext.stopListening === 'function') {
+		  window.chatContext.stopListening();
+		  /* window.chatContext = null; */
+	  }
+	  /* delete window.chatContext; */
+	};
+  </script>
 </body>
 </html>

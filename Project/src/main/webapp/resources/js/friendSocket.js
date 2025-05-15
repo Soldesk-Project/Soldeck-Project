@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (senderMemNo) {
         // WebSocket 연결
-        socket = new WebSocket("wss://f73f-14-52-79-21.ngrok-free.app/friendSocket");
+        socket = new WebSocket("wss://b500-14-52-79-21.ngrok-free.app/friendSocket");
 
         socket.onopen = () => {
             socket.send(senderMemNo.toString());  // 서버에 내 mem_no 전달
