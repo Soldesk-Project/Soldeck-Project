@@ -9,76 +9,64 @@
 //})();
 
 //----------------------------------------------------------------------------
-
-fetch('/event/list/0001')
-.then(response => response.json())
-.then(data => {
-	const container = document.querySelector(".rank");
-	let ranking = `
-		<h1>랭킹</h1>
-		<table>
+function loadGame1RankData() {
+	fetch('/event/list/0001')
+	.then(response => response.json())
+	.then(data => {
+		const container = document.querySelector(".rank");
+		let ranking = `
+			<h1>랭킹</h1>
+			<table>
+				<tr>
+					<td>등수</td>
+					<td>닉네임</td>
+					<td>점수</td>
+				</tr>`;
+	
+		  data.forEach((rank, idx) => {
+			  if (rank.game_score_1>0 ){
+				  ranking+= `
+							<tr>
+								<td>${idx+1}등</td>
+								<td>${rank.mem_nick }</td>
+								<td class="score-td">${rank.game_score_1 }</td>
+							</tr>
+					  	`;
+			  }
+	
+		  });
+		  ranking+=`</table>`;
+		  container.innerHTML=ranking;
+	  })
+	  .catch(error => console.error("랭킹  로드 실패:", error));
+}
+function loadGame1MyData() {
+	fetch('/event/list/0001/myScore')
+	.then(response => response.json())
+	.then(data => {
+		console.log(data);
+		const container = document.querySelector(".myRank");
+		let ranking = `
+			<h1>내 점수</h1>
+			<table>
 			<tr>
-				<td>등수</td>
 				<td>닉네임</td>
 				<td>점수</td>
 			</tr>`;
-
-	  data.forEach((rank, idx) => {
-		  if (rank.game_score_1>0 ){
-			  ranking+= `
-						<tr>
-							<td>${idx+1}등</td>
-							<td>${rank.mem_nick }</td>
-							<td class="score-td">${rank.game_score_1 }</td>
-						</tr>
-				  	`;
-		  }
-
-	  });
-	  ranking+=`</table>`;
-	  container.innerHTML=ranking;
-  })
-  .catch(error => console.error("랭킹  로드 실패:", error));
-
-
-fetch('/event/list/0001/myScore')
-.then(response => response.json())
-.then(data => {
-	console.log(data);
-	const container = document.querySelector(".myRank");
-	let ranking = `
-		<h1>내 점수</h1>
-		<table>
-		<tr>
-			<td>닉네임</td>
-			<td>점수</td>
-		</tr>`;
-	if (data.game_score_1>0 ){
-		ranking+= `
-			<tr>
-				<td>${data.mem_nick }</td>
-				<td class="score-td myScore">${data.game_score_1 }</td>
-			</tr>
-			`;
-	}
-		
-	ranking+=`</table>`;
-	container.innerHTML=ranking;
-})
-.catch(error => console.error("내 점수 로드 실패:", error));
-
-
-
-
-
-
-
-
-
-
-
-
-
+		if (data.game_score_1>0 ){
+			ranking+= `
+				<tr>
+					<td>${data.mem_nick }</td>
+					<td class="score-td myScore">${data.game_score_1 }</td>
+				</tr>
+				`;
+		}
+			
+		ranking+=`</table>`;
+		container.innerHTML=ranking;
+	})
+	.catch(error => console.error("내 점수 로드 실패:", error));
+}
 
 
 
@@ -705,6 +693,7 @@ this.distanceMeter.setHighScore(this.highestScore);
 // Reset the time clock.
 this.time = getTimeStamp();
 saveScore();
+highScoreValue='';	
 },
 stop: function() {
 this.activated = false;
@@ -2090,13 +2079,15 @@ function saveScore() {
 		})
 	    .then(response => response.json())
 	    .then(result => {
-	      if(result) {
-	          console.log("점수 갱신 성공!");
+	    	if(result) {
+	    		console.log("점수 갱신 성공!");
 	//          location.reload();
 	        } else {
-	          console.log("기존 점수보다 낮거나 같아서 갱신되지 않았습니다.");
+	        	console.log("기존 점수보다 낮거나 같아서 갱신되지 않았습니다.");
 	        }
-	      highScoreValue='';
+	    	highScoreValue='';
+	    	loadGame1RankData();
+	    	loadGame1MyData();
 	    })
 	    .catch(err => console.log(err));
 	}
@@ -2105,3 +2096,5 @@ function saveScore() {
 }
 
 })();
+loadGame1RankData();
+loadGame1MyData();

@@ -15,7 +15,7 @@
 				<li>
 					<a href="/list/0003">
 						<div class="event-list-img">
-							<img alt="이벤트 사진" src="../resources/images/event.png" class="event-img">
+							<img alt="이벤트 사진" src="../resources/images/spin.png" class="event-img">
 						</div>
 						<div class="event-list-title">
 							<span>룰렛 돌리기</span>
@@ -29,7 +29,7 @@
 				<li>
 					<a href="/list/0004">
 						<div class="event-list-img">
-							<img alt="이벤트 사진" src="../resources/images/event.png" class="event-img">
+							<img alt="이벤트 사진" src="../resources/images/attendanceCheck.png" class="event-img">
 						</div>
 						<div class="event-list-title">
 							<span>출석체크</span>

@@ -15,7 +15,7 @@
 				<li>
 					<a href="/list/0001">
 						<div class="event-list-img">
-							<img alt="이벤트 사진" src="../resources/images/event.png" class="event-img">
+							<img alt="이벤트 사진" src="../resources/images/chromeDino.png" class="event-img">
 						</div>
 						<div class="event-list-title">
 							<span>Chrome T-rex</span>
@@ -29,7 +29,7 @@
 				<li>
 					<a href="/list/0002">
 						<div class="event-list-img">
-							<img alt="이벤트 사진" src="../resources/images/event.png" class="event-img">
+							<img alt="이벤트 사진" src="../resources/images/snake.png" class="event-img">
 						</div>
 						<div class="event-list-title">
 							<span>Snake Game</span>

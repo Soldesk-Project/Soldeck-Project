@@ -15,7 +15,7 @@
 			MEM_NO=#{mem_no}
 	</update>
 	
-	<select id="getPoint" resultType="int">
+	<select id="getPoint" resultType="org.joonzis.domain.EventVO">
 		SELECT POINT FROM EVENT_INFO WHERE MEM_NO=#{mem_no}
 	</select>
 	
@@ -86,9 +86,18 @@
 			MEM_NO=#{mem_no}
 	</update>
 	
+	<insert id="checkAttendance">
+		INSERT INTO ATTENDANCECHECK
+		VALUES(#{mem_no}, #{attendance_date})
+	</insert>
 	
-	
-	
+	<select id="loadAttendance" resultType="int">
+		SELECT EXTRACT(DAY FROM ATTENDANCE_DATE)
+		FROM ATTENDANCECHECK
+		WHERE mem_no = #{mem_no}
+		  AND EXTRACT(YEAR FROM ATTENDANCE_DATE) = #{year}
+		  AND EXTRACT(MONTH FROM ATTENDANCE_DATE) = #{month}
+	</select>
 	
 	
 </mapper>

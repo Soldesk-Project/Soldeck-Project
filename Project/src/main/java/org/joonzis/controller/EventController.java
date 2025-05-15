@@ -43,28 +43,28 @@ public class EventController {
         return "/event/main";
     }
 	
-	@GetMapping(value = "/list/0001", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
+	@GetMapping(value = "/list/0001", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<EventVO> eventTab1() {
 		log.info("eventTab...1");
 		return eservice.getGame1Rank();
 	}
-	@GetMapping(value = "/list/0001/myScore", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
+	@GetMapping(value = "/list/0001/myScore", produces = MediaType.APPLICATION_JSON_VALUE)
 	public EventVO eventTab1MyScore(HttpSession session) {
 		log.info("eventTab...1-1");
 		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
 		int mem_no = loggedInMember.getMem_no();
 		return eservice.getMyGame1Rank(mem_no);
 	}
-	@GetMapping(value = "/list/0002", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
+	@GetMapping(value = "/list/0002", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<EventVO> eventTab2() {
 		log.info("eventTab...2");
 		return eservice.getGame2Rank();
 	}
-	@GetMapping(value = "/list/0002/myScore", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
+	@GetMapping(value = "/list/0002/myScore", produces = MediaType.APPLICATION_JSON_VALUE)
 	public EventVO eventTab2MyScore(HttpSession session) {
 		log.info("eventTab...2-2");
 		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
@@ -72,17 +72,17 @@ public class EventController {
 		return eservice.getMyGame2Rank(mem_no);
 	}
 	
-	@GetMapping("/list/0003")
-	public void eventTab4(Model model, HttpSession session) {
+	@ResponseBody
+	@GetMapping(value = "/list/point", produces = MediaType.APPLICATION_JSON_VALUE)
+	public EventVO eventTab3(HttpSession session) {
 		log.info("eventTab...3");
 		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
 		int mem_no = loggedInMember.getMem_no();
-		model.addAttribute("point", eservice.getPoint(mem_no));
-		log.info(eservice.getPoint(mem_no));
+		return eservice.getPoint(mem_no);
 	}
 
 	@GetMapping("/list/0004")
-	public void eventTab3() {
+	public void eventTab4() {
 		log.info("eventTab...4");
 	}
 	
@@ -111,7 +111,7 @@ public class EventController {
 	}
 	@PostMapping(value = "/event/saveGameScore2", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> saveGameScore2(@RequestBody EventVO vo, HttpSession session) {
-		log.info("saveGameScore1...");
+		log.info("saveGameScore2...");
 		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
 		if (loggedInMember == null) {
 			return new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED);
@@ -119,6 +119,23 @@ public class EventController {
 		int mem_no = loggedInMember.getMem_no();
 		boolean result=eservice.saveGameScore2(mem_no, vo.getGame_score_2());
 		return new ResponseEntity<Boolean>(result,HttpStatus.OK);
+	}
+
+	@PostMapping(value = "/event/checkAttendance", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Boolean> checkAttendance(@RequestBody EventVO vo, HttpSession session) {
+		log.info("checkAttendance...");
+		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
+		int mem_no = loggedInMember.getMem_no();
+		boolean result=eservice.checkAttendance(mem_no, vo.getAttendance_date());
+		return new ResponseEntity<Boolean>(result,HttpStatus.OK);
+	}
+	@ResponseBody
+	@PostMapping(value = "/event/loadAttendance", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Integer> loadAttendance(@RequestBody EventVO vo, HttpSession session) {
+		log.info("loadAttendance...");
+		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
+		int mem_no = loggedInMember.getMem_no();
+		return eservice.loadAttendance(mem_no, vo.getYear(), vo.getMonth());
 	}
 	
 	

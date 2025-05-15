@@ -9,6 +9,41 @@
 //})();
 
 
+
+
+
+function loadMyPointData() {
+	fetch('/event/list/point')
+	.then(response => response.json())
+	.then(data => {
+		const container = document.querySelector(".my-point-div");
+		let myPoint = '';
+		if (data.point>=0 ){
+			myPoint+= `
+			<p>현재 내 포인트 : <span class="my-point">${data.point }</span></p>
+			`;
+		}
+		container.innerHTML=myPoint;
+		const spinBtn = document.getElementById("spin");
+		if (spinBtn) {	
+			if (data.point<100) {
+				spinBtn.disabled = true;
+				spinBtn.textContent = "포인트가 부족합니다";
+			} else {
+				spinBtn.disabled = false;
+				spinBtn.textContent = "SPIN";
+			}
+		}
+	  })
+	  .catch(error => console.error("포인트  로드 실패:", error));
+}
+
+
+
+
+
+
+
 window.cleanupEventTab0001 = function() {
 	if (window.runner && typeof window.runner.stopListening === 'function') {
 		window.runner.stopListening();
@@ -78,7 +113,7 @@ function drawRoulette() {
   ctx.fill();
 }
 
-const spinBtn = document.getElementById("spin");
+
 
 
 //수정된 spinRoulette 함수
@@ -90,17 +125,6 @@ function spinRoulette() {
 	animateSpin();
 }
 
-//페이지 로드 시 버튼 상태 설정
-window.addEventListener('DOMContentLoaded', () => {
-	let myPoint=document.querySelector('.my-point').innerText;
-	if (myPoint<100) {
-		spinBtn.disabled = true;
-	 spinBtn.textContent = "포인트가 부족합니다";
-	} else {
-		spinBtn.disabled = false;
-	 spinBtn.textContent = "SPIN";
-	}
-});
 
 function animateSpin() {
   if (spinVelocity > 0.005) {
@@ -116,8 +140,7 @@ function animateSpin() {
     let selected = items.length - Math.floor(((angle + Math.PI / 2) % (2 * Math.PI)) / arc) - 1;
     if (selected < 0) selected += items.length;
     setTimeout(() => {
-      alert("결과: " + items[selected]);
-      console.log(items[selected]-100);
+    	alert('결과 : '+items[selected]);
       if (items[selected]>0) {
     	  savePoint(items[selected]-100);
       }else{
@@ -135,7 +158,6 @@ document.getElementById("spin").addEventListener("click", spinRoulette);
 //-----------------------------------------------------------------------------------------------------
 
 function savePoint(point) {
-	console.log(point);
 	if(point!=null){
 		fetch('/event/savePoint',{
 			method : 'post',
@@ -146,8 +168,7 @@ function savePoint(point) {
 		})
 	    .then(response => response.json())
 	    .then(result => {
-	      console.log(result);
-	      location.reload();
+	      loadMyPointData();
 	    })
 	    .catch(err => console.log(err));
 	}
@@ -156,3 +177,11 @@ function savePoint(point) {
 
 
 })();
+
+
+loadMyPointData();
+
+
+
+
+

@@ -1,5 +1,6 @@
 package org.joonzis.service;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.joonzis.domain.EventVO;
@@ -49,7 +50,7 @@ public class EventServiceImpl implements EventService{
 	}
 	
 	@Override
-	public int getPoint(int mem_no) {
+	public EventVO getPoint(int mem_no) {
 		return mapper.getPoint(mem_no);
 	}
 	@Override
@@ -76,8 +77,14 @@ public class EventServiceImpl implements EventService{
 	public boolean saveGameScore2(int mem_no, int game_score_2) {
 		return mapper.saveGameScore2(mem_no, game_score_2);
 	}
-	
-	
+	@Override
+	public boolean checkAttendance(int mem_no, Date attendance_date) {
+		return mapper.checkAttendance(mem_no, attendance_date);
+	}
+	@Override
+	public List<Integer> loadAttendance(int mem_no, int year, int month) {
+		return mapper.loadAttendance(mem_no, year, month);
+	}
 	
 	
 	

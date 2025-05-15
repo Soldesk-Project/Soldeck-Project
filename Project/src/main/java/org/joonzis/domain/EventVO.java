@@ -1,6 +1,7 @@
 package org.joonzis.domain;
 
-import java.util.Date;
+
+import java.sql.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +13,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class EventVO {
-	public int mem_no, point, game_score_1, game_score_2;
+	public int mem_no, point, game_score_1, game_score_2, year, month;
 	public String mem_nick;
-	public Date last_spin; 
+	public Date last_spin, attendance_date; 
 }
