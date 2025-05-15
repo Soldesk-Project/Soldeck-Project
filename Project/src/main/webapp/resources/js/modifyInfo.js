@@ -30,12 +30,16 @@ window.onload = () => {
 	const resetBtn = document.getElementById('resetBtn');
 	const removeBtn = document.getElementById('removeBtn');
 	const modifyBtn = document.getElementById('modifyBtn');
+	const foodCheckboxes = document.querySelectorAll('.foods');
 	
 	// 초기 상태 설정 (modifyBtn 클릭 전 숨김)
 	profileUploadDiv.style.display = 'none';
 	modifyFinishBtn.style.display = 'none';
 	resetBtn.style.display = 'none';
 	removeBtn.style.display = 'none';
+	foodCheckboxes.forEach(checkbox => {
+		checkbox.disabled = true;
+	})
 	
 	document.querySelectorAll('button').forEach(btn => {
 		btn.addEventListener('click', (e) => {
@@ -67,6 +71,11 @@ window.onload = () => {
 
 				// 4. 수정 버튼 숨기기
 				modifyBtn.style.display = 'none';
+				
+				//5. 선호 음식 체크박스 활성화
+				foodCheckboxes.forEach(checkbox => {
+					checkbox.disabled = false;
+				})
 			}
 		});
 	});
@@ -97,12 +106,18 @@ function resetForm() {
 	const emailInput = document.getElementById('email');
 	const phone2Input = document.getElementById('phone2');
 	const phone3Input = document.getElementById('phone3');
+	const foodCheckboxes = document.querySelectorAll('.foods');
 
 	passwordInput.readOnly = true;
 	nicknameInput.readOnly = true;
 	emailInput.readOnly = true;
 	phone2Input.readOnly = true;
 	phone3Input.readOnly = true;
+	
+	//선호 음식 체크박스 다시 비활성화
+	foodCheckboxes.forEach(checkbox => {
+		checkbox.disabled = true;
+	})
 
 	// 버튼 상태 다시 설정 (수정 버튼 보이고, 완료/리셋/탈퇴 숨김)
 	const profileUploadDiv = document.querySelector('.info-profile-div-div');

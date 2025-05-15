@@ -45,7 +45,7 @@
 					<div class="info-title">
 						<b>생년월일</b>	
 					</div>
-					<div class="info-content">
+					<div class="info-content birth-date-group">
 						<input type="text" class="info-birth" name="year" value="${fn:substring(member.mem_birth, 0, 4)}" readonly="readonly">
 						<input type="text" class="info-birth" name="month" value="${fn:substring(member.mem_birth, 4, 6)}" readonly="readonly">
 						<input type="text" class="info-birth" name="day" value="${fn:substring(member.mem_birth, 6, 8)}" readonly="readonly">
@@ -107,6 +107,7 @@
 					<div id="emailCheckMessage" class="message error"></div>
 				</div>
 			</div>
+			<div class="info_border_box">
 				<div class="info-title">
 					<b>연락처</b>	
 				</div>
@@ -117,7 +118,9 @@
 						<input type="text" class="info-phone" id="phone3" name="phoneNumber" value="${fn:substring(member.mem_phone, 6, 10)}" readonly="readonly">
 					</div>
 					<div id="phoneErrorMessage" class="message error phone-error"></div>
-					</div>
+				</div>
+			</div>
+			<div class="info_border_box">
 				<div class="info-title">
 					<b>선호 음식</b>	
 				</div>
@@ -136,6 +139,7 @@
 					</fieldset>
 					<div id="interestErrorMessage" class="message error"></div>
 				</div>
+			</div>
 				<input type="hidden" name="mem_no" value="${member.mem_no}">
 			</div>
 			<div class="btn-div">
