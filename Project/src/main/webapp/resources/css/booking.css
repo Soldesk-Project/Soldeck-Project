@@ -4,6 +4,18 @@ img, a img {
   -ms-user-drag: none;
   user-drag: none;
 }
+::-webkit-scrollbar {
+  display: none;
+}
+input {
+  border: none;
+  outline: none;
+  box-shadow: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: transparent; /* 배경도 없애려면 */
+}
 /*------------------ body / main menu -------------------------*/
 html, body {
   margin: 0;
@@ -21,37 +33,33 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
   margin-top: 130px;
 }
 
-/* 아래는 그대로 유지해도 됩니다 */
 .container {
+  flex: 1;
   width: 1200px;
-  height: 800px; /* 유지하고 싶다면 그대로 둬도 OK */
   margin: auto;
   display: flex;
   flex-direction: row;
-  overflow-y: auto;
-}
-::-webkit-scrollbar {
-  display: none;
+  min-height: 0;
 }
 .mainBoxDesign{
-	flex:1;
-	border: 1px solid #ebebeb;
+	flex: 1;
+	min-width: 0;
 	border-radius: 20px;
-	margin-top: 13px;
+	margin-top: 12px;
 	margin-bottom: 80px;
 	display: flex;
+	background-color: white;
+	border: 1px solid #ebebeb;
 }
 .main-menu{
-	flex: 1;
+	width: 100%;
 	display: flex;
 	flex-direction: column;
 	overflow: hidden;
-	max-height: 700px;
-	border-style: hidden;
-	border-radius: 10px;
 }
 .main-list{
 	flex: 1;
@@ -63,7 +71,10 @@ body {
 	overflow-y: auto;
 	min-height: 0;
 	max-height: 100%;
+	min-width: 0;
 	position: relative; /* 중요 */
+	display: flex;
+  	flex-direction: column;
 }
 /*.inner-main::-webkit-scrollbar {
 	display:inline;
@@ -73,13 +84,42 @@ body {
     background:#FF7D00;
     border-radius: 10px;
 }*/
+.booking-schedule{
+	padding: 0px;
+	display: flex;
+	flex-direction: column;
+}
+.booking-schedule-one{
+	padding: 0px;
+	display: flex;
+	flex-direction: row;
+	gap: 376px;
+}
+.booking-schedule-one-and-one{
+	border: none;
+	margin-top: 5px;
+	margin-left: 10px;
+}
+.booking-content{
+	display: flex;
+	flex-direction: column;
+	padding: 0px;
+}
 .booking-list{
+	flex:1;
 	flex-shrink: 0;
 	position: relative;
 	height: auto;
 	display: flex;
 	flex-direction: row;
+	width: 100%;
+	flex-wrap: nowrap;
+	box-sizing: border-box;
 }
+.booking-content-top-flex{
+	display: flex;
+	flex-wrap: nowrap; /* 줄바꿈 방지 */
+	}
 .image-div{
 	text-align: center;
 	width: 270px;
@@ -91,9 +131,9 @@ body {
     box-shadow: 3px 3px 8px 1px rgba(0, 0, 0, 0.2);
 }
 .booking-info{
-	width: 640px;
+	width: 690px;
 	height: 300px;
-	margin-left: auto;
+	margin-left: 20px;
 	margin-top: 10px;
 }
 .border-div{
@@ -114,16 +154,13 @@ body {
 .booking-schedule{
 	height: 60px;
 	width: 100%;
-	display: flex;
-	justify-content: end;
-	text-align: center;
 }
 .booking-time-box{
-	width: 215px;
-	height: 45px;
-	border-bottom: 1px solid #ebebeb;
+	width: 175px;
+	height: 28px;
+	border-bottom: 1px solid black;
 }
-.booking-date{
+.booking-date personnel-box{
 	height: 30px;
 	margin: 15px 5px 0px;
 	padding: 0;
@@ -133,14 +170,11 @@ body {
 	border: none;
 	border-radius: 15px;
 }
-.personnel{
-	width: 50px;
-}
 .date{
 	width: 120px;
 }
 .time{
-	width: 70px;
+	width: 40px;
 }
 .info-text{
 	height: 100px;
@@ -263,10 +297,6 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     display: none;
     position: fixed;
-	top: 45%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-	background: rgba(0,0,0,0.2);
 	background: rgba(0,0,0,0.01);
   	z-index: 999;
 }
@@ -367,3 +397,4 @@ body {
 	text-align: left;
 	margin: 0px 10px 5px;
 }
+/*------------ 버그 수정 확인 코드------------------*/

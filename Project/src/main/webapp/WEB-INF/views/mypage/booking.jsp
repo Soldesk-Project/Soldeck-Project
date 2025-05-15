@@ -30,16 +30,18 @@
 						</div>
 						<div class="booking-info">
 							<div class="booking-schedule">
-								<div>
-									<input type="text" class="booking-date personnel" name="bookingDatePersonnel" value="${rl.res_personnel}" readonly="readonly">
-								<div class="booking-time-box">
-									<input type="text" class="booking-date date" name="bookingDate" value="<fmt:formatDate value="${rl.res_date}" pattern='yyyy - MM - dd'/>" readonly="readonly">
-									<input type="text" class="booking-date time" name="bookingDateTime" value="${rl.res_time }" readonly="readonly">
-				                    <input type="hidden" class="reserve-no" value="${rl.res_no }">
-				                    <input type="hidden" class="member-no" value="${rl.mem_no }">
-								</div>
+								<div class="booking-schedule-one">
+									<div class="booking-schedule-one-and-one">
+										<input type="text" class="booking-date personnel" name="bookingDatePersonnel" value="${rl.res_personnel}" readonly="readonly">
+										<div class="booking-time-box">
+											<input type="text" class="booking-date date" name="bookingDate" value="<fmt:formatDate value="${rl.res_date}" pattern='yyyy - MM - dd'/>" readonly="readonly">
+											<input type="text" class="booking-date time" name="bookingDateTime" value="${rl.res_time }" readonly="readonly">
+						                    <input type="hidden" class="reserve-no" value="${rl.res_no }">
+						                    <input type="hidden" class="member-no" value="${rl.mem_no }">
+										</div>
+									</div>
 								<button type="button" class="booking-cancel-btn" id="bookingCancelBtn">예약취소</button>
-							</div>
+								</div>
 							<div class="border-div">
 			                    <div class="info-text">
 			            	        <div class="rest-info">
@@ -65,6 +67,7 @@
 			                    </div>
 							</div>
 						</div>
+					</div>
 					</div>
 					</c:forEach>
 	

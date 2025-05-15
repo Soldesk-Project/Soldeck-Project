@@ -4,10 +4,10 @@ img, a img {
   -ms-user-drag: none;
   user-drag: none;
 }
-/*------------------ body / main menu -------------------------*/
 ::-webkit-scrollbar {
 	display: none;
 }
+/*------------------ body / main menu -------------------------*/
 html, body {
   margin: 0;
   padding: 0;
