@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,18 +15,19 @@
 	
 	<div class="container">
         <div class="page-header" data-rest_no="${rest_no}">
-        	<!-- 이미지 -->
+        	<!-- 이미지 슬라이드 -->
             <div class="slideshow-container">
                 <a class="prev" onclick="moveSlide(-1)">❮</a>
                 <div class="slides-container"> 
-                <div class="slides-wrapper"></div>
+                	<div class="slides-wrapper"></div>
                 </div>
                 <a class="next" onclick="moveSlide(1)">❯</a>
             </div>
+            
 			<!-- 가게 내용 -->
             <div class="content">
-			    <div class="store-list">
-			    </div>
+			    <div class="store-list"></div>
+			    
 			    <div class="store-details">
 			    	<div class="store-tap">
 			    		<button class="tap-home active" data-target="store-info">홈</button>
@@ -34,6 +36,7 @@
 			    	<div class="store-info"></div>
 			    	<div class="store-menu" style="display: none;"></div>
 			    </div>
+			    
 			    <div class="store-function">
 				    <div class="store-map">
 				    	<div id="map" style="width: 100%; height: 100%;"></div>
@@ -45,16 +48,17 @@
             </div>
         </div>
             
+        <!-- 댓글 이미지 및 더보기 -->
         <div class="panel-body">
         	<div class="comment-image-container">
         		<div class="image-wrapper"></div>
 			</div>
         	<div>
-	            <!-- 더보기 버튼 (기본적으로 숨김) -->
  			    <button class="more-btn" style="display: none;">더보기</button>
         	</div>
         </div>
         
+        <!-- 댓글 입력 및 출력 -->
         <div class="panel-footer">
             <div class="panel-footer-header">
                 <div class="panle-footer-input">
@@ -76,107 +80,64 @@
                         <button type="button" class="btn btn-sec" id="commentBtn">댓글 달기</button>
                     </div>
                 </div>
-					<div class="uploadResult">
-				        <div class="slider-container">
-				            <ul></ul>
-				        </div>
-				        <span class="arrow left" onclick="moveSlider('left')">&#10094;</span>
-				        <span class="arrow right" onclick="moveSlider('right')">&#10095;</span>
-				    </div>
+                
+				<div class="uploadResult">
+			        <div class="slider-container">
+			            <ul></ul>
+			        </div>
+			        <span class="arrow left" onclick="moveSlider('left')">&#10094;</span>
+			        <span class="arrow right" onclick="moveSlider('right')">&#10095;</span>
+			    </div>
              </div>
+             
              <div class="panel-footer-body">
-                <ul class="chat">
-                   <!-- <li data-com_no="1">
-                      <div class="chat-full">
-                         <div class="chat-header">
-                         	<img alt="프로필" src="">
-                            <strong>작성자</strong>
-                            <small class="pull-right">0000-00-00</small>
-                         </div>
-                         <div class="chat-body">
-                            <div class="image-con">
-                            </div>
-                            <div class="btn-com">
-                                <button type="button" class="btn btn-com" id="viewBtn">더보기</button>
-                            </div>
-                         </div>
-                         <div class="chat-footer" id="chat_abc">
-                         </div>
-                      </div>
-                   </li> -->
-                </ul>
+                <ul class="chat"></ul>
              </div>
         </div>
+        
+        <!-- 로그인 정보 -->
         <div id="login-data" data-mem_no="${member.mem_no != null ? member.mem_no : '0'}" data-mem_name="${member.mem_name != null ? member.mem_name : ''}"></div>
     </div>
-    <!-- 모달 창 -->
+    
+    <!-- 댓글 이미지 더보기 모달 -->
 	<div class="modal2" style="display: none;">
 	  <div class="modal-content2">
 	    <div class="modal-image-container"></div>
 	  </div>
 	</div>
-    
-	<!-- 모달 창 (더보기) -->
-	<div class="modal_view" id="viewModal">
-		<div class="modal_view-content">
-			<div class="image-view">
-			</div>
-		</div>
-	</div>
 
-	<!-- 모달 창 (예약) -->
+	<!-- 예약 모달 -->
 	<div class="modal" id="reservationModal">
 	  <div class="modal-content">
-	    <!-- 캘린더 -->
 	    <div class="calendar">
 	      <div class="calendar-header">
 	        <select id="monthSelect">
-	          <option value="1">1월</option>
-	          <option value="2">2월</option>
-	          <option value="3">3월</option>
-	          <option value="4">4월</option>
-	          <option value="5">5월</option>
-	          <option value="6">6월</option>
-	          <option value="7">7월</option>
-	          <option value="8">8월</option>
-	          <option value="9">9월</option>
-	          <option value="10">10월</option>
-	          <option value="11">11월</option>
-	          <option value="12">12월</option>
+	        	<c:forEach begin="1" end="12" var="m">
+	              <option value="${m}">${m}월</option>
+	            </c:forEach>
 	        </select>
 	      </div>
 	      <div class="calendar-days" id="calendarDays"></div>
 	    </div>
-	    <!-- 시간 선택 -->
+	    
 	    <div class="time-selection">
 	      <h3>시간 선택</h3>
 	      <div class="time-options">
-	        <button class="time-btn">11:00</button>
-	        <button class="time-btn">12:00</button>
-	        <button class="time-btn">13:00</button>
-	        <button class="time-btn">15:00</button>
-	        <button class="time-btn">16:00</button>
-	        <button class="time-btn">17:00</button>
-	        <button class="time-btn">18:00</button>
-	        <button class="time-btn">19:00</button>
-	        <button class="time-btn">20:00</button>
-	        <button class="time-btn">21:00</button>
-	        <button class="time-btn">22:00</button>
-	        <button class="time-btn">23:00</button>
+		      <c:forEach var="t" items="${fn:split('11,12,13,15,16,17,18,19,20,21,22,23', ',')}">
+	            <button class="time-btn">${t}:00</button>
+	          </c:forEach>
 	      </div>
 	    </div>
+	    
 	    <div class="personnel-selection">
 	    	<h3>인원 선택</h3>
 	    	<div class="personnel-options">
-		        <button class="personnel-btn">1인</button>
-		        <button class="personnel-btn">2인</button>
-		        <button class="personnel-btn">3인</button>
-		        <button class="personnel-btn">4인</button>
-		        <button class="personnel-btn">5인</button>
-		        <button class="personnel-btn">6인</button>
+	    		<c:forEach var="p" begin="1" end="6">
+	              <button class="personnel-btn">${p}인</button>
+	            </c:forEach>
 	    	</div>
 	    </div>
-	    <!-- 모달 버튼 -->
+	    
 	    <div class="modal-buttons">
 	      <button type="button" class="btn btn-close" id="closeModalBtn">예약 닫기</button>
 	      <button type="button" class="btn btn-confirm" id="confirmReservationBtn">예약</button>
@@ -184,6 +145,7 @@
 	  </div>
 	</div>
 	
+	<!-- 즐겨찾기 모달 -->
 	<div class="modal" id="favoriteModal">
 		<div class="modal-content">
 			<h3>즐겨찾기 설정</h3>

@@ -6,34 +6,31 @@ linkEle.href = CSS_FILE_PATH;
 document.head.appendChild(linkEle);
 
 // 전역 변수 정의
-const login_data = document.getElementById('login-data');
-const initialmem_no = login_data.dataset.mem_no || '';
-let mem_no = initialmem_no;
+const loginData = document.getElementById('login-data');
+const mem_no = loginData.dataset.mem_no || '';
 let restNo = null;
 let currentIndex = 0;
 const visibleSlides = 4;
+let selectedDate = null;
+let selectedTime = null;
+let selectedPersonnel = null;
+let selectedMonth = new Date().getMonth() + 1; // 초기 월을 현재 월로 설정
+let isFavorite = false; // 초기 즐겨찾기 상태
+let favoriteBtnElement = null;
+let ratingValue = 0;
 
-// DOM 요소 참조 (중복 쿼리 방지)
-const viewModal = document.getElementById('viewModal');
+// DOM 요소 참조 (중복 방지)
 const reservationModal = document.getElementById('reservationModal');
-const viewBtn = document.getElementById('viewBtn');
 const reservationBtn = document.getElementById('reservationBtn');
 const closeModalBtn = document.getElementById('closeModalBtn');
 const confirmReservationBtn = document.getElementById('confirmReservationBtn');
 const commentBtn = document.querySelector("#commentBtn");
 const monthSelect = document.getElementById('monthSelect');
 const calendarDays = document.getElementById('calendarDays');
-let selectedDate = null;
-let selectedTime = null;
-let selectedPersonnel = null;
-let selectedMonth = new Date().getMonth() + 1; // 초기 월을 현재 월로 설정
-let isFavorite = false; // 초기 즐겨찾기 상태
 const favoriteModal = document.getElementById('favoriteModal');
 const publicFavoriteBtn = document.getElementById('publicFavoriteBtn');
 const privateFavoriteBtn = document.getElementById('privateFavoriteBtn');
 const closeFavoriteModalBtn = document.getElementById('closeFavoriteModalBtn');
-let favoriteBtnElement = null;
-
 const imageWrapper = document.querySelector('.image-wrapper');
 const images = imageWrapper.querySelectorAll('.image');
 const panelbody = document.querySelector('.panel-body');
@@ -44,72 +41,59 @@ const closeBtn = modal.querySelector('.close-btn');
 // JSP에서 시간 슬롯 가져오기
 const timeButtons = document.querySelectorAll('.time-options .time-btn');
 const timeSlots = Array.from(timeButtons).map(button => button.textContent.trim());
-
 const personnelButtons = document.querySelectorAll('.personnel-options .personnel-btn');
-
 const stars = document.querySelectorAll('#starRating .star');
-let ratingValue = 0;
 
+//별점 클릭 및 표시 업데이트
 stars.forEach(star => {
     star.addEventListener('click', () => {
-        ratingValue = parseInt(star.getAttribute('data-value'));
+        ratingValue = parseInt(star.dataset.value);
         updateStars(ratingValue);
     });
 });
-
 function updateStars(rating) {
     stars.forEach(star => {
-        const value = parseInt(star.getAttribute('data-value'));
-        if (value <= rating) {
-            star.classList.add('filled');
-        } else {
-            star.classList.remove('filled');
-        }
+        const value = parseInt(star.dataset.value);
+        star.classList.toggle('filled', value <= rating);
     });
 }
 
-//시간과 인원 선택 초기화 함수
+//시간 및 인원 초기화
 function resetTimeAndPersonnel() {
     selectedTime = null;
     selectedPersonnel = null;
     timeButtons.forEach(btn => {
-        btn.classList.remove('selected');
-        btn.disabled = false; // 모든 시간 버튼 활성화
-        btn.classList.remove('disabled');
+        btn.classList.remove('selected', 'disabled');
+        btn.disabled = false;
     });
     personnelButtons.forEach(btn => btn.classList.remove('selected'));
 }
 
-// 초기화 및 이벤트 리스너 설정
-document.addEventListener("DOMContentLoaded", function () {
-	
-	  // 이미지 더보기 모달 외부 클릭 시 닫기
-	  modal.addEventListener('click', (e) => {
-	    if (e.target === modal) {
-	      modal.style.display = 'none';
-	    }
-	  });
-	
-    // page-header에서 restNo 가져오기
-    const pageHeader = document.querySelector(".page-header");
-    if (pageHeader) {
-        restNo = pageHeader.dataset.rest_no;
-    } else {
-        console.error("page-header 요소를 찾을 수 없습니다.");
-        restNo = null;
-    }
-    
-    showCommentsImage();
-    
-    // 중복된 store-details 요소 정리
-    const storeDetailsElements = document.querySelectorAll('.store-details');
-    if (storeDetailsElements.length > 1) {
-        for (let i = 1; i < storeDetailsElements.length; i++) {
-            storeDetailsElements[i].remove();
+//모달 외부 클릭 시 닫기 헬퍼 함수
+function addModalCloseHandler(modalElement) {
+    modalElement.addEventListener('click', e => {
+        if (e.target === modalElement) {
+            modalElement.style.display = 'none';
         }
+    });
+}
+
+// 문서 로드 후 이벤트 바인딩
+document.addEventListener("DOMContentLoaded", function () {
+	// page-header에서 restNo 가져오기
+    const pageHeader = document.querySelector(".page-header");
+    restNo = pageHeader ? pageHeader.dataset.rest_no : null;
+    if (!restNo) {
+        console.error("page-header 요소를 찾을 수 없습니다.");
     }
 
-    // restNo가 존재하면 데이터 로드
+    showCommentsImage();
+
+    // 중복 store-details 제거
+    const storeDetailsElements = document.querySelectorAll('.store-details');
+    storeDetailsElements.forEach((el, i) => i > 0 && el.remove());
+
+    // 가게 정보 로딩
     if (restNo) {
         fetchStoreDetails();
     } else {
@@ -120,49 +104,31 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // 모달 창 외부 클릭 감지 (viewModal)
-    if (viewModal) {
-        viewModal.addEventListener('click', function (event) {
-            if (event.target === viewModal) {
-                viewModal.style.display = 'none';
-            }
-        });
-    }
-    // 더보기 버튼 (viewModal 열기)
-    if (viewBtn) {
-        viewBtn.addEventListener('click', () => {
-            viewModal.style.display = 'flex';
-        });
-    }
-    // 예약 버튼 (reservationModal 열기)
-    if (reservationBtn) {
-        reservationBtn.addEventListener('click', () => {
-        	if(mem_no == 0){
-                alert("로그인을 해주세요.");
-                return;
-            }
-            reservationModal.style.display = 'flex';
-            selectedMonth = new Date().getMonth() + 1; // 현재 월로 설정
-            if (monthSelect) monthSelect.value = selectedMonth.toString();
-            renderCalendar(selectedMonth);
-        });
-    }
-    // 예약 모달 닫기 버튼
-    if (closeModalBtn) {
-        closeModalBtn.addEventListener('click', () => {
-            reservationModal.style.display = 'none';
-            resetSelections();
-        });
-    }
-    // 월 선택 (달력 업데이트)
-    if (monthSelect) {
-        monthSelect.addEventListener('change', (e) => {
-            selectedMonth = parseInt(e.target.value);
-            resetTimeAndPersonnel(); // 시간과 인원 초기화
-            renderCalendar(selectedMonth);
-        });
-    }
-    // 시간 선택 버튼
+    // 모달 관련 처리
+    addModalCloseHandler(modal);
+    addModalCloseHandler(reservationModal);
+    addModalCloseHandler(favoriteModal);
+
+    // 예약 관련 처리
+    reservationBtn.addEventListener('click', () => {
+        if (mem_no == 0) return alert("로그인을 해주세요.");
+        reservationModal.style.display = 'flex';
+        selectedMonth = new Date().getMonth() + 1;
+        monthSelect && (monthSelect.value = selectedMonth);
+        renderCalendar(selectedMonth);
+    });
+    
+    closeModalBtn.addEventListener('click', () => {
+        reservationModal.style.display = 'none';
+        resetSelections();
+    });
+    
+    monthSelect.addEventListener('change', (e) => {
+        selectedMonth = parseInt(e.target.value);
+        resetTimeAndPersonnel();
+        renderCalendar(selectedMonth);
+    });
+    
     const timeButtons = document.querySelectorAll('.time-btn');
     timeButtons.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -173,7 +139,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
     
-    // 인원 선택 버튼
     const personnelButtons = document.querySelectorAll('.personnel-btn');
     personnelButtons.forEach(btn => {
     	btn.addEventListener('click', () => {
@@ -184,123 +149,84 @@ document.addEventListener("DOMContentLoaded", function () {
     	});
     });
 
-    // 예약 확인 버튼
-    if (confirmReservationBtn) {
-        confirmReservationBtn.addEventListener('click', () => {
-            if (!selectedDate || !selectedTime || !selectedMonth || !selectedPersonnel) {
-                alert('날짜와 시간, 인원을 선택해주세요.');
-                return;
-            }
-            const resDate = `2025-${selectedMonth}-${selectedDate}`; // 예:
-																		// "2025-4-24"
-            // resDate 형식 검증
-            if (!/^\d{4}-\d{1,2}-\d{1,2}$/.test(resDate)) {
-                alert('유효한 날짜 형식이 아닙니다.');
-                return;
-            }
-            const reservationData = {
-                rest_no: restNo,
-                mem_no: mem_no,
-                res_date: resDate,
-                res_time: selectedTime,
-                res_personnel: selectedPersonnel,
-                res_memo: '예약 메모'
-            };
-            fetch('/search/reservations/add', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify(reservationData)
-            })
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(errData => {
-                        throw new Error(errData.message || '서버 오류');
-                    });
-                }
-                return response.json();
-            })
-            .then(data => {
-                alert(`예약이 완료되었습니다!\n날짜: 2025년 ${selectedMonth}월 ${selectedDate}일\n시간: ${selectedTime}\n인원 : ${selectedPersonnel}`);
-                reservationModal.style.display = 'none';
-                resetSelections();
-                updateTimeSlots(restNo, resDate); // 시간 슬롯 갱신
-            })
-            .catch(err => alert('예약 실패: ' + err.message));
-        });
-    }
+    confirmReservationBtn.addEventListener('click', () => {
+        if (!selectedDate || !selectedTime || !selectedMonth || !selectedPersonnel) {
+            return alert('날짜와 시간, 인원을 선택해주세요.');
+        }
 
-    // 모달 바깥 클릭 시 닫기 (favoriteModal)
-    if (favoriteModal) {
-        favoriteModal.addEventListener('click', function (event) {
-            if (event.target === favoriteModal) {
-                favoriteModal.style.display = 'none';
-            }
-        });
-    }
+        const resDate = `2025-${selectedMonth}-${selectedDate}`;
+        if (!/^\d{4}-\d{1,2}-\d{1,2}$/.test(resDate)) {
+            return alert('유효한 날짜 형식이 아닙니다.');
+        }
 
-    if (closeFavoriteModalBtn) {
-        closeFavoriteModalBtn.addEventListener('click', () => {
-            favoriteModal.style.display = 'none';
-        });
-    }
+        const reservationData = {
+            rest_no: restNo,
+            mem_no: mem_no,
+            res_date: resDate,
+            res_time: selectedTime,
+            res_personnel: selectedPersonnel,
+            res_memo: '예약 메모'
+        };
 
-    if (publicFavoriteBtn) {
-        publicFavoriteBtn.addEventListener('click', () => {
-            addFavorite(true); // 공개
-        });
-    }
-
-    if (privateFavoriteBtn) {
-        privateFavoriteBtn.addEventListener('click', () => {
-            addFavorite(false); // 비공개
-        });
-    }
-
-    // 코멘트 업로드 버튼
-    if (commentBtn) {
-        commentBtn.addEventListener('click', uploadComment);
-    }
+        fetch('/search/reservations/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(reservationData)
+        })
+        .then(res => res.ok ? res.json() : res.json().then(err => Promise.reject(err.message || '서버 오류')))
+        .then(() => {
+            alert(`예약이 완료되었습니다!\n날짜: 2025년 ${selectedMonth}월 ${selectedDate}일\n시간: ${selectedTime}\n인원 : ${selectedPersonnel}`);
+            reservationModal.style.display = 'none';
+            resetSelections();
+            updateTimeSlots(restNo, resDate);
+        })
+        .catch(err => alert('예약 실패: ' + err));
+    });
+    
+    // 버튼 관련 처리
+    closeFavoriteModalBtn.addEventListener('click', () => favoriteModal.style.display = 'none');
+    publicFavoriteBtn.addEventListener('click', () => addFavorite(true));
+    privateFavoriteBtn.addEventListener('click', () => addFavorite(false));
+    commentBtn.addEventListener('click', uploadComment);
 
     checkInitialFavoriteStatus(); // 초기 상태 확인
 });
 
-// 가게 상세 정보 가져오기 및 렌더링
-function fetchStoreDetails() {
-    const storeDetails = document.querySelector('.store-details');
-
-    get(data => {
-        renderStoreDetails(data);
-        showViewList();
-        fetchComments();
-        showAvgRate();
-        showCommentsImage();
-        storeMenu();
-        
-        initMap(store_latitude, store_longitude, store_name);
-    });
-}
+//가게 상세 정보 전역 변수
 let store_name = '';
 let store_latitude = '';
 let store_longitude = '';
-// 가게 상세 정보 렌더링
+let menuLoaded = false;
+
+// 가게 상세 정보 가져오기 및 렌더링
+function fetchStoreDetails() {
+    get(data => {
+        renderStoreDetails(data);
+        fetchComments();
+        showViewList();
+        showAvgRate();
+        showCommentsImage();
+        storeMenu();
+        initMap(store_latitude, store_longitude, store_name);
+    });
+}
+
 function renderStoreDetails(data) {
     const storeDetails = document.querySelector('.store-info');
-    if (!storeDetails) {
-        console.error('가게 상세 정보 컨테이너(.store-info)를 찾을 수 없습니다.');
-        return;
-    }
+    if (!storeDetails) return console.error('가게 상세 정보 컨테이너(.store-info)를 찾을 수 없습니다.');
 
     const storeData = Array.isArray(data) && data.length > 0 ? data[0] : data;
     if (!storeData || Object.keys(storeData).length === 0) {
         storeDetails.innerHTML = '<tr><td colspan="2">가게 정보를 찾을 수 없습니다.</td></tr>';
         return;
     }
-    store_name = storeData.rest_name;
-    store_latitude = storeData.latitude;
-    store_longitude = storeData.longitude;
+    ({ rest_name: store_name,
+       latitude: store_latitude,
+       longitude: store_longitude } = storeData);
+    
     storeDetails.innerHTML = `
     	<div class="info-item" id="rest_name">
             <div class="info-label">가게 이름 :</div>
@@ -337,388 +263,313 @@ function renderStoreDetails(data) {
     }
 }
 
-// 데이터 가져오기 공통 함수
 function get(callback) {
-    if (!restNo) {
-        console.error("restNo가 정의되지 않았습니다.");
-        callback({});
-        return;
-    }
-
-    const url = `/search/view/${restNo}`;
-    fetch(url, {
-        headers: {
-            'Accept': 'application/json'
-        }
+	if (!restNo) return console.error("restNo가 정의되지 않았습니다."), callback({});
+	
+	fetch(`/search/view/${restNo}`, {
+        headers: { 'Accept': 'application/json' }
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(data => {
-        callback(data || {});
-    })
-    .catch(err => {
-        console.error("Fetch error:", err.message);
-        callback({});
-    });
+    .then(res => res.ok ? res.json() : Promise.reject(res))
+    .then(data => callback(data || {}))
+    .catch(err => console.error("Fetch error:", err.message), callback({}));
 }
-let menuLoaded = false;
-// 가게 메뉴 정보 렌더링
+
 function storeMenu() {
     const storeMenus = document.querySelector('.store-menu');
-    if (!storeMenus) {
-        console.error('가게 메뉴 정보(.store-map)를 찾을 수 없습니다.');
-        return;
-    }
+    if (!storeMenus) return console.error('가게 메뉴 정보(.store-menu)를 찾을 수 없습니다.');
+    if (menuLoaded) return;
     
-    if (menuLoaded) {
-        return; // 이미 로드된 경우 리턴
-    }
-    
-    getMenu(jsonArray => {
-        let msg = '';
-        jsonArray.forEach(json => {
-            msg += `<div class="menu">`;
-            msg += `<span class="menu_name">${json.menu_name}</span>`;
-            msg += `<span class="menu_price">${json.menu_price}</span>`;
-            msg += `</div>`;
-        });
-
-        storeMenus.innerHTML = msg;
-        menuLoaded = true; // 로드 완료 플래그 설정
+    getMenu(menuItems => {
+        storeMenus.innerHTML = menuItems.map(({ menu_name, menu_price }) => `
+            <div class="menu">
+                <span class="menu_name">${menu_name}</span>
+                <span class="menu_price">${menu_price}</span>
+            </div>`).join('');
+        menuLoaded = true;
     });
 }
 
 function getMenu(callback) {
-    if (!restNo) {
-        console.error("restNo가 정의되지 않았습니다.");
-        callback({});
-        return;
-    }
+    if (!restNo) return console.error("restNo가 정의되지 않았습니다."), callback([]);
 
-    const url = `/search/view/menu/${restNo}`;
-    fetch(url, {
-        headers: {
-            'Accept': 'application/json'
-        }
+    fetch(`/search/view/menu/${restNo}`, {
+        headers: { 'Accept': 'application/json' }
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(data => {
-        callback(data || {});
-    })
-    .catch(err => {
-        console.error("Fetch error:", err.message);
-        callback({});
-    });
+    .then(res => res.ok ? res.json() : Promise.reject(res))
+    .then(data => callback(data || []))
+    .catch(err => console.error("Fetch error:", err.message), callback([]));
 }
 
-// 탭 전환 로직
-document.addEventListener('DOMContentLoaded', () => {
-    const buttons = document.querySelectorAll('.store-tap button');
-    const contents = document.querySelectorAll('.store-info, .store-menu');
-
-    const showTab = (targetId) => {
-        contents.forEach(content => {
-            content.style.display = 'none';
-        });
-
-        buttons.forEach(button => {
-            button.classList.remove('active');
-        });
-
-        const targetContent = document.querySelector(`.${targetId}`);
-        if (targetContent) {
-            targetContent.style.display = 'block';
-        }
-
-        const activeButton = document.querySelector(`[data-target="${targetId}"]`);
-        if (activeButton) {
-            activeButton.classList.add('active');
-        }
-
-        // 메뉴 탭 클릭 시 storeMenu 호출
-        if (targetId === 'store-menu') {
-            storeMenu();
-        }
-    };
-
-    buttons.forEach(button => {
-        button.addEventListener('click', () => {
-            const targetId = button.getAttribute('data-target');
-            showTab(targetId);
-        });
-    });
-
-    // 초기 상태: store-info 표시 (renderStoreDetails는 JSP에서 호출)
-    showTab('store-info');
-});
-
-function initMap(lat, lng, storeName) {
-    const mapContainer = document.getElementById('map');
-    const mapOption = {
-        center: new kakao.maps.LatLng(lat, lng),
-        level: 3
-    };
-
-    const map = new kakao.maps.Map(mapContainer, mapOption);
-
-    const marker = new kakao.maps.Marker({
-        position: mapOption.center,
-        map: map
-    });
-
-    const infoWindow = new kakao.maps.InfoWindow({
-        content: `<div style="padding:5px;font-size:13px;">${storeName}</div>`,
-        position: mapOption.center
-    });
-    infoWindow.open(map, marker);
-}
-
-// 관련 가게 슬라이드 표시
 function showViewList() {
     const imageUL = document.querySelector(".slides-wrapper");
-    if (!imageUL) {
-        console.error('슬라이드 컨테이너(.slides-wrapper)를 찾을 수 없습니다.');
-        return;
-    }
+    if (!imageUL) return console.error('슬라이드 컨테이너(.slides-wrapper)를 찾을 수 없습니다.');
 
-    getList(jsonArray => {
-        for (let i = jsonArray.length - 1; i > 0; i--) {
+    getList(images => {
+        for (let i = images.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            [jsonArray[i], jsonArray[j]] = [jsonArray[j], jsonArray[i]];
+            [images[i], images[j]] = [images[j], images[i]];
         }
-
-        let msg = '';
-        jsonArray.forEach(json => {
-            msg += `<div class="slide">`;
-            msg += `<img src="${json.rest_img_name || '/resources/images/noImage.png'}" alt="이미지 없음" onerror="this.src='/resources/images/noImage.png';">`;
-            msg += `</div>`;
-        });
-
-        imageUL.innerHTML = msg;
+        imageUL.innerHTML = images.map(({ rest_img_name }) => `
+            <div class="slide">
+                <img src="${rest_img_name || '/resources/images/noImage.png'}" alt="이미지 없음" onerror="this.src='/resources/images/noImage.png';">
+            </div>`).join('');
         initializeSlides();
     });
 }
 
 function getList(callback) {
-    if (!restNo) {
-        console.error("restNo가 정의되지 않았습니다.");
-        callback([]);
-        return;
-    }
+    if (!restNo) return console.error("restNo가 정의되지 않았습니다."), callback([]);
 
-    const url = `/search/view/${restNo}`;
-    fetch(url, {
-        headers: {
-            'Accept': 'application/json'
-        }
+    fetch(`/search/view/${restNo}`, {
+        headers: { 'Accept': 'application/json' }
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(data => {
-        callback(data || []);
-    })
-    .catch(err => {
-        console.error("Fetch error:", err.message);
-        callback([]);
-    });
+    .then(res => res.ok ? res.json() : Promise.reject(res))
+    .then(data => callback(data || []))
+    .catch(err => console.error("Fetch error:", err.message), callback([]));
 }
 
-// 슬라이드 기능
 function initializeSlides() {
-    const slidesWrapper = document.querySelector('.slides-wrapper');
-    const slides = document.querySelectorAll('.slide');
-    const totalSlides = slides.length;
+    const wrapper = document.querySelector('.slides-wrapper');
+    let slides = [...document.querySelectorAll('.slide')];
+    if (slides.length === 0) return wrapper.innerHTML = '<div class="slide">이미지 준비중 입니다.</div>';
 
-    if (totalSlides === 0) {
-        slidesWrapper.innerHTML = '<div class="slide">이미지 준비중 입니다.</div>';
-        return;
-    }
+    const validVisibleSlides = Math.min(visibleSlides, slides.length);
+    slides.slice(0, validVisibleSlides).forEach(slide => wrapper.appendChild(slide.cloneNode(true)));
+    slides.slice(-validVisibleSlides).forEach(slide => wrapper.insertBefore(slide.cloneNode(true), wrapper.querySelector('.slide')));
 
-    // 슬라이드 복제: 무한 루프를 위해 첫 4개와 마지막 4개를 추가
-    const cloneCount = visibleSlides;
-    for (let i = 0; i < cloneCount; i++) {
-        const cloneFirst = slides[i].cloneNode(true);
-        slidesWrapper.appendChild(cloneFirst);
-    }
-    for (let i = totalSlides - cloneCount; i < totalSlides; i++) {
-        const cloneLast = slides[i].cloneNode(true);
-        slidesWrapper.insertBefore(cloneLast, slides[0]);
-    }
-
-    // 초기 위치 설정: 복제된 마지막 슬라이드에서 시작
-    currentIndex = cloneCount; // 복제된 마지막 슬라이드 위치
-    const offset = currentIndex * (100 / visibleSlides);
-    slidesWrapper.style.transform = `translateX(-${offset}%)`;
-    slidesWrapper.style.transition = 'none'; // 초기 위치 설정 시 애니메이션 없음
-    setTimeout(() => {
-        slidesWrapper.style.transition = 'transform 0.5s ease-in-out';
-    }, 0);
+    currentIndex = validVisibleSlides;
+    const offset = currentIndex * (100 / validVisibleSlides);
+    wrapper.style.transform = `translateX(-${offset}%)`;
+    wrapper.style.transition = 'none';
+    setTimeout(() => wrapper.style.transition = 'transform 0.5s ease-in-out', 0);
 }
 
 function moveSlide(direction) {
-    const slidesWrapper = document.querySelector('.slides-wrapper');
+    const wrapper = document.querySelector('.slides-wrapper');
     const slides = document.querySelectorAll('.slide');
-    const totalSlides = slides.length - 2 * visibleSlides; // 원본 슬라이드 수
-    const totalWithClones = slides.length;
+    const total = slides.length - 2 * visibleSlides;
+    const allSlides = slides.length;
 
-    if (totalSlides <= visibleSlides) {
-        return;
+    // visibleSlides 유효성 검증
+    if (visibleSlides <= 0 || total <= visibleSlides) return;
+
+    currentIndex += direction * visibleSlides;
+
+    let resetTransition = false;
+    if (currentIndex >= allSlides - visibleSlides) {
+        currentIndex = visibleSlides;
+        resetTransition = true;
+    } else if (currentIndex < visibleSlides) {
+        currentIndex = allSlides - 2 * visibleSlides;
+        resetTransition = true;
     }
 
-    currentIndex += direction * visibleSlides; // 4개씩 이동
-
-    // 무한 루프 처리
-    if (currentIndex >= totalWithClones - visibleSlides) {
-        currentIndex = visibleSlides; // 복제된 마지막 슬라이드 위치로
-        slidesWrapper.style.transition = 'none';
-        const offset = currentIndex * (100 / visibleSlides);
-        slidesWrapper.style.transform = `translateX(-${offset}%)`;
-        setTimeout(() => {
-            slidesWrapper.style.transition = 'transform 0.5s ease-in-out';
-        }, 0);
-    } else if (currentIndex < visibleSlides) {
-        currentIndex = totalWithClones - 2 * visibleSlides; // 복제된 첫 슬라이드 직전
-        slidesWrapper.style.transition = 'none';
-        const offset = currentIndex * (100 / visibleSlides);
-        slidesWrapper.style.transform = `translateX(-${offset}%)`;
-        setTimeout(() => {
-            slidesWrapper.style.transition = 'transform 0.5s ease-in-out';
-        }, 0);
-    } else {
-        const offset = currentIndex * (100 / visibleSlides);
-        slidesWrapper.style.transform = `translateX(-${offset}%)`;
+    const offset = currentIndex * (100 / visibleSlides);
+    wrapper.style.transform = `translateX(-${offset}%)`;
+    if (resetTransition) {
+        wrapper.style.transition = 'none';
+        setTimeout(() => wrapper.style.transition = 'transform 0.5s ease-in-out', 0);
     }
 }
 
-// 달력 및 예약 기능 -----------------------------------------
+function getAvgRate(callback) {
+	if (!restNo) return console.error("restNo가 정의되지 않았습니다."), callback(null);
+	
+	fetch(`/comment/rate/${restNo}`, {
+		method: 'GET',
+		headers: { 'Accept': 'application/json' }
+	})
+	.then(res => res.ok ? res.json() : Promise.reject(res))
+	.then(callback)
+	.catch(err => {
+		callback(null);
+	});
+}
+
+function getAgeAvgRate(callback) {
+    fetch(`/comment/ageRate/${restNo}`, {
+        method: 'GET',
+        headers: { 'Accept': 'application/json' }
+    })
+    .then(res => res.ok ? res.json() : Promise.reject(res))
+    .then(callback)
+    .catch(err => {
+        callback(null);
+    });
+}
+
+function showAvgRate() {
+    const avgRateEl = document.querySelector(".store-list");
+    if (!avgRateEl) return;
+
+    getAvgRate(avg => {
+        const average = (typeof avg === 'number' && !isNaN(avg)) ? avg.toFixed(1) : '0.0';
+
+        let html = `
+            <div class="store-item">
+                <span class="name">가게 총 평점</span>
+                <span class="rating">${average}</span>
+            </div>
+            <div class="store-item" id="age_rate">
+                <span class="name">&lt;연령별 평점&gt;</span>
+                <span class="rating"></span>
+            </div>
+        `;
+
+        // 연령대별 평점 이어 붙이기
+        getAgeAvgRate(data => {
+            html += renderAgeRateHtml(data);
+            avgRateEl.innerHTML = html;
+        });
+    });
+}
+
+function renderAgeRateHtml(data) {
+    const ageGroups = [10, 20, 30, 40];
+    return ageGroups.map(age => {
+        const item = Array.isArray(data) ? data.find(d => d.age_group === age) : null;
+        const rating = item ? parseFloat(item.avg_rating).toFixed(1) : '0.0';
+        return `
+            <div class="store-item">
+                <span class="name">${age}대</span>
+                <span class="rating">${rating}</span>
+            </div>
+        `;
+    }).join('');
+}
+
+// 탭 전환 처리
+document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('.store-tap button');
+    const contents = document.querySelectorAll('.store-info, .store-menu');
+
+    const showTab = id => {
+        contents.forEach(c => c.style.display = 'none');
+        buttons.forEach(b => b.classList.remove('active'));
+
+        document.querySelector(`.${id}`).style.display = 'block';
+        document.querySelector(`[data-target="${id}"]`).classList.add('active');
+
+        if (id === 'store-menu') storeMenu();
+    };
+
+    buttons.forEach(btn => btn.addEventListener('click', () => showTab(btn.dataset.target)));
+    showTab('store-info');
+});
+
+function initMap(lat, lng, storeName) {
+    const container = document.getElementById('map');
+    const pos = new kakao.maps.LatLng(lat, lng);
+    const map = new kakao.maps.Map(container, { center: pos, level: 3 });
+    
+    const marker = new kakao.maps.Marker({ position: pos, map });
+    new kakao.maps.InfoWindow({ content: `<div style="padding:5px;font-size:13px;">${storeName}</div>`, position: pos }).open(map, marker);
+}
+
+// 예약 - 달력 기능
 function renderCalendar(month) {
     if (!calendarDays) return;
     calendarDays.innerHTML = '';
 
+    const fragment = document.createDocumentFragment();
     const year = new Date().getFullYear();
+    const today = new Date();
+    const todayDate = today.getDate();
+    const todayMonth = today.getMonth() + 1;
+    const todayYear = today.getFullYear();
+
     const daysInMonth = new Date(year, month, 0).getDate();
     const firstDay = new Date(year, month - 1, 1).getDay();
     const prevMonth = month === 1 ? 12 : month - 1;
-    const prevMonthYear = month === 1 ? year - 1 : year;
-    const daysInPrevMonth = new Date(prevMonthYear, prevMonth, 0).getDate();
+    const prevYear = month === 1 ? year - 1 : year;
+    const daysInPrevMonth = new Date(prevYear, prevMonth, 0).getDate();
     const prevMonthStart = daysInPrevMonth - firstDay + 1;
 
-    const today = new Date();
-    const todayDate = today.getDate();
-    const todayMonth = today.getMonth() + 1; // JavaScript 월은 0부터 시작
-    const todayYear = today.getFullYear();
+    const isPast = (y, m, d) => new Date(y, m - 1, d).setHours(0, 0, 0, 0) < today.setHours(0, 0, 0, 0);
 
-    // 이전 달의 날짜 채우기
+    // 이전 달 날짜 채우기
     for (let i = 0; i < firstDay; i++) {
-        const day = document.createElement('div');
-        day.classList.add('day', 'disabled');
-        day.textContent = prevMonthStart + i;
-        calendarDays.appendChild(day);
+        const day = createDayCell(prevMonthStart + i, ['disabled']);
+        fragment.appendChild(day);
     }
 
-    // 현재 달의 날짜 채우기
+    // 현재 달 날짜
     for (let i = 1; i <= daysInMonth; i++) {
-        const day = document.createElement('div');
-        day.classList.add('day');
-        day.textContent = i;
+        const isToday = year === todayYear && month === todayMonth && i === todayDate;
+        const disabled = isPast(year, month, i);
+        const day = createDayCell(i, disabled ? ['disabled'] : []);
 
-        const currentDate = new Date(year, month - 1, i);
-        if (currentDate < today.setHours(0, 0, 0, 0)) {
-            day.classList.add('disabled');
-        } else {
+        if (!disabled) {
             day.addEventListener('click', () => {
-                const days = document.querySelectorAll('.day:not(.disabled)');
-                days.forEach(d => d.classList.remove('selected'));
-                day.classList.add('selected');
-                selectedDate = day.textContent;
-                resetTimeAndPersonnel(); // 시간과 인원 초기화
-                const resDate = `2025-${month}-${selectedDate}`;
-                updateTimeSlots(restNo, resDate);
-            });
-
-            // 오늘 날짜가 현재 월에 있고, 해당 날짜라면 선택 상태로 설정
-            if (year === todayYear && month === todayMonth && i === todayDate) {
+                document.querySelectorAll('.day:not(.disabled)').forEach(d => d.classList.remove('selected'));
                 day.classList.add('selected');
                 selectedDate = i.toString();
-                resetTimeAndPersonnel(); // 시간과 인원 초기화
-                const resDate = `2025-${month}-${selectedDate}`;
-                updateTimeSlots(restNo, resDate); // 시간 슬롯 즉시 업데이트
+                resetTimeAndPersonnel();
+                updateTimeSlots(restNo, `2025-${month}-${selectedDate}`);
+            });
+
+            if (isToday) {
+                day.classList.add('selected');
+                selectedDate = i.toString();
+                resetTimeAndPersonnel();
+                updateTimeSlots(restNo, `2025-${month}-${selectedDate}`);
             }
         }
 
-        calendarDays.appendChild(day);
+        fragment.appendChild(day);
     }
 
-    // 남은 셀을 다음 달의 날짜로 채워 6줄(42셀) 완성
-    const totalDays = firstDay + daysInMonth;
-    const remainingCells = 42 - totalDays;
-    for (let i = 1; i <= remainingCells; i++) {
-        const day = document.createElement('div');
-        day.classList.add('day', 'disabled');
-        day.textContent = i;
-        calendarDays.appendChild(day);
+    // 다음 달 날짜로 빈 칸 채우기
+    const totalCells = firstDay + daysInMonth;
+    const remaining = 42 - totalCells;
+    for (let i = 1; i <= remaining; i++) {
+        const day = createDayCell(i, ['disabled']);
+        fragment.appendChild(day);
     }
+
+    calendarDays.appendChild(fragment);
+}
+
+function createDayCell(text, classes = []) {
+    const day = document.createElement('div');
+    day.classList.add('day', ...classes);
+    day.textContent = text;
+    return day;
 }
 
 function resetSelections() {
-    selectedDate = null;
-    selectedTime = null;
-    selectedPersonnel = null;
-    selectedMonth = new Date().getMonth() + 1; // 현재 월로 초기화
+    selectedDate = selectedTime = selectedPersonnel = null;
+    selectedMonth = new Date().getMonth() + 1;
     if (monthSelect) monthSelect.value = selectedMonth.toString();
-    const days = document.querySelectorAll('.day:not(.disabled)');
-    days.forEach(day => day.classList.remove('selected'));
-    const timeButtons = document.querySelectorAll('.time-btn');
-    timeButtons.forEach(btn => btn.classList.remove('selected'));
-    const personnelButtons = document.querySelectorAll('.personnel-btn');
-    personnelButtons.forEach(btn => btn.classList.remove('selected'));
-    resetTimeAndPersonnel(); // 시간과 인원 초기화
+
+    document.querySelectorAll('.day.selected').forEach(d => d.classList.remove('selected'));
+    document.querySelectorAll('.time-btn.selected').forEach(b => b.classList.remove('selected'));
+    document.querySelectorAll('.personnel-btn.selected').forEach(b => b.classList.remove('selected'));
+
+    resetTimeAndPersonnel();
     renderCalendar(selectedMonth);
 }
 
-// 시간 슬롯 비활성화 함수
 function updateTimeSlots(restNo, resDate) {
     fetch(`/search/reservations/times?rest_no=${restNo}&res_date=${resDate}`, {
         method: 'GET',
-        headers: {
-            'Accept': 'application/json'
-        }
+        headers: { 'Accept': 'application/json' }
     })
     .then(response => {
         if (!response.ok) {
-            return response.json().then(errData => {
-                throw new Error(errData.message || '서버 오류');
-            });
+            return response.json().then(err => { throw new Error(err.message || '서버 오류'); });
         }
         return response.json();
     })
     .then(data => {
         if (data.status === 'success') {
-            const reservedTimes = data.reservedTimes || [];
-            
+            const reserved = data.reservedTimes || [];
             timeButtons.forEach(button => {
                 const time = button.textContent.trim();
-                button.disabled = false; // 기본적으로 활성화
-                button.classList.remove('disabled');
-                
-                if (reservedTimes.includes(time)) {
-                    button.disabled = true;
-                    button.classList.add('disabled');
-                    button.title = '이미 예약된 시간입니다.';
-                }
+                const isReserved = reserved.includes(time);
+                button.disabled = isReserved;
+                button.classList.toggle('disabled', isReserved);
+                button.title = isReserved ? '이미 예약된 시간입니다.' : '';
             });
         } else {
             throw new Error(data.message || '예약된 시간 조회 실패');
@@ -726,7 +577,7 @@ function updateTimeSlots(restNo, resDate) {
     })
     .catch(err => {
         console.error('예약된 시간 조회 실패:', err.message);
-        console.log('에러 상세:', err); // 추가
+        console.log('에러 상세:', err);
         timeButtons.forEach(button => {
             button.disabled = false;
             button.classList.remove('disabled');
@@ -734,472 +585,237 @@ function updateTimeSlots(restNo, resDate) {
     });
 }
 
-// 댓글 입력 제한
-document.addEventListener('DOMContentLoaded', function () {
-    const textarea = document.getElementById('comment');
-    const maxChars = 500; // 최대 문자 수
-    const maxLines = 20; // 최대 줄 수
-
-    textarea.setAttribute('rows', maxLines); // rows 속성을 20으로 고정
-
-    textarea.addEventListener('input', function () {
-        // 1. 문자 수 제한
-        if (textarea.value.length > maxChars) {
-            textarea.value = textarea.value.substring(0, maxChars);
-        }
-
-        // 2. 줄 수 제한 (실제 줄 바꿈 기준)
-        let lines = textarea.value.split('\n');
-        if (lines.length > maxLines) {
-            textarea.value = lines.slice(0, maxLines).join('\n');
-        }
-
-        // 3. 자동 줄 바꿈 포함한 줄 수 계산 및 제한
-        const lineHeight = parseFloat(getComputedStyle(textarea).lineHeight) || 20; // 줄 높이
-																					// (기본값
-																					// 20px)
-        const totalHeight = textarea.scrollHeight; // 스크롤 높이
-        const calculatedLines = Math.floor(totalHeight / lineHeight); // 실제
-																		// 렌더링 줄
-																		// 수
-
-        if (calculatedLines > maxLines) {
-            // 줄 수 초과 시 마지막 줄 잘라내기
-            let text = textarea.value;
-            while (Math.floor(textarea.scrollHeight / lineHeight) > maxLines && text.length > 0) {
-                text = text.substring(0, text.length - 1);
-                textarea.value = text;
-            }
-        }
-    });
-
-    // 키보드 입력 시 줄 바꿈 제한
-    textarea.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter') {
-            const lines = textarea.value.split('\n');
-            if (lines.length >= maxLines) {
-                e.preventDefault(); // Enter 키 입력 방지
-            }
-        }
-    });
-});
-
-// 코멘트 목록 조회 및 표시 -----------------------------------------------
+// 코멘트 목록 조회 -------------------------------------------
 function fetchComments() {
-    const commentList = document.querySelector(".panel-footer-body ul.chat");
-    if (!commentList) {
-        console.error('코멘트 목록 컨테이너(.panel-footer-body ul.chat)를 찾을 수 없습니다.');
-        return;
-    }
+	  const commentList = document.querySelector(".panel-footer-body ul.chat");
+	  if (!commentList) return console.error('코멘트 목록 컨테이너(.panel-footer-body ul.chat)를 찾을 수 없습니다.');
 
-    getComments(data => {
-        const seenComNos = new Set();
-        let msg = '';
-        data.forEach(comment => {
-            if (seenComNos.has(comment.com_no)) {
-                return;
-            }
-            seenComNos.add(comment.com_no);
+	  getComments(data => {
+	    const seen = new Set();
+	    commentList.innerHTML = data.map(comment => {
+	      if (seen.has(comment.com_no)) return '';
+	      seen.add(comment.com_no);
 
-            const rate = parseInt(comment.com_rate) || 0;
-            let starsHtml = '<div class="comment-rating">';
-            for (let i = 1; i <= 5; i++) {
-                const starClass = i <= rate ? 'star filled' : 'star';
-                starsHtml += `<div class="${starClass}"></div>`;
-            }
-            starsHtml += '</div>';
+	      const rate = Number(comment.com_rate) || 0;
+	      const stars = Array.from({ length: 5 }, (_, i) => `<div class="star ${i < rate ? 'filled' : ''}"></div>`).join('');
 
-            // 첨부 파일 처리
-            let attachHtml = '';
-            const attachList = comment.com_attachList || []; // null이면 빈 배열로
-																// 초기화
-            if (attachList.length > 0) {
-                attachHtml = '<div class="comment-attachments">';
-                attachList.forEach(attach => {
-                    const fileName = `${attach.att_uuid}_${attach.att_name}`;
-                    const imageUrl = `${attach.att_path}/${encodeURIComponent(fileName)}`;
-                    attachHtml += `
-                        <div class="attachment">
-                            <img src="${imageUrl}" alt="${attach.att_name}" class="comment-image">
-                        </div>
-                    `;
-                });
-                attachHtml += '</div>';
-            } else {
-                attachHtml = ''; // 선택적 메시지
-            }
+	      const attachList = Array.isArray(comment.com_attachList) ? comment.com_attachList : [];
+	      const attachHtml = attachList.length ? `
+	        <div class="comment-attachments">
+	          ${attachList.map(a => {
+	            const fileName = `${a.att_uuid}_${a.att_name}`;
+	            const imageUrl = `${a.att_path}/${encodeURIComponent(fileName)}`;
+	            return `<div class="attachment"><img src="${imageUrl}" alt="${a.att_name}" class="comment-image"></div>`;
+	          }).join('')}
+	        </div>` : '';
 
-            // 프로필 이미지 처리
-            const profileImg = comment.com_memberData && comment.com_memberData.mem_img
-                ? `/resources/upload/${comment.com_memberData.mem_img}`
-                : '/resources/images/profile_1.png';
+	      const memberData = comment.com_memberData || {};
+	      const profileImg = memberData.mem_img
+	        ? `/resources/upload/${memberData.mem_img}`
+	        : '/resources/images/profile_1.png';
+	      const nickName = memberData.mem_nick || memberData.mem_name || '익명';
+	      const isOwn = Number(mem_no) === Number(comment.mem_no);
 
-            // 닉네임 처리
-            const nickName = comment.com_memberData && comment.com_memberData.mem_nick
-                ? comment.com_memberData.mem_nick
-                : (comment.com_memberData && comment.com_memberData.mem_name || '익명');
+	      return `
+	        <li data-com_no="${comment.com_no}">
+	          <div class="chat-full" id="comment-${comment.com_no}">
+	            <div class="chat-header">
+	              <img src="${profileImg}" alt="프로필" class="profile-img" onerror="this.src='/resources/images/profile.png'">
+	              <strong>${nickName}</strong>
+	              <div class="header-right">
+	                <small class="pull-right">${formatDate(comment.com_date)}</small>
+	                <div class="comment-rating">${stars}</div>
+	              </div>
+	              ${isOwn ? `<button class="comment-delete-btn" data-com_no="${comment.com_no}" aria-label="코멘트 삭제">X</button>` : ''}
+	            </div>
+	            <div class="chat-body">${attachHtml}</div>
+	            <div class="chat-footer"><p>${comment.com_con || '내용 없음'}</p></div>
+	          </div>
+	        </li>`;
+	    }).join('');
 
-            // 삭제 버튼 표시 (로그인한 사용자의 mem_no와 코멘트의 mem_no 비교)
-            const isOwnComment = parseInt(mem_no) === parseInt(comment.mem_no);
-            const deleteButton = isOwnComment
-                ? `<button class="comment-delete-btn" data-com_no="${comment.com_no}" aria-label="코멘트 삭제">X</button>`
-                : '';
-
-            msg += `
-                <li data-com_no="${comment.com_no}">
-                    <div class="chat-full" id="comment-${comment.com_no }">
-                        <div class="chat-header">
-                            <img src="${profileImg}" alt="프로필" class="profile-img" onerror="this.src='/resources/images/profile.png'">
-                            <strong>${nickName}</strong>
-                            <div class="header-right">
-                                <small class="pull-right">${formatDate(comment.com_date)}</small>
-                                ${starsHtml}
-                            </div>
-                            ${deleteButton}
-                        </div>
-                        <div class="chat-body">
-                            ${attachHtml}
-                        </div>
-                        <div class="chat-footer">
-                            <p>${comment.com_con || '내용 없음'}</p>
-                        </div>
-                    </div>
-                </li>
-            `;
-        });
-
-        commentList.innerHTML = msg;
-
-        // 삭제 버튼 이벤트 리스너 추가 (이벤트 위임)
-        commentList.addEventListener('click', handleCommentDelete);
-    });
-}
+	    commentList.addEventListener('click', handleCommentDelete);
+	  });
+	}
 
 function getComments(callback) {
-    fetch(`/comment/pages/${restNo}`, {
-        method: 'GET',
-        headers: {
-            'Accept': 'application/json'
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(data => {
-        callback(data);
-    })
+  fetch(`/comment/pages/${restNo}`)
+    .then(res => res.ok ? res.json() : Promise.reject(res))
+    .then(callback)
     .catch(err => {
-        console.error("Fetch comments error:", err.message);
-        callback([]);
+      console.error("댓글 조회 오류:", err);
+      callback([]);
     });
 }
 
-// 코멘트 이미지들
 function showCommentsImage() {
-    const imageUL = document.querySelector(".image-wrapper");
-    if (!imageUL) {
-        console.error('이미지 컨테이너(.image-wrapper)를 찾을 수 없습니다.');
-        return;
-    }
+	  const imageUL = document.querySelector(".image-wrapper");
+	  if (!imageUL) return console.error('이미지 컨테이너(.image-wrapper)를 찾을 수 없습니다.');
 
-    getComments(data => {
-        const seenComNos = new Set();
-        let msg = '';
+	  getComments(data => {
+	    const seen = new Set();
+	    let html = '';
 
-        data.forEach(comment => {
-            // 중복 코멘트 제외
-            if (seenComNos.has(comment.com_no)) {
-                return;
-            }
-            seenComNos.add(comment.com_no);
+	    data.forEach(comment => {
+	      if (seen.has(comment.com_no)) return;
+	      seen.add(comment.com_no);
 
-            // 첨부 파일 처리
-            const attachList = comment.com_attachList || [];
-            if (attachList.length === 0) {
-                return;
-            }
+	      const attachList = Array.isArray(comment.com_attachList) ? comment.com_attachList : [];
+	      attachList.forEach(attach => {
+	        if (!attach.att_uuid || !attach.att_name || !attach.att_path) return; // 속성 검증
+	        const fileName = `${attach.att_uuid}_${attach.att_name}`;
+	        const imageUrl = `${attach.att_path}/${encodeURIComponent(fileName)}`;
+	        html += `
+	          <div class="image">
+	            <div class="attachment">
+	              <img src="${imageUrl}" alt="${attach.att_name}" class="comment-image-show">
+	            </div>
+	          </div>`;
+	      });
+	    });
 
-            // 이미지 하나당 .image 생성
-            attachList.forEach(attach => {
-                const fileName = `${attach.att_uuid}_${attach.att_name}`;
-                const imageUrl = `${attach.att_path}/${encodeURIComponent(fileName)}`;
-                msg += `
-                    <div class="image">
-                        <div class="attachment">
-                            <img src="${imageUrl}" alt="${attach.att_name}" class="comment-image-show">
-                        </div>
-                    </div>
-                `;
-            });
-        });
+	    imageUL.innerHTML = html;
+	    const images = imageUL.querySelectorAll('.image');
+	    const moreBtn = document.querySelector('.more-btn');
 
-        imageUL.innerHTML = msg;
-        
-        // ✅ 이미지 렌더링 후 처리
-        const images = imageUL.querySelectorAll('.image');
-        const moreBtn = document.querySelector('.more-btn');
-        if (images.length > 4) {
-            moreBtn.style.display = 'block';
-        }
-     // 더보기 버튼 클릭 시 모달 열기
-  	  moreBtn.addEventListener('click', () => {
-  	    	// 모달에 이미지 추가
-  	    	modalImageContainer.innerHTML = '';
-  	    	images.forEach(image => {
-  	    		const imgElement = image.querySelector('img').cloneNode(true);
-  	    		const imageDiv = document.createElement('div');
-  	    		imageDiv.classList.add('image');
-  	    		imageDiv.appendChild(imgElement);
-  	    		modalImageContainer.appendChild(imageDiv);
-  	    	});
-  	    	modal.style.display = 'flex';
-  	    });
-    });
-}
+	    if (images.length > 4 && moreBtn) {
+	      moreBtn.style.display = 'block';
+	      moreBtn.addEventListener('click', () => {
+	        if (!modalImageContainer || !modal) return; // 모달 요소 검증
+	        modalImageContainer.innerHTML = '';
+	        images.forEach(img => {
+	          const clone = img.querySelector('img').cloneNode(true);
+	          const div = document.createElement('div');
+	          div.classList.add('image'); // 기존 클래스 유지
+	          div.appendChild(clone);
+	          modalImageContainer.appendChild(div);
+	        });
+	        modal.style.display = 'flex';
+	      }, { once: true }); // 단일 이벤트 보장
+	    }
+	  });
+	}
 
-// 코멘트 삭제
 function handleCommentDelete(e) {
-    if (e.target.classList.contains('comment-delete-btn')) {
-        const comNo = e.target.getAttribute('data-com_no');
-        if (!comNo) {
-            console.error('com_no가 정의되지 않았습니다.');
-            alert('코멘트 삭제에 실패했습니다.');
-            return;
-        }
+  const btn = e.target.closest('.comment-delete-btn');
+  if (!btn) return;
 
-        if (!mem_no || mem_no === '0') {
-            alert('로그인이 필요합니다.');
-            return;
-        }
+  const comNo = btn.dataset.com_no;
+  if (!comNo || !mem_no || mem_no === '0') return alert('로그인이 필요합니다.');
+  if (!confirm('정말로 이 코멘트를 삭제하시겠습니까?')) return;
 
-        if (!confirm('정말로 이 코멘트를 삭제하시겠습니까?')) {
-            return;
-        }
+  btn.disabled = true;
+  btn.textContent = '삭제 중...';
 
-        e.target.disabled = true; // 버튼 비활성화
-        e.target.textContent = '삭제 중...';
-
-        fetch(`/comment/delete/${comNo}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        })
-        .then(response => {
-            // 응답이 JSON인지 확인
-            const contentType = response.headers.get('Content-Type');
-            if (!contentType || !contentType.includes('application/json')) {
-                return response.text().then(text => {
-                    throw new Error(`서버가 JSON이 아닌 응답을 반환했습니다: ${text.substring(0, 50)}...`);
-                });
-            }
-            if (!response.ok) {
-                return response.json().then(errData => {
-                    throw new Error(errData.message || '서버 오류');
-                });
-            }
-            return response.json();
-        })
-        .then(data => {
-            e.target.disabled = false;
-            e.target.textContent = 'X';
-            /* alert('코멘트가 삭제되었습니다.'); */
-            fetchComments();
-            showAvgRate();
-            showCommentsImage();
-        })
-        .catch(err => {
-            e.target.disabled = false;
-            e.target.textContent = 'X';
-            console.error('Delete error:', err.message);
-            alert('코멘트 삭제에 실패했습니다: ' + err.message);
-        });
-    }
+  fetch(`/comment/delete/${comNo}`, { method: 'POST', headers: { 'Content-Type': 'application/json' } })
+    .then(res => res.ok ? res.json() : res.text().then(txt => Promise.reject(txt)))
+    .then(() => {
+      fetchComments();
+      showAvgRate();
+      showCommentsImage();
+    })
+    .catch(err => {
+      console.error('삭제 실패:', err);
+      alert('코멘트 삭제에 실패했습니다.');
+    })
+    .finally(() => {
+      btn.disabled = false;
+      btn.textContent = 'X';
+    });
 }
 
-// 코멘트 등록
 function uploadComment() {
-    const commentInput = document.querySelector("#comment");
-    if(mem_no == 0){
-        alert("로그인을 해주세요.");
-        return;
-    }
-    if (!commentInput) {
-        console.error("코멘트 입력 필드(#comment)를 찾을 수 없습니다.");
-        return;
+	  const commentInput = document.querySelector("#comment");
+	  if (!mem_no || Number(mem_no) === 0) return alert("로그인을 해주세요.");
+	  if (!commentInput) return console.error("코멘트 입력 필드(#comment)를 찾을 수 없습니다.");
+
+	  const content = commentInput.value.trim();
+	  if (!content) return alert("코멘트를 입력해주세요.");
+	  if (!restNo) {
+	    console.error("restNo가 정의되지 않았습니다.");
+	    return alert("가게 정보를 불러올 수 없습니다.");
+	  }
+	  if (!ratingValue || Number(ratingValue) === 0) return alert("평점을 선택해주세요");
+
+	  const attachList = (window.uploadedFiles || []).map(f => ({
+	    att_uuid: f.att_uuid,
+	    att_path: f.att_path,
+	    att_name: f.att_name
+	  }));
+
+	  const data = {
+	    rest_no: restNo,
+	    com_con: content,
+	    mem_no: Number(mem_no),
+	    com_rate: Number(ratingValue),
+	    com_attachList: attachList
+	  };
+
+	  fetch('/comment/add', {
+	    method: 'POST',
+	    headers: {
+	      'Content-Type': 'application/json; charset=utf-8',
+	      'Accept': 'application/json'
+	    },
+	    body: JSON.stringify(data)
+	  })
+	    .then(res => {
+	      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+	      return res.json();
+	    })
+	    .then(() => {
+	      fetchComments();
+	      showAvgRate();
+	      showCommentsImage();
+	      commentInput.value = '';
+	      ratingValue = 0;
+	      updateStars(0);
+	      window.uploadedFiles = [];
+	      const uploadResult = document.querySelector('.uploadResult ul');
+	      if (uploadResult) uploadResult.innerHTML = '';
+	    })
+	    .catch(err => {
+	      console.error("코멘트 등록 실패:", err.message);
+	      alert("코멘트 등록에 실패했습니다.");
+	    });
+	}
+
+//댓글 입력 제한 ----------------------------------------------
+document.addEventListener('DOMContentLoaded', () => {
+  const textarea = document.getElementById('comment');
+  const maxChars = 500;
+  const maxLines = 20;
+  const lineHeight = parseFloat(getComputedStyle(textarea).lineHeight) || 20;
+
+  textarea.setAttribute('rows', maxLines);
+
+  textarea.addEventListener('input', () => {
+    textarea.value = textarea.value.slice(0, maxChars);
+
+    let lines = textarea.value.split('\n');
+    if (lines.length > maxLines) {
+      textarea.value = lines.slice(0, maxLines).join('\n');
     }
 
-    const commentContent = commentInput.value.trim();
-    if (!commentContent) {
-        alert("코멘트를 입력해주세요.");
-        return;
+    while (Math.floor(textarea.scrollHeight / lineHeight) > maxLines && textarea.value.length > 0) {
+      textarea.value = textarea.value.slice(0, -1);
     }
+  });
 
-    if (!restNo) {
-        console.error("restNo가 정의되지 않았습니다.");
-        alert("가게 정보를 불러올 수 없습니다.");
-        return;
+  textarea.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && textarea.value.split('\n').length >= maxLines) {
+      e.preventDefault();
     }
-    if(ratingValue == 0){
-        alert("평점을 선택해주세요");
-        return;
-    }
-    const attachList = (window.uploadedFiles || []).map(file => ({
-        att_uuid: file.att_uuid,
-        att_path: file.att_path,
-        att_name: file.att_name
-    }));
+  });
+});
 
-    const commentData = {
-        rest_no: restNo,
-        com_con: commentContent,
-        mem_no: mem_no,
-        com_rate: ratingValue,
-        com_attachList: attachList
-    };
-
-    fetch('/comment/add', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json; charset=utf-8',
-            'Accept': 'application/json'
-        },
-        body: JSON.stringify(commentData)
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(data => {
-        fetchComments();
-        showAvgRate();
-        showCommentsImage();
-        commentInput.value = '';
-        ratingValue = 0;
-        updateStars(0);
-        window.uploadedFiles = []; // 초기화
-        document.querySelector('.uploadResult ul').innerHTML = '';
-        /* alert("코멘트가 등록되었습니다."); */
-    })
-    .catch(err => {
-        console.error("Upload error:", err.message);
-        alert("코멘트 등록에 실패했습니다.");
-    });
-}
-
-// 코멘트 날짜 포맷팅 함수
 function formatDate(dateString) {
-    if (!dateString) return '날짜 없음';
-    return new Date(dateString).toISOString().split('T')[0];
+  return dateString ? new Date(dateString).toISOString().split('T')[0] : '날짜 없음';
 }
 
-// 평점 평균 관련---------------------------
-function getAvgRate(callback) {
-    if (!restNo) {
-        console.error("restNo가 정의되지 않았습니다.");
-        callback(null);
-        return;
-    }
-    fetch(`/comment/rate/${restNo}`, {
-        method: 'GET',
-        headers: {
-            'Accept': 'application/json'
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(data => {
-        callback(data);
-    })
-    .catch(err => {
-        console.error("Fetch avg rate error:", err.message);
-        callback(null);
-    });
-}
-
-function getAgeAvgRate(callback) {
-    // 서버에서 연령대별 평점 데이터를 가져오는 API 호출
-    fetch(`/comment/ageRate/${restNo}`, {
-        headers: {
-            'Accept': 'application/json'
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('연령대별 평점 조회 실패');
-        }
-        return response.json();
-    })
-    .then(data => {
-        // 데이터 예: [{ ageGroup: 10, avgRating: 4.5 }, { ageGroup: 20, avgRating:
-		// 3.8 }, ...]
-        let ageAvgHtml = '';
-        const ageGroups = [10, 20, 30, 40];
-
-        // 연령대별 HTML 생성
-        ageGroups.forEach(age => {
-            const ratingData = data.find(item => item.age_group === age);
-            const avgRating = ratingData ? ratingData.avg_rating.toFixed(1) : '0.0';
-            ageAvgHtml += `
-                <div class="store-item">
-                    <span class="name">${age}대</span>
-                    <span class="rating">${avgRating}</span>
-                </div>`;
-        });
-        callback(ageAvgHtml);
-    })
-    .catch(err => {
-        console.error('연령대별 평점 조회 실패:', err.message);
-        // 에러 시 기본 HTML 반환
-        let ageAvgHtml = '';
-        const ageGroups = [10, 20, 30, 40];
-        ageGroups.forEach(age => {
-            ageAvgHtml += `
-                <div class="store-item">
-                    <span class="name">${age}대</span>
-                    <span class="rating">0.0</span>
-                </div>`;
-        });
-        callback(ageAvgHtml);
-    });
-}
-
-function showAvgRate() {
-    const avgRate = document.querySelector(".store-list");
-    
-    getAvgRate(jsonArray => {
-        let msg = '';
-        msg += `<div class="store-item">`;
-        msg += `<span class="name">가게 총 평점</span>`;
-        const avg = typeof jsonArray === 'number' && !isNaN(jsonArray) ? jsonArray.toFixed(1) : '0.0';
-        msg += `<span class="rating">${avg}</span>`;
-        msg += `</div>`;
-        msg += `<div class="store-item" id="age_rate">`;
-        msg += `<span class="name">&lt;연령별 평점&gt;</span>`;
-        msg += `<span class="rating"></span>`;
-        msg += `</div>`;
-        
-     // 연령대별 평점 가져오기
-        getAgeAvgRate(ageAvgHtml => {
-            // 연령대별 평점을 총 평점 아래에 추가
-            msg += ageAvgHtml;
-            avgRate.innerHTML = msg;
-        });
-    });
-}
-
+// 즐겨찾기 처리
 function handleFavoriteClick() {
-    console.log("handleFavoriteClick isFavorite:", window.isFavorite);
+//    console.log("handleFavoriteClick isFavorite:", window.isFavorite);
     const favoriteBtnElement = document.getElementById('favoriteBtn');
     const favoriteModal = document.getElementById('favoriteModal');
 
@@ -1256,7 +872,7 @@ function addFavorite(isPublic) {
         if (data) { // 서버 응답 데이터(boolean)가 true인지 확인
             window.isFavorite = true; // 전역 변수 업데이트
             updateFavoriteButtonUI();
-            console.trace("updateFavoriteButtonUI 호출 스택 (addFavorite)");
+//            console.trace("updateFavoriteButtonUI 호출 스택 (addFavorite)");
             if (favoriteModal) {
                 favoriteModal.style.display = 'none';
             }
@@ -1273,10 +889,10 @@ function removeFavorite() {
     })
     .then(response => response.json())
     .then(data => {
-        if (data.success) {
+        if (data == true) {
             isFavorite = false;
             updateFavoriteButtonUI();
-            console.trace("updateFavoriteButtonUI 호출 스택(removeFavorite)");
+//            console.trace("updateFavoriteButtonUI 호출 스택(removeFavorite)");
         } else {
             alert('즐겨찾기 해제에 실패했습니다.');
         }
@@ -1291,11 +907,11 @@ function updateFavoriteButtonUI() {
         	favoriteBtnElement.style.backgroundColor = 'yellow';
         }
         // 필요하다면 아이콘 변경 등의 추가 UI 업데이트
-    } else {
+    } 
+    /*else {
         console.error("favoriteBtnElement를 찾을 수 없습니다.");
-    }
+    }*/
 }
-
 
 setTimeout(function() {
 	if (location.hash) {
@@ -1305,9 +921,3 @@ setTimeout(function() {
 		}
 	}
 }, 300);
-
-
-
-
-
-

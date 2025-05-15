@@ -118,9 +118,6 @@ public class CommentServiceImpl implements CommentService {
 		return mapper.getAvgRate(rest_no);
 	}
 	
-	
-	
-	
 	@Override
 	public List<CommentDTO> getCommentList(int mem_no) {
 	    return mapper.getCommentList(mem_no);

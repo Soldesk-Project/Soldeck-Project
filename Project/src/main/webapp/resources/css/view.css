@@ -6,7 +6,7 @@ img, a img {
 }
 /* 화면 전체 */
 .container {
-    margin: 20px auto;
+    margin: 110px auto;
     width: 1200px;
     border: 1px solid;
     border-color: #000000;
@@ -349,30 +349,19 @@ a:hover {
   overflow: hidden;
 }
 .modal-content2 {
+  margin-top: 50px;
   background-color: #fff;
   width: 90%;
+  height: 50%;
   max-width: 1000px;
-  min-height: 300px; 최소 높이 설정
-  max-height: 80vh; 화면 높이의 80%로 제한
+  min-height: 300px;
   border-radius: 8px;
   padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
   gap: 20px;
-  overflow-y: auto; 콘텐츠가 많아지면 세로 스크롤 활성화
-  box-sizing: border-box;
+  overflow-y: overlay;
 }
- /* .modal-content2 {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  width: 80%;
-  max-width: 1000px;
-  max-height: 80vh;
-  overflow-y: auto;
-  position: relative;
-} */
 .close-btn {
   position: absolute;
   top: 10px;
@@ -660,49 +649,6 @@ a:hover {
   border: 1px solid #ddd;
   border-radius: 5px;
 } 
-/* 모달 창 스타일 (더보기)*/
-.modal_view {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden; /* 모달 바깥 스크롤 방지 */
-}
-.modal_view-content {
-  background-color: #fff;
-  width: 90%;
-  max-width: 1000px;
-  min-height: 300px; /* 최소 높이 설정 */
-  max-height: 80vh; /* 화면 높이의 80%로 제한 */
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  overflow-y: auto; /* 콘텐츠가 많아지면 세로 스크롤 활성화 */
-  box-sizing: border-box;
-}
-.image-view {
-  display: flex;
-  flex-wrap: wrap; /* 3개 초과 시 다음 줄로 */
-  gap: 15px; /* 이미지 간 간격 */
-  justify-content: flex-start; /* 왼쪽 정렬 */
-}
-.image-view img {
-  height: 250px; /* 이미지 높이 고정 */
-  width: auto; /* 비율 유지 */
-  object-fit: cover; /* 이미지 비율 유지하며 잘림 */
-  flex: 1 1 calc(33.33% - 15px); /* 3개씩 한 줄, 간격 고려 */
-  max-width: calc(33.33% - 15px); /* 최대 너비 설정 */
-  box-sizing: border-box;
-}
 
 /* 모달 창 스타일 (예약)*/
 .modal {
@@ -848,6 +794,7 @@ a:hover {
   background-color: #fff;
   cursor: pointer;
   font-size: 14px;
+  width: 67px;
 }
 .personnel-btn:hover {
   background-color: #e0e0e0;

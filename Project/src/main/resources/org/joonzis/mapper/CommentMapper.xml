@@ -57,7 +57,7 @@
 	
 	<!-- 코멘트 평균 평점 -->
 	<select id="getAvgRate" resultType="double">
-		SELECT ROUND(AVG(COM_RATE), 1) FROM "COMMENT" WHERE REST_NO = #{rest_no}
+		SELECT COALESCE(AVG(COM_RATE), 0.0) FROM "COMMENT" WHERE REST_NO = #{rest_no}
 	</select>
 	<!-- 가게 평점 평균 상위 -->
 	<select id="getRestAvgRate" resultType="org.joonzis.domain.RestVO">

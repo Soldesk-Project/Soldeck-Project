@@ -380,26 +380,6 @@ function showReview() {
 	});
 }
 
-/*function showReview() {
-	const review = document.querySelector('.content-review');
-	if (!review) {
-		console.error('리뷰 정보(.content-review)를 찾을 수 없습니다.');
-		return;
-	}
-	
-	getReview(jsonArray => {
-		let msg = '';
-		jsonArray.forEach(json => {
-			msg += `<div class="reviews" data-rest_no="${json.rest_no}">`;
-			msg += 	`<div class="review_name">${json.rest_name}</div>`;
-			msg += 	`<div class="review_count">${json.com_count}개</div>`;
-			msg += 	`<div class="review_cate">${json.rest_cate}</div>`;
-			msg += `</div>`;
-		});
-		review.innerHTML = msg;
-	});
-}*/
-
 //날짜 시간 자동 나오게 하기
 function updateDateTime() {
     const now = new Date();
