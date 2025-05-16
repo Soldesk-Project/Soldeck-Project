@@ -455,3 +455,12 @@ function updateDateTime() {
 
   // 1초마다 갱신
   setInterval(updateDateTime, 1000);
+  
+  //미니 캘린터 
+  document.addEventListener("DOMContentLoaded", function () {
+	  flatpickr("#mini-calendar", {
+	    inline: true, // 항상 달력 표시
+	    locale: "ko", // 한국어 설정
+	    defaultDate: "today"
+	  });
+	});

@@ -411,8 +411,40 @@ body {
 	font-weight: 500;
 }
 .rating_meta {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+	margin-left: auto;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+/* 캘린더 css */
+.right_content{
+	display: flex;
+	flex-direction: column;
+	overflow: visible;
+}
+.mini-calendar-wrapper {
+	margin: 20px 0;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	overflow: visible; /* 추가 */
+	transform: scale(0.83); /* 달력 전체를 85%로 축소 */
+	transform-origin: top left; /* 축소 기준점을 위쪽 가운데로 지정 */
+}
+
+#mini-calendar {
+	border: none;
+	font-family: inherit;
+	display: none;
+}
+.flatpickr-day {
+  padding: 4px;
+  font-size: 12px;
+  width: 28px;
+  height: 28px;
+  line-height: 28px;
+}
+.flatpickr-calendar{
+	border-radius: 15px;
+	height: 250px;
 }
