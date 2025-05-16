@@ -115,7 +115,7 @@ body {
 
 /* 전체 컨테이너 스타일 */
 .kategorie-container {
-  padding: 5px;
+  padding: 20px;
   /*border: 2px solid #EBEBEB;*/
   border-radius : 20px;
   max-width: 40%; 
@@ -149,7 +149,6 @@ body {
 .btn-fir {
   width: 60px; /* 버튼의 너비 */
   height: 60px; /* 버튼의 높이 */
-  background-color: #f0f0f0; /* 배경색 (회색) */
   border: none; /* 테두리 제거 */
   border-radius: 50%; /* 원형으로 만들기 */
   font-size: 16px; /* 텍스트 크기 */
@@ -160,10 +159,21 @@ body {
   align-items: center; /* 텍스트 수직 가운데 */
   transition: background-color 0.3s; /* 호버 효과를 위한 전환 */
 }
-
-/* 호버 효과 */
-.btn-fir:hover {
-  background-color: #e0e0e0; /* 호버 시 더 어두운 회색 */
+.btn.btn-fir {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: inherit; /* p 태그 글자색 링크 기본값 제거 */
+}
+.btn.btn-fir img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+}
+.btn.btn-fir p {
+  margin-top: 8px;
+  font-size: 14px;
 }
 
 /* 메인 추천 화면*/
@@ -296,7 +306,7 @@ body {
 /* rank-tap 배너 스타일 */
 .rank-tap {
     width: 250px;
-    height: 600px;
+    height: 670px;
     background-color: white;
     box-sizing: border-box;
     border-radius: 20px;
@@ -336,7 +346,7 @@ body {
 }
 /* 랭크 콘텐츠 */
 .rank-content {
-  height: 300px;
+  height: 350px;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -364,6 +374,7 @@ body {
     cursor: pointer;
     display: flex;
     gap: 5px;
+    margin-bottom: 7px;
 }
 .rating-infos, .review-infos{
 	margin-left: 5px;
@@ -392,4 +403,16 @@ body {
 	height: 218px;
 	object-fit: cover;
 	border-radius: 8px;
+}
+.rating_avg_rate {
+	font-weight: 500;
+}
+.review_count{
+	font-weight: 500;
+}
+.rating_meta {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }

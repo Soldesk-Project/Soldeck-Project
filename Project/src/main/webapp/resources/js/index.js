@@ -148,14 +148,18 @@ function moveSlider(name, direction) {
 }
 
 // 지역별 지도 이동 함수
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll('.btn-fir').forEach(btn => {
-        btn.addEventListener('click', () => {
-            let keyword = btn.getAttribute("value");
+        btn.addEventListener('click', (e) => {
+            e.preventDefault(); // 기본 이동 막기
+
+            let keyword = btn.dataset.value;
             console.log("클릭된 키워드:", keyword);
+
             sessionStorage.setItem('keyword', keyword);
             sessionStorage.setItem('actionType', 'category');
-            location.href = "../search/map";
+
+            location.href = btn.href;
         });
     });
 });
@@ -354,8 +358,10 @@ function showRating() {
 			infoHtml += `<div class="ratings" data-rest_no="${json.rest_no}">`;
 			infoHtml += 	`<div class="rating_rate">${rate}.</div>`;
 			infoHtml += 	`<div class="rating_name">${json.rest_name}</div>`;
-			infoHtml += 	`<div class="rating_avg_rate">${json.avg_rate}점</div>`;
+			infoHtml += 	`<div class="rating_meta">`;
 			infoHtml += 	`<div class="rating_cate">${json.rest_cate}</div>`;
+			infoHtml += 	`<div class="rating_avg_rate">${json.avg_rate}점</div>`;
+			infoHtml += 	`</div>`;
 			infoHtml += `</div>`;
 			rate += 1;
 		});
@@ -410,8 +416,10 @@ function showReview() {
 			infoHtml += `<div class="reviews" data-rest_no="${json.rest_no}">`;
 			infoHtml += 	`<div class="review_rate">${rate}.</div>`;
 			infoHtml += 	`<div class="review_name">${json.rest_name}</div>`;
-			infoHtml += 	`<div class="review_count">${json.com_count}개</div>`;
+			infoHtml += 	`<div class="rating_meta">`;
 			infoHtml += 	`<div class="review_cate">${json.rest_cate}</div>`;
+			infoHtml += 	`<div class="review_count">${json.com_count}개</div>`;
+			infoHtml += 	`</div>`;
 			infoHtml += `</div>`;
 			rate += 1;
 		});

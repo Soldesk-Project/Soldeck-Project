@@ -52,24 +52,34 @@
 	   		<div class="kategorie-container">
 			    <ul class="kategorie-list">
 			    	<li>
-			    		<button type="button" class="btn btn-fir" id="korBtn" value="한식"></button>
-			    		<p>한식</p>
+			    		<a href="../search/map" class="btn btn-fir" data-value="한식">
+							<img src="resources/images/korea_food.png" alt="한식 아이콘">
+    						<p>한식</p>
+    					</a>
 			    	</li>
 			    	<li>
-			    		<button type="button" class="btn btn-fir" id="chnBtn" value="중식"></button>
-			    		<p>중식</p>
+			    		<a href="../search/map" class="btn btn-fir" data-value="중식">
+							<img src="resources/images/china_food.png" alt="중식 아이콘">
+			    			<p>중식</p>
+    					</a>
 			    	</li>
 			    	<li>
-				    	<button type="button" class="btn btn-fir" id="japBtn" value="일식"></button>
-				    	<p>일식</p>
+			    		<a href="../search/map" class="btn btn-fir" data-value="일식">
+							<img src="resources/images/japan_food.png" alt="일식 아이콘">
+				    		<p>일식</p>
+    					</a>
 			    	</li>
 			    	<li>
-				    	<button type="button" class="btn btn-fir" id="wesBtn" value="양식"></button>
-				    	<p>양식</p>
+			    		<a href="../search/map" class="btn btn-fir" data-value="양식">
+							<img src="resources/images/America_food.png" alt="양식 아이콘">
+				    		<p>양식</p>
+    					</a>
 			    	</li>
 			    	<li>
-				    	<button type="button" class="btn btn-fir" id="vietBtn" value="베트남식"></button>
-				    	<p>베트남</p>
+			    		<a href="../search/map" class="btn btn-fir" data-value="베트남">
+							<img src="resources/images/vietnam_food.png" alt="베트남 아이콘">
+				    		<p>베트남</p>
+    					</a>
 			    	</li>
 			    </ul>
 	   		</div>
