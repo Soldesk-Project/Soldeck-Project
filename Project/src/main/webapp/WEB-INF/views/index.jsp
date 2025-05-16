@@ -128,6 +128,7 @@
 			</c:if>
         </div>
         
+<<<<<<< Updated upstream
         
         <!-- 
 		<div class="popup" id="popup">
@@ -137,6 +138,8 @@
 	            </div>
 	    </div>
          -->
+=======
+>>>>>>> Stashed changes
 	    <div id="user-data" data-user="${sessionScope.loggedInUser.mem_no}"></div>
     </div>
     

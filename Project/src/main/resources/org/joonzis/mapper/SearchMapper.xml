@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="org.joonzis.mapper.SearchMapper">
+  
+	<insert id="insertSearchLog" parameterType="org.joonzis.domain.SearchLogVO">
+	  INSERT INTO search_log (
+	    id, keyword, ip_address, user_id
+	  )
+	  VALUES (
+	    search_log_seq.NEXTVAL,
+	    #{keyword},
+	    #{ipAddress},
+	    #{userId, jdbcType=INTEGER}
+	  )
+	</insert>
+	
+	<select id="getPopularKeywords" resultType="org.joonzis.domain.PopularKeywordVO">
+	    <![CDATA[
+	    SELECT *
+	    FROM (
+	        SELECT keyword, COUNT(*) AS count
+	        FROM search_log
+	        WHERE search_time >= SYSDATE - 7
+	        GROUP BY keyword
+	        ORDER BY count DESC
+	    )
+	    WHERE ROWNUM <= 10
+	    ]]>
+	</select>
+  
+  </mapper>

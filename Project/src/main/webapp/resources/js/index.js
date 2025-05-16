@@ -1,19 +1,3 @@
-document.addEventListener('DOMContentLoaded', function() {
-    var popup = document.getElementById('popup');
-    var closeBtn = document.getElementById('popup-close');
-
-    setTimeout(function() {
-        popup.style.display = 'block';
-    }, 1000);
-
-    closeBtn.addEventListener('click', function() {
-        popup.style.display = 'none';
-    });
-    document.querySelector(".pop-up_image").addEventListener('click',()=>{
-    	location.href='/event/main';
-    });
-});
-
 // 메인 페이지 이미지 슬라이더
 const slides = document.getElementById("slides");
 const slideContainers = document.querySelectorAll('#slides .slide-container');

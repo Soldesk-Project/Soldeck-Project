@@ -47,4 +47,5 @@
 	<!-- WebSocket을 위한 ServerEndpointExporter 빈 등록 -->
 	<context:component-scan base-package="org.joonzis.websoket" />
     <bean class="org.springframework.web.socket.server.standard.ServerEndpointExporter"/>
+    
 </beans>

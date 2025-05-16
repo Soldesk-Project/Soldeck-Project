@@ -10,14 +10,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.joonzis.domain.MemberVO;
 import org.joonzis.domain.MenuVO;
+import org.joonzis.domain.PopularKeywordVO;
 import org.joonzis.domain.ReserveVO;
 import org.joonzis.domain.RestVO;
 import org.joonzis.service.MemberService;
 import org.joonzis.service.RestService;
+import org.joonzis.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -44,6 +47,9 @@ public class SearchController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private SearchService sservice;
 		
 	// index페이지 취향 추천픽 데이터
 	@GetMapping(value = "/index/likeKateData", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -216,6 +222,26 @@ public class SearchController {
 	    } else {
 	        return null; // 데이터가 없으면 null 반환
 	    }
+	}
+	
+	@PostMapping("/log")
+	@ResponseBody
+	public ResponseEntity<String> insertSearchLog(@RequestParam String keyword, HttpServletRequest request) {
+		System.out.println(">>> 로그 저장 진입 확인");
+		
+	    String ip = request.getRemoteAddr();
+	    Integer userId = (Integer) request.getSession().getAttribute("UserId");
+
+	    System.out.println("✅ 검색 로그 저장 요청 수신: " + keyword + ", IP: " + ip + ", userId: " + userId);
+	    sservice.saveSearch(keyword, ip, userId);
+
+	    return ResponseEntity.ok("로그 저장 완료");
+	}
+	
+	@GetMapping(value = "/popular", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<PopularKeywordVO> getPopularKeyword(){
+		return sservice.getPopularKeyword();	
 	}
 	
 //	@GetMapping(value = "/search")
