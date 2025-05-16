@@ -23,7 +23,7 @@ window.onload = () => {
 	const passwordInput = document.getElementById('password');
 	const nicknameInput = document.getElementById('nickName');
 	const emailInput = document.getElementById('email');
-	const phone1Input = document.getElementById('phone1');
+	let phone1Input = document.getElementById('phone1');
 	const phone2Input = document.getElementById('phone2');
 	const phone3Input = document.getElementById('phone3');
 	const modifyFinishBtn = document.getElementById('modifyFinishBtn');
@@ -31,6 +31,7 @@ window.onload = () => {
 	const removeBtn = document.getElementById('removeBtn');
 	const modifyBtn = document.getElementById('modifyBtn');
 	const foodCheckboxes = document.querySelectorAll('.foods');
+	let originalPhone1Value = '';
 	
 	// 초기 상태 설정 (modifyBtn 클릭 전 숨김)
 	profileUploadDiv.style.display = 'none';
@@ -50,42 +51,76 @@ window.onload = () => {
 			if(type == 'profileUploadBtn'){
 				profileImageInput.click();
 			}else if(type=='modifyFinishBtn'){
-				modify(mem_no);
+				const prefixSelectGlobal = document.getElementById('prefix');
+				modify(mem_no, prefixSelectGlobal); // prefixSelect 요소 전달
 			}else if(type=='removeBtn'){
 				remove(mem_no);
 			}else if (type === 'modifyBtn') { // 수정 버튼 클릭 시
-				// 1. 프로필 업로드 영역 보이기
+				//1. phone1Input 요소를 다시 찾음
+                phone1Input = document.getElementById('phone1');
+                if (!phone1Input) {
+                    console.error("phone1Input 요소를 찾을 수 없습니다.");
+                    return;
+                }
+				
+				//2. 프로필 업로드 영역 보이기
 				profileUploadDiv.style.display = 'flex';
 
-				// 2. 입력 필드의 readonly 속성 해제
+				//3. 입력 필드의 readonly 속성 해제
 				passwordInput.readOnly = false;
 				nicknameInput.readOnly = false;
 				emailInput.readOnly = false;
 				phone2Input.readOnly = false;
 				phone3Input.readOnly = false;
 
-				// 3. 수정 완료, 리셋, 탈퇴 버튼 보이기
+				//4. 수정 완료, 리셋, 탈퇴 버튼 보이기
 				modifyFinishBtn.style.display = 'inline-block';
 				resetBtn.style.display = 'inline-block';
 				removeBtn.style.display = 'inline-block';
 
-				// 4. 수정 버튼 숨기기
+				//5. 수정 버튼 숨기기
 				modifyBtn.style.display = 'none';
 				
-				//5. 선호 음식 체크박스 활성화
+				//6. 선호 음식 체크박스 활성화
 				foodCheckboxes.forEach(checkbox => {
 					checkbox.disabled = false;
-				})
+				})	
+				//7. 전화번호 앞자리 <select>요소로 변경
+				const parentDiv = phone1Input.parentNode;
+				const prefixSelect = document.createElement('select');
+				prefixSelect.id = 'prefix';
+				prefixSelect.name = 'prefix';
+				prefixSelect.classList.add('info-phone', 'phone-prefix'); // 기존 input과 동일한 클래스 적용
+
+				const prefixes = ['010', '011', '016', '017', '018', '019'];
+				const currentPrefix = phone1Input.value; // 현재 phone1의 값 가져오기
+				originalPhone1Value = currentPrefix;
+
+				prefixes.forEach(prefix => {
+					const option = document.createElement('option');
+					option.value = prefix;
+					option.textContent = prefix;
+					if (prefix === currentPrefix) {
+						option.selected = true; // 현재 값과 일치하는 옵션 선택
+					}
+					prefixSelect.appendChild(option);
+				});
+
+				parentDiv.replaceChild(prefixSelect, phone1Input);
+				phone1Input = null;
 			}
 		});
 	});
 	// "수정 리셋" 버튼 클릭 이벤트 리스너 추가
 	if (resetBtn) {
-		resetBtn.addEventListener('click', resetForm);
+		resetBtn.addEventListener('click', () => {
+			resetForm(originalPhone1Value);
+			phone1Input = document.getElementById('phone1'); // resetForm 후 phone1Input 다시 찾기
+		});
 	}
 };
 //-----수정 폼 리셋 함수--------------------------------------------
-function resetForm() {
+function resetForm(originalPhone1Value) {
 	modifyInfoForm.reset(); // 폼의 모든 입력 필드를 초기 상태로 되돌립니다.
 
 	// 에러 메시지 초기화
@@ -99,6 +134,21 @@ function resetForm() {
 	const previewImage = document.getElementById('profileImage');
 	const originalImageSrc = previewImage.dataset.originalSrc;
 	previewImage.src = originalImageSrc;
+	
+	// 전화번호 앞자리 <select> 요소를 다시 <input> 요소로 정확히 복원
+	const prefixSelect = document.getElementById('prefix');
+	if (prefixSelect) {
+		const parentDiv = prefixSelect.parentNode;
+		const newInput = document.createElement('input');
+		newInput.type = 'text';
+		newInput.classList.add('info-phone');
+		newInput.id = 'phone1';
+		newInput.name = 'phoneNumber';
+		newInput.value = originalPhone1Value; // 저장해둔 원래 값으로 설정
+		newInput.readOnly = true;
+
+		parentDiv.replaceChild(newInput, prefixSelect);
+	}
 	
 	// readonly 속성 다시 설정 (수정 버튼이 다시 눌릴 때를 대비)
 	const passwordInput = document.getElementById('password');
@@ -138,7 +188,6 @@ const modifyInfoForm = document.getElementById('modifyInfoForm');
 const passwordInputGlobal = document.getElementById('password');
 const nicknameInputGlobal = document.getElementById('nickName');
 const emailInputGlobal = document.getElementById('email');
-const phone1InputGlobal = document.getElementById('phone1');
 const phone2InputGlobal = document.getElementById('phone2');
 const phone3InputGlobal = document.getElementById('phone3');
 const idCheckMessage = document.getElementById('idCheckMessage');
@@ -187,8 +236,8 @@ function validateNickname() {
     	nicknameCheckMessage.textContent = '별명은 2자 이상 8자 이하로 입력해주세요.';
     	return false;
     } else {
-        nicknameCheckMessage.textContent = '';
-        return true;
+    	nicknameCheckMessage.textContent = '';
+    	return true;
     }
 }
 
@@ -257,7 +306,6 @@ document.addEventListener('DOMContentLoaded',()=>{
     		nicknameInput: nicknameCheckMessage,
     		emailInput: emailCheckMessage,
     		interestCheckboxes: interestErrorMessageGlobal,
-    		phone1Input: phoneErrorMessage,
     		phone2Input: phoneErrorMessage,
     		phone3Input: phoneErrorMessage
     };
@@ -281,7 +329,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     }
 });
 
-async function modify(mem_no){
+async function modify(mem_no, prefixSelect){
 
     const isPasswordValid = validatePassword();
     const isNicknameValid = validateNickname();
@@ -314,7 +362,7 @@ async function modify(mem_no){
     const formData = new FormData(modifyInfoForm);
 
     // 분리된 전화번호 값을 하이픈으로 연결하여 'phone' 키로 FormData에 추가
-    const phoneNumber = phone1InputGlobal.value + phone2InputGlobal.value + phone3InputGlobal.value;
+    const phoneNumber = prefixSelect.value + phone2InputGlobal.value + phone3InputGlobal.value;
     formData.append('mem_phone', phoneNumber);
     
     for (let [key, value] of formData.entries()) {

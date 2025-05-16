@@ -108,6 +108,16 @@ b{
 	float: left;
 	text-align: center;
 }
+.phone-prefix{
+	padding: 0;
+	width: 118px;
+	height: 34px;
+	float: left;
+	text-align: center;
+	font-size: 15px;
+    border: 1px solid;
+    border-radius: 10px;
+}
 .info-content span{
 	float: left;
 	margin: 0 10px;

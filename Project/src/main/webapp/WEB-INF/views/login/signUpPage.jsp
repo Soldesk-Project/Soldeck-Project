@@ -87,7 +87,14 @@
 			<div class="formGroup">
 				<label for="phone1">연락처</label>
 				<div class="phone-inputs">
-					<label>010</label>
+					<select id="prefix" name="prefix">
+						<option value="010">010</option>
+						<option value="011">011</option>
+						<option value="016">016</option>
+						<option value="017">017</option>
+						<option value="018">018</option>
+						<option value="019">019</option>
+    				</select>
 					<span>-</span>
 					<input type="tel" id="phone1" name="phone1" placeholder="1234" maxlength="4" required>
 					<span>-</span>

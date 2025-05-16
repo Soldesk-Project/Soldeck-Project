@@ -113,7 +113,7 @@
 				</div>
 				<div class="info-content">
 					<div>
-						<input type="text" class="info-phone" id="phone1" name="phoneNumber" value="010" readonly="readonly"><span class="dash">-</span>
+						<input type="text" class="info-phone" id="phone1" name="phoneNumber" value="0${fn:substring(member.mem_phone, 0, 2)}" readonly="readonly"><span class="dash">-</span>
 						<input type="text" class="info-phone" id="phone2" name="phoneNumber" value="${fn:substring(member.mem_phone, 2, 6)}" readonly="readonly"><span class="dash">-</span>
 						<input type="text" class="info-phone" id="phone3" name="phoneNumber" value="${fn:substring(member.mem_phone, 6, 10)}" readonly="readonly">
 					</div>

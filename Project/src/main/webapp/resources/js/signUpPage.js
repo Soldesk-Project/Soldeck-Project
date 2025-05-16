@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const birthDateErrorMessage = document.getElementById('birthDateErrorMessage');
     const passwordCheckInput = document.getElementById('passwordCheck');
     const passwordCheckMessage = document.getElementById('passwordCheckMessage');
+    const prefixSelect = document.getElementById('prefix');
 
     // 정규식
     const regId = /^[0-9a-z]{8,16}$/;
@@ -295,7 +296,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const formData = new FormData(registrationForm);
 
             // 분리된 전화번호 값을 하이픈으로 연결하여 'phone' 키로 FormData에 추가
-            const phoneNumber = '010' + phone1Input.value + phone2Input.value;
+            const prefixValue = prefixSelect.value;
+            const phoneNumber = prefixValue  + phone1Input.value + phone2Input.value;
             formData.append('phone', phoneNumber);
             
             console.log('Sending FormData:', formData); // 콘솔에 FormData 객체 확인

@@ -53,29 +53,32 @@ input[type="tel"] {
 	align-items: center; /* 세로 방향 가운데 정렬 (하이픈과 input 높이 맞춤) */
 }
 
-.phone-inputs input[type="tel"] {
+.phone-inputs input[type="tel"],
+.phone-inputs select {
 	width: 120px;
 	flex-grow: 0;
-	min-width: 0; /* flex-grow 시 min-width 설정으로 내용이 잘리지 않게 함 */
+	min-width: 0;
 	margin: 0;
 	padding: 8px;
 	box-sizing: border-box;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	font-size: inherit;
+}
+
+.phone-inputs select {
+	background-image: url('data:image/svg+xml;utf8,<svg fill="currentColor" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>'); /* 사용자 정의 화살표 */
+	background-repeat: no-repeat;
+	background-position: right 12px center;
+	background-size: 16px;
+	padding-right: 8px;
 }
 
 .phone-inputs span {
 	margin: 5px; /* 하이픈 주변 간격 조절 */
 	color: #555;
 }
-/* 010 라벨 스타일 */
-.phone-inputs label {
-	width: 120px;
-    margin-right: 0;
-    margin-left: 0;
-    padding: 0;
-    font-size: 1.1em;
-    font-weight: bold;
-    text-align: center;
-}
+
 .birthDate {
 	display: flex;
 	gap: 10px;
