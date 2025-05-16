@@ -1,3 +1,13 @@
+//-----스페이스 락-----------------------------------------------------
+(function() {
+	
+
+window.addEventListener('keydown', function(e) {
+	if (e.keyCode === 32 && e.target === document.body) {
+	  	e.preventDefault();
+  	}
+});
+
 // 출석 정보 저장 객체
 let attendance = {};
 
@@ -78,8 +88,9 @@ document.querySelector('.today-check-btn').addEventListener('click', () => {
 	        }
 	    })
 	    .catch(err => console.log(err));
+	    openModal('출석체크 완료!');
     } else {
-        alert('이미 오늘 출석체크를 했습니다');
+        openModal('오늘 이미 출석체크를 완료하였습니다');
     }
 });
 
@@ -112,6 +123,27 @@ function loadMyPointData() {
     .catch(error => console.error("포인트  로드 실패:", error));
 }
 
+
+const modal = document.querySelector('.result-modal');
+const instructions =document.querySelector('.modal-instructions');
+function openModal(check) {
+	let p=`<p>${check}</p>`;
+	instructions.innerHTML=p;	
+	modal.style.display = 'block';
+	document.body.style.overflow = 'hidden';
+
+}	
+function closeModal(){
+	modal.style.display = 'none';
+	document.body.style.overflow = 'auto';
+}
+document.querySelector('.close-modal').addEventListener('click',()=>{
+	closeModal();
+});
+
+	
 // 초기화
 loadAttendanceData(year, month);
 loadMyPointData();
+})();
+

@@ -30,12 +30,16 @@
 					</div>
 				</div>
 			</div>
-		
-		
-		
 		</div>	
 	</div>	
-	
+	<div id="customConfirm" class="result-modal">
+		<div class="inner-modal">
+	    	<p>최고점수가 갱신되었습니다!</p>
+			<div class="score-modal-content">
+			    <button class="close-modal" id="closeModalBtn">확인</button>
+		    </div>
+		</div>
+	</div>
 <script type="text/javascript" src="/resources/js/eventTab/0002.js"></script>
 </body>
 </html>

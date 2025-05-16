@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.joonzis.domain.GroupMemberDTO;
 import org.joonzis.domain.GroupVO;
 import org.joonzis.domain.MemberVO;
 import org.joonzis.service.GroupService;
@@ -77,14 +78,14 @@ public class GroupController {
 	
 	@GetMapping(value = "/groupListData", produces = "application/json")
 	@ResponseBody
-	public List<GroupVO> getGroupListData(HttpSession session) {
+	public List<GroupMemberDTO> getGroupListData(HttpSession session) {
 		 MemberVO member = (MemberVO) session.getAttribute("loggedInUser");
 	     if (member == null) {
 	        return Collections.emptyList();  // 로그인 안 되어 있으면 빈 리스트 반환
 	    }
 	
 	    int mem_no = member.getMem_no();
-	    return service.getGroupList(mem_no);  // JSON 응답
+	    return service.getAllGroups(mem_no);  // JSON 응답
 	}
 	
 	@PostMapping("/unfollow")

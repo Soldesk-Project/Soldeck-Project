@@ -57,7 +57,8 @@ function loadGame2MyData() {
 			ranking+= `
 				<tr>
 					<td>${data.mem_nick }</td>
-					<td class="score-td myScore">${data.game_score_2 }</td>
+					<td class="score-td">${data.game_score_2 }</td>
+					<td><input type="hidden" class="myScore" value="${data.game_score_2}"></td>
 				</tr>
 				`;
 		}
@@ -108,7 +109,7 @@ const scale = 20;
 const rows = canvas.height / scale;
 const columns = canvas.width / scale;
 let score = 0;
-let highScore=0;
+//let highScore=0;
 
 let snake;
 let fruit;
@@ -147,12 +148,14 @@ function stopGame() {
 }
 
 function gameOver() {
-	if (score>highScore) {
-		highScore=score;
+	let myGameScore=document.querySelector('.myScore').value;
+	if (score>myGameScore) {
+		saveScore(score);
+//		highScore=score;
 	}
-  snake.reset();
-  stopGame();
-  saveScore();
+	snake.reset();
+  	stopGame();
+	
 }
 
 function Snake() {
@@ -257,26 +260,35 @@ window.addEventListener("keydown", (event) => {
 
 document.querySelector(".start-btn").addEventListener("click", startGame);
 
-function saveScore() {
-	let myGameScore=document.querySelector('.myScore').innerText;
-	
-	if (myGameScore<highScore) {
-		fetch('/event/saveGameScore2',{
-			method : 'post',
-			headers : {
-			      'content-type' : 'application/json; charset=utf-8'
-		    },
-		    body : JSON.stringify({game_score_2 : highScore})
-		})
-	    .then(response => response.json())
-    	.then(result => {
-    		highScore=0;
-		  	loadGame2RankData();
-			loadGame2MyData();
-	    })
-	    .catch(err => console.log(err));
-		}
-	}
+function saveScore(score) {
+	fetch('/event/saveGameScore2',{
+		method : 'post',
+		headers : {
+		      'content-type' : 'application/json; charset=utf-8'
+	    },
+	    body : JSON.stringify({game_score_2 : score})
+	})
+    .then(response => response.json())
+	.then(result => {
+		openModal();
+	  	loadGame2RankData();
+		loadGame2MyData();
+    })
+    .catch(err => console.log(err));
+}
+const modal = document.querySelector('.result-modal');
+function openModal() {
+	modal.style.display = 'block';
+	document.body.style.overflow = 'hidden';
+
+}	
+function closeModal(){
+	modal.style.display = 'none';
+	document.body.style.overflow = 'auto';
+}
+document.querySelector('.close-modal').addEventListener('click',()=>{
+	closeModal();
+});
 
 
 })();

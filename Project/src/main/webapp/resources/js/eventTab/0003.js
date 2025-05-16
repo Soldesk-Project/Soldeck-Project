@@ -8,7 +8,13 @@
 //	document.head.appendChild(linkEle);
 //})();
 
-
+//-----스페이스 락-----------------------------------------------------
+window.addEventListener('keydown', function(e) {
+	if (e.keyCode === 32 && e.target === document.body) {
+	  	e.preventDefault();
+  	}
+});
+//----------------------------------------------------------
 
 
 
@@ -37,11 +43,6 @@ function loadMyPointData() {
 	  })
 	  .catch(error => console.error("포인트  로드 실패:", error));
 }
-
-
-
-
-
 
 
 window.cleanupEventTab0001 = function() {
@@ -77,6 +78,10 @@ let angle = 0;
 let spinning = false;
 let spinAngle = 0;
 let spinVelocity = 0;
+
+const modal = document.querySelector('.result-modal');
+const instructions =document.querySelector('.modal-instructions');
+
 
 function drawRoulette() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -118,7 +123,9 @@ function drawRoulette() {
 
 //수정된 spinRoulette 함수
 function spinRoulette() {
-	if (spinning) return;
+	if (spinning||modal.style.display == 'block'){
+		return;
+	}
 
 	spinning = true;
 	spinVelocity = Math.random() * 0.2 + 0.25;
@@ -140,7 +147,7 @@ function animateSpin() {
     let selected = items.length - Math.floor(((angle + Math.PI / 2) % (2 * Math.PI)) / arc) - 1;
     if (selected < 0) selected += items.length;
     setTimeout(() => {
-    	alert('결과 : '+items[selected]);
+    	openModal(items[selected]);
       if (items[selected]>0) {
     	  savePoint(items[selected]-100);
       }else{
@@ -174,6 +181,20 @@ function savePoint(point) {
 	}
 }
 
+function openModal(check) {
+	let p=`<p>룰렛 결과 : ${check}</p>`;
+	instructions.innerHTML=p;	
+	modal.style.display = 'block';
+	document.body.style.overflow = 'hidden';
+
+}	
+function closeModal(){
+	modal.style.display = 'none';
+	document.body.style.overflow = 'auto';
+}
+document.querySelector('.close-modal').addEventListener('click',()=>{
+	closeModal();
+});
 
 
 })();

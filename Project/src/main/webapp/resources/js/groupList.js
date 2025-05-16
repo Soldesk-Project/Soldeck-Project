@@ -1,3 +1,5 @@
+function loadGroupList() {
+	
 fetch("/grouplist/groupListData")
   .then(response => response.json())
   .then(data => {
@@ -16,27 +18,68 @@ fetch("/grouplist/groupListData")
       el.classList.add("group-box");
 
       el.innerHTML = `
-        <div class="group_profile">
-          <img src="../resources/upload/${group.group_img}" alt="모임프로필" width="80" height="80"
+    	<div class="group_profile">
+    	  <img src="../resources/upload/${group.group_img}" alt="모임프로필" width="80" height="80"
                onerror="if (!this.dataset.error) { this.dataset.error = true; this.src='../resources/images/group_default_profile.png'; }">
           <div class="groupnameBox"><p>${group.chat_title}</p></div>
           <div class="memo_input">
-            <input type="text" id="group_memo_box" name="gro_memo" value="${group_mem.group_usermemo || ''}" placeholder="메모 입력" data-group-id="${group_mem.group_no}" />
+          	<span class="group-memo">${group.group_usermemo||'//-----'}</span>
+            <input type="text" class="group-memo-modify" value="${group.group_usermemo || ''}" placeholder="메모 입력" data-group-id="${group.group_no}" display="none"/>
 
             <!-- 메모 저장 버튼 -->
-            <button onclick="saveMemo(this)">저장</button>
+            <button class="group-modify-btn">수정</button>
+    	    <button class="group-save-btn">완료</button>
             
             <div class="unfollowBtn">
-               <button onclick="unfollow(${group_mem.group_no}, this)">언팔로우</button>
+               <button onclick="unfollow(${group.group_no}, this)">탈퇴</button>
             </div>
-         </div>
-        </div>
-      `;
+          </div>
+        </div>`;
+	    if(group.min_age==0||group.max_age==0){
+	    	el.innerHTML+=
+	    		`<div class="group-info">
+	    			<span>성별 제한 : ${group.lim_gender}</span>
+	    			<span>나이 제한 : 없음</span>
+	    			<span>공개 여부 : ${group.is_public}</span>
+	    		</div>`
+	    }else{
+	    	el.innerHTML+=
+	    		`<div class="group-info">
+	    			<span>성별 제한 : ${group.lim_gender}</span>
+    	    		<span>나이 제한 : ${group.min_age}~${group.max_age}</span>
+		    		<span>공개 여부 : ${group.is_public}</span>
+    	    	</div>`
+	    }
 
       container.appendChild(el);
     });
-  });
+//----- 수정 버튼 클릭 시 수정가능 변경-------------------------------------------------------------------
+	document.querySelectorAll(".group-modify-btn").forEach(modifyMemo => {
+		modifyMemo.addEventListener('click',e=>{
+    		console.log('수정 버튼');
+    		modifyMemo.closest(".memo_input").querySelector(".group-memo").style.display='none';
+    		modifyMemo.closest(".memo_input").querySelector(".group-memo-modify").style.display='inline';
+    		modifyMemo.closest(".memo_input").querySelector(".group-modify-btn").style.display='none';
+    		modifyMemo.closest(".memo_input").querySelector(".group-save-btn").style.display='inline';
+    		modifyMemo.closest(".group-box").querySelector(".group-info").style.display='flex';
+    	});
+    });
+	document.querySelectorAll('.group-box').forEach(group=>{
+		group.addEventListener('click',e=>{
+			const tag = e.target.tagName.toLowerCase();
+		    if (['button', 'input', 'span', 'img', 'p'].includes(tag)||group.closest('.group-box').querySelector('.group-modify-btn').style.display=='none') {
+		      return;
+		    }
+			if(group.closest('.group-box').querySelector('.group-info').style.display=='none'){
+				group.closest('.group-box').querySelector('.group-info').style.display='flex';
+			}else{
+				group.closest('.group-box').querySelector('.group-info').style.display='none';
+			}
+		});
+	});
+});
 
+}
 /* 언팔로우 버튼*/
 function unfollow(groupMemNo, button) {
      if (!confirm("이 대화방을 나가시겠습니까?")) return;
@@ -228,4 +271,28 @@ document.addEventListener("DOMContentLoaded", function () {
          .catch(err => {
          });
      });
-   });
+});	
+
+
+
+
+
+
+
+
+
+
+
+
+
+loadGroupList();
+
+
+
+
+
+
+
+
+
+

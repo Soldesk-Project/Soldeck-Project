@@ -40,24 +40,28 @@
 					  	<div class="inner-content">
 					  	<c:forEach var="bm" items="${bookmarkList }">
 					  	<c:if test="${bm.is_public eq 'Y'}">
-			            	<div class="view" data-adr="${bm.rest.rest_loc}">
+			            	<div class="view" data-adr="${bm.rest_loc}">
 				                <div class="view-info">
 				                    <div><button type="button" class="bookmark" id="bookmarkBtn">★</button></div>
 				                    <div class="info-text">
 					                    <a href="#" draggable="false">
-					                    	<input type="text" class="res-name" value="${bm.rest.rest_name }" readonly="readonly"><span class="input-size"></span>
+					                    	<input type="text" class="res-name" value="${bm.rest_name }" readonly="readonly"><span class="input-size"></span>
 					                    </a>
-					                    <input type="text" class="res-cate" value="${bm.rest.rest_cate }" readonly="readonly">
+					                    <input type="text" class="res-cate" value="${bm.rest_cate }" readonly="readonly">
 					                    <input type="hidden" id="memNo" value="${bm.mem_no }">
-					                    <input type="hidden" id="restNo" value="${bm.rest.rest_no }">
+					                    <input type="hidden" id="restNo" value="${bm.rest_no }">
 					                    <input type="hidden" class="is-public" value="${bm.is_public }">
-					                    <input type="hidden" class="rest-adr" value="${bm.rest.rest_loc}">
+					                    <input type="hidden" class="rest-adr" value="${bm.rest_loc}">
 					                    
 				                    </div>
 				                </div>
-				                <div class="view-img">
-			                		<img alt="res img" src="${bm.rest.rest_img_name }" class="view-res-image">
-				                </div>
+				                <div class="view-img-list">
+				                	<c:forEach var="rest" items="${bm.rest }">
+			               				<div class="view-img">
+				                			<img alt="res img" src="${rest.rest_img_name }" class="view-res-image" onerror="this.onerror=null; this.src='/resources/images/noImage.png';">
+					               	 	</div>
+					  				</c:forEach>
+			                	</div>
 				            </div>
 				           <!--  -->
 					  	</c:if>
@@ -79,22 +83,26 @@
 				  		<div class="inner-content">
 				  		<c:forEach var="bm" items="${bookmarkList }">
 				  		<c:if test="${bm.is_public eq 'N'}">
-		            		<div class="view" data-adr="${bm.rest.rest_loc}">
+		            		<div class="view" data-adr="${bm.rest_loc}">
 			                	<div class="view-info">
 			                    	<div><button type="button" class="bookmark" id="bookmarkBtn">★</button></div>
 			                    	<div class="info-text">
 				                    	<a href="#" draggable="false">
-				                    		<input type="text" class="res-name" value="${bm.rest.rest_name }" readonly="readonly"><span class="input-size"></span>
+				                    		<input type="text" class="res-name" value="${bm.rest_name }" readonly="readonly"><span class="input-size"></span>
 				                    	</a>
-				                    	<input type="text" class="res-cate" value="${bm.rest.rest_cate }" readonly="readonly">
+				                    	<input type="text" class="res-cate" value="${bm.rest_cate }" readonly="readonly">
 				                    	<input type="hidden" id="memNo" value="${bm.mem_no }">
-				                    	<input type="hidden" id="restNo" value="${bm.rest.rest_no }">
+				                    	<input type="hidden" id="restNo" value="${bm.rest_no }">
 				                    	<input type="hidden" class="is-public" value="${bm.is_public }">
-				                    	<input type="hidden" class="rest-adr" value="${bm.rest.rest_loc}">
+				                    	<input type="hidden" class="rest-adr" value="${bm.rest_loc}">
 			                    	</div>
 			                	</div>
-		               			<div class="view-img">
-		                			<img alt="res img" src="${bm.rest.rest_img_name }" class="view-res-image">
+	                			<div class="view-img-list">
+				                	<c:forEach var="rest" items="${bm.rest }">
+			               				<div class="view-img">
+				                			<img alt="res img" src="${rest.rest_img_name }" class="view-res-image" onerror="this.onerror=null; this.src='/resources/images/noImage.png';">
+					               	 	</div>
+					  				</c:forEach>
 			                	</div>
 			            	</div>
 			           		<!--  -->

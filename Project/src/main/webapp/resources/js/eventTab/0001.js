@@ -57,7 +57,8 @@ function loadGame1MyData() {
 			ranking+= `
 				<tr>
 					<td>${data.mem_nick }</td>
-					<td class="score-td myScore">${data.game_score_1 }</td>
+					<td class="score-td">${data.game_score_1 }</td>
+					<td><input type="hidden" class="myScore" value="${data.game_score_1}"></td>
 				</tr>
 				`;
 		}
@@ -2065,7 +2066,7 @@ window.onload = function() {
 };	
 //----- 최고점수 갱신------------------------------------------------------------------
 function saveScore() {
-	let myGameScore=document.querySelector('.myScore').innerText;
+	let myGameScore=document.querySelector('.myScore').value;
 	highScoreValue=parseInt(highScoreValue);
 	console.log(highScoreValue);
 	console.log(myGameScore);
@@ -2082,6 +2083,7 @@ function saveScore() {
 	    	if(result) {
 	    		console.log("점수 갱신 성공!");
 	//          location.reload();
+	    		openModal();
 	        } else {
 	        	console.log("기존 점수보다 낮거나 같아서 갱신되지 않았습니다.");
 	        }
@@ -2091,9 +2093,21 @@ function saveScore() {
 	    })
 	    .catch(err => console.log(err));
 	}
-	
-	
 }
+const modal = document.querySelector('.result-modal');
+function openModal() {
+	modal.style.display = 'block';
+	document.body.style.overflow = 'hidden';
+
+}	
+function closeModal(){
+	modal.style.display = 'none';
+	document.body.style.overflow = 'auto';
+}
+document.querySelector('.close-modal').addEventListener('click',()=>{
+	closeModal();
+});
+
 
 })();
 loadGame1RankData();

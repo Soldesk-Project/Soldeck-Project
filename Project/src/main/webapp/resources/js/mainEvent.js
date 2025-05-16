@@ -1,4 +1,4 @@
-////-----CSS 파일 추가-----------------------------------------
+//-----CSS 파일 추가-----------------------------------------
 //(function() {
 //	
 //	const CSS_FILE_PATH = '/resources/css/mainEvent.css';
@@ -15,80 +15,80 @@ document.querySelectorAll(".main-menu a").forEach(event=>{
 		let tab=event.getAttribute('href');
 		
 		let jsPath = '';
-        let urlKey = '';
-        switch (tab) {
-        case '/list/0001':
-            urlKey = '0001';
-            jsPath = '/resources/js/eventTab/0001.js';
-            break;
-        case '/list/0002':
-            urlKey = '0002';
-            jsPath = '/resources/js/eventTab/0002.js';
-            break;
-        case '/list/0003':
-            urlKey = '0003';
-            jsPath = '/resources/js/eventTab/0003.js';
-            break;
-        case '/list/0004':
-            urlKey = '0004';
-            jsPath = '/resources/js/eventTab/0004.js';
-            break;
-        default:
-            console.error('Unknown category:', tab);
-            return;
-    }
+		let urlKey = '';
+		switch (tab) {
+		case '/list/0001':
+			urlKey = '0001';
+			jsPath = '/resources/js/eventTab/0001.js';
+			break;
+		case '/list/0002':
+			urlKey = '0002';
+			jsPath = '/resources/js/eventTab/0002.js';
+			break;
+		case '/list/0003':
+			urlKey = '0003';
+			jsPath = '/resources/js/eventTab/0003.js';
+			break;
+		case '/list/0004':
+			urlKey = '0004';
+			jsPath = '/resources/js/eventTab/0004.js';
+			break;
+		default:
+			console.error('Unknown category:', tab);
+		return;
+		}
 		
 		
 		fetch("/community/content?url=" + urlKey)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("HTTP error " + response.status);
-            }
-            return response.text();
-        })
-        .then(data => {
-            contentArea.innerHTML = data;
-            // JS 파일 로드
-            if (jsPath) {
-                if (!document.querySelector(`script[src="${jsPath}"]`)) {
-                    const script = document.createElement('script');
-                    script.src = jsPath;
-                    script.onload = () => console.log(jsPath + ' 로드 완료');
-                    document.body.appendChild(script);
-                } else {
-                	deleteScript();
-                	const script = document.createElement('script');
-                    script.src = jsPath;
-                    script.onload = () => console.log(jsPath + ' 로드 완료');
-                    document.body.appendChild(script);
-                    console.log(jsPath + ' 이미 로드됨');
-                }
-            }
-        })
-        .catch(error => {
-            console.error('콘텐츠 로딩 실패:', error);
-            contentArea.innerHTML = '<p>콘텐츠를 로드하는 데 실패했습니다.</p>';
-        });
+		.then(response => {
+			if (!response.ok) {
+				throw new Error("HTTP error " + response.status);
+			}
+			return response.text();
+		})
+		.then(data => {
+			contentArea.innerHTML = data;
+			// JS 파일 로드
+			if (jsPath) {
+				if (!document.querySelector(`script[src="${jsPath}"]`)) {
+					const script = document.createElement('script');
+					script.src = jsPath;
+					script.setAttribute('data-dynamic', 'true');
+					script.onload = () => console.log(jsPath + ' 로드 완료');
+					document.body.appendChild(script);
+				} else {
+					deleteScript();
+					const script = document.createElement('script');
+					script.src = jsPath;
+					script.setAttribute('data-dynamic', 'true');
+					script.onload = () => console.log(jsPath + ' 로드 완료');
+					document.body.appendChild(script);
+				}
+			}
+		})
+		.catch(error => {
+			console.error('콘텐츠 로딩 실패:', error);
+			contentArea.innerHTML = '<p>콘텐츠를 로드하는 데 실패했습니다.</p>';
+		});
 		
 	})
 })
 function deleteScript() {
+	console.log('delete함수');
 	
-	const scriptPaths = [
-		  '/resources/js/friendList.js',
-		  '/resources/js/groupList.js',
-		  '/resources/js/chatroom.js',
-		  '/resources/js/mainEvent.js',
-		  '/resources/js/minigame.js',
-		  '/resources/js/eventTab/0001.js',
-		  '/resources/js/eventTab/0002.js',
-		  '/resources/js/eventTab/0003.js',
-		  '/resources/js/eventTab/0004.js'
-		];
-		scriptPaths.forEach(path => {
-		  const scriptTag = document.querySelector(`script[src="${path}"]`);
-		  if (scriptTag && scriptTag.parentNode) {
-		    scriptTag.parentNode.removeChild(scriptTag);
-		  }
-		});
+	const dynamicScripts = document.querySelectorAll('script[data-dynamic="true"]');
+	console.log(dynamicScripts);
+    dynamicScripts.forEach(script => script.parentNode.removeChild(script));
+//	const scriptPaths = [
+//		'/resources/js/eventTab/0001.js',
+//		'/resources/js/eventTab/0002.js',
+//		'/resources/js/eventTab/0003.js',
+//		'/resources/js/eventTab/0004.js'
+//		];
+//	scriptPaths.forEach(path => {
+//		const scriptTag = document.querySelectorAll(`script[src="${path}"]`);
+//		if (scriptTag && scriptTag.parentNode) {
+//			scriptTag.parentNode.removeChild(scriptTag);
+//		}
+//	});
 }

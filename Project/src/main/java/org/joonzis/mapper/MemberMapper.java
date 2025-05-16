@@ -44,4 +44,9 @@ public interface MemberMapper {
 	public int deleteFriendRequestsByMemNo(int mem_no);
 	public int deleteFriendsByMemNo(int mem_no);
 	public int deleteGroupsByMemNo(int mem_no);
+	public int deleteAttendanceCheckByMemNo(int mem_no);
+	public int deleteEventInfoByMemNo(int mem_no);
+	public int deleteGroupMemByMemNo(int mem_no);
+	public int deleteGroupReqByMemNo(int mem_no);
+	
 }

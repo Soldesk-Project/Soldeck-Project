@@ -20,6 +20,7 @@ document.head.appendChild(linkEle3);
 window.onload = () => {
 	const mnoInput = document.querySelector('input[name="mem_no"]');
 	const profileUploadDiv = document.querySelector('.info-profile-div-div');
+	const profileDiv = document.querySelector('.info-profile-div');
 	const passwordInput = document.getElementById('password');
 	const nicknameInput = document.getElementById('nickName');
 	const emailInput = document.getElementById('email');
@@ -35,6 +36,7 @@ window.onload = () => {
 	
 	// 초기 상태 설정 (modifyBtn 클릭 전 숨김)
 	profileUploadDiv.style.display = 'none';
+	profileDiv.style.border = 'none';
 	modifyFinishBtn.style.display = 'none';
 	resetBtn.style.display = 'none';
 	removeBtn.style.display = 'none';
@@ -65,6 +67,8 @@ window.onload = () => {
 				
 				//2. 프로필 업로드 영역 보이기
 				profileUploadDiv.style.display = 'flex';
+				// 1-1. 프로필 표시
+				profileDiv.style.border = '1px dashed';
 
 				//3. 입력 필드의 readonly 속성 해제
 				passwordInput.readOnly = false;

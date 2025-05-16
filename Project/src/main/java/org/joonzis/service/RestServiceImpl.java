@@ -57,12 +57,9 @@ public class RestServiceImpl implements RestService{
 	}
 	
 	@Override
-	public RestVO getRest(int rest_no) {
-		RestVO result= mapper.getRest(rest_no);
-		if (result.getRest_name().length()>=10) {
-			result.setRest_name(result.getRest_name().substring(0, 10)+"...");
-		}
-		return result;
+	public List<RestVO> getRest(int rest_no) {
+		log.info("getRest..."+rest_no);
+		return mapper.getRest(rest_no);
 	}
 	
 	@Override

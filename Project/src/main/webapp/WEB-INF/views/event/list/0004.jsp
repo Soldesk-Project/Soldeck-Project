@@ -20,11 +20,20 @@
 		    	<button class="today-check-btn">출석체크</button>
 		    	<p>출석체크 할 때마다 100p!</p>
 				<div class="my-point">
-		
 				</div>			
 		  	</div>
 		</div>
 	</div>	
+	<div id="customConfirm" class="result-modal">
+		<div class="inner-modal">
+			<div class="modal-instructions">
+
+			</div>
+			<div class="attendance-modal-content">
+			    <button class="close-modal" id="closeModalBtn">확인</button>
+		    </div>
+		</div>
+	</div>
 	
 <script type="text/javascript" src="/resources/js/eventTab/0004.js"></script>
 </body>

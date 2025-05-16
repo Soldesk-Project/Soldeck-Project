@@ -94,6 +94,10 @@ public class MemberServiceImpl implements MemberService{
         mapper.deleteFriendRequestsByMemNo(mem_no);
         mapper.deleteFriendsByMemNo(mem_no);
         mapper.deleteGroupsByMemNo(mem_no);
+        mapper.deleteAttendanceCheckByMemNo(mem_no);
+        mapper.deleteEventInfoByMemNo(mem_no);
+        mapper.deleteGroupMemByMemNo(mem_no);
+        mapper.deleteGroupReqByMemNo(mem_no);
         return mapper.deleteMemberInfo(mem_no) == 1;
 	}
 	

@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.joonzis.domain.BookMarkDTO;
 import org.joonzis.domain.BookMarkVO;
 import org.joonzis.domain.CommentDTO;
 import org.joonzis.domain.CommentVO;
@@ -162,9 +163,9 @@ public class myPageController {
 		MemberVO mvo = (MemberVO) session.getAttribute("loggedInUser");
 		int mem_no = mvo.getMem_no();
 		log.info("bookmark..."+mem_no);
-		List<BookMarkVO> bookmarkList = bservice.getBookMark(mem_no);
-		for (BookMarkVO bm : bookmarkList) {
-		    RestVO rest = rservice.getRest(bm.getRest_no());
+		List<BookMarkDTO> bookmarkList = bservice.getBookMark(mem_no);
+		for (BookMarkDTO bm : bookmarkList) {
+		    List<RestVO> rest = rservice.getRest(bm.getRest_no());
 	        bm.setRest(rest);
 		}
 		model.addAttribute("bookmarkList", bookmarkList);

@@ -22,7 +22,16 @@
 			</div>
 		</div>	
 	</div>	
-	
+	<div id="customConfirm" class="result-modal">
+		<div class="inner-modal">
+			<div class="modal-instructions">
+
+			</div>
+			<div class="roulette-modal-content">
+			    <button class="close-modal" id="closeModalBtn">확인</button>
+		    </div>
+		</div>
+	</div>
 <script type="text/javascript" src="/resources/js/eventTab/0003.js"></script>
 </body>
 </html>

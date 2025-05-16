@@ -126,20 +126,28 @@ body {
 }
 
 .view {
-  flex-shrink: 0;
-  position: relative;
-  height: auto;
+  	flex-shrink: 0;
+  	position: relative;
+  	height: auto;
+  	border: 1px double white;
+  	border-radius: 10px;
+	padding: 5px;
 }
 .view.active{
 	border: 1px double #F7F3EA;
+	border: 1px double #FF7D00;
 	border-radius: 10px;
 	padding: 5px;
+}
+.view-img-list{
+	display: flex;
 }
 .view-img{
 	width: 100px;
 	height: 100px;
 	border-radius: 10px;
 	overflow: hidden;
+    margin: 0 10px;
 }
 .view-res-image{
 	margin: auto;

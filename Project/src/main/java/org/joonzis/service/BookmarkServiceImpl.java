@@ -2,7 +2,9 @@ package org.joonzis.service;
 
 import java.util.List;
 
+import org.joonzis.domain.BookMarkDTO;
 import org.joonzis.domain.BookMarkVO;
+import org.joonzis.domain.RestVO;
 import org.joonzis.mapper.BookmarkMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +19,12 @@ public class BookmarkServiceImpl implements BookmarkService{
 	private BookmarkMapper mapper;
 
 	@Override
-	public List<BookMarkVO> getBookMark(int mem_no) {
+	public List<BookMarkDTO> getBookMark(int mem_no) {
+		List<BookMarkDTO> result=mapper.getBookMark(mem_no);
+		for(BookMarkDTO rest:result)
+			if (rest.getRest_name().length()>=10) {
+				rest.setRest_name(rest.getRest_name().substring(0, 10)+"...");
+			}
 		return mapper.getBookMark(mem_no);
 	}
 	@Override

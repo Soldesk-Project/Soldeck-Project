@@ -26,7 +26,7 @@ public interface RestMapper {
 	// 가게 메뉴 찾기
 	public List<MenuVO> getMenu(int rest_no);
 	
-	public RestVO getRest(int rest_no);
+	public List<RestVO> getRest(int rest_no);
 	
 	public void addReserve(ReserveVO reservation);
 	

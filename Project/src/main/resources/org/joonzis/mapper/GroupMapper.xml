@@ -55,9 +55,12 @@
 		    g.GROUP_NO,
 		    g.CHAT_TITLE,
 		    g.IS_PUBLIC,
+		    g.LIM_GENDER,
+		    g.MIN_AGE,
+		    g.MAX_AGE,
+		    g.GROUP_IMG,
 		    m.MEM_NO,
-		    m.GROUP_USERMEMO,
-		    m.GROUP_BOOKMARK
+		    m.GROUP_USERMEMO
 		FROM
 		    "GROUP" g
 		INNER JOIN
@@ -65,12 +68,7 @@
 		WHERE
 		    m.MEM_NO=#{mem_no}
 		ORDER BY 
-		    CASE 
-		        WHEN m.GROUP_BOOKMARK = 'Y' THEN 1
-		        WHEN m.GROUP_BOOKMARK = 'N' THEN 2
-		        ELSE 3
-		    END,
-		    g.CHAT_TITLE ASC
+		    g.GROUP_NO DESC
 	</select>
 	
 	<!-- 그룹 메모 저장 -->

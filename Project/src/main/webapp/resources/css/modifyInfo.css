@@ -171,6 +171,8 @@ fieldset > label {
 .info-profile-div-div{
 	margin-top: 5px;
 	text-align: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 .btn-div{

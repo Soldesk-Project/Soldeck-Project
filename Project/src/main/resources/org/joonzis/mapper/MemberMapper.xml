@@ -116,4 +116,22 @@
 	<delete id="deleteGroupsByMemNo" parameterType="int">
     	DELETE FROM "GROUP" WHERE MEM_NO = #{mem_no}
 	</delete>
+	
+	
+	
+	<delete id="deleteAttendanceCheckByMemNo" parameterType="int">
+    	DELETE FROM ATTENDANCE_CHECK WHERE MEM_NO = #{mem_no}
+	</delete>
+	<delete id="deleteEventInfoByMemNo" parameterType="int">
+    	DELETE FROM EVENT_INFO WHERE MEM_NO = #{mem_no}
+	</delete>
+	<delete id="deleteGroupMemByMemNo" parameterType="int">
+    	DELETE FROM GROUP_MEM WHERE MEM_NO = #{mem_no}
+	</delete>
+	<delete id="deleteGroupReqByMemNo" parameterType="int">
+    	DELETE FROM GROUP_REQ WHERE MEM_NO = #{mem_no}
+	</delete>
+	
+	
+	
 </mapper>

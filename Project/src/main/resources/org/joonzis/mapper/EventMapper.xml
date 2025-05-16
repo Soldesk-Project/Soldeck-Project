@@ -87,13 +87,13 @@
 	</update>
 	
 	<insert id="checkAttendance">
-		INSERT INTO ATTENDANCECHECK
+		INSERT INTO ATTENDANCE_CHECK
 		VALUES(#{mem_no}, #{attendance_date})
 	</insert>
 	
 	<select id="loadAttendance" resultType="int">
 		SELECT EXTRACT(DAY FROM ATTENDANCE_DATE)
-		FROM ATTENDANCECHECK
+		FROM ATTENDANCE_CHECK
 		WHERE mem_no = #{mem_no}
 		  AND EXTRACT(YEAR FROM ATTENDANCE_DATE) = #{year}
 		  AND EXTRACT(MONTH FROM ATTENDANCE_DATE) = #{month}

@@ -6,15 +6,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
-public class BookMarkVO {
+public class BookMarkDTO {
 	private int mem_no, rest_no;
-	private String is_public;
+	private String is_public, rest_name, rest_loc, rest_cate;
 	private List<RestVO> rest;
 	}
