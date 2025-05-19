@@ -16,6 +16,7 @@ import org.joonzis.service.MemberService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -46,6 +47,9 @@ public class LoginController {
     
     @Autowired
     private FriendService fservice;
+    
+    @Value("${file.upload-dir}")
+    private String uploadDir;
 
     @Bean
     public InternalResourceViewResolver viewResolver() {
@@ -164,7 +168,6 @@ public class LoginController {
         if (!profileImage.isEmpty()) {
             try {
                 // 이미지 저장 경로 설정
-                String uploadDir = "C:/upload";
                 File uploadPath = new File(uploadDir);
                 if (!uploadPath.exists()) {
                     uploadPath.mkdirs();

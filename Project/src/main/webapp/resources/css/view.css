@@ -185,16 +185,26 @@ a:hover {
 }
 
 .tabel_favor {
-    padding-bottom: 30px; /* 일관된 간격 유지 */
-    text-align: end; /* 버튼 중앙 정렬 */
+	padding-bottom: 10px; /* 일관된 간격 유지 */
+	text-align: end; /* 버튼 중앙 정렬 */
+	margin-top: -30px;
 }
-#favoriteBtn {
-	background: white;
-	border: 1px solid #ddd;
-	border-radius: 4px;
+.bookmark-container {
+	display: inline-block;
+}
+
+.bookmark {
+	background: none;
+	border: none;
 	cursor: pointer;
-	font-size: 16px;
-	font-weight: 500;
+	font-size: 60px;
+	color: #bbb;
+	transition: color 0.2s;
+	outline: none;
+}
+
+.bookmark.active {
+	color: #FFD700;
 }
 .store-menu {
 	display: none;

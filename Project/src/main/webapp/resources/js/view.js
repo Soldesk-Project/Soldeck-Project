@@ -249,17 +249,19 @@ function renderStoreDetails(data) {
             <div class="info-value">${storeData.rest_adr || '정보 없음'}</div>
         </div>
         <div class="tabel_favor">
-            <button id="favoriteBtn"></button>
+    		<div class="bookmark-container">
+    			<button type="button" class="bookmark" id="bookmarkBtn">★</button>
+    		</div>
         </div>
     `;
 
-    const newFavoriteBtnElement = document.getElementById('favoriteBtn');
-    if (newFavoriteBtnElement) {
-        newFavoriteBtnElement.addEventListener('click', handleFavoriteClick); // 익명 함수 제거, handleFavoriteClick 직접 할당
-        favoriteBtnElement = newFavoriteBtnElement;
-        updateFavoriteButtonUI();
+    const newBookmarkBtnElement = document.getElementById('bookmarkBtn');
+    if (newBookmarkBtnElement) {
+    	newBookmarkBtnElement.addEventListener('click', handleFavoriteClick); // 익명 함수 제거, handleFavoriteClick 직접 할당
+    	BookmarkBtnElement = newBookmarkBtnElement;
+        updateInitialBookmarkUI();
     } else {
-        console.error("renderStoreDetails에서 favoriteBtn 요소를 찾을 수 없습니다.");
+        console.error("renderStoreDetails에서 bookmarkBtn 요소를 찾을 수 없습니다.");
     }
 }
 
@@ -816,7 +818,7 @@ function formatDate(dateString) {
 // 즐겨찾기 처리
 function handleFavoriteClick() {
 //    console.log("handleFavoriteClick isFavorite:", window.isFavorite);
-    const favoriteBtnElement = document.getElementById('favoriteBtn');
+    const bookmarkBtnElement = document.getElementById('bookmarkBtn');
     const favoriteModal = document.getElementById('favoriteModal');
 
     if (mem_no == 0) {
@@ -828,12 +830,11 @@ function handleFavoriteClick() {
 
     if (window.isFavorite) {
         removeFavorite();
-        if (favoriteBtnElement) {
-            favoriteBtnElement.style.backgroundColor = 'white';
-            favoriteBtnElement.textContent = '즐겨찾기';
-            window.isFavorite = false;
+        if (bookmarkBtnElement) {
+        	bookmarkBtnElement.classList.remove('active'); // 즐겨찾기 해제 시 회색 별
+        	window.isFavorite = false;
         } else {
-            console.error("favoriteBtnElement를 찾을 수 없습니다.");
+            console.error("bookmarkBtnElement를 찾을 수 없습니다.");
         }
     } else {
         if (favoriteModal) {
@@ -855,7 +856,7 @@ function checkInitialFavoriteStatus() {
     .then(response => response.json())
     .then(data => {
         window.isFavorite = data; // 서버 응답 값을 직접 할당
-        updateFavoriteButtonUI(); // 초기 상태 반영
+        updateInitialBookmarkUI(); // 초기 상태 반영
     });
 }
 
@@ -872,7 +873,7 @@ function addFavorite(isPublic) {
     .then(data => {
         if (data) { // 서버 응답 데이터(boolean)가 true인지 확인
             window.isFavorite = true; // 전역 변수 업데이트
-            updateFavoriteButtonUI();
+            updateBookmarkUI();
 //            console.trace("updateFavoriteButtonUI 호출 스택 (addFavorite)");
             if (favoriteModal) {
                 favoriteModal.style.display = 'none';
@@ -892,7 +893,7 @@ function removeFavorite() {
     .then(data => {
         if (data == true) {
             isFavorite = false;
-            updateFavoriteButtonUI();
+            updateBookmarkUI();
 //            console.trace("updateFavoriteButtonUI 호출 스택(removeFavorite)");
         } else {
             alert('즐겨찾기 해제에 실패했습니다.');
@@ -900,18 +901,31 @@ function removeFavorite() {
     });
 }
 
-function updateFavoriteButtonUI() {
-	const favoriteBtnElement = document.getElementById('favoriteBtn');
-    if (favoriteBtnElement) {
-        favoriteBtnElement.textContent = window.isFavorite ? '즐겨찾기 해제' : '즐겨찾기';
-        if(favoriteBtnElement.textContent == '즐겨찾기 해제'){
-        	favoriteBtnElement.style.backgroundColor = 'yellow';
-        }
-        // 필요하다면 아이콘 변경 등의 추가 UI 업데이트
-    } 
-    /*else {
-        console.error("favoriteBtnElement를 찾을 수 없습니다.");
-    }*/
+function updateInitialBookmarkUI() {
+	const bookmarkBtnElement  = document.getElementById('bookmarkBtn');
+    if (bookmarkBtnElement) {
+    	if (window.isFavorite) {
+    		bookmarkBtnElement.classList.add('active'); // 즐겨찾기 O: 노란색 별 (active 클래스 제거)
+    	} else {
+    		bookmarkBtnElement.classList.remove('active');    // 즐겨찾기 X: 회색 별 (active 클래스 추가)
+    	}
+	} else {
+		console.error("updateInitialBookmarkUI에서 bookmarkBtn 요소를 찾을 수 없습니다.");
+    }
+}
+
+//북마크 UI 업데이트 (즐겨찾기 상태에 따라 별 색상 변경)
+function updateBookmarkUI() {
+	const bookmarkBtnElement = document.getElementById('bookmarkBtn');
+	if (bookmarkBtnElement) {
+		if (window.isFavorite) {
+			bookmarkBtnElement.classList.add('active'); // 즐겨찾기 O: 노란색 별
+		} else {
+			bookmarkBtnElement.classList.remove('active');    // 즐겨찾기 X: 회색 별
+		}
+	} else {
+		console.error("updateBookmarkUI에서 bookmarkBtn 요소를 찾을 수 없습니다.");
+	}
 }
 
 setTimeout(function() {
