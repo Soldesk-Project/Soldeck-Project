@@ -52,8 +52,8 @@ public class GroupServiceImpl implements GroupService {
 	
 	
 	@Override
-	public boolean updateGroupMemo(int group_no, int mem_no, String group_usermemo) {
-		return mapper.updateGroupMemo(group_no, mem_no, group_usermemo);
+	public boolean updateGroupMemo(int mem_no, int group_no, String group_usermemo) {
+		return mapper.updateGroupMemo(mem_no, group_no, group_usermemo);
 	}
 	@Override
 	public boolean addGroupBookmark(int group_no, int mem_no) {

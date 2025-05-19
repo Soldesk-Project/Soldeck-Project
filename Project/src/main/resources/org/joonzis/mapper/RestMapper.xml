@@ -151,6 +151,7 @@
 	</select>
 	
 	<select id="getReserveList" resultType="org.joonzis.domain.ReserveRestDTO">
+	<![CDATA[
 		SELECT 
 		    e.RES_NO,
 		    e.MEM_NO,
@@ -174,14 +175,16 @@
 		LEFT JOIN
 		    BOOKMARK b ON e.MEM_NO = b.MEM_NO AND r.REST_NO = b.REST_NO
 		WHERE 
-		    e.MEM_NO = #{mem_no}
+		    e.MEM_NO = #{mem_no} AND e.RES_DATE > SYSDATE-1
 		ORDER BY
+			e.RES_DATE ASC,
 			e.RES_TIME ASC,
 		    CASE 
 		        WHEN b.IS_PUBLIC = 'Y' THEN 1
 		        WHEN b.IS_PUBLIC = 'N' THEN 2
 		        ELSE 3
 		    END
+    ]]>
 	</select>
 	
 	<delete id="cancelBooking">

@@ -126,7 +126,6 @@ function initFriendList() {
 
       return;
     }
-  });
 
     // 메모 저장
     if (target.classList.contains("save-memo-btn")) {

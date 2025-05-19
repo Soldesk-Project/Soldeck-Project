@@ -44,7 +44,6 @@ function loadGame1MyData() {
 	fetch('/event/list/0001/myScore')
 	.then(response => response.json())
 	.then(data => {
-		console.log(data);
 		const container = document.querySelector(".myRank");
 		let ranking = `
 			<h1>내 점수</h1>
@@ -693,7 +692,7 @@ this.distanceMeter.setHighScore(this.highestScore);
 }
 // Reset the time clock.
 this.time = getTimeStamp();
-saveScore();
+save1Score();
 highScoreValue='';	
 },
 stop: function() {
@@ -2065,11 +2064,9 @@ window.onload = function() {
 	runner.horizon.resize(600, 150);
 };	
 //----- 최고점수 갱신------------------------------------------------------------------
-function saveScore() {
+function save1Score() {
 	let myGameScore=document.querySelector('.myScore').value;
 	highScoreValue=parseInt(highScoreValue);
-	console.log(highScoreValue);
-	console.log(myGameScore);
 	if (myGameScore<highScoreValue) {
 		fetch('/event/saveGameScore1',{
 			method : 'post',
@@ -2093,6 +2090,7 @@ function saveScore() {
 	    })
 	    .catch(err => console.log(err));
 	}
+
 }
 const modal = document.querySelector('.result-modal');
 function openModal() {

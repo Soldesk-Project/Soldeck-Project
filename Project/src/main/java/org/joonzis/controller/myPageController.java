@@ -279,9 +279,11 @@ public class myPageController {
 		return "/mypage/club";
 	}
 	@PostMapping(value = "/club/memoUpdate", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Boolean> updateGRoupMemo(@RequestBody GroupMemberDTO dto) {
-		log.info("updateGRoupMemo..."+dto.getMem_no()+dto.getGroup_no());
-		boolean result=groupService.updateGroupMemo(dto.getGroup_no(), dto.getMem_no(), dto.getGroup_usermemo());
+	public ResponseEntity<Boolean> updateGRoupMemo(@RequestBody GroupMemberDTO dto, HttpSession session) {
+		log.info("updateGRoupMemo..."+dto.getGroup_no());
+		MemberVO mvo = (MemberVO) session.getAttribute("loggedInUser");
+		boolean result=groupService.updateGroupMemo(mvo.getMem_no(), dto.getGroup_no(), dto.getGroup_usermemo());
+		log.info(result);
 		return new ResponseEntity<Boolean>(result,HttpStatus.OK);
 	}
 	@PostMapping(value = "/groupBookmark/del", produces = MediaType.APPLICATION_JSON_VALUE)

@@ -20,8 +20,8 @@ public interface GroupMapper {
 	
 	
 	
-	public boolean updateGroupMemo(@Param("group_no") int group_no, 
-								   @Param("mem_no")	int mem_no, 
+	public boolean updateGroupMemo(@Param("mem_no")	int mem_no, 
+								   @Param("group_no")	int group_no, 
 								   @Param("group_usermemo") String group_usermemo);
 	
 	public boolean addGroupBookmark(@Param("group_no") int group_no, 

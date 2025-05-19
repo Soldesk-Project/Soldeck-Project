@@ -58,7 +58,7 @@ if (!window.chatContext) {
     if (window.ws && window.ws.readyState !== WebSocket.CLOSED) {
       window.ws.close();  // 기존 연결 있으면 닫기
     }
-    window.ws = new WebSocket("wss://b500-14-52-79-21.ngrok-free.app/chat/" + currentRoomNo);
+    window.ws = new WebSocket("wss://35dc-14-52-79-21.ngrok-free.app/chat/" + currentRoomNo);
     console.log("WebSocket 생성:", window.ws);
 
     window.ws.onopen = function(event) {

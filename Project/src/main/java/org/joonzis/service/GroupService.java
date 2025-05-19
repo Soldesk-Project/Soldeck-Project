@@ -16,7 +16,7 @@ public interface GroupService {
 	
 	
 
-	public boolean updateGroupMemo(int group_no, int mem_no, String group_usermemo);
+	public boolean updateGroupMemo(int mem_no, int group_no, String group_usermemo);
 	
 	public boolean addGroupBookmark(int group_no, int mem_no);
 	

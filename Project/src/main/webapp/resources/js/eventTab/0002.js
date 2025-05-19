@@ -100,7 +100,6 @@ window.addEventListener('keydown', function(e) {
 	}
 });
 
-
 //----- 게임 ------------------------------------------------------------------
 	
 const canvas = document.getElementById("game-board");
@@ -150,7 +149,7 @@ function stopGame() {
 function gameOver() {
 	let myGameScore=document.querySelector('.myScore').value;
 	if (score>myGameScore) {
-		saveScore(score);
+		save2Score(score);
 //		highScore=score;
 	}
 	snake.reset();
@@ -260,7 +259,7 @@ window.addEventListener("keydown", (event) => {
 
 document.querySelector(".start-btn").addEventListener("click", startGame);
 
-function saveScore(score) {
+function save2Score(score) {
 	fetch('/event/saveGameScore2',{
 		method : 'post',
 		headers : {

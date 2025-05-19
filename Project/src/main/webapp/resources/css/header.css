@@ -289,22 +289,23 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 #popular-keywords {
-	overflow: hidden;
+	/*overflow: hidden;*/
 	height: 30px;
+	height: 50px;
 	position: relative;
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	width: 250px;
   
 }
 
 .keyword-rank {
-	position: absolute;
+	/*position: absolute;*/
 	width: 130%;
 	text-align: left;
 	animation: slideUp 3s ease-in-out infinite;
 	white-space: nowrap;
-	 margin: 0;
+	margin: 0;
 	padding: 0;
 	text-overflow: ellipsis;
 	flex-shrink: 1;

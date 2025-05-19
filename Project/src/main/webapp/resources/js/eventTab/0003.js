@@ -44,7 +44,6 @@ function loadMyPointData() {
 	  .catch(error => console.error("포인트  로드 실패:", error));
 }
 
-
 window.cleanupEventTab0001 = function() {
 	if (window.runner && typeof window.runner.stopListening === 'function') {
 		window.runner.stopListening();
@@ -68,7 +67,7 @@ window.cleanupEventTab0001 = function() {
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-const items = ["꽝", "꽝", "꽝", "꽝", "50", "100", "200", "500"];
+const items = ["꽝", "50", "꽝", "100", "꽝", "200", "꽝", "500"];
 const colors = ["#00B8D4", "#FF7D00", "#00B8D4", "#FF7D00", "#00B8D4", "#FF7D00", "#00B8D4", "#FF7D00"];
 
 const centerX = canvas.width / 2;

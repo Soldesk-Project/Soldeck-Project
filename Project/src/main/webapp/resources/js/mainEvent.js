@@ -1,4 +1,4 @@
-//-----CSS 파일 추가-----------------------------------------
+
 //(function() {
 //	
 //	const CSS_FILE_PATH = '/resources/css/mainEvent.css';

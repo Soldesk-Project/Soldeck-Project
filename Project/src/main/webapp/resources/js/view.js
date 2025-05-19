@@ -693,7 +693,7 @@ function showCommentsImage() {
 	          modalImageContainer.appendChild(div);
 	        });
 	        modal.style.display = 'flex';
-	      }, { once: true }); // 단일 이벤트 보장
+	      });
 	    }
 	  });
 	}
