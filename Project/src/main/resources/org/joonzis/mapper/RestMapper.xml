@@ -72,40 +72,6 @@
 	]]>
 	</select>
 	
-	<!-- <select id="todayData" resultType="org.joonzis.domain.RestVO">
-	<![CDATA[
-	    SELECT *
-	    FROM (
-	        SELECT 
-	            r.REST_NO,
-	            r.REST_NAME,
-	            i.REST_IMG_NAME,
-	            i.REST_IMG_NO,
-	            DBMS_RANDOM.VALUE AS rand_val
-	        FROM 
-	            RESTAURANT r
-	        LEFT JOIN (
-	            SELECT 
-	                REST_NO,
-	                REST_IMG_NAME,
-	                REST_IMG_NO
-	            FROM (
-	                SELECT 
-	                    REST_NO,
-	                    REST_IMG_NAME,
-	                    REST_IMG_NO,
-	                    ROW_NUMBER() OVER (PARTITION BY REST_NO ORDER BY REST_IMG_NO) AS rn
-	                FROM 
-	                    REST_IMG
-	            ) i
-	            WHERE i.rn = 1
-	        ) i ON r.REST_NO = i.REST_NO
-	        ORDER BY DBMS_RANDOM.VALUE
-	    )
-	    WHERE ROWNUM <= 300
-	]]>
-	</select> -->
-	
 	<select id="findByNo" resultType="org.joonzis.domain.RestVO">
 		SELECT 
         r.REST_NO,

@@ -170,16 +170,18 @@ public class SearchController {
 	@ResponseBody
 	public List<RestVO> getLocation(@RequestParam("keyword") String keyword) {
 	    List<RestVO> allPlaces = service.getAllRestWithThumbnail(); // 전체 가게 리스트 불러옴
-	    List<RestVO> filteredPlaces = new ArrayList<>();
-	    
-	    if (keyword != null && !keyword.trim().isEmpty()) {
-	        for (RestVO place : allPlaces) {
-	            if (keyword.equals(place.getRest_cate())) {
-	                filteredPlaces.add(place);
-	            }
-	        }
-	    }
+	    // keyword가 null, 빈 문자열, 또는 "전체"일 경우 모든 가게 반환
+        if (keyword == null || keyword.trim().isEmpty() || keyword.trim().equals("전체")) {
+            return allPlaces;
+        }
 
+        // 특정 카테고리 필터링
+        List<RestVO> filteredPlaces = new ArrayList<>();
+        for (RestVO place : allPlaces) {
+            if (keyword.trim().equals(place.getRest_cate())) {
+                filteredPlaces.add(place);
+            }
+        }
 	    return filteredPlaces;
 	}
 	// 현재 위치 기준 식당 검색 데이터 가져오기

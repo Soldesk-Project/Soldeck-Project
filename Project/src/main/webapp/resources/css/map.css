@@ -77,7 +77,20 @@ img, a img {
 	height: 50px;
 	margin-left: 10px; /* 검색창과 로고 사이 공간 추가 */
 }
-
+#search-boxBtn {
+  position: absolute;
+  right: 21px;
+  top: 5.5%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+#search-boxBtn img {
+  width: 27px;
+  height: 27px;
+  filter: brightness(0) saturate(100%) invert(52%) sepia(92%) saturate(2043%) hue-rotate(-8deg) brightness(104%) contrast(104%);
+}
 /* 가게 리스트 스타일 */
 .store-item {
   display: flex;
@@ -185,4 +198,37 @@ img, a img {
 
 .changeLocationBtn .btn_text {
     font-weight: bold; /* 글자 두껍게 */
+}
+
+.resetLocationBtn {
+    display: none;
+    position: absolute;
+    bottom: 20px;
+    left: 58%;
+    transform: translateX(-50%);
+    z-index: 10;
+    padding: 10px 20px;
+    background-color: #2e8bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+#category-select {
+    position: absolute;
+    top: 20px;
+    left: 24%;
+    transform: translateX(-50%);
+    z-index: 10;
+    width: 95px;
+    padding: 10px 10px;
+    background-color: #2e8bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
 }
