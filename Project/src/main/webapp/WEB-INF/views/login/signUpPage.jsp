@@ -4,13 +4,13 @@
 <head>
 <meta charset="UTF-8">
 <title>회원 가입</title>
-<link rel="stylesheet" href="../resources/css/header.css">
 <link rel="stylesheet" href="../resources/css/signUpPage.css">
 <link rel="stylesheet" href="../resources/css/footer.css">
 </head>
 <body>
-	<jsp:include page="../layout/header.jsp"/>
-
+	<a href="/">
+			<img src="../resources/images/logo.png" alt="로고" class="logo">
+	</a>
 	<div class="container">
 		<form id="registrationForm" action="/login/signUpProcess" method="post" enctype="multipart/form-data">
 			<div class="image-upload-container">
