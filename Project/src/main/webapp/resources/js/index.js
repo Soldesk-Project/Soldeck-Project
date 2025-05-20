@@ -487,7 +487,25 @@ function updateDateTime() {
 							showPopup(date);
 						});
 					}
-				}
+				},
+				onChange: function (selectedDates) {
+				    const selectedDate = selectedDates[0];
+				    const today = new Date();
+				    today.setHours(0, 0, 0, 0);
+				    selectedDate.setHours(0, 0, 0, 0);
+
+				    const isToday = selectedDate.getTime() === today.getTime();
+
+				    const todayElem = document.querySelector(".flatpickr-day.today");
+
+				    if (todayElem) {
+				      if (isToday) {
+				        todayElem.classList.remove("not-today-selected");
+				      } else {
+				        todayElem.classList.add("not-today-selected");
+				      }
+				    }
+				  }
 			});
 		});
 	});
