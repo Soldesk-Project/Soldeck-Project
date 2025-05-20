@@ -15,6 +15,7 @@ public interface GroupService {
 	// 그럽 정보 가져오기
 	public List<GroupMemberDTO> getAllGroups(int mem_no);
 	
+	public List<Integer> getGroupFoodKate(int group_no);
 	
 
 	public boolean updateGroupMemo(int mem_no, int group_no, String group_usermemo);
@@ -30,9 +31,9 @@ public interface GroupService {
 	//랜덤추천채팅 목록 불러오기
 	Integer getGroupNoByMember(int mem_no);
 	
-    public List<GroupVO> getRandomGroupList(int group_no, int mem_no);
+    public List<GroupDTO> getRandomGroupList(int group_no, int mem_no);
     //내가 속한 모임 필터링
-    public List<GroupVO> getRandomGroupListWithoutFilter(int mem_no);
+    public List<GroupDTO> getRandomGroupListWithoutFilter(int mem_no);
 	//채팅 가입하기
 	void insertGroup(int group_no, int mem_no);
 	//검색어가 포함된 채팅 목록 불러오기

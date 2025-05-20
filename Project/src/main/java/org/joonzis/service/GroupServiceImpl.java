@@ -54,7 +54,10 @@ public class GroupServiceImpl implements GroupService {
 	public List<GroupMemberDTO> getAllGroups(int mem_no) {
 		return mapper.getAllGroups(mem_no);
 	}
-	
+	@Override
+	public List<Integer> getGroupFoodKate(int group_no) {
+		return mapper.getGroupFoodKate(group_no);
+	}
 	
 	
 	
@@ -84,12 +87,12 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public List<GroupVO> getRandomGroupList(int group_no, int mem_no) {
+    public List<GroupDTO> getRandomGroupList(int group_no, int mem_no) {
         return mapper.getRandomGroupList(group_no, mem_no);
     }
 
     @Override
-    public List<GroupVO> getRandomGroupListWithoutFilter(int mem_no) {
+    public List<GroupDTO> getRandomGroupListWithoutFilter(int mem_no) {
         return mapper.getRandomGroupListWithoutFilter(mem_no);
     }
 

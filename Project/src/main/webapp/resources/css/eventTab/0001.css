@@ -271,11 +271,6 @@ html:not([subframe]) #sub-frame-error {
   margin-top: 20px;
 }
 
-a {
-  color: rgb(17, 85, 204);
-  text-decoration: none;
-}
-
 .icon {
   -webkit-user-select: none;
 }

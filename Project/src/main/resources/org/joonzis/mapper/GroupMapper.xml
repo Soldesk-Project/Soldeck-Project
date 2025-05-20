@@ -126,7 +126,11 @@
 	    AND ROWNUM = 1
 	</select>
 	
-	<select id="getRandomGroupList" resultType="org.joonzis.domain.GroupVO">
+	<select id="getGroupFoodKate" parameterType="int" resultType="int">
+		SELECT FOOD_NO FROM GROUP_FOOD_KATE WHERE GROUP_NO=#{group_no}
+	</select>
+	
+	<select id="getRandomGroupList" resultType="org.joonzis.domain.GroupDTO">
 	    <![CDATA[
 		    SELECT *
 		    FROM (
@@ -144,7 +148,7 @@
 	    ]]>
 	</select>
 	
-	<select id="getRandomGroupListWithoutFilter" resultType="org.joonzis.domain.GroupVO">
+	<select id="getRandomGroupListWithoutFilter" resultType="org.joonzis.domain.GroupDTO">
 	    <![CDATA[
 		    SELECT *
 		    FROM (

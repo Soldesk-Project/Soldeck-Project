@@ -128,14 +128,16 @@ public class GroupController {
 	        // group_no 조회 실패 시 null로 처리
 	        group_no = null;
 	    }
-
-	    List<GroupVO> result;
+	    List<GroupDTO> result;
 	    if (group_no == null) {
 	        // 내가 속한 그룹이 없을 때: 필터 없이 전체 중에서 추천
 	        result = service.getRandomGroupListWithoutFilter(mem_no);
 	    } else {
 	        // 정상적으로 group_no 조회되었을 때
 	        result = service.getRandomGroupList(group_no, mem_no);
+	    }
+	    for(GroupDTO gdto:result) {
+	    	gdto.setFoodList(service.getGroupFoodKate(gdto.getGroup_no()));
 	    }
 
 	    return ResponseEntity.ok(result);

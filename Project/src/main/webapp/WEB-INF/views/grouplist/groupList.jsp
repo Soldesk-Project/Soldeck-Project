@@ -41,7 +41,11 @@
 		<div class="modal-body">
 			<ul>
 				<li class="image-container">
-					<div class="image-placeholder">이미지</div>
+					<div class="image-placeholder">
+						<img class="info-profile" id="profileImage" src="/resources/upload/group_default_img.png" alt="그룹 프로필"
+							onerror="if (!this.dataset.error) { this.dataset.error = true; this.src='/resources/upload/group_default_img.png'; }">
+						<input type="file" id="profileImageInput" class="previewImage" accept="image/*" name="profileImageInput">
+					</div>
 					<button id="uploadBtn" class="upload-btn">업로드</button>
 				</li>
 				<li>

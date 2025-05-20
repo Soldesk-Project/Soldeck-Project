@@ -86,11 +86,18 @@ function loadRandomGroupList() {
 		    return;
 		}
 	
+		const foodMap = {
+			    1: "한식",
+			    2: "일식",
+			    3: "중식",
+			    4: "양식",
+			    5: "베트남요리"
+			};
 		data.forEach(group => {
-			//fallback 값 설정
-		    const hashtags = (group.hashtags || []).slice(0, 3)
-		    .map(tag => `<li>#${tag}</li>`)
-		    .join('');
+			console.log(group.foodList);
+		    const hashtags = (group.foodList || []).slice(0, 3)
+	        .map(no => `<li>${foodMap[no] || '기타'}</li>`)
+	        .join('');
 	
 		    const introduce = group.group_memo || "소개글이 없습니다";
 	
@@ -106,8 +113,7 @@ function loadRandomGroupList() {
 		    	  <div><p class="title">선호도</p></div>
 		    	  <div class="preference">
 			    	<ul class="hashtags">
-				    	<li>한식</li>
-				    	<li>베트남식</li>
+				    	${hashtags}
 			    	</ul>
 		    	  </div>
 		          <div class="follow-btn">
@@ -329,7 +335,8 @@ function createGroup() {
 	const checkMemo=/^.{0,200}$/;
 	
 	const foodList = Array.from(checked).map(food => Number(food.value));	
-
+	
+	
 	if (count < 1 || count > 3) {
 		alert('선호 음식은 1개 이상, 3개 이하로 선택해주세요.');
 		return;
@@ -368,8 +375,28 @@ function createGroup() {
 	})
 	.catch(err => console.log(err));
 }
+//-----프로필 미리보기----------------------------------------------------------------------
+const profileImageInput = document.getElementById('profileImageInput');
+const previewImage = document.getElementById('profileImage');
 
-
+profileImageInput.addEventListener('change', function() {
+    const file = this.files[0];
+    if (file) {
+        if (!file.type.startsWith('image/')) {
+            alert('이미지 파일만 선택해주세요.');
+            this.value = '';
+            previewImage.src = '#';
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            previewImage.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    } else {
+        previewImage.src = '#';
+    }
+});
 
 //-----버튼 클릭 이벤트-------------------------------------------------------------------
 document.querySelectorAll('button').forEach(btn => {
@@ -389,14 +416,13 @@ document.querySelectorAll('button').forEach(btn => {
 		}else if(type == 'closeModalBtn'){
 			closeModal();
 		}else if(type == 'uploadBtn'){
-			//프로필 업로드 함수
+			profileImageInput.click();
 		}
 	});
 });
 
 
 })();
-loadGroupList();
 
 
 //-----채팅방 열기-------------------------------------------------------------------
@@ -488,7 +514,7 @@ function moveChatRoom(event){
 
 
 
-
+loadGroupList();
 
 
 

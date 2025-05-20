@@ -22,6 +22,7 @@ public interface GroupMapper {
 	// 그룹 정보 가져오기
 	public List<GroupMemberDTO> getAllGroups(int mem_no);
 	
+	public List<Integer> getGroupFoodKate(int group_no);
 	
 	
 	public boolean updateGroupMemo(@Param("mem_no")	int mem_no, 
@@ -41,9 +42,9 @@ public interface GroupMapper {
 	//랜덤으로 추천되는 채팅 목록 불러오기
 	Integer getGroupNoByMember(int mem_no);
 
-    List<GroupVO> getRandomGroupList(@Param("group_no") int group_no, @Param("mem_no") int mem_no);
+    List<GroupDTO> getRandomGroupList(@Param("group_no") int group_no, @Param("mem_no") int mem_no);
 
-    List<GroupVO> getRandomGroupListWithoutFilter(@Param("mem_no") int mem_no);
+    List<GroupDTO> getRandomGroupListWithoutFilter(@Param("mem_no") int mem_no);
 	
 	//채팅 가입하기 버튼
 	void insertGroup(@Param("group_no") int group_no, @Param("mem_no") int mem_no);
