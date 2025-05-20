@@ -414,7 +414,6 @@ function moveChatRoom(event){
 		
 		const roomNo = target.dataset.groupNo;
 		
-		console.log(roomNo);
 		
 		fetch(`/chat/chatRoom/${roomNo}`)
 			.then(response => {
@@ -422,7 +421,6 @@ function moveChatRoom(event){
 				return response.text();
 			})
 			.then(html => {
-				console.log(html)
 				const parser = new DOMParser();
 				const doc = parser.parseFromString(html, "text/html");
 				

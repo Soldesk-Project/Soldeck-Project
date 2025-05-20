@@ -17,7 +17,7 @@
   <button id="closeChatBtn">닫기 ✖</button>
 </div>
   <!-- 채팅창 -->
-  <div class="chat-container">
+  <div class="chat-container" data-room-type="private">>
     <div id="chat-box"></div>
   </div>
 

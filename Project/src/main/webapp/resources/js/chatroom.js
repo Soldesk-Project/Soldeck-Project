@@ -148,10 +148,11 @@ function initializeChatroom() {
       alert("웹소켓 연결이 아직 완료되지 않았습니다.");
       return;
     }
+    const chatContainer = document.getElementById('chat-container');
     const input = document.getElementById("msg");
     const fileInput = document.getElementById("fileInput");
     const message = input.value;
-    const isPrivate = true;
+    const isPrivate = chatContainer.getAttribute('data-room-type') === 'private';
 
     if (message.trim() !== "" || (fileInput && fileInput.files.length > 0)) {
       const chatMessage = {
