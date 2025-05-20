@@ -21,7 +21,9 @@
 		</div>
 		<div id="sidebar-body"></div>
 	</div>
-  <div id="map"></div>
+  <div id="map">
+  
+  </div>
   <!-- 드롭다운 메뉴 추가 -->
   <select id="category-select">
       <option value="전체">전체</option>

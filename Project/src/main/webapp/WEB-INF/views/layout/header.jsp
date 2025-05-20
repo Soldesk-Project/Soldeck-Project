@@ -14,13 +14,13 @@
 		</div>
 	</div>
 
-    <c:if test="${sessionScope.loggedInUser != null}">
-    	<c:set var="member" value="${sessionScope.loggedInUser}" />
-    	
 	<div id="popular-keywords">
     	<div class="indexTitle_header"># 인기 검색어</div>
  		<div class="keyword-rank" id="keyword-text">불러오는 중...</div>
 	</div>
+	
+    <c:if test="${sessionScope.loggedInUser != null}">
+    	<c:set var="member" value="${sessionScope.loggedInUser}" />
     	
     <div class="profileBox">
        	<div class="profileBox1">

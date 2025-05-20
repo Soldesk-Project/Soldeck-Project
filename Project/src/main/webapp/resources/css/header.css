@@ -289,8 +289,6 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 #popular-keywords {
-	/*overflow: hidden;*/
-	height: 30px;
 	height: 50px;
 	position: relative;
 	display: flex;
@@ -300,7 +298,6 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 .keyword-rank {
-	/*position: absolute;*/
 	width: 130%;
 	text-align: left;
 	animation: slideUp 3s ease-in-out infinite;
@@ -310,4 +307,5 @@ input[type="search"]::-webkit-search-cancel-button {
 	text-overflow: ellipsis;
 	flex-shrink: 1;
 	min-width: 0;
+	cursor: pointer;
 }
