@@ -442,7 +442,6 @@ body {
 	display: none;
 }
 .flatpickr-day {
-  padding: 4px;
   font-size: 12px;
   width: 28px;
   height: 28px;
@@ -460,8 +459,8 @@ body {
 
 .reserve-circle {
 	position: absolute;
-	top: 4px; /* 위에서부터의 거리: 위치 조절 */
-	left: 4px; /* 왼쪽 여백 */
+	top: 0px; /* 위에서부터의 거리: 위치 조절 */
+	left: 5px; /* 왼쪽 여백 */
 	width: 28px;   /* 원 크기 */
 	height: 28px;
 	border: 2px solid red;
@@ -469,6 +468,80 @@ body {
 	box-sizing: border-box;
 	pointer-events: none; /* 클릭 방해 안 되게 */
 	z-index: 0;
+}
+
+/* 기본 빨간 원 스타일 */
+.has-reserve-circle {
+  position: relative;
+  z-index: 1;
+}
+.flatpickr-day.today {
+  position: relative;
+   color: #fff; /* 기존 텍스트 색상으로 되돌림 */
+  z-index: 1; /* 텍스트가 위에 보이도록 */
+}
+
+.flatpickr-day.today::after {
+  content: "";
+  position: absolute;
+  top: 0px; /* reserve-circle과 동일한 위치 */
+  left: 5.1px;
+  width: 28px;
+  height: 28px;
+  background: #FF7D00;
+  border: 2px solid #FF7D00; /* reserve-circle과 동일한 스타일 */
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+  z-index: -1;
+}
+.flatpickr-day.today.not-today-selected {
+  color: inherit;
+}
+.flatpickr-day.today.not-today-selected::after {
+  content: none;
+}
+/* hover 상태 배경 */
+.flatpickr-day:hover::after {
+  content: "";
+  position: absolute;
+  top: 0px;
+  left: 5.1px;
+  width: 28px;
+  height: 28px;
+  background: lavender;
+  border-radius: 50%;
+  z-index: -1; /* 텍스트보다 뒤 */
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+/* 선택 상태 배경 */
+.flatpickr-day.selected::after {
+  content: "";
+  position: absolute;
+  top: 0px;
+  left: 5.1px;
+  width: 28px;
+  height: 28px;
+  background: #FF7D00;
+  border-radius: 50%;
+  z-index: -1;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+/* 예약이 있는 날짜와 현재 날짜가 겹칠 경우를 위한 스타일 */
+.flatpickr-day.today.has-reserve-circle::after {
+  border-color: red; /* 필요 시 색상 조정 가능 */
+  z-index: -1;
+}
+
+.flatpickr-day.selected,
+.flatpickr-day.today,
+.flatpickr-day:hover {
+  background: none !important;
+  border: none !important;
+  /* color: inherit; */
 }
 
 .reserve-popup {

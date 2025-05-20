@@ -20,6 +20,11 @@
 				<div class="noticeContent">
 					<p>공지사항1번 내용</p>
 				</div>
+				<div class="noticeTitle"><공지사항>공지사항2번</div>
+				<div class="noticeContent">
+					<p>공지사항2번 내용</p>
+				</div>
+
 			</div>
 		</div>
 	</div>
