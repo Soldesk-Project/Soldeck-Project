@@ -95,8 +95,7 @@ function initializeChatroom() {
       window.ws.close();  // 기존 연결 있으면 닫기
     }
     window.ws = new WebSocket("wss://4617-14-52-79-21.ngrok-free.app/chat/" + roomNo);
-    console.log("WebSocket 생성:", window.ws);
-
+    console.log("WebSocket 생성:", window.ws)
     window.ws.onopen = function(event) {
       const firstMessage = JSON.stringify({ type: "register", mem_no: mem_no });
       window.ws.send(firstMessage);
@@ -148,11 +147,12 @@ function initializeChatroom() {
       alert("웹소켓 연결이 아직 완료되지 않았습니다.");
       return;
     }
-    const chatContainer = document.getElementById('chat-container');
+    const chatRoomDiv = document.querySelector('#chat-container .chat-container');
     const input = document.getElementById("msg");
     const fileInput = document.getElementById("fileInput");
     const message = input.value;
-    const isPrivate = chatContainer.getAttribute('data-room-type') === 'private';
+    const isPrivate = chatRoomDiv.getAttribute('data-room-type') === 'private';
+    const roomNo = chatRoomDiv.getAttribute('data-room-no') || currentRoomNo;
 
     if (message.trim() !== "" || (fileInput && fileInput.files.length > 0)) {
       const chatMessage = {
@@ -161,8 +161,10 @@ function initializeChatroom() {
         mem_no: mem_no,
         msg: message,
         chat_type: isPrivate ? "private" : "group",
-        room_no: isPrivate ? currentRoomNo : undefined
+        room_no: roomNo
       };
+      
+      console.log(chatMessage);
 
       if (chatMessage.file) {
         const reader = new FileReader();

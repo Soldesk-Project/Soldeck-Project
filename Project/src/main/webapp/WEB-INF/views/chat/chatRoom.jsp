@@ -11,11 +11,13 @@
   <link rel="stylesheet" type="text/css" href="/resources/css/chatroom.css">
 </head>
 <body>
+<div class="chat-head">
   <h2>${chatTitle}</h2>
  <button id="closeChatBtn">닫기 ✖</button>
+</div>
 
   <!-- 채팅창 -->
-  <div class="chat-container" data-room-type="group">
+  <div class="chat-container" data-room-type="group" data-room-no="${groupNo }">
     <div id="chat-box"></div>
   </div>
 
