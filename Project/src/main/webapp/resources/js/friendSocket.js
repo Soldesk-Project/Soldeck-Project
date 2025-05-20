@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
             notificationContainer.style.zIndex = "9999";
             notificationContainer.style.backgroundColor = "#fff";
             notificationContainer.style.border = "1px solid #ccc";
-            notificationContainer.style.padding = "10px";
+            notificationContainer.style.padding = "10px";    
             document.body.appendChild(notificationContainer);
         }
 

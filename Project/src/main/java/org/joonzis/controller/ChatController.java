@@ -114,7 +114,7 @@ public class ChatController {
 	        chatLogsJson = "[]"; // 예외 발생 시 빈 배열로 설정
 	    }
 
-	    model.addAttribute("chatLogs", chatLogsJson);
+	    model.addAttribute("chatLogsJson", chatLogsJson);
 	    model.addAttribute("groupList", groups);
 
 	    return "chat/chatRoom";

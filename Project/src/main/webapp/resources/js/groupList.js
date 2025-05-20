@@ -25,7 +25,9 @@ function loadGroupList() {
 	    	<div class="group_profile">
 	    	  <img src="../resources/upload/${group.group_img?group.group_img:'group_default_img.png'}" alt="모임프로필" width="80" height="80"
 	               onerror="if (!this.dataset.error) { this.dataset.error = true; this.src='../resources/images/group_default_profile.png'; }">
-	          <div class="groupnameBox"><p>${group.chat_title}</p></div>
+	          <div class="groupnameBox">
+							<p><a href="#" class="chat-title" data-group-no="${group.group_no}">${group.chat_title}</a></p>
+						</div>
 	          <div class="memo_input">
 	          	<span class="group-memo">${group.group_usermemo||'//-----'}</span>
 	            <input type="text" class="group-memo-modify" value="${group.group_usermemo || ''}" placeholder="메모 입력" data-group-id="${group.group_no}" display="none">
@@ -159,7 +161,7 @@ function clickGroupInfo() {
 					return;
 				}
 			}
-			if (['button', 'span', 'img', 'p', 'li'].includes(tag)) {
+			if (['button', 'span', 'img', 'p', 'a', 'li'].includes(tag)) {
 				return;
 			}
 			if(group.closest('.group-box').querySelector('.group-info').style.display=='none'){
@@ -396,6 +398,92 @@ document.querySelectorAll('button').forEach(btn => {
 })();
 loadGroupList();
 
+
+//-----채팅방 열기-------------------------------------------------------------------
+document.addEventListener("click", function(event) {
+	if (event.target.classList.contains("chat-title")) {
+		moveChatRoom(event);
+	}
+});
+
+function moveChatRoom(event){
+	const target = event.target;
+
+	if(target.classList.contains("chat-title")){
+		event.preventDefault();
+		
+		const roomNo = target.dataset.groupNo;
+		
+		console.log(roomNo);
+		
+		fetch(`/chat/chatRoom/${roomNo}`)
+			.then(response => {
+				if(!response.ok) throw new Error("채팅방 요청 실패");
+				return response.text();
+			})
+			.then(html => {
+				console.log(html)
+				const parser = new DOMParser();
+				const doc = parser.parseFromString(html, "text/html");
+				
+				const chatContainer = document.getElementById("chat-container") || (() => {
+					const div = document.createElement("div");
+					div.id =  "chat-container";
+					document.body.appendChild(div);
+					return div;
+				})();
+				
+				// 이벤트 중복 방지: once: true
+		        window.addEventListener("chatContextReady", () => {
+		          window.dispatchEvent(new CustomEvent('openChatRoom', { detail: { roomNo } }));
+		        }, { once: true });
+
+		        const scripts = doc.querySelectorAll("script");
+		        scripts.forEach(s => s.remove());
+		        chatContainer.innerHTML = doc.body.innerHTML;
+
+		        scripts.forEach(oldScript => {
+		          const newScript = document.createElement("script");
+		          if (oldScript.src) {
+		            if (!document.querySelector(`script[src="${oldScript.src}"]`)) {
+		              newScript.src = oldScript.src;
+		              newScript.type = oldScript.type || "text/javascript";
+		              document.body.appendChild(newScript);
+		            }
+		          } else {
+		            newScript.textContent = oldScript.textContent;
+		            newScript.type = oldScript.type || "text/javascript";
+		            document.body.appendChild(newScript);
+		          }
+		        });
+
+		        if (!document.querySelector('link[href="/resources/css/chatroom.css"]')) {
+		          const link = document.createElement("link");
+		          link.rel = "stylesheet";
+		          link.type = "text/css";
+		          link.href = "/resources/css/chatroom.css";
+		          document.head.appendChild(link);
+		        }
+
+		        const existingScript = document.querySelector('script[src="/resources/js/chatroom.js"]');
+		        if (existingScript) existingScript.remove();
+
+		        const script = document.createElement('script');
+		        script.src = "/resources/js/chatroom.js";
+		        script.onload = () => {
+		          if (window.chatContext) {
+		            window.dispatchEvent(new Event("chatContextReady"));
+		          } else {
+		            console.warn("chatContext가 아직 준비되지 않았습니다.");
+		          }
+		        };
+		        document.body.appendChild(script);
+			})
+			.catch(error => {
+				console.error("채팅방 열기 중 에러 발생:", error);
+			})
+	}
+}
 
 
 

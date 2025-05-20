@@ -12,6 +12,7 @@
 </head>
 <body>
   <h2>${chatTitle}</h2>
+ <button id="closeChatBtn">닫기 ✖</button>
 
   <!-- 채팅창 -->
   <div class="chat-container">
@@ -25,6 +26,11 @@
     <button id="emoji-btn">😊</button>
     <button id="sendBtn" onclick="sendMessage()">보내기</button>  
   </div>
+  
+  <div id="chat-meta"
+     data-current-nick="${currentNick}"
+     data-mem-no="${currentNo}"
+     data-chat-logs='${chatLogsJson}'></div>
   
   <script type="module">
     import { EmojiButton } from 'https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@4.6.4/dist/index.min.js';
@@ -49,18 +55,5 @@
   	  input.focus();  // 입력창에 포커스 유지
 	});
   </script>
-
-  <!-- JavaScript 파일 연결 -->
-  <script type="text/javascript">
-    const currentNick = "${currentNick}";
-    const mem_no = "${currentNo}";
-    const chatLogs = ${chatLogs};  // 서버에서 전달된 JSON 데이터
-
-    // chatroom.js는 여기서 로드되도록 함
-    const script = document.createElement('script');
-    script.src = "/resources/js/chatroom.js";
-    document.body.appendChild(script);
-  </script>
-
 </body>
 </html>

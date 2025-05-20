@@ -20,6 +20,8 @@
 	<div class="container_F">
 		<!-- 검색 영역 -->
 		<div class="searchBox">
+			<button class="friend-tab-button active" data-tab="my">내 친구</button>
+			<button class="friend-tab-button" data-tab="recommend">추천 친구</button>
 			<p class="searchTitle">친구 검색</p>
 			<input type="text" id="searchInput" placeholder="친구 검색">
 			<button id="friendSearchButton">검색</button>
@@ -29,14 +31,6 @@
 
 		<!-- 친구 탭 UI -->
 		<div class="friendWrapper">
-			<!-- 탭 버튼 -->
-			<div class="friendTabMenu">
-				<button type="button" class="friend-tab-button active" data-tab="my">내
-					친구</button>
-				<button type="button" class="friend-tab-button" data-tab="recommend">친구
-					추천</button>
-			</div>
-
 			<!-- 탭 콘텐츠 -->
 			<div class="friendTabContent">
 				<!-- 내 친구 목록 -->

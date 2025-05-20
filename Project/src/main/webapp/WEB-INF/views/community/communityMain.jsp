@@ -17,7 +17,6 @@
     <div class="community-major-category-area">
         <button type="button" class="major-category-button active" data-major="friend">친구</button>
         <button type="button" class="major-category-button" data-major="group">모임</button>
-        <button type="button" class="major-category-button" data-major="chat">채팅</button>
         <button type="button" class="major-category-button" data-major="event">이벤트</button>
         <button type="button" class="major-category-button" data-major="minigame">미니게임</button>
     </div>

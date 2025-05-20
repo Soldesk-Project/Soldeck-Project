@@ -11,8 +11,11 @@
   <link rel="stylesheet" type="text/css" href="/resources/css/chatroom.css">
 </head>
 <body>
-  <h2>${chatTitle}</h2>
 
+<div class="chat-head">
+  <h2>${friendNick}님과의 채팅</h2>
+  <button id="closeChatBtn">닫기 ✖</button>
+</div>
   <!-- 채팅창 -->
   <div class="chat-container">
     <div id="chat-box"></div>
@@ -25,6 +28,10 @@
     <button id="emoji-btn">😊</button>
     <button id="sendBtn" onclick="sendMessage()">보내기</button>  
   </div>
+  <div id="chat-meta"
+     data-current-nick="${currentNick}"
+     data-mem-no="${currentNo}"
+     data-chat-logs='${chatLogsJson}'></div>
   
   <script type="module">
     import { EmojiButton } from 'https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@4.6.4/dist/index.min.js';
@@ -48,27 +55,6 @@
 	  input.value += emoji.emoji;  // emoji.emoji 속성을 사용하여 이모지 문자만 추가
   	  input.focus();  // 입력창에 포커스 유지
 	});
-  </script>
-
-  <!-- JavaScript 파일 연결 -->
-  <script type="text/javascript">
-  if(window.chatContext){
-	  window.cleanupEventTab0001();
-  }
-  
-  window.chatContext = {
-		  currentNick : "${currentNick}",
-		  mem_no : "${currentNo}",
-		  chatLogs : JSON.parse('${chatLogsJson}')
-  }
-  
-  window.cleanupEventTab0001 = function() {
-	  if (window.chatContext && typeof window.chatContext.stopListening === 'function') {
-		  window.chatContext.stopListening();
-		  /* window.chatContext = null; */
-	  }
-	  /* delete window.chatContext; */
-	};
   </script>
 </body>
 </html>

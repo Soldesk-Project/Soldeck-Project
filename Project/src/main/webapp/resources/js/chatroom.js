@@ -1,12 +1,35 @@
 var currentRoomNo = null;
 
-if (!window.chatContext) {
-  console.error("chatContext가 없습니다.");
-} else {
+function parseChatContextFromMeta() {
+  const meta = document.getElementById('chat-meta');
+  if (!meta) return null;
+
+  const currentNick = meta.getAttribute('data-current-nick');
+  const mem_no = meta.getAttribute('data-mem-no');
+  const chatLogsJson = meta.getAttribute('data-chat-logs');
+
+  let chatLogs = [];
+  try {
+	  chatLogs = JSON.parse(chatLogsJson);
+  } catch (e) {
+    console.error('chatLogsJson 파싱 실패:', e);
+  }
+
+  return {
+    currentNick,
+    mem_no,
+    chatLogs
+  };
+}
+
+function initializeChatroom() {
   const { chatLogs, currentNick, mem_no } = window.chatContext;
 
   window.initChatRoom = initChatRoom;
   window.sendMessage = sendMessage;
+  
+  //항상 chatBox를 최신 DOM에서 가져오게 수정
+  window.chatBox = document.getElementById("chat-box");
 
   if (!window.ws) {
     window.ws = null;
@@ -45,34 +68,38 @@ if (!window.chatContext) {
     const linkedMsg = linkify(msg);
     messageDiv.innerHTML = `<strong>${sender}:</strong> ${linkedMsg}`;
 
-    chatBox.appendChild(messageDiv);
+    window.chatBox.appendChild(messageDiv);
   });
+
+  // 웹소켓 재연결 함수
+  function reconnectWebSocket(roomNo) {
+    if (window.ws && window.ws.readyState !== WebSocket.CLOSED) {
+      window.ws.onclose = function() {
+        initChatRoom(roomNo);
+        window.ws.onclose = null; // 중복 호출 방지
+      };
+      window.ws.close();
+    } else {
+      initChatRoom(roomNo);
+    }
+  }
 
   // 웹소켓 연결
   window.addEventListener('openChatRoom', (e) => {
     currentRoomNo = e.detail.roomNo;
-    initChatRoom(currentRoomNo);
+    reconnectWebSocket(currentRoomNo);
   });
 
-  function initChatRoom(currentRoomNo) {
+  function initChatRoom(roomNo) {
     if (window.ws && window.ws.readyState !== WebSocket.CLOSED) {
       window.ws.close();  // 기존 연결 있으면 닫기
     }
-    window.ws = new WebSocket("wss://4617-14-52-79-21.ngrok-free.app/chat/" + currentRoomNo);
+    window.ws = new WebSocket("wss://4617-14-52-79-21.ngrok-free.app/chat/" + roomNo);
     console.log("WebSocket 생성:", window.ws);
 
     window.ws.onopen = function(event) {
-      document.body.insertAdjacentHTML("beforeend", "<div>웹소켓 연결 성공!</div>");
       const firstMessage = JSON.stringify({ type: "register", mem_no: mem_no });
       window.ws.send(firstMessage);
-    };
-
-    window.ws.onerror = function(e) {
-      document.body.insertAdjacentHTML("beforeend", "<div>웹소켓 오류 발생!</div>");
-    };
-
-    window.ws.onclose = function() {
-      document.body.insertAdjacentHTML("beforeend", "<div>웹소켓 연결 종료됨</div>");
     };
 
     window.ws.onmessage = function(event) {
@@ -97,11 +124,11 @@ if (!window.chatContext) {
             messageDiv.innerHTML = `<strong>${sender}:</strong> ${linkedMsg}`;
           }
 
-          chatBox = document.getElementById("chat-box");
+          const chatBox = document.getElementById("chat-box");
           if (chatBox) chatBox.appendChild(messageDiv);
         }
       } catch (e) {
-        chatBox = document.getElementById("chat-box");
+        const chatBox = document.getElementById("chat-box");
         if (chatBox) {
           const messageDiv = document.createElement("div");
           messageDiv.className = "other-message";
@@ -110,7 +137,7 @@ if (!window.chatContext) {
         }
       }
 
-      chatBox = document.getElementById("chat-box");
+      const chatBox = document.getElementById("chat-box");
       if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
     };
   }
@@ -124,7 +151,6 @@ if (!window.chatContext) {
     const input = document.getElementById("msg");
     const fileInput = document.getElementById("fileInput");
     const message = input.value;
-    // 개인 채팅 여부 판단 (URL에 "privateRoom" 포함 여부)
     const isPrivate = true;
 
     if (message.trim() !== "" || (fileInput && fileInput.files.length > 0)) {
@@ -133,30 +159,49 @@ if (!window.chatContext) {
         sender: currentNick,
         mem_no: mem_no,
         msg: message,
-        chat_type: isPrivate ? "private" : "group", // 개인 채팅 여부 명시
+        chat_type: isPrivate ? "private" : "group",
         room_no: isPrivate ? currentRoomNo : undefined
       };
 
-      // 개인 채팅일 경우 room_no 추가
-      if (currentRoomNo) {
-        chatMessage.room_no = currentRoomNo;  // 개인 채팅에서는 roomNo 사용
-      }
-
       if (chatMessage.file) {
-        // 이미지 파일을 base64로 인코딩하여 전송
         const reader = new FileReader();
         reader.onload = function(event) {
-          chatMessage.fileData = event.target.result; // base64 인코딩된 파일 데이터
-          window.ws.send(JSON.stringify(chatMessage)); // 서버로 메시지 전송
+          chatMessage.fileData = event.target.result;
+          window.ws.send(JSON.stringify(chatMessage));
         };
-        reader.readAsDataURL(chatMessage.file); // 파일을 base64로 읽음
+        reader.readAsDataURL(chatMessage.file);
       } else {
-        window.ws.send(JSON.stringify(chatMessage)); // 텍스트 메시지만 전송
+        window.ws.send(JSON.stringify(chatMessage));
       }
 
-      // 메시지 입력창 초기화
       input.value = "";
       // fileInput.value = "";
     }
   }
 }
+
+//항상 최신 데이터를 받아오게 수정
+window.chatContext = parseChatContextFromMeta();
+
+if (!window.chatContext) {
+  console.error("chatContext가 없습니다. 초기화를 대기합니다.");
+  window.addEventListener("chatContextReady", () => {
+    console.log("chatContext 준비 완료, 채팅방 초기화 시작");
+    initializeChatroom();
+  }, { once: true });
+} else {
+  initializeChatroom();
+}
+
+document.addEventListener('click', (event) => {
+	  if(event.target.id === 'closeChatBtn'){
+	    const chatContainer = document.getElementById('chat-container');
+	    if(chatContainer){
+	      // 채팅창 숨기기 (또는 비우기)
+	      //chatContainer.style.display = 'none';
+
+	      // 필요하면 내용도 초기화
+	      chatContainer.innerHTML = '';
+	    }
+	  }
+	});

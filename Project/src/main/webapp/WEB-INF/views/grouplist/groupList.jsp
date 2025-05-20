@@ -22,10 +22,12 @@
 				</div>
 				<div class="groupList">
 					<div id="groupListContainer" class="scroll-container">
-						<!-- JS로 모임 div가 계속 추가됨 -->
+						<!-- JS로 모임 div가 계속 추가됨 -->s
 					</div>
 				</div>
 			</div>
+			<!-- 채팅방을 표시할 곳 -->
+			<div id="chat-container"></div>
 		</div>
 	</div>
 	

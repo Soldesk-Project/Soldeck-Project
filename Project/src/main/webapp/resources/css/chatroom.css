@@ -7,6 +7,13 @@
   background-color: #f0f2f5;
 }
 
+#chat-container .chat-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
 #chat-box {
   width: 400px;
   height: 500px;
@@ -20,6 +27,7 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
 
 /* 내 메시지 */
 .my-message {
