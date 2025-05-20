@@ -162,6 +162,11 @@
 		)
 	</select>
 	
+	<delete id="removeGroup">
+		DELETE GROUP_MEM WHERE GROUP_NO=#{group_no} AND MEM_NO=#{mem_no}	
+	</delete>
+	
+	
 	<!-- 모임 검색 -->
 	<select id="searchGroupBygroupname" parameterType="String" resultType="org.joonzis.domain.GroupVO">
     	SELECT group_no, chat_title, group_img
@@ -181,7 +186,7 @@
 	</insert>
 	
 	<select id="getGroupOwnerMemNo" resultType="int">
-		SELECT mem_no FROM "GROUP" WHERE group_no = #{groupNo}
+		SELECT mem_no FROM "GROUP" WHERE group_no = #{group_no}
 	</select>
 	
 	<select id="getGroupListByMember" resultType="org.joonzis.domain.GroupVO">

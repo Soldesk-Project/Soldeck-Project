@@ -90,14 +90,13 @@ public class GroupController {
 	
 	@PostMapping("/unfollow")
     @ResponseBody
-    public ResponseEntity<String> unfollow(@RequestParam("mem_no") int MemNo,
-                                           HttpSession session) {
-        GroupVO group = (GroupVO) session.getAttribute("loggedInUser");
-        if (group == null) {
+    public ResponseEntity<String> unfollow(@RequestParam("group_no") int group_no, HttpSession session) {
+		MemberVO member = (MemberVO) session.getAttribute("loggedInUser");
+        if (member == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다");
         }
-
-        service.removeGroup(group.getGroup_no(), MemNo);  // 관계 삭제
+        
+        service.removeGroup(group_no, member.getMem_no());  // 관계 삭제
         return ResponseEntity.ok("삭제 완료");
     }
 	    
@@ -150,22 +149,19 @@ public class GroupController {
 	    return service.getGroupListByMember(mem_no);
 	}
     
-    @PostMapping(value = "/follow", produces = "application/json;charset-UTF-8")
+    @PostMapping(value = "/follow", produces = "text/plain;charset=UTF-8")
     @ResponseBody
-    public ResponseEntity<String> follow(@RequestParam("senderMemNo") int senderMemNo, HttpSession session) {
-    	
+    public ResponseEntity<String> follow(@RequestParam("group_no") int group_no, HttpSession session) {
     	MemberVO member = (MemberVO) session.getAttribute("loggedInUser");
-        
         if (member == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다");
         }
-
-        boolean sent = service.insertGroupRequset(22, senderMemNo);
-
+        boolean sent = service.insertGroupRequset(group_no, member.getMem_no());
+        log.info(service.getGroupOwnerMemNo(group_no));
         if (sent) {
             // 웹소켓 알림 전송
             //String msg = member.getMem_nick() + "님이 친구 요청을 보냈습니다.";
-        	friendSocketHandler.sendFriendRequestAlert(22, senderMemNo, member.getMem_nick());
+        	friendSocketHandler.sendFriendRequestAlert(service.getGroupOwnerMemNo(group_no), member.getMem_no(), member.getMem_nick());
             return ResponseEntity.ok("요청이 전송되었습니다");
         } else {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 요청을 보냈습니다");

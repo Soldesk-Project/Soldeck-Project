@@ -21,7 +21,6 @@
 .kirby{
 	text-align: center;
 }
-
 /*------------------ 사이드 메뉴 css -------------------------*/
 .side-menu{
 	width: 200px;
@@ -58,15 +57,18 @@
 .side-event{
 	border-radius: 0 0 15px 15px;
 }
-.side li:hover,
-.side-modifyinfo.active {
+.side li:hover{
     background-color: rgba(255, 254, 252, 0.5);
     font-weight: bold;
 }
-.side a:hover,
-.side-modifyinfo.active a {
+.side a:hover{
     color: #FF7D00 !important;
     text-decoration: none;
+}
+.side li a.active{
+	color: #FF7D00; !important;
+	font-weight: bold;
+	text-decoration: none;	
 }
 #text1{
 	font-size: 12px;
