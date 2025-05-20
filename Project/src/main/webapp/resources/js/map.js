@@ -1,6 +1,10 @@
 // 필요 변수 선언
 const locationBtn = document.querySelector('.changeLocationBtn');
 const resetLocationBtn = document.querySelector('.resetLocationBtn');
+
+//사이드바 관련 스크립트
+const toggleArrow = document.getElementById('toggleArrow');
+const sidebar = document.getElementById('sidebar');
 const sidebarBody = document.getElementById('sidebar-body');
 
 let initialLat = null, initialLon = null; // 초기 위치 위도, 경도 저장
@@ -10,7 +14,7 @@ let markers = [];
 
 const default_lat = 37.5054070438773;
 const default_lon = 127.026682479708;
-const default_zoom = 3;
+const default_zoom = 4;
 
 const keyword = sessionStorage.getItem('keyword'); // 최초 map페이지 진입 시 한식, 중식 등 키워드 세션에서 가져옴
 
@@ -54,7 +58,7 @@ function sharePlace(restNo) {
 }
 
 // 실제 지도 생성 함수
-function renderMapWithPlaces(places, myLat, myLon, maxDistance = Infinity, zoomLevel = default_zoom) {
+function renderMapWithPlaces(places, myLat, myLon, maxDistance = Infinity, zoomLevel = default_zoom, showCurrentLocationMarker = true, openFirstInfowindow = false) {
     const mapContainer = document.getElementById('map');
     markers.forEach(({ marker }) => marker.setMap(null));
     markers = [];
@@ -70,8 +74,11 @@ function renderMapWithPlaces(places, myLat, myLon, maxDistance = Infinity, zoomL
         locationBtn.style.display = 'block';
         resetLocationBtn.style.display = 'block';
     });
-
-    displayMarker(new kakao.maps.LatLng(myLat, myLon), '<div style="padding:5px;">여기가 현재 위치입니다!</div>', map);
+    
+    if (showCurrentLocationMarker) {
+        displayMarker(new kakao.maps.LatLng(myLat, myLon), '<div style="padding:5px;">여기가 현재 위치입니다!</div>', map);
+    }
+//    displayMarker(new kakao.maps.LatLng(myLat, myLon), '<div style="padding:5px;">여기가 현재 위치입니다!</div>', map);
 
     sidebarBody.innerHTML = '';
     places.forEach(place => {
@@ -124,6 +131,16 @@ function renderMapWithPlaces(places, myLat, myLon, maxDistance = Infinity, zoomL
         }
     });
 
+    // 공유 링크로 진입 시 첫 번째 가게의 InfoWindow를 자동으로 열기
+    if (openFirstInfowindow && markers.length > 0) {
+        const firstMarker = markers[0].marker;
+        const firstInfowindow = markers[0].infowindow;
+        map.setCenter(firstMarker.getPosition());
+        if (currentInfowindow) currentInfowindow.close();
+        firstInfowindow.open(map, firstMarker);
+        currentInfowindow = firstInfowindow;
+    }
+    
     sidebarBody.onclick = function(event) {
         const target = event.target;
         if (target.classList.contains('store-name') || target.classList.contains('store-thumbnail')) {
@@ -153,7 +170,7 @@ function getPlacesAndShowMap() {
 //            renderMapWithPlaces(places, myLat, myLon, 2, 3);
             initialLat = currentLat = default_lat;
             initialLon = currentLon = default_lon;
-            renderMapWithPlaces(places, currentLat, currentLon, 2);
+            renderMapWithPlaces(places, currentLat, currentLon, 2,zoomLevel = default_zoom, true, false);
         })
         .catch(err => {
             console.error('가게 목록을 불러오는데 실패했습니다.', err);
@@ -162,6 +179,7 @@ function getPlacesAndShowMap() {
 
 function getSearch() {
     const searchKeyword = sessionStorage.getItem('search');
+    
     if (searchKeyword) {
         const keywords = searchKeyword.trim().split(/\s+/);
         const params = new URLSearchParams();
@@ -176,8 +194,8 @@ function getSearch() {
                 initialLon = myLon;
                 currentLat = myLat;
                 currentLon = myLon;
-                const zoomLevel = map ? map.getLevel() : 3; // 현재 줌 레벨 유지
-                renderMapWithPlaces(places, myLat, myLon, Infinity, zoomLevel);
+                const zoomLevel = map ? map.getLevel() : 4; // 현재 줌 레벨 유지
+                renderMapWithPlaces(places, myLat, myLon, Infinity, zoomLevel, false, true);
 
                 // 검색 시 첫 번째 가게로 이동
                 if (markers.length > 0) {
@@ -334,10 +352,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const places = [place]; // renderMapWithPlaces는 배열을 받음
                 const lat = place.latitude;
                 const lon = place.longitude;
-                console.log(places);
-                console.log(lat);
-                console.log(lon);
-                renderMapWithPlaces(places, lat, lon, Infinity); // 거리 제한 없음
+                initialLat = currentLat = default_lat;
+                initialLon = currentLon = default_lon;
+                renderMapWithPlaces(places, lat, lon, Infinity, false); // 거리 제한 없음
             })
             .catch(err => {
                 console.error('공유된 가게 정보 로딩 실패:', err);
@@ -355,10 +372,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
-
-// 사이드바 관련 스크립트
-const toggleArrow = document.getElementById('toggleArrow');
-const sidebar = document.getElementById('sidebar');
 
 toggleArrow.addEventListener('click', () => {
     sidebar.classList.toggle('collapsed');
@@ -379,7 +392,7 @@ locationBtn.addEventListener('click', () => {
     fetch(`/search/getLocation?keyword=${encodeURIComponent(keyword)}`)
         .then(res => res.json())
         .then(places => {
-        	renderMapWithPlaces(places, currentLat, currentLon, 2, zoomLevel); // 현재 지도 중심 좌표 기준, 2km 이내 가게 표시
+        	renderMapWithPlaces(places, currentLat, currentLon, 2, zoomLevel, false, false); // 현재 지도 중심 좌표 기준, 2km 이내 가게 표시
         })
         .catch(err => {
             console.error('카테고리 기반 가게 목록 불러오기 실패:', err);
@@ -404,7 +417,7 @@ resetLocationBtn.addEventListener('click', () => {
     fetch(`/search/getLocation?keyword=${encodeURIComponent(keyword)}`)
         .then(res => res.json())
         .then(places => {
-            renderMapWithPlaces(places, initialLat, initialLon, 2, zoomLevel); // 초기 위치 기준, 2km 이내 가게 표시
+            renderMapWithPlaces(places, initialLat, initialLon, 2, zoomLevel, true, false); // 초기 위치 기준, 2km 이내 가게 표시
         })
         .catch(err => {
             console.error('카테고리 기반 가게 목록 불러오기 실패:', err);
@@ -498,13 +511,13 @@ document.addEventListener('DOMContentLoaded', () => {
             // 현재 기준 위치 사용 (currentLat, currentLon)
             const myLat = currentLat || 37.5054070438773; // 기준 위치 없으면 기본값
             const myLon = currentLon || 127.026682479708;
-            const zoomLevel = map ? map.getLevel() : 3;
+            const zoomLevel = map ? map.getLevel() : 4;
             
             // AJAX로 카테고리별 가게 데이터 가져오기
             fetch(`/search/getLocation?keyword=${encodeURIComponent(selectedKeyword)}`)
                 .then(res => res.json())
                 .then(places => {
-                	renderMapWithPlaces(places, myLat, myLon, 2, zoomLevel); // 2km 이내 가게 표시
+                	renderMapWithPlaces(places, myLat, myLon, 2, zoomLevel, false, false); // 2km 이내 가게 표시
                 })
                 .catch(err => {
                     console.error('카테고리 기반 가게 목록 불러오기 실패:', err);
@@ -523,7 +536,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const places = [place];
                 const lat = place.latitude;
                 const lon = place.longitude;
-                renderMapWithPlaces(places, lat, lon, Infinity);
+                initialLat = currentLat = default_lat;
+                initialLon = currentLon = default_lon;
+                renderMapWithPlaces(places, lat, lon, Infinity, default_zoom, false, true);
             })
             .catch(err => {
                 console.error('공유된 가게 정보 로딩 실패:', err);

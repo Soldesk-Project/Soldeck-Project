@@ -1,16 +1,16 @@
 // 검색 관련 스크립트 (sendBeacon 사용)
-function handleSearch() {
+function handleSearch(keyword) {
   const input = document.getElementById("search");
-  if (!input) return alert("검색창을 찾을 수 없습니다.");
+  if (!input && !keyword) return alert("검색창을 찾을 수 없습니다.");
 
-  const keyword = input.value.trim();
-  if (!keyword) return alert("검색어를 입력하세요.");
+  const searchKeyword = keyword || input.value.trim(); // clickedKeyword 또는 입력값 사용
+  if (!searchKeyword) return alert("검색어를 입력하세요.");
 
-  const encodedKeyword = encodeURIComponent(keyword);
+  const encodedKeyword = encodeURIComponent(searchKeyword);
 
   // ✅ 검색 로그 백그라운드로 전송
   const params = new URLSearchParams();
-  params.append("keyword", keyword);
+  params.append("keyword", searchKeyword);
   navigator.sendBeacon("/search/log", params);
 
   // ✅ 검색 상태 저장 후 이동
@@ -18,6 +18,25 @@ function handleSearch() {
   sessionStorage.setItem("actionType", "search");
   window.location.href = "/search/map";
 }
+//function handleSearch() {
+//  const input = document.getElementById("search");
+//  if (!input) return alert("검색창을 찾을 수 없습니다.");
+//
+//  const keyword = input.value.trim();
+//  if (!keyword) return alert("검색어를 입력하세요.");
+//
+//  const encodedKeyword = encodeURIComponent(keyword);
+//
+//  // ✅ 검색 로그 백그라운드로 전송
+//  const params = new URLSearchParams();
+//  params.append("keyword", keyword);
+//  navigator.sendBeacon("/search/log", params);
+//
+//  // ✅ 검색 상태 저장 후 이동
+//  sessionStorage.setItem("search", encodedKeyword);
+//  sessionStorage.setItem("actionType", "search");
+//  window.location.href = "/search/map";
+//}
 
 // DOM이 완전히 로드된 후 실행
 window.addEventListener("DOMContentLoaded", () => {
@@ -53,6 +72,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
 // 인기 검색어 로딩
 let keywords = [];
+let dataItems = []; // 원본 data를 저장해 item.keyword 접근
 
 function cycleKeyword() {
   const textElement = document.getElementById('keyword-text');
@@ -68,11 +88,18 @@ function cycleKeyword() {
 
   showNext();
   setInterval(showNext, 3000);
+  
+//클릭 이벤트: 현재 표시된 키워드의 item.keyword 가져오기
+  textElement.addEventListener('click', () => {
+    const clickedKeyword = dataItems[(idx - 1 + keywords.length) % keywords.length].keyword;
+    handleSearch(clickedKeyword);
+  });
 }
 
 fetch("/search/popular")
   .then(res => res.json())
   .then(data => {
+	dataItems = data; // 원본 데이터 저장
     keywords = data.map((item, idx) => `${idx + 1}위. ${item.keyword}`);
     if (keywords.length > 0) cycleKeyword();
     else document.getElementById('keyword-text').textContent = "데이터 없음";
@@ -81,6 +108,7 @@ fetch("/search/popular")
     console.error("인기 검색어 로드 실패:", err);
     document.getElementById('keyword-text').textContent = "불러오기 실패";
   });
+
 // 알림 모달 세팅
 function setupAlarmModal() {
   const alarmBtn = document.getElementById("alarmBtn");
