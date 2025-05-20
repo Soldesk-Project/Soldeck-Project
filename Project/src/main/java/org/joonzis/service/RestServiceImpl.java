@@ -122,4 +122,9 @@ public class RestServiceImpl implements RestService{
 	public List<RestVO> getAllRestWithThumbnail() {
 		return mapper.getAllRestWithThumbnail();
 	}
+	
+	@Override
+	public List<ReserveRestDTO> getReserve(int mem_no) {
+		return mapper.getReserve(mem_no);
+	}
 }

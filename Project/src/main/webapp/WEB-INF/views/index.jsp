@@ -161,6 +161,15 @@
 		    <div class="mini-calendar-wrapper">
 		    	<input type="text" id="mini-calendar" placeholder="날짜 선택">
 			</div>
+			
+			<div id="reserve-popup" class="reserve-popup hidden">
+			  <div class="popup-content">
+			    <span class="popup-close" onclick="closePopup()">&times;</span>
+			    <div id="popup-date" class="popup-date"></div>
+			    <div id="popup-details" class="popup-details"></div>
+			  </div>
+			</div>
+			
 		</div>
     
 	</div>

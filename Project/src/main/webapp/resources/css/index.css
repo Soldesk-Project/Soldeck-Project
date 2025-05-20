@@ -452,3 +452,62 @@ body {
 	border-radius: 15px;
 	height: 250px;
 }
+
+.flatpickr-day.has-reserve-circle {
+	position: relative;
+	z-index: 1;
+}
+
+.reserve-circle {
+	position: absolute;
+	top: 4px; /* 위에서부터의 거리: 위치 조절 */
+	left: 4px; /* 왼쪽 여백 */
+	width: 28px;   /* 원 크기 */
+	height: 28px;
+	border: 2px solid red;
+	border-radius: 50%;
+	box-sizing: border-box;
+	pointer-events: none; /* 클릭 방해 안 되게 */
+	z-index: 0;
+}
+
+.reserve-popup {
+  position: absolute;
+  top: 118%;
+  right: -3%;
+  transform: translate(-50%);
+  background-color: #fff;
+  border: 1px solid #aaa;
+  padding: 20px;
+  z-index: 999;
+  width: 210px;
+  border-radius: 10px;
+  max-height: 300px;
+  overflow-y: overlay; 
+}
+
+.hidden {
+  display: none;
+}
+
+.popup-content {
+  position: relative;
+}
+
+.popup-close {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.reserve-entry span {
+	color:blue;
+	cursor: pointer;
+}
+.reserve-entry span:hover {
+	color:blue;
+	text-decoration: none;
+	cursor: pointer;
+}

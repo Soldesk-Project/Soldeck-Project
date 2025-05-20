@@ -432,7 +432,7 @@ function updateDateTime() {
 
     // 출력
     document.getElementById("today-datetime").textContent = formatted;
-  }
+}
 
   // 최초 실행
   updateDateTime();
@@ -440,11 +440,92 @@ function updateDateTime() {
   // 1초마다 갱신
   setInterval(updateDateTime, 1000);
   
-  //미니 캘린터 
+  let reserveMap = {};  // 날짜별 예약들 저장
+  
+  function getReserve() {
+		if (!user_no) return Promise.resolve([]);
+
+		return fetch(`/search/reserve`, {
+			headers: { 'Accept': 'application/json' }
+		})
+		.then(res => res.json())
+		.then(data => {
+			console.log(data);
+			// 날짜별로 묶어서 저장
+			reserveMap = data.reduce((acc, r) => {
+				const dateKey = toDateKeyKST(r.res_date);
+				if (!acc[dateKey]) acc[dateKey] = [];
+				acc[dateKey].push(r);
+				return acc;
+			}, {});
+			return Object.keys(reserveMap);
+		});
+	}
+  function toDateKeyKST(timestamp) {
+	  const date = new Date(timestamp);
+	  // UTC+9 보정
+	  date.setMinutes(date.getMinutes() + date.getTimezoneOffset() + 540);
+	  return date.toISOString().split("T")[0]; // "YYYY-MM-DD"
+	}
+
   document.addEventListener("DOMContentLoaded", function () {
-	  flatpickr("#mini-calendar", {
-	    inline: true, // 항상 달력 표시
-	    locale: "ko", // 한국어 설정
-	    defaultDate: "today"
-	  });
+		getReserve().then(uniqueDates => {
+			  //미니 캘린터 
+			flatpickr("#mini-calendar", {
+				inline: true,
+				locale: "ko",
+				defaultDate: "today",
+				onDayCreate: function (dObj, dStr, fp, dayElem) {
+					const date = dayElem.dateObj.toISOString().split("T")[0];
+					if (uniqueDates.includes(date)) {
+						const circle = document.createElement("div");
+						circle.className = "reserve-circle";
+						dayElem.appendChild(circle);
+						dayElem.classList.add("has-reserve-circle");
+
+						dayElem.addEventListener("click", function () {
+							showPopup(date);
+						});
+					}
+				}
+			});
+		});
 	});
+  
+  function showPopup(date) {
+		const popup = document.getElementById("reserve-popup");
+		const dateBox = document.getElementById("popup-date");
+		const detailBox = document.getElementById("popup-details");
+
+		const reserves = reserveMap[date];
+		console.log(date);
+		const [year, month, day] = date.split("-");
+		const localDateStr = new Date(`${date}T00:00:00-16:00`).toLocaleDateString("ko-KR", {
+			month: 'long', day: 'numeric'
+		});
+		
+		dateBox.textContent = `${localDateStr} 예약 정보`;
+		
+		if (reserves && reserves.length > 0) {
+			detailBox.innerHTML = reserves.map(r => `
+				<div class="reserve-entry">
+					<strong>
+						<span class="reserve-link" onclick="location.href='/search/view?rest_no=${r.rest_no}'">
+							${r.rest_name}
+						</span>
+					</strong><br>
+					시간: ${r.res_time}<br>
+					인원: ${r.res_personnel}<br>
+					메모: ${r.res_memo || '-'}
+				</div>
+				<hr>
+			`).join('');
+		} else {
+			detailBox.innerHTML = "예약 정보 없음";
+		}
+		popup.classList.remove("hidden");
+	}
+
+	function closePopup() {
+		document.getElementById("reserve-popup").classList.add("hidden");
+	}

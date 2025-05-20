@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.joonzis.domain.MemberVO;
 import org.joonzis.domain.MenuVO;
 import org.joonzis.domain.PopularKeywordVO;
+import org.joonzis.domain.ReserveRestDTO;
 import org.joonzis.domain.ReserveVO;
 import org.joonzis.domain.RestVO;
 import org.joonzis.service.MemberService;
@@ -164,6 +165,14 @@ public class SearchController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
+	
+	 @GetMapping(value = "/reserve", produces = MediaType.APPLICATION_JSON_VALUE)
+	 public ResponseEntity<List<ReserveRestDTO>> getReserve(HttpSession session) {
+		 MemberVO uesrInfo = (MemberVO) session.getAttribute("loggedInUser"); 
+		 int mem_no = uesrInfo.getMem_no();
+		 return ResponseEntity.ok(service.getReserve(mem_no)); 
+	 }
+	 
 	
 	// 현재 위치 기준 식당 데이터 가져오기
 	@GetMapping(value = "/getLocation", produces = MediaType.APPLICATION_JSON_VALUE)

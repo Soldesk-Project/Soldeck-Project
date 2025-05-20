@@ -150,6 +150,26 @@
 	    AND RES_DATE = TO_DATE(#{res_date, jdbcType=VARCHAR}, 'YYYY-MM-DD')
 	</select>
 	
+	<select id="getReserve" resultType="org.joonzis.domain.ReserveRestDTO">
+		SELECT 
+		    e.MEM_NO,
+		    e.RES_DATE,
+		    e.RES_TIME,
+		    e.RES_MEMO,
+		    e.RES_PERSONNEL,
+		    r.REST_NO,
+		    r.REST_NAME
+		FROM 
+		    RESTAURANT r
+		INNER JOIN    
+		    RESERVE e ON r.REST_NO = e.REST_NO
+		WHERE 
+		    e.MEM_NO = #{mem_no} AND e.RES_DATE > SYSDATE-1
+		ORDER BY
+			e.RES_DATE ASC,
+			e.RES_TIME ASC
+	</select>
+	
 	<select id="getReserveList" resultType="org.joonzis.domain.ReserveRestDTO">
 	<![CDATA[
 		SELECT 

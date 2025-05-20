@@ -27,6 +27,8 @@ public interface RestMapper {
 	public List<MenuVO> getMenu(int rest_no);
 	
 	public List<RestVO> getRest(int rest_no);
+
+	public List<ReserveRestDTO> getReserve(int mem_no);
 	
 	public void addReserve(ReserveVO reservation);
 	
