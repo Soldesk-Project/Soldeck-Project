@@ -71,4 +71,4 @@
   </div>
 </div>
 
-<script src="${pageContext.request.contextPath}/resources/js/header.js"></script>
+<script src="/resources/js/header.js"></script>
