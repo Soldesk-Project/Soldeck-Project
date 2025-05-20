@@ -232,10 +232,10 @@ public class SearchController {
 		System.out.println(">>> 로그 저장 진입 확인");
 		
 	    String ip = request.getRemoteAddr();
-	    Integer userId = (Integer) request.getSession().getAttribute("UserId");
+	    Integer memNo = (Integer) request.getSession().getAttribute("mem_no");
 
-	    System.out.println("✅ 검색 로그 저장 요청 수신: " + keyword + ", IP: " + ip + ", userId: " + userId);
-	    sservice.saveSearch(keyword, ip, userId);
+	    System.out.println("✅ 검색 로그 저장 요청 수신: " + keyword + ", IP: " + ip + ", memNo: " + memNo);
+	    sservice.saveSearch(keyword, ip, memNo);
 
 	    return ResponseEntity.ok("로그 저장 완료");
 	}
@@ -245,25 +245,4 @@ public class SearchController {
 	public List<PopularKeywordVO> getPopularKeyword(){
 		return sservice.getPopularKeyword();	
 	}
-	
-//	@GetMapping(value = "/search")
-//	public String searchPage(@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword, Model model) {
-//		model.addAttribute("keyword", keyword);
-//		return "/search/search";
-//	} 
-//	@GetMapping("/location")
-//	public String location(@RequestParam(value = "region", required = false) String region,
-//							@RequestParam(value = "category", required = false) String category,
-//							Model model) {
-//		log.info("location..." + " region : " + region + " category : " + category);
-//		model.addAttribute("category", category);
-//		model.addAttribute("region",region);
-//		return "/search/location";
-//	}
-//	@GetMapping(value = "/location/data", produces = MediaType.APPLICATION_JSON_VALUE)
-//	public ResponseEntity<List<RestVO>> locationData(@RequestParam(value = "region", required = false) String region,
-//														@RequestParam(value = "category", required = false) String category) {
-//		log.info("locationData..." + " region : " + region + " category : " + category);
-//		return new ResponseEntity<List<RestVO>>(service.getFilteredList(region, category), HttpStatus.OK);
-//	}
 }

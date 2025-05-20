@@ -15,6 +15,6 @@ import lombok.Setter;
 public class SearchLogVO {
 	private Long id;
 	private String keyword, ipAddress;
-	private Integer userId;
+	private int mem_no;
 	private Timestamp searchTime;
 }

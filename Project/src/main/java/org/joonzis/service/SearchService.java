@@ -6,7 +6,7 @@ import org.joonzis.domain.PopularKeywordVO;
 
 public interface SearchService {
 	
-	void saveSearch(String keyword, String ip, Integer userId);
+	void saveSearch(String keyword, String ip, Integer memNo);
 	
 	List<PopularKeywordVO> getPopularKeyword();
 	

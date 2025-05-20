@@ -15,12 +15,12 @@ public class SearchServiceImpl implements SearchService{
 	private SearchMapper smapper;
 	
 	@Override
-	public void saveSearch(String keyword, String ip, Integer userId) {
-		System.out.println(">>> saveSearch 실행: " + keyword + ", IP=" + ip + ", userId=" + userId);
+	public void saveSearch(String keyword, String ip, Integer memNo) {
+		System.out.println(">>> saveSearch 실행: " + keyword + ", IP=" + ip + ", memNo=" + memNo);
 	    SearchLogVO vo = new SearchLogVO();
 	    vo.setKeyword(keyword);
 	    vo.setIpAddress(ip);
-	    vo.setUserId(userId);
+	    vo.setMem_no(memNo);
 	    smapper.insertSearchLog(vo);
 	}
 		
