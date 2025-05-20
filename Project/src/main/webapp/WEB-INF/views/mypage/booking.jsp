@@ -89,10 +89,11 @@
 	</div>
 	<div id="customConfirm" class="bookmark-add-modal modal-popup">
 		<div class="inner-modal">
-	    	<p>즐겨찾기를 추가하시겠습니까?</p>
+	    	<p>추가할 즐겨찾기의 공개/비공개를 설정해주세요.</p>
 			<div class="bookmark-modal-content">
-			    <button class="yes-btn" id="addBookMarkBtn">예</button>
-				<button class="add-bookmark-btn" id="cancelModalBtn">아니오</button>
+				<button type="button" class="btn btn-sec" id="publicFavoriteBtn">공개</button>
+				<button type="button" class="btn btn-sec" id="privateFavoriteBtn">비공개</button>
+				<button type="button" class="btn btn-close" id="cancelModalBtn">취소</button>
 		    </div>
 		</div>
 	</div>

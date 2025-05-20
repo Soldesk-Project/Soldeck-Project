@@ -195,30 +195,52 @@ function deleteBookmark() {
 		  .catch(e=>console.log(e));
 }
 //-----즐겨찾기 추가 함수----------------------------------------------------
+const publicFavoriteBtn = document.getElementById('publicFavoriteBtn');
+const privateFavoriteBtn = document.getElementById('privateFavoriteBtn');
+const closeFavoriteModalBtn = document.getElementById('closeFavoriteModalBtn');
+const isPublicInput = document.getElementById('isPublic'); // hidden input 요소 가져오기
+
+if (closeFavoriteModalBtn) {
+	closeFavoriteModalBtn.addEventListener('click', () => favoriteModal.style.display = 'none');
+}
+if (publicFavoriteBtn) {
+	publicFavoriteBtn.addEventListener('click', () => {
+		isPublicInput.value = 'true'; // public 버튼 클릭 시 hidden input 값 설정
+		addBookmark();
+	});
+}
+if (privateFavoriteBtn) {
+	privateFavoriteBtn.addEventListener('click', () => {
+		isPublicInput.value = 'false'; // private 버튼 클릭 시 hidden input 값 설정
+		addBookmark();
+	});
+}
+
 function addBookmark() {
-	console.log(restNo);
-	console.log(memberNo);
-	
+	console.log("restNo:", restNo);
+	console.log("memberNo:", memberNo);
+	console.log("isPublic from input:", isPublicInput.value); // hidden input 값 확인
+
 	fetch('/mypage/bookmark/add', {
-		  method: 'POST',
-		  headers: {
-		    'Content-Type': 'application/json; charset=utf-8'
-		  },
-		  body: JSON.stringify({mem_no: memberNo, rest_no: restNo})
-		})
-		  .then(response => response.json())
-		  .then(data=>{
-		  	console.log(data);
-		  	document.querySelectorAll('.bookmark').forEach(btn => {
-				const targetRestNo = btn.closest('.booking-info').querySelector('#restNo').value;
-				if (targetRestNo === restNo) {
-					btn.classList.remove('active');
-					btn.classList.add('bookmarked'); // ✅ 상태 표시용 클래스
-				}
-			});
-		  	location.reload();
-		  })
-		  .catch(e=>console.log(e));
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json; charset=utf-8'
+		},
+		body: JSON.stringify({ mem_no: memberNo, rest_no: restNo, is_public: isPublicInput.value })
+	})
+	.then(response => response.json())
+	.then(data => {
+		console.log("서버 응답:", data);
+		document.querySelectorAll('.bookmark').forEach(btn => {
+			const targetRestNo = btn.closest('.booking-info').querySelector('#restNo').value;
+			if (targetRestNo === restNo) {
+				btn.classList.remove('active');
+				btn.classList.add('bookmarked');
+			}
+		});
+		location.reload();
+	})
+	.catch(error => console.error("에러 발생:", error));
 }
 //-----예약 취소 함수--------------------------------------
 function bookingCancel() {

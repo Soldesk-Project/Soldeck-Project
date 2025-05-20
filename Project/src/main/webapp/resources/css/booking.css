@@ -326,6 +326,18 @@ body {
     height: 40px;
     margin: auto;
 }
+.btn-sec{
+	background-color: white;
+    color: black;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100px;
+    height: 40px;
+    margin: auto;
+}
+
 #cancelModalBtn{
 	background-color: white;
     color: black;

@@ -27,10 +27,11 @@ const confirmReservationBtn = document.getElementById('confirmReservationBtn');
 const commentBtn = document.querySelector("#commentBtn");
 const monthSelect = document.getElementById('monthSelect');
 const calendarDays = document.getElementById('calendarDays');
-const favoriteModal = document.getElementById('favoriteModal');
+const favoriteAddModal = document.getElementById('favoriteAddModal');
 const publicFavoriteBtn = document.getElementById('publicFavoriteBtn');
 const privateFavoriteBtn = document.getElementById('privateFavoriteBtn');
-const closeFavoriteModalBtn = document.getElementById('closeFavoriteModalBtn');
+const closeFavoriteAddModalBtn = document.getElementById('closeFavoriteAddModalBtn');
+const closeFavoriteDeleteModalBtn = document.getElementById('closeFavoriteDeleteModalBtn');
 const imageWrapper = document.querySelector('.image-wrapper');
 const images = imageWrapper.querySelectorAll('.image');
 const panelbody = document.querySelector('.panel-body');
@@ -107,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // 모달 관련 처리
     addModalCloseHandler(modal);
     addModalCloseHandler(reservationModal);
-    addModalCloseHandler(favoriteModal);
+    addModalCloseHandler(favoriteAddModal);
 
     // 예약 관련 처리
     reservationBtn.addEventListener('click', () => {
@@ -187,9 +188,11 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     
     // 버튼 관련 처리
-    closeFavoriteModalBtn.addEventListener('click', () => favoriteModal.style.display = 'none');
+    closeFavoriteAddModalBtn.addEventListener('click', () => favoriteAddModal.style.display = 'none');
+    closeFavoriteDeleteModalBtn.addEventListener('click', () => favoriteDeleteModal.style.display = 'none');
     publicFavoriteBtn.addEventListener('click', () => addFavorite(true));
     privateFavoriteBtn.addEventListener('click', () => addFavorite(false));
+    deleteFavoriteBtn.addEventListener('click', () => removeFavorite());
     commentBtn.addEventListener('click', uploadComment);
 
     checkInitialFavoriteStatus(); // 초기 상태 확인
@@ -819,7 +822,8 @@ function formatDate(dateString) {
 function handleFavoriteClick() {
 //    console.log("handleFavoriteClick isFavorite:", window.isFavorite);
     const bookmarkBtnElement = document.getElementById('bookmarkBtn');
-    const favoriteModal = document.getElementById('favoriteModal');
+    const favoriteAddModal = document.getElementById('favoriteAddModal');
+    const favoriteDeleteModal = document.getElementById('favoriteDeleteModal');
 
     if (mem_no == 0) {
         alert("즐겨찾기 기능은 로그인 후 가능합니다.")
@@ -829,18 +833,16 @@ function handleFavoriteClick() {
     }
 
     if (window.isFavorite) {
-        removeFavorite();
-        if (bookmarkBtnElement) {
-        	bookmarkBtnElement.classList.remove('active'); // 즐겨찾기 해제 시 회색 별
-        	window.isFavorite = false;
+        if (favoriteDeleteModal) {
+            favoriteDeleteModal.style.display = 'block';
         } else {
-            console.error("bookmarkBtnElement를 찾을 수 없습니다.");
+            console.error("favoriteDeleteModal을 찾을 수 없습니다.");
         }
     } else {
-        if (favoriteModal) {
-            favoriteModal.style.display = 'block';
+        if (favoriteAddModal) {
+            favoriteAddModal.style.display = 'block';
         } else {
-            console.error("favoriteModal을 찾을 수 없습니다.");
+            console.error("favoriteAddModal을 찾을 수 없습니다.");
         }
     }
 }
@@ -859,9 +861,9 @@ function checkInitialFavoriteStatus() {
         updateInitialBookmarkUI(); // 초기 상태 반영
     });
 }
-
+//즐겨찾기 추가
 function addFavorite(isPublic) {
-    const favoriteModal = document.getElementById('favoriteModal');
+    const favoriteAddModal = document.getElementById('favoriteAddModal');
     fetch(`/mypage/favorites/add`, {
         method: 'POST',
         headers: {
@@ -875,8 +877,8 @@ function addFavorite(isPublic) {
             window.isFavorite = true; // 전역 변수 업데이트
             updateBookmarkUI();
 //            console.trace("updateFavoriteButtonUI 호출 스택 (addFavorite)");
-            if (favoriteModal) {
-                favoriteModal.style.display = 'none';
+            if (favoriteAddModal) {
+                favoriteAddModal.style.display = 'none';
             }
         } else {
             alert('즐겨찾기 추가에 실패했습니다.');
@@ -884,7 +886,7 @@ function addFavorite(isPublic) {
     });
 }
 
-
+//즐겨찾기 삭제
 function removeFavorite() {
     fetch(`/mypage/favorites/remove/${restNo}`, {
         method: 'DELETE'
@@ -892,8 +894,11 @@ function removeFavorite() {
     .then(response => response.json())
     .then(data => {
         if (data == true) {
-            isFavorite = false;
+            window.isFavorite = false;
             updateBookmarkUI();
+            if (favoriteDeleteModal) {
+            	favoriteDeleteModal.style.display = 'none'; // 삭제 후 모달 닫기
+            }
 //            console.trace("updateFavoriteButtonUI 호출 스택(removeFavorite)");
         } else {
             alert('즐겨찾기 해제에 실패했습니다.');
