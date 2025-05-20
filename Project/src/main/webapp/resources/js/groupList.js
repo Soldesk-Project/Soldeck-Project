@@ -1,3 +1,4 @@
+
 //-----내 모임 목록-----------------------------------------------------------------
 function loadGroupList() {
 	fetch("/grouplist/groupListData")
@@ -171,8 +172,6 @@ function clickGroupInfo() {
 }
 //----메모 저장-------------------------------------------------------------------
 function saveGroupMemo(memo, groupNo) {
-	console.log(memo);
-	console.log(groupNo);
 	const checkMemo=/^.{0,200}$/;
 	if (!checkMemo.test(memo)) {
 		alert("200자 미만으로 작성");
@@ -193,7 +192,7 @@ function saveGroupMemo(memo, groupNo) {
 	}
 }
 //-----언팔 버튼-------------------------------------------------------------------
-function unfollow(groupMemNo, button) {
+function unfollow(groupNo, button) {
 	if (!confirm("이 대화방을 나가시겠습니까?")) return;
 
     fetch("/grouplist/unfollow", {
@@ -202,7 +201,7 @@ function unfollow(groupMemNo, button) {
         	"Content-Type": "application/x-www-form-urlencoded"
         	},
         body: new URLSearchParams({
-        	group_no: groupMemNo
+        	group_no: groupNo
         })
     })
     .then(res => {
@@ -216,30 +215,29 @@ function unfollow(groupMemNo, button) {
     });
 }
 //-----그룹 참여 버튼-------------------------------------------------------------------
-function follow(groupMemNo, button) {
-	const senderMemNo = document.body.dataset.memNo;
-   fetch("/grouplist/follow", {
-       method: "POST",
-       credentials: "include",  // 세션 정보 포함
-       headers: {
-           "Content-Type": "application/x-www-form-urlencoded"
-       },
-       body: new URLSearchParams({
-       	senderMemNo: senderMemNo
-       })
-   })
-   .then(res => res.text())
-   .then(msg => {
-   	alert(msg);
-       button.disabled = true;
-       button.textContent = "요청됨";
-   })
-   .catch(error => {
-       console.error("그룹 요청 실패", error);
-       alert("요청을 처리하는 중 오류가 발생했습니다.");
-   });
+function follow(groupNo, button) {
+	fetch("/grouplist/follow", {
+		method: "POST",
+        credentials: "include",  // 세션 정보 포함
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: new URLSearchParams({
+        	group_no: groupNo
+        })
+    })
+    .then(res => res.text())
+    .then(msg => {
+    	alert(msg);
+        button.disabled = true;
+        button.textContent = "요청됨";
+    })
+    .catch(error => {
+        console.error("그룹 요청 실패", error);
+        alert("요청을 처리하는 중 오류가 발생했습니다.");
+    });
 }
-//-----팔로우 버튼 친구신청 <-??????-------------------------------------------------------------------
+//-----수락 시 상호작용-------------------------------------------------------------------
 function acceptFriend(senderMemNo) {
     fetch("/friendlist/accept", {
       method: "POST",
@@ -345,19 +343,22 @@ function createGroup() {
 	    .catch(err => console.log(err));
 }
 //----- 모달 관련 스크립트---------------------------------------------------------------
-const modal = document.querySelector('#modal');
+
+(function() {
+
+
+const groupModal = document.querySelector('#modal');
 const clubTilte = document.querySelector("input[name='club-title']");
 const clubDesc = document.querySelector("textarea[name='club-desc']");
 const minAge = document.querySelector("input[name='min-age']");
 const maxAge = document.querySelector("input[name='max-age']");
 const isPublic = document.querySelector(".public-checkbox").checked ? 'Y' : 'N';
-
 function openModal(){
-    modal.style.display = 'block';
-    document.body.style.overflow = 'hidden';
+	groupModal.style.display = 'block';
+	document.body.style.overflow = 'hidden';
 }
 function closeModal(){
-	modal.style.display = 'none';
+	groupModal.style.display = 'none';
 	document.body.style.overflow = 'auto';
 }
 
@@ -378,14 +379,16 @@ document.querySelectorAll('button').forEach(btn => {
 			openModal();
 		}else if(type == 'createBtn'){
 			createGroup();
+		}else if(type == 'closeModalBtn'){
+			closeModal();
 		}
 	});
 });
 
 
-
-
 loadGroupList();
+})();
+
 
 
 

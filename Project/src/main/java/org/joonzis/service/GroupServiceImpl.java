@@ -111,8 +111,8 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
-	public void getGroupOwnerMemNo(int group_no) {
-		mapper.getGroupOwnerMemNo(group_no);
+	public int getGroupOwnerMemNo(int group_no) {
+		return mapper.getGroupOwnerMemNo(group_no);
 	}
 	
 	@Override
