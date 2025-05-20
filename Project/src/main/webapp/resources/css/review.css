@@ -1,9 +1,9 @@
 /*------------------ body / main menu -------------------------*/
 body{
- -ms-overflow-style: none;
+	-ms-overflow-style: none;
  }
 ::-webkit-scrollbar {
-  display: none;
+	display: none;
 }
 .container{
 	display: flex;
@@ -28,14 +28,6 @@ body{
 	overflow: auto;
 	height: 100%;
 }
-/*.inner-main::-webkit-scrollbar {
-	display:inline;
-    width: 10px;  
-}
-.inner-main::-webkit-scrollbar-thumb {
-    background:#FF7D00;
-    border-radius: 10px;
-}*/
 input, textarea{
 	outline: none;
 	border-width: 0;
@@ -178,12 +170,12 @@ a:focus{
 }
 .yes-btn,
 .cancle-modal-btn {
-  outline: none;
+	outline: none;
 }
 .yes-btn:focus,
 .cancle-modal-btn:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px #ddd; /* 눈에 덜 띄는 대체 효과 */
+	outline: none;
+	box-shadow: 0 0 0 2px #ddd; /* 눈에 덜 띄는 대체 효과 */
 }
 /*------------------ 사이드 메뉴 css -------------------------*/
 .side-menu{
@@ -221,17 +213,19 @@ a:focus{
 .side-event{
 	border-radius: 0 0 15px 15px;
 }
-.side li:hover,
-.side-modifyinfo.active {
+.side li:hover{
     background-color: rgba(255, 254, 252, 0.5);
     font-weight: bold;
 }
-.side a:hover,
-.side-modifyinfo.active a {
+.side a:hover{
     color: #FF7D00 !important;
     text-decoration: none;
 }
-
+.side li a.active{
+	color: #FF7D00; !important;
+	font-weight: bold;
+	text-decoration: none;	
+}
 #text1{
 	font-size: 12px;
 	text-align: left;

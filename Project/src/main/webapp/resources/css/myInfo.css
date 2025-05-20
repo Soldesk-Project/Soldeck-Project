@@ -6,12 +6,11 @@ body {
     flex-direction: column;
     min-height: 100vh; /*영역을 남김없이 쓴다는 뜻 대략..*/
 }
-
 input:focus,
 button:focus,
 textarea:focus,
 select:focus {
-  outline: none;
+	outline: none;
 }
 .myInfo_text{
 	text-align: left;
@@ -41,7 +40,6 @@ select:focus {
 	float: right;
 	border-radius: 20px;
 	margin-right: 230px;
-	
 }
 .info_personal_box{
 	border: 1px solid #EBEBEB;
@@ -190,17 +188,19 @@ b{
 .side-event{
 	border-radius: 0 0 15px 15px;
 }
-.side li:hover,
-.side-myinfo.active {
+.side li:hover{
     background-color: rgba(255, 254, 252, 0.5);
     font-weight: bold;
     
 }
-.side a:hover,
-.side-myinfo.active a {
+.side a:hover{
     color: #FF7D00 !important;
 }
-
+.side li a.active{
+	color: #FF7D00; !important;
+	font-weight: bold;
+	text-decoration: none;	
+}
 #text1{
 	font-size: 12px;
 	text-align: left;

@@ -13,9 +13,9 @@ body {
 }
 /*------------------ body / main menu -------------------------*/
 .container-wrapper {
-  background-color: rgba(255, 254, 252, 0.3);
-  padding-bottom: 40px;
-  margin-top: 100px;
+	background-color: rgba(255, 254, 252, 0.3);
+	padding-bottom: 40px;
+	margin-top: 100px;
 }
 .container{
 	width: 1200px;
@@ -152,7 +152,7 @@ fieldset{
 }
 
 fieldset > label {
-  margin-right: 10px;
+	margin-right: 10px;
 }
 
 .info-profile-div-box{
@@ -161,12 +161,12 @@ fieldset > label {
 	align-items: center;
 }
 .info-profile-div-box::after {
-  content: "";
-  margin-top : 20px;
-  width: 600px; /* 원하는 밑줄 길이 */
-  height: 1px;
-  background-color: #EBEBEB;
-  margin-bottom: 10px;
+	content: "";
+	margin-top : 20px;
+	width: 600px; /* 원하는 밑줄 길이 */
+	height: 1px;
+	background-color: #EBEBEB;
+	margin-bottom: 10px;
 }
 .info-profile-div-div{
 	margin-top: 5px;
@@ -241,9 +241,9 @@ fieldset > label {
 	margin-top: 5px;
 }
 input[readonly] {
-  background-color: #f0f0f0;
-  color: #888;
-  border: 1px solid #ccc;
+	background-color: #f0f0f0;
+	color: #888;
+	border: 1px solid #ccc;
 }
 .message {
 	color: red;
@@ -267,13 +267,13 @@ b{
 	height : auto;
 }
 .info_border_box::after {
-  content: "";
-  display: table;
-  clear: both;
+	content: "";
+	display: table;
+	clear: both;
 }
 .dash {
-  font-size: 25px;
-  margin: 0 5px;
+	font-size: 25px;
+	margin: 0 5px;
 }
 /*------------------ 사이드 메뉴 css -------------------------*/
 
@@ -309,15 +309,18 @@ b{
 .side-event{
 	border-radius: 0 0 15px 15px;
 }	
-.side li:hover,
-.side-modifyinfo.active {
+.side li:hover{
     background-color: rgba(255, 254, 252, 0.5);
     font-weight: bold;
 }
-.side a:hover,
-.side-modifyinfo.active a {
+.side a:hover{
     color: #FF7D00 !important;
     text-decoration: none;
+}
+.side li a.active{
+	color: #FF7D00; !important;
+	font-weight: bold;
+	text-decoration: none;	
 }
 #text1{
 	font-size: 12px;

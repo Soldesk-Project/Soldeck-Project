@@ -1,11 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <ul class="side">
-	<li class="side-myinfo active"><a href="myInfo" class="a-myinfo active">나의 정보</a></li>
-	<!-- <li class="side-modifyinfo active"><a href="modifyInfo" class="a-modifyinfo active">정보 수정</a></li> -->
-	<li class="side-bookmark active"><a href="bookmark" class="a-bookmark active">즐겨 찾기</a></li>
-	<li class="side-booking active"><a href="booking" class="a-booking active">예약 내역</a></li>
-	<li class="side-review active"><a href="review" class="a-review active">나의 리뷰</a></li>
-	<li class="side-event active"><a href="event" class="a-event active">나의 이벤트</a></li>
+	<li class="side-myinfo"><a href="/mypage/myInfo" class="a-myinfo">나의 정보</a></li>
+	<li class="side-bookmark"><a href="/mypage/bookmark" class="a-bookmark">즐겨 찾기</a></li>
+	<li class="side-booking"><a href="/mypage/booking" class="a-booking">예약 내역</a></li>
+	<li class="side-review"><a href="/mypage/review" class="a-review">나의 리뷰</a></li>
+	<li class="side-event"><a href="/mypage/event" class="a-event">나의 이벤트</a></li>
 </ul>
 	
