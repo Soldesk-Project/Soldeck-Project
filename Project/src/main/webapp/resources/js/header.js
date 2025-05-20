@@ -12,7 +12,6 @@
         }
       });
     }
-
     if (searchButton) searchButton.addEventListener("click", handleSearch);
 
     if (loginLink) {

@@ -62,7 +62,6 @@
     </c:if>
   </div>
 </div>
-
 <!-- 알림 모달 창 -->
 <div id="alarmModal" class="modal">
   <div class="modal-content">
