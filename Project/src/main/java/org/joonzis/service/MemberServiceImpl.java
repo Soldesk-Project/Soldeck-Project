@@ -34,9 +34,9 @@ public class MemberServiceImpl implements MemberService{
         
         //event 테이블에 정보 생성
         mapper.insertEventInfo(member.getMem_no());
-        
-        
     }
+    
+        
 
 	@Override
 	public List<String> findId(String mem_name, String mem_birth, Long mem_phone) {

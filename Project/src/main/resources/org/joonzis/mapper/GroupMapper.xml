@@ -1,34 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.joonzis.mapper.GroupMapper">
-	<insert id="createGroup" parameterType="org.joonzis.domain.GroupVO" useGeneratedKeys="true" keyProperty="groupNo">
-		<selectKey keyProperty="groupNo" resultType="int" order="AFTER">
-        	SELECT GROUP_SEQ.CURRVAL FROM DUAL
+	<insert id="createGroup" parameterType="org.joonzis.domain.GroupDTO" useGeneratedKeys="true" keyProperty="group_no">
+	    <selectKey keyProperty="group_no" resultType="int" order="AFTER">
+	        SELECT GROUP_SEQ.CURRVAL FROM DUAL
 	    </selectKey>
-		INSERT INTO "GROUP" (
-			GROUP_NO, 
-			MEM_NO, 
-			CHAT_TITLE, 
-			REG_DATE,
-			MAX_MEM, 
-			LIM_GENDER, 
-			IS_PUBLIC,
-			GROUP_MEMO,
-			MIN_AGE,
-			MAX_AGE
-			)
-		VALUES(
-			GROUP_SEQ.NEXTVAL,
-			#{memNo},
-			#{chatTitle},
-			sysdate,
-			#{maxMem},
-			#{limGender},
-			#{isPublic, jdbcType=CHAR},
-			#{groupMemo},
-			#{minAge},
-			#{maxAge}
-		)
+	    INSERT INTO "GROUP" (
+	        GROUP_NO, 
+	        MEM_NO, 
+	        CHAT_TITLE, 
+	        REG_DATE,
+	        MAX_MEM, 
+	        LIM_GENDER, 
+	        IS_PUBLIC,
+	        GROUP_MEMO,
+	        MIN_AGE,
+	        MAX_AGE
+	    )
+	    VALUES(
+	        GROUP_SEQ.NEXTVAL,
+	        #{mem_no},
+	        #{chat_title, jdbcType=VARCHAR},
+	        sysdate,
+	        #{max_mem},
+	        #{lim_gender, jdbcType=VARCHAR},
+	        #{is_public, jdbcType=CHAR},
+	        #{group_memo, jdbcType=VARCHAR},
+	        #{min_age},
+	        #{max_age}
+	    )
+	</insert>
+	
+	<insert id="insertFoodKate">
+		INSERT INTO GROUP_FOOD_KATE VALUES(#{group_no}, #{food_no})	
 	</insert>
 	
 	<!-- 채팅방 생성 쿼리 -->
@@ -42,6 +46,11 @@
 	    	sysdate
 	    	)
 	</insert>
+	
+	<insert id="joinGroup">
+		INSERT INTO GROUP_MEM VALUES(#{group_no}, #{mem_no}, null)
+	</insert>
+	
 	
 	<!-- 채팅방 번호 가져오기 -->
 	<resultMap id="groupResultMap" type="org.joonzis.domain.GroupVO">

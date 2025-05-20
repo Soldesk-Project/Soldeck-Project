@@ -45,6 +45,18 @@ public class FriendSocketHandler extends TextWebSocketHandler {
             }
         }
     }
+    public void sendGroupRequestAlert(int targetMemNo, int mem_no, String mem_nick) {
+    	WebSocketSession session = userSessions.get(targetMemNo);
+    	if (session != null && session.isOpen()) {
+    		try {
+    			String jsonMessage = String.format(
+    					"{\"mem_no\": %d, \"mem_nick\": \"%s\"}", mem_no, mem_nick);
+    			session.sendMessage(new TextMessage(jsonMessage));
+    		} catch (Exception e) {
+    			e.printStackTrace();
+    		}
+    	}
+    }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {

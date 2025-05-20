@@ -4,14 +4,18 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.joonzis.domain.ChatRoomVO;
+import org.joonzis.domain.GroupDTO;
 import org.joonzis.domain.GroupMemberDTO;
 import org.joonzis.domain.GroupVO;
 
 public interface GroupMapper {
 	
 	// 그룹 생성
-	public int createGroup(GroupVO vo);
-	
+	public int createGroup(GroupDTO dto);
+	// 그룹 선호 음식 
+	public void insertFoodKate(@Param("group_no") int group_no, @Param("food_no") int food_no);
+	// 그룹 참가
+	public void joinGroup(@Param("mem_no") int mem_no, @Param("group_no") int group_no); 
 	// 채팅방 생성
 	public int createChatRoom(ChatRoomVO vo);
 	

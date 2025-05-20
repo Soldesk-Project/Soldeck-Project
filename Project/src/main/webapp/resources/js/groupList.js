@@ -303,56 +303,9 @@ function searchGroupList() {
         .catch(err=>console.error("그룹 요청 실패", error));
     });
 }
-//-----모임 만들기-------------------------------------------------------------------
-function createGroup() {
-	  const gender = document.querySelector("input[name='gender']:checked");
-	  if(!clubTilte.value){
-	    alert("모임 이름을 입력해 주세요");
-	    return;
-	  }
-	
-	  if(!clubDesc.value){
-	    alert("모임 소개를 입력해 주세요");
-	    return;
-	  }
-	
-	  const data = {
-	    chatTitle : clubTilte.value,
-	    groupMemo : clubDesc.value,
-	    minAge : minAge.value,
-	    maxAge : maxAge.value,
-	    limGender : gender.value,
-	    isPublic: isPublic ? 'Y' : 'N'
-	  }
-	
-	  console.log(data);
-	
-	  fetch(`/grouplist/createGroup`, {
-	    method : 'post',
-	    body : JSON.stringify(data),
-	    headers : {
-	      'content-type' : 'application/json; charset=utf-8'
-	    }
-	  })
-	    .then(response => response.json())
-	    .then(result => {
-	      console.log(result);
-	      alert('그룹 및 채팅방 생성 성공');
-	      window.location.href = result.redirect;
-	    })
-	    .catch(err => console.log(err));
-}
-//----- 모달 관련 스크립트---------------------------------------------------------------
-
 (function() {
-
-
+//----- 모달 관련 스크립트---------------------------------------------------------------
 const groupModal = document.querySelector('#modal');
-const clubTilte = document.querySelector("input[name='club-title']");
-const clubDesc = document.querySelector("textarea[name='club-desc']");
-const minAge = document.querySelector("input[name='min-age']");
-const maxAge = document.querySelector("input[name='max-age']");
-const isPublic = document.querySelector(".public-checkbox").checked ? 'Y' : 'N';
 function openModal(){
 	groupModal.style.display = 'block';
 	document.body.style.overflow = 'hidden';
@@ -360,6 +313,58 @@ function openModal(){
 function closeModal(){
 	groupModal.style.display = 'none';
 	document.body.style.overflow = 'auto';
+}
+//-----모임 만들기-------------------------------------------------------------------
+function createGroup() {
+	const gender = document.querySelector("input[name='gender']:checked");
+	const isPublic = document.querySelector(".public-checkbox").checked ? 'Y' : 'N';
+	const checked = document.querySelectorAll('input[name="food"]:checked');
+	const count = checked.length;
+	const clubTilte = document.querySelector("input[name='club-title']");
+	const clubDesc = document.querySelector("textarea[name='club-desc']");
+	const minAge = document.querySelector("input[name='min-age']");
+	const maxAge = document.querySelector("input[name='max-age']");
+	const checkMemo=/^.{0,200}$/;
+	
+	const foodList = Array.from(checked).map(food => Number(food.value));	
+
+	if (count < 1 || count > 3) {
+		alert('선호 음식은 1개 이상, 3개 이하로 선택해주세요.');
+		return;
+	}
+	
+	if(!clubTilte.value){
+		alert("모임 이름을 입력해 주세요");
+	    return;
+	}
+	if (!checkMemo.test(clubDesc.value)) {
+		alert("200자 미만으로 작성");
+		return;
+	}
+	
+	const data = {
+        chat_title : clubTilte.value,
+	    group_memo : clubDesc.value,
+	    lim_gender : gender.value,
+	    min_age : minAge.value,
+	    max_age : maxAge.value,
+	    is_public: isPublic ? 'Y' : 'N',
+	    foodList: foodList
+	}
+	
+	fetch(`/grouplist/createGroup`, {
+	    method : 'post',
+	    body : JSON.stringify(data),
+	    headers : {
+	      'content-type' : 'application/json; charset=utf-8'
+	    }
+	})
+	.then(response => response.text())
+	.then(result => {
+		alert('그룹 및 채팅방 생성 성공');
+	    closeModal();	
+	})
+	.catch(err => console.log(err));
 }
 
 
@@ -381,13 +386,15 @@ document.querySelectorAll('button').forEach(btn => {
 			createGroup();
 		}else if(type == 'closeModalBtn'){
 			closeModal();
+		}else if(type == 'uploadBtn'){
+			//프로필 업로드 함수
 		}
 	});
 });
 
 
-loadGroupList();
 })();
+loadGroupList();
 
 
 

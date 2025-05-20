@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.joonzis.domain.GroupDTO;
 import org.joonzis.domain.GroupMemberDTO;
 import org.joonzis.domain.GroupVO;
 import org.joonzis.domain.MemberVO;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,21 +49,29 @@ public class GroupController {
 	    }
 	
 	// 그룹 생성 및 채팅방 생성
+	@Transactional
 	@ResponseBody
 	@PostMapping("/createGroup")
-	public ResponseEntity<String> createGroup(@RequestBody GroupVO vo, Model model) {
-	    log.info("create..." + vo);
+	public ResponseEntity<String> createGroup(@RequestBody GroupDTO dto, HttpSession session, Model model) {
+	    log.info("create..." + dto);
+	    MemberVO member = (MemberVO) session.getAttribute("loggedInUser");
+        if (member == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다");
+        }
+        dto.setMem_no(member.getMem_no());  // 회원 번호 설정
+        dto.setMax_mem(10);  // 최대 인원 설정
 
-	    vo.setMem_no(100);  // 회원 번호 설정
-	    vo.setMax_mem(10);  // 최대 인원 설정
-
-	    int result = service.createGroupAndChatRoom(vo);  // 그룹과 채팅방을 함께 생성
-
+        int result = service.createGroupAndChatRoom(dto);  // 그룹과 채팅방을 함께 생성
+	    
+        log.info(".............."+dto.getGroup_no());
+	    for(int interests:dto.getFoodList()) {
+	    	service.insertFoodKate(dto.getGroup_no(), interests);
+	    }
+	    
 	    if (result > 0) {
-	        return ResponseEntity.ok().body("{\"redirect\":\"/mypage/club\"}");
+	        return ResponseEntity.ok("성공");
 	    } else {
-	        model.addAttribute("msg", "그룹 생성 실패");
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\":\"그룹 생성 실패\"}");
+	    	return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("그룹 생성 실패");
 	    }
 	}
 	
@@ -161,7 +171,7 @@ public class GroupController {
         if (sent) {
             // 웹소켓 알림 전송
             //String msg = member.getMem_nick() + "님이 친구 요청을 보냈습니다.";
-        	friendSocketHandler.sendFriendRequestAlert(service.getGroupOwnerMemNo(group_no), member.getMem_no(), member.getMem_nick());
+        	friendSocketHandler.sendGroupRequestAlert(service.getGroupOwnerMemNo(group_no), member.getMem_no(), member.getMem_nick());
             return ResponseEntity.ok("요청이 전송되었습니다");
         } else {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 요청을 보냈습니다");

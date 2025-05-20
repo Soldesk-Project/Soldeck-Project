@@ -3,6 +3,7 @@ package org.joonzis.service;
 import java.util.List;
 
 import org.joonzis.domain.ChatRoomVO;
+import org.joonzis.domain.GroupDTO;
 import org.joonzis.domain.GroupMemberDTO;
 import org.joonzis.domain.GroupVO;
 import org.joonzis.mapper.GroupMapper;
@@ -19,29 +20,36 @@ public class GroupServiceImpl implements GroupService {
     private GroupMapper mapper;
 
     @Override
-    public int createGroupAndChatRoom(GroupVO vo) {
+    public int createGroupAndChatRoom(GroupDTO dto) {
         // 1. 그룹 생성
-        int result = mapper.createGroup(vo);
+        int result = mapper.createGroup(dto);
         if(result > 0) {
-            log.info("Group created successfully: " + vo);
+            log.info("Group created successfully: " + dto);
             
             // 2. 그룹 번호가 생성되면, 해당 그룹 번호로 채팅방 생성
-            int groupNo = vo.getGroup_no();  // 그룹 번호를 받아옵니다.
+            int groupNo = dto.getGroup_no();  // 그룹 번호를 받아옵니다.
 
             ChatRoomVO chatRoomVO = new ChatRoomVO();
             chatRoomVO.setGroupNo(groupNo);
             result = mapper.createChatRoom(chatRoomVO);
-            
+            mapper.joinGroup(dto.getMem_no(), groupNo);
             if(result > 0) {
                 log.info("Chat room created successfully for group number: " + groupNo);
             }
         } else {
-            log.error("Group creation failed: " + vo);
+            log.error("Group creation failed: " + dto);
         }
         
         return result;
     }
-
+    @Override
+    public void insertFoodKate(int group_no, int food_no) {
+    	mapper.insertFoodKate(group_no, food_no);
+    }
+    
+    
+    
+    
 	@Override
 	public List<GroupMemberDTO> getAllGroups(int mem_no) {
 		return mapper.getAllGroups(mem_no);

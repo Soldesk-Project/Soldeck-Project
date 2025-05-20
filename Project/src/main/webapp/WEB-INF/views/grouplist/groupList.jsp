@@ -40,6 +40,7 @@
 			<ul>
 				<li class="image-container">
 					<div class="image-placeholder">이미지</div>
+					<button id="uploadBtn" class="upload-btn">업로드</button>
 				</li>
 				<li>
 					<input type="text" name="club-title" placeholder="모임방 이름" class="input-text">
@@ -65,6 +66,19 @@
 				<li>
 					<label class="input-label">공개 여부</label>
 					<input type="checkbox" class="public-checkbox"> 공개
+				</li>
+				<li>
+					<label class="input-label">선호 음식</label>
+					<input type="checkbox" class="foods" id="korean" name="food" value="1">
+					<label for="korean">한식</label>
+					<input type="checkbox" class="foods" id="japanese" name="food" value="2">
+					<label for="japanese">일식</label>
+					<input type="checkbox" class="foods" id="chinese" name="food" value="3">
+					<label for="chinese">중식</label>
+					<input type="checkbox" class="foods" id="western" name="food" value="4">
+					<label for="western">양식</label>
+					<input type="checkbox" class="foods" id="viet" name="food" value="5">
+					<label for="viet">베트남요리</label>
 				</li>
 			</ul>
 		</div>
