@@ -4,7 +4,7 @@ function initFriendList() {
     .then(response => response.json())
     .then(data => {
       const container = document.getElementById("friendListContainer");
-      container.innerHTML = ""; // 초기화
+      container.innerHTML = "";  // 초기화
 
       if (data.length === 0) {
         const msg = document.createElement("p");
@@ -24,6 +24,13 @@ function initFriendList() {
                 onerror="if (!this.dataset.error) { this.dataset.error = true; this.src='../resources/images/profile.png'; }">
             <div class="nicknameBox">
               <p><a href="#" class="friend-name" data-friend-no="${friend.friend_mem_no}">${friend.friendMember.mem_nick}</a></p>
+            </div>
+            <div class="memo_input">
+              <input type="text" name="fre_memo" value="${friend.fre_memo || ''}" placeholder="메모 입력" data-friend-id="${friend.friend_mem_no}" />
+              <button class="save-memo-btn" data-friend-id="${friend.friend_mem_no}">저장</button>
+              <div class="unfollowBtn">
+                <button class="unfollow-btn" data-friend-id="${friend.friend_mem_no}">언팔로우</button>
+              </div>
             </div>
           </div>
         `;
@@ -52,77 +59,86 @@ function initFriendList() {
         ? `${myNo}${friendNo}`
         : `${friendNo}${myNo}`;
 
-      // 기존 chat-container 제거
-      const existingChatContainer = document.getElementById("chat-container");
-      if (existingChatContainer) existingChatContainer.remove();
+      console.log(roomNo);
 
       // AJAX로 채팅 페이지 가져오기
       fetch(`/chat/privateRoom/${roomNo}`)
-        .then(response => {
-          if (!response.ok) throw new Error("채팅방 요청 실패");
-          return response.text();
-        })
-        .then(html => {
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(html, "text/html");
+      .then(response => {
+        if (!response.ok) throw new Error("채팅방 요청 실패");
+        return response.text();
+      })
+      .then(html => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
 
-          const chatContainer = document.createElement("div");
-          chatContainer.id = "chat-container";
-          document.body.appendChild(chatContainer);
+        const chatContainer = document.getElementById("chat-container") || (() => {
+          const div = document.createElement("div");
+          div.id = "chat-container";
+          document.body.appendChild(div);
+          return div;
+        })();
+        
+        window.addEventListener("chatContextReady", () => {
+        	  const event = new CustomEvent('openChatRoom', { detail: { roomNo } });
+        	  window.dispatchEvent(event);
+        	});
 
-          // body 내용 중 스크립트 제거하고 innerHTML에 넣기
-          const scripts = doc.querySelectorAll("script");
-          scripts.forEach(s => s.remove());
-          chatContainer.innerHTML = doc.body.innerHTML;
+        // 1. body 내용 중 스크립트 제거하고 innerHTML에 넣기
+        const scripts = doc.querySelectorAll("script");
+        scripts.forEach(s => s.remove());
+        chatContainer.innerHTML = doc.body.innerHTML;
 
-          // 인라인 스크립트 강제 실행
-          scripts.forEach(oldScript => {
-            const newScript = document.createElement("script");
-            if (oldScript.src) {
-              // 외부 스크립트 중복 검사 후 추가
-              if (!document.querySelector(`script[src="${oldScript.src}"]`)) {
-                newScript.src = oldScript.src;
-                newScript.type = oldScript.type || "text/javascript";
-                document.body.appendChild(newScript);
-              }
-            } else {
-              // 인라인 스크립트 강제 실행
-              newScript.textContent = oldScript.textContent;
+        // 2. 스크립트 태그들 별도 실행
+        scripts.forEach(oldScript => {
+          const newScript = document.createElement("script");
+          if (oldScript.src) {
+            // 외부 스크립트 중복 검사 후 추가
+            if (!document.querySelector(`script[src="${oldScript.src}"]`)) {
+              newScript.src = oldScript.src;
               newScript.type = oldScript.type || "text/javascript";
               document.body.appendChild(newScript);
             }
-          });
-
-          // CSS 중복 체크 후 추가
-          if (!document.querySelector('link[href="/resources/css/chatroom.css"]')) {
-            const link = document.createElement("link");
-            link.rel = "stylesheet";
-            link.type = "text/css";
-            link.href = "/resources/css/chatroom.css";
-            document.head.appendChild(link);
+          } else {
+            // 인라인 스크립트 강제 실행
+            // (eval 대신 동적 스크립트 삽입으로 브라우저가 처리)
+            newScript.textContent = oldScript.textContent;
+            newScript.type = oldScript.type || "text/javascript";
+            document.body.appendChild(newScript);
           }
-
-          // chatroom.js 스크립트 관리
-          const existingScript = document.querySelector('script[src="/resources/js/chatroom.js"]');
-          if (existingScript) existingScript.remove(); // 기존 스크립트 제거
-
-          const script = document.createElement("script");
-          script.src = "/resources/js/chatroom.js";
-          script.onload = () => {
-            // chatroom.js가 로드되면 chatContextReady 이벤트 발생
-            if (window.chatContext) {
-              const event = new Event("chatContextReady");
-              window.dispatchEvent(event);
-            } else {
-              console.warn("chatContext가 아직 준비되지 않았습니다.");
-            }
-          };
-          document.body.appendChild(script);
-        })
-        .catch(error => {
-          console.error("채팅방 로드 실패:", error);
-          alert("채팅방을 불러오지 못했습니다.");
         });
+
+        // 3. CSS 중복 체크 후 추가
+        if (!document.querySelector('link[href="/resources/css/chatroom.css"]')) {
+          const link = document.createElement("link");
+          link.rel = "stylesheet";
+          link.type = "text/css";
+          link.href = "/resources/css/chatroom.css";
+          document.head.appendChild(link);
+        }
+
+        // 4. chatroom.js는 항상 새로 로드해서 최신 상태 유지
+        const existingScript = document.querySelector('script[src="/resources/js/chatroom.js"]');
+        if (existingScript) existingScript.remove();
+
+        const script = document.createElement('script');
+        script.src = "/resources/js/chatroom.js";
+        script.onload = () => {
+          // chatroom.js가 로드되면 chatContextReady 이벤트 발생시킴
+          if (window.chatContext) {
+            const event = new Event("chatContextReady");
+            window.dispatchEvent(event);
+          } else {
+            console.warn("chatContext가 아직 준비되지 않았습니다.");
+          }
+        };
+        
+        document.body.appendChild(script);
+
+      })
+      .catch(error => {
+        console.error("채팅방 로드 실패:", error);
+        alert("채팅방을 불러오지 못했습니다.");
+      });
 
       return;
     }
