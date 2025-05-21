@@ -40,7 +40,7 @@
 						                    <input type="hidden" class="member-no" value="${rl.mem_no }">
 										</div>
 									</div>
-								<button type="button" class="booking-cancel-btn" id="bookingCancelBtn">예약취소</button>
+								<button type="button" class="booking-cancel-btn">예약취소</button>
 								</div>
 							<div class="border-div">
 			                    <div class="info-text">
@@ -58,9 +58,9 @@
 				                    <span class="memo-title">특이 사항 메모</span>
 				                    <div class="memo-content">
 										<span class="booking-memo">${rl.res_memo }</span>
-										<input type="text" class="booking-memo-modify" value="${rl.res_memo }">
+										<input type="text" class="booking-memo-modify" value="${rl.res_memo }" style="display: none;">
 										<button type="button" class="booking-memo-btn" id="modifyMemoBtn">수정</button>
-										<button type="button" class="check-memo" id="saveMemoBtn">저장</button>
+										<button type="button" class="check-memo" id="saveMemoBtn" style="display: none;">저장</button>
 					                    <input type="hidden" id="restNo" value="${rl.rest_no }">
 					                    <input type="hidden" id="isPublic" value="${rl.is_public }">
 				                    </div>

@@ -41,6 +41,52 @@ document.querySelectorAll(".booking-img img").forEach(moveRestView => {
 		location.href="../search/view?rest_no="+view;
 	});
 })
+// --- 과거 여부 판단 ---
+document.addEventListener('DOMContentLoaded', function() {
+    const bookingLists = document.querySelectorAll('.booking-list');
+    const currentDateTime = new Date(); // 현재 시간
+
+    bookingLists.forEach(function(bookingList) {
+        const resDateInput = bookingList.querySelector('.booking-date.date');
+        const resTimeInput = bookingList.querySelector('.booking-date.time');
+        
+        // 날짜 형식 변환: "yyyy - MM - dd" -> "yyyy-MM-dd" (fmt:formatDate 패턴 고려)
+        const resDateStr = resDateInput.value.replace(/\s/g, ''); 
+        const resTimeStr = resTimeInput.value; // "HH:MM" 형식
+
+        const [year, month, day] = resDateStr.split('-').map(Number);
+        const [hour, minute] = resTimeStr.split(':').map(Number);
+        const bookingDateTime = new Date(year, month - 1, day, hour, minute); // 월은 0부터 시작
+
+        const cancelButton = bookingList.querySelector('.booking-cancel-btn');
+        const memoButton = bookingList.querySelector('.booking-memo-btn'); // '수정' 버튼
+        const memoModifyInput = bookingList.querySelector('.booking-memo-modify'); // 수정 입력창
+        const saveMemoBtn = bookingList.querySelector('.check-memo'); // '저장' 버튼
+
+        if (bookingDateTime < currentDateTime) {
+            // 과거 예약인 경우
+            bookingList.classList.add('past-booking'); // .past-booking 클래스 추가
+
+            if (cancelButton) {
+                cancelButton.textContent = '예약완료'; // 텍스트 변경
+                cancelButton.disabled = true; // 버튼 비활성화
+            }
+
+            // 메모 관련 기능 비활성화 및 숨김
+            if (memoButton) {
+                memoButton.style.display = 'none'; // 수정 버튼 숨김
+            }
+            if (memoModifyInput) {
+                memoModifyInput.style.display = 'none'; // 수정 입력창 숨김
+                memoModifyInput.readOnly = true; // 읽기 전용
+            }
+            if (saveMemoBtn) {
+                saveMemoBtn.style.display = 'none'; // 저장 버튼 숨김
+            }
+        }
+    });
+});
+
 //-----페이지 로딩시 즐겨찾기 유무 판단 / 즐겨찾기 유무에 따라 이벤트 부여----------------------------------------------
 document.addEventListener('DOMContentLoaded', ()=> {
 	const bookmarkButtons = document.querySelectorAll('.bookmark');
