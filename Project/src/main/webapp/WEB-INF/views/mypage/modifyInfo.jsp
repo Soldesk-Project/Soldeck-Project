@@ -144,7 +144,7 @@
 			</div>
 			<div class="btn-div">
 				<button type="button" class="modify-finish-btn" id="modifyFinishBtn" style="display: none;">수정 완료</button>
-				<button type="reset" class="reset-btn" id="resetBtn" style="display: none;">수정 리셋</button>
+				<button type="reset" class="reset-btn" id="resetBtn" style="display: none;">수정 취소</button>
 				<button type="button" class="remove-btn" id="removeBtn" style="display: none;">회원 탈퇴</button>
 				<button type="button" class="modify-btn" id="modifyBtn">수정</button>
 			</div>
