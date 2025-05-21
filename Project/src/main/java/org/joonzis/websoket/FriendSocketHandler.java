@@ -45,12 +45,12 @@ public class FriendSocketHandler extends TextWebSocketHandler {
             }
         }
     }
-    public void sendGroupRequestAlert(int group_no, int targetMemNo, int mem_no, String mem_nick) {
+    public void sendGroupRequestAlert(int group_no, String chat_title, int targetMemNo, int mem_no, String mem_nick) {
     	WebSocketSession session = userSessions.get(targetMemNo);
     	if (session != null && session.isOpen()) {
     		try {
     			String jsonMessage = String.format(
-    					"{\"type\": \"group\", \"group_no\": %d, \"mem_no\": %d, \"mem_nick\": \"%s\"}", group_no, mem_no, mem_nick);
+    					"{\"type\": \"group\", \"chat_title\": \"%s\", \"group_no\": %d, \"mem_no\": %d, \"mem_nick\": \"%s\"}", chat_title, group_no, mem_no, mem_nick);
     			session.sendMessage(new TextMessage(jsonMessage));
     		} catch (Exception e) {
     			e.printStackTrace();

@@ -10,5 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class GroupReqVO {
-	private int req_no, group_no, mem_no, req_status;
+	private int group_no, mem_no;
+	private String req_status;
 }

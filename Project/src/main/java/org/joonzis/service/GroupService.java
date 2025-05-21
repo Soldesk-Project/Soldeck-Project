@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.joonzis.domain.GroupDTO;
 import org.joonzis.domain.GroupMemberDTO;
+import org.joonzis.domain.GroupReqVO;
 import org.joonzis.domain.GroupVO;
 
 
@@ -47,9 +48,14 @@ public interface GroupService {
     
     // 친구 요청 거절
  	public boolean declineGroupRequest(int group_no, int mem_no);
+ 	
+ 	// 오프라인 친구 요청 조회
+ 	List<GroupReqVO> getPendingRequest(int mem_no);
 	
 	int getGroupOwnerMemNo(int group_no);
 	
 	public List<GroupVO> getGroupListByMember(int mem_no);
+	
+	public String getGroupName(int group_no);
 
 }

@@ -232,4 +232,21 @@
 		        m.MEM_NO = #{mem_no}
 	</select>
 	
+	<!-- 오프라인시 그룹 요청 확인 -->
+	<select id="getPendingRequest" resultType="org.joonzis.domain.GroupReqVO">
+	   SELECT  gr.group_no,
+		       gr.mem_no,        -- 요청자 회원번호
+		       g.chat_title,     -- 그룹 이름
+		       g.group_img,
+		       gr.req_status
+		FROM group_req gr
+		JOIN "GROUP" g ON gr.group_no = g.group_no
+		WHERE g.mem_no = #{mem_no}  -- 그룹 소유자(그룹장) mem_no
+		  AND gr.req_status = 'PENDING'
+	</select>
+	
+	<select id="getGroupName" resultType="string">
+		SELECT chat_title FROM "GROUP" where group_no = #{group_no}
+	</select>
+	
 </mapper>

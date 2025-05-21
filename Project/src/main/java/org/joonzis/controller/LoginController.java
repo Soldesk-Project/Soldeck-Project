@@ -3,6 +3,7 @@ package org.joonzis.controller;
 import java.io.File;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -10,8 +11,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.servlet.http.HttpSession;
 
 import org.joonzis.domain.FriendReqVO;
+import org.joonzis.domain.GroupReqVO;
 import org.joonzis.domain.MemberVO;
 import org.joonzis.service.FriendService;
+import org.joonzis.service.GroupService;
 import org.joonzis.service.MemberService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +49,10 @@ public class LoginController {
     private MemberService memberservice;
     
     @Autowired
-    private FriendService fservice;
+    private FriendService friendservice;
+    
+    @Autowired
+    private GroupService groupservice;
     
     @Value("${file.upload-dir}")
     private String uploadDir;
@@ -235,13 +241,18 @@ public class LoginController {
             newSession.setAttribute("loggedInUser", loggedInMember);
             loggedInSessions.put(mem_id, newSession);
             
-            List<FriendReqVO> pendingRequest = fservice.getPendingRequest(loggedInMember.getMem_no());
+            List<FriendReqVO> pendingFriendRequest = friendservice.getPendingRequest(loggedInMember.getMem_no());
+            List<GroupReqVO> pendingGroupRequest = groupservice.getPendingRequest(loggedInMember.getMem_no());
             
             ObjectMapper objectMapper = new ObjectMapper();
             String pendingRequestJson = null;
 
             try {
-                pendingRequestJson = objectMapper.writeValueAsString(pendingRequest);
+            	List<Object> combinedRequests = new ArrayList<>();
+            	combinedRequests.addAll(pendingFriendRequest);
+            	combinedRequests.addAll(pendingGroupRequest);
+
+            	pendingRequestJson = objectMapper.writeValueAsString(combinedRequests);
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }

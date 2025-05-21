@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.joonzis.domain.ChatRoomVO;
 import org.joonzis.domain.GroupDTO;
 import org.joonzis.domain.GroupMemberDTO;
+import org.joonzis.domain.GroupReqVO;
 import org.joonzis.domain.GroupVO;
 
 public interface GroupMapper {
@@ -64,5 +65,10 @@ public interface GroupMapper {
     // 그룹 요청 응답 후 테이블 비우기
     void deleteGroupRequest(@Param("group_no") int group_no, @Param("mem_no") int mem_no);
     
+    // 오프라인 친구 요청 조회
+ 	List<GroupReqVO> getPendingRequest(@Param("mem_no") int mem_no);
+ 	
 	public List<GroupVO> getGroupListByMember(int mem_no);
+	
+	public String getGroupName(@Param("group_no") int group_no);
 }
