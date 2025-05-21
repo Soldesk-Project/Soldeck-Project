@@ -58,13 +58,39 @@ document.addEventListener('keydown', function (e) {
 	});
 
 //-----버튼 누를 때 댓글 번호 가져오기 ------------------------------
-let comNo;
-document.querySelectorAll(".remove-btn").forEach(removeBtn => {
-	removeBtn.addEventListener('click',e=>{
-		e.preventDefault();
-		comNo = removeBtn.closest(".appraisal-div").querySelector(".com-no").value;
+function hideAllModals() {
+	document.querySelectorAll('.delete-comment-modal').forEach(modal => {
+		modal.style.display = 'none';
 	});
-})
+}
+
+function showModalToLeft(modalSelector, triggerBtn) {
+	const modal = document.querySelector(modalSelector);
+	if (!modal) return;
+
+	const innerModal = modal.querySelector('.inner-modal');
+	if (!innerModal) return;
+
+	const rect = triggerBtn.getBoundingClientRect();
+	innerModal.style.top = `${rect.top + window.scrollY}px`;
+	innerModal.style.left = `${rect.left + window.scrollX - innerModal.offsetWidth - 8}px`;
+
+	modal.style.display = 'block';
+}
+
+document.querySelectorAll('.remove-btn').forEach(removeBtn => {
+	removeBtn.addEventListener('click', function (e) {
+		e.preventDefault();
+
+		// 댓글 번호 가져오기
+		comNo = this.closest(".appraisal-div").querySelector(".com-no").value;
+
+		// 모달 표시 및 위치 설정
+		hideAllModals();
+		showModalToLeft('.delete-comment-modal', this);
+	});
+});
+
 let memNo=document.querySelector(".mem-no").value;
 //-----댓글 링크 이동 ------------------------------
 let restNo;
