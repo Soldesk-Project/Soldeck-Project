@@ -470,6 +470,19 @@ a:hover {
     background-color: white;
     color: black;
 }
+.textarea-wrapper .btn-one_c {
+    position: absolute;
+    bottom: 18px; /* textarea 내부 오른쪽 아래 */
+    right: 8px;
+    border: 1px solid #EBEBEB;
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    background-color: white;
+    color: black;
+}
 .btn-comment {
     display: flex;
     flex-direction: column;
