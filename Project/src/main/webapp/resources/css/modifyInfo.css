@@ -11,17 +11,24 @@ body {
 	margin: 0px 0px 0px 10px; 
 	font-weight: 500;
 }
+::-webkit-scrollbar {
+	display: none;
+}
 /*------------------ body / main menu -------------------------*/
 .container-wrapper {
-	background-color: rgba(255, 254, 252, 0.3);
-	padding-bottom: 40px;
-	margin-top: 100px;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	margin-top: 130px;
 }
 .container{
+	flex:1;
 	width: 1200px;
 	margin: auto;
-	flex: 1;
-	background-color: fffefc;
+	display: flex;
+	flex-direction: row;
+	min-height: 0;
 }
 .side-menu{
 	width: 200px;
@@ -29,7 +36,8 @@ body {
 }
 .main-menu{
 	width: 80%;
-	float: right;
+	display:flex;
+	flex-direction:column;
 	border-radius: 20px;
 }
 .info_personal_box{
@@ -55,7 +63,7 @@ b{
 }
 
 .info{
-	margin: 20px 10px;
+	margin: 10px 0px;
 	width: 70%;
 }
 .info-title{
@@ -281,8 +289,7 @@ b{
     list-style-type: none;
     position: fixed;
     width: 182px;
-    padding: 15px;
-    margin-top: 38px;
+    padding: 0px 0px;
     border-radius: 20px;
 }
 .side a{

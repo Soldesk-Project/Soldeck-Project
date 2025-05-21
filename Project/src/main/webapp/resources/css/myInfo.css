@@ -160,8 +160,7 @@ b{
     list-style-type: none;
     position: fixed;
     width: 182px;
-    padding: 15px;
-    margin-top: 38px;
+    padding: 0px 0px;
     border-radius: 20px;
 }
 .side a{
