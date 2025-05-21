@@ -97,10 +97,7 @@ h1,h2,h3,h4,h5,h6{
 	gap: 20px; /* 원하는 여백 */
 	justify-content: center; /* 가운데 정렬 */
 	align-items: center;
-	border: 1px solid black;
-	border-radius: 35px;
 	width: 800px;
-	margin-bottom: 15px;
 }
 .searchBox button{
 	border-radius: 20px;

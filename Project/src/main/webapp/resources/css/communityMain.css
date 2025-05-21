@@ -1,53 +1,60 @@
+/* 공통모듈 */
+body {
+    font-family: sans-serif;
+    margin: 0;
+    display: flex; 
+    flex-direction: column;
+    min-height: 100vh;
+}
+::-webkit-scrollbar {
+	display: none;
+}
+/*-------------------------------------*/
+.wrapper{
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	margin-top: 90px;
+}
 .community-container {
-	width: 1200px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
-    margin: 0 auto;
-    margin-top: 130px;
-
 }
-
 .community-major-category-area {
     display: flex;
     width: 100%;
-    background-color: #e0e0e0;
-    justify-content: flex-start;
+    background-color: #FF7700;
+    justify-content: center;
 	height: 60px;
     align-items: center;
+    gap:50px;
 }
-
 .community-major-category-area > label {
     margin-right: 5px;
     font-size: 0.9em;
 }
-
 .community-major-category-area button {
     padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    background-color: #eee;
+    background-color: #FF7700;
     cursor: pointer;
-    margin-left: 10px;
-    font-size: 0.9em;
-}
-
-.community-major-category-area button.active {
-    background-color: #FF7D00;
+    font-size: 18px;
+    height: 100%;
+    border: none;
     color: white;
-    border-color: #FF7D00;
 }
-
+.community-major-category-area button.active {
+    background-color: white;
+    color: black;
+}
 .community-content-area {
     display: flex;
     width: 100%;
     gap: 20px;
     align-items: flex-start; /* 상단 기준 정렬 */
-    margin-top: 20px;
     justify-content: center;
 }
-
 .community-popular-posts {
     width: 20%; /* 좋아요 순 게시글 영역 너비 조정 */
     height: 500px;
@@ -57,26 +64,21 @@
     border: 1px solid #ddd;
     box-sizing: border-box; /* padding, border 포함하여 너비 계산 */
 }
-
 .community-popular-posts h2 {
     font-size: 1.2em;
     margin-bottom: 10px;
 }
-
 .community-popular-posts .popular-post-list {
     /* 좋아요 순 게시글 목록 스타일링 */
 }
-
 .community-popular-posts .popular-post-list .post-item {
     border-bottom: 1px solid #eee;
     padding: 10px 0;
     text-align: left;
 }
-
 .community-popular-posts .popular-post-list .post-item:last-child {
     border-bottom: none;
 }
-
 .community-list {
     width: 60%; /* 게시글 목록 영역 너비 조정 */
     background-color: #f8f8f8;
@@ -85,18 +87,15 @@
     border: 1px solid #ddd;
     box-sizing: border-box; /* padding, border 포함하여 너비 계산 */
 }
-
 .community-list .community-title {
     font-size: 1.5em;
     margin-bottom: 10px;
 }
-
 .community-list .post-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 15px;
 }
-
 .community-list .post-list .post-item {
     border: 1px solid #eee;
     border-radius: 5px;
@@ -106,29 +105,24 @@
     color: #333;	
     font-size: 0.9em;
 }
-
 .community-list .post-list .post-item h3.post-title {
     font-size: 1.1em;
     margin-bottom: 5px;
     font-weight: bold;
 }
-
 .community-list .post-list .post-item .post-preview {
     color: #666;
     line-height: 1.4;
     margin-bottom: 10px;
 }
-
 .community-list .post-list .post-item .post-image-preview {
     margin-bottom: 10px;
     text-align: center; /* 이미지 가운데 정렬 */
 }
-
 .community-list .post-list .post-item .post-meta {
     font-size: 0.8em;
     color: #999;
 }
-
 .event-info {
     width: 20%; /* 이벤트 정보 영역 너비 조정 */
     padding: 15px;
@@ -138,29 +132,13 @@
     text-align: center;
     box-sizing: border-box; /* padding, border 포함하여 너비 계산 */
 }
-
 .event-info h2 {
     font-size: 1.2em;
     margin-bottom: 10px;
 }
-
 .event-info .placeholder {
     color: #999;
     font-size: 0.9em;
-}
-
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-.community-container {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
 }
 .popup {
     position: fixed;
@@ -174,11 +152,9 @@ body {
 	width: 70px;
 	height: 70px;
 }
-
 .popup-content {
     position: relative;
 }
-
 .popup-close {
     position: absolute;
     top: -5px;
