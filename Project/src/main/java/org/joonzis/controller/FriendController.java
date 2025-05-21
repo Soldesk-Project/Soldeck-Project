@@ -62,12 +62,6 @@ public class FriendController {
 	    return "redirect:/friend/list"; // 저장 후 리다이렉트
 	}
 	
-	@GetMapping("/test")
-	public void test() {
-		log.info("테스트");
-
-	}
-
     @GetMapping("/friendList")
     public String getFriendListPage(HttpSession session, Model model) {
         MemberVO member = (MemberVO) session.getAttribute("loggedInUser");
@@ -169,7 +163,6 @@ public class FriendController {
             e.printStackTrace();
         }
         
-        log.info(pendingRequestJson);
 
         // 세션에 저장
         if (pendingRequestJson != null) {

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.joonzis.domain.GroupDTO;
 import org.joonzis.domain.GroupMemberDTO;
+import org.joonzis.domain.GroupReqVO;
 import org.joonzis.domain.GroupVO;
 import org.joonzis.domain.MemberVO;
 import org.joonzis.service.GroupService;
@@ -25,6 +26,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.log4j.Log4j;
 
@@ -173,8 +177,7 @@ public class GroupController {
         boolean sent = service.insertGroupRequset(group_no, member.getMem_no());
         if (sent) {
             // 웹소켓 알림 전송
-            //String msg = member.getMem_nick() + "님이 친구 요청을 보냈습니다.";
-        	friendSocketHandler.sendGroupRequestAlert(group_no, service.getGroupOwnerMemNo(group_no), member.getMem_no(), member.getMem_nick());
+        	friendSocketHandler.sendGroupRequestAlert(group_no, service.getGroupName(group_no), service.getGroupOwnerMemNo(group_no), member.getMem_no(), member.getMem_nick());
             return ResponseEntity.ok("요청이 전송되었습니다");
         } else {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 요청을 보냈습니다");
@@ -199,31 +202,33 @@ public class GroupController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType("text/plain; charset=UTF-8"));
         
-//        List<FriendReqVO> pendingRequest = fservice.getPendingRequest(member.getMem_no());
-//        
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        String pendingRequestJson = null;
-//
-//        try {
-//            pendingRequestJson = objectMapper.writeValueAsString(pendingRequest);
-//        } catch (JsonProcessingException e) {
-//            e.printStackTrace();
-//        }
-//        
-//        log.info(pendingRequestJson);
-//
-//        // 세션에 저장
-//        if (pendingRequestJson != null) {
-//        	session.setAttribute("pendingRequest", pendingRequestJson);
-//        }
+        List<GroupReqVO> pendingRequest = service.getPendingRequest(member.getMem_no());
+        
+        ObjectMapper objectMapper = new ObjectMapper();
+        String pendingRequestJson = null;
+
+        try {
+            pendingRequestJson = objectMapper.writeValueAsString(pendingRequest);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        
+        log.info(pendingRequestJson);
+
+        // 세션에 저장
+        if (pendingRequestJson != null) {
+        	System.out.println(pendingRequestJson);
+        	session.setAttribute("pendingRequest", pendingRequestJson);
+        }
 
         return new ResponseEntity<>("그룹 가입 요청 수락", headers, HttpStatus.OK);
     }
     
- // 요청 거절
-    @PostMapping("/declineFriend")
+    // 요청 거절
+    @PostMapping("/declineGroup")
     @ResponseBody
     public ResponseEntity<String> declineFriend(@RequestParam("group_no") int group_no,
+    											@RequestParam("mem_no") int request_mem_no,
     											HttpSession session){
     	
     	MemberVO member = (MemberVO) session.getAttribute("loggedInUser");
@@ -232,30 +237,30 @@ public class GroupController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다");
         }
         
-    	service.declineGroupRequest(group_no, member.getMem_no());
+    	service.declineGroupRequest(group_no, request_mem_no);
     	
         // UTF-8 인코딩 설정
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType("text/plain; charset=UTF-8"));
         
-//        List<FriendReqVO> pendingRequest = fservice.getPendingRequest(member.getMem_no());
-//        
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        String pendingRequestJson = null;
-//
-//        try {
-//            pendingRequestJson = objectMapper.writeValueAsString(pendingRequest);
-//        } catch (JsonProcessingException e) {
-//            e.printStackTrace();
-//        }
-//        
-//
-//        // 세션에 저장
-//        if (pendingRequestJson != null) {
-//        	session.setAttribute("pendingRequest", pendingRequestJson);
-//        }
+        List<GroupReqVO> pendingRequest = service.getPendingRequest(member.getMem_no());
+        
+        ObjectMapper objectMapper = new ObjectMapper();
+        String pendingRequestJson = null;
 
-        return new ResponseEntity<>("친구 거절 완료", headers, HttpStatus.OK);
+        try {
+            pendingRequestJson = objectMapper.writeValueAsString(pendingRequest);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        
+
+        // 세션에 저장
+        if (pendingRequestJson != null) {
+        	session.setAttribute("pendingRequest", pendingRequestJson);
+        }
+
+        return new ResponseEntity<>("그룹 요청 거절 완료", headers, HttpStatus.OK);
     }
 
 }

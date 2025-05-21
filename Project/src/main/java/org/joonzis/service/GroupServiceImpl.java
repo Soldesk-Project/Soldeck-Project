@@ -5,6 +5,7 @@ import java.util.List;
 import org.joonzis.domain.ChatRoomVO;
 import org.joonzis.domain.GroupDTO;
 import org.joonzis.domain.GroupMemberDTO;
+import org.joonzis.domain.GroupReqVO;
 import org.joonzis.domain.GroupVO;
 import org.joonzis.mapper.GroupMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -144,6 +145,14 @@ public class GroupServiceImpl implements GroupService {
 		mapper.deleteGroupRequest(group_no, mem_no);
 		return false;
 	}
+	
+	// 오프라인시 그룹 요청 조회
+	@Override
+	public List<GroupReqVO> getPendingRequest(int mem_no) {
+		System.out.println("mem_no" + mem_no);
+		return mapper.getPendingRequest(mem_no);
+	}
+	
 	@Override
 	public int getGroupOwnerMemNo(int group_no) {
 		return mapper.getGroupOwnerMemNo(group_no);
@@ -153,4 +162,11 @@ public class GroupServiceImpl implements GroupService {
 	public List<GroupVO> getGroupListByMember(int mem_no) {
 		return mapper.getGroupListByMember(mem_no);
 	}
+	
+	@Override
+	public String getGroupName(int group_no) {
+		return mapper.getGroupName(group_no);
+	}
+	
+	
 }

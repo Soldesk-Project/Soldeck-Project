@@ -1,94 +1,138 @@
-// 실시간 친구 요청 관련 소켓 코드
 document.addEventListener("DOMContentLoaded", () => {
     
-    // body 태그에서 data-memNo 속성 값 가져오기
     const senderMemNo = document.body.dataset.memNo;
     
     let socket = null;
+    let alarmCount = 0;
     
-    // 서버에서 받은 친구 요청 알림 처리
-    const pendingRequest = JSON.parse(document.body.dataset.pendingRequest || '[]'); // 서버에서 전달한 pendingRequest 데이터를 가져옴
+    function getStoredAlarms() {
+        const alarms = sessionStorage.getItem("alarms");
+        return alarms ? JSON.parse(alarms) : [];
+    }
+
+    function setStoredAlarms(alarms) {
+        sessionStorage.setItem("alarms", JSON.stringify(alarms));
+    }
+    
+    const pendingRequest = JSON.parse(document.body.dataset.pendingRequest || '[]');
+    
+    // 1) 서버에서 온 pendingRequest 알림 먼저 화면에 표시
     pendingRequest.forEach(request => {
-        displayFriendRequestAlert(request);
+        console.log("pendingRequest 데이터 확인:", request);
+        displayRequestAlert(request);
+    });
+
+    // 2) 세션스토리지에 있는 알림 중 중복되지 않는 것만 화면에 표시
+    const storedAlarms = getStoredAlarms();
+    storedAlarms.forEach(alarm => {
+        const alarmList = document.getElementById("alarmList");
+        if (!alarmList) return;
+
+        // 중복 체크: mem_nick 포함 여부로 간단히 판별
+        const exists = Array.from(alarmList.children).some(li =>
+            li.textContent.includes(alarm.mem_nick)
+        );
+        if (!exists) {
+            displayRequestAlert(alarm);
+        }
     });
 
     if (senderMemNo) {
-        // WebSocket 연결
         socket = new WebSocket("wss://5da3-14-52-79-21.ngrok-free.app/friendSocket");
 
         socket.onopen = () => {
-            socket.send(senderMemNo.toString());  // 서버에 내 mem_no 전달
+            socket.send(senderMemNo.toString());
         };
 
-        // WebSocket 메시지 수신 시 처리
         socket.onmessage = (event) => {
-            const data = JSON.parse(event.data); // 서버에서 받은 데이터(JSON 형태로 가정)
+            const data = JSON.parse(event.data);
             console.log("받은 데이터:", data);
-            displayRequestAlert(data);  // 알림 화면에 표시
+            displayRequestAlert(data);
         };
 
         socket.onclose = () => console.log("WebSocket 연결 종료");
         socket.onerror = (err) => console.error("WebSocket 오류", err);
     }
 
-    // 친구 요청 알림을 화면에 표시
     function displayRequestAlert(data) {
-        let notificationContainer = document.getElementById("notificationContainer");
+        const alarmList = document.getElementById("alarmList");
+        if (!alarmList) return;
 
-        if (!notificationContainer) {
-            notificationContainer = document.createElement("div");
-            notificationContainer.id = "notificationContainer";
-            notificationContainer.style.position = "fixed";
-            notificationContainer.style.top = "100px";
-            notificationContainer.style.right = "10px";
-            notificationContainer.style.zIndex = "9999";
-            notificationContainer.style.backgroundColor = "#fff";
-            notificationContainer.style.border = "1px solid #ccc";
-            notificationContainer.style.padding = "10px";
-            document.body.appendChild(notificationContainer);
+        // "새로운 알림이 없습니다." 메시지 제거
+        const emptyMsg = alarmList.querySelector("li");
+        if (emptyMsg && emptyMsg.textContent === "새로운 알림이 없습니다.") {
+            alarmList.removeChild(emptyMsg);
         }
 
-        const notification = document.createElement("div");
-        notification.classList.add("request-notification");
+        const li = document.createElement("li");
 
-        if (data.type === "friend") {
-            notification.innerHTML = `
+        if (data.type === "friend" || 'frd_req' in data) {
+            li.innerHTML = `
                 <p><strong>${data.mem_nick}</strong>님이 친구 요청을 보냈습니다.</p>
                 <button onclick="acceptFriend(${data.mem_no}, this)">수락</button>
-                <button onclick="declineFriend(${data.mem_no})">거절</button>
+                <button onclick="declineFriend(${data.mem_no}, this)">거절</button>
             `;
-        } else if (data.type === "group") {
-            notification.innerHTML = `
-                <p><strong>${data.mem_nick}</strong>님이 <strong>${data.group_name}</strong> 그룹에 초대했습니다.</p>
+        } else if (data.type === "group" || 'group_no' in data) {
+            li.innerHTML = `
+                <p><strong>${data.mem_nick}</strong>님이 <strong>${data.chat_title}</strong> 그룹에 초대했습니다.</p>
                 <button onclick="acceptGroup(${data.group_no}, ${data.mem_no}, this)">수락</button>
-                <button onclick="declineGroup(${data.group_id}, ${data.mem_no})">거절</button>
+                <button onclick="declineGroup(${data.group_no}, ${data.mem_no}, this)">거절</button>
             `;
         }
 
-        notificationContainer.appendChild(notification);
-    }
+        alarmList.appendChild(li);
 
-    // 친구 요청 수락 함수 (전역 범위로 이동)
+        let alarms = getStoredAlarms();
+        // 중복 저장 체크
+        if (!alarms.some(alarm => JSON.stringify(alarm) === JSON.stringify(data))) {
+            alarms.push(data);
+            setStoredAlarms(alarms);
+        }
+        
+        alarmCount = alarms.length;
+        updateAlarmBadge(alarmCount);
+    }
+    
+    function removeNotificationAndContainerIfEmpty(button) {
+        const li = button.closest('li');
+        if (!li) return;
+
+        const alarmText = li.textContent;
+        li.remove();
+
+        let alarms = getStoredAlarms();
+        alarms = alarms.filter(alarm => {
+            return !(alarm.mem_nick && alarmText.includes(alarm.mem_nick));
+        });
+        setStoredAlarms(alarms);
+
+        const alarmList = document.getElementById('alarmList');
+        if (alarmList && alarmList.children.length === 0) {
+            const emptyMsg = document.createElement('li');
+            emptyMsg.textContent = "새로운 알림이 없습니다.";
+            alarmList.appendChild(emptyMsg);
+        }
+
+        alarmCount = alarms.length;
+        updateAlarmBadge(alarmCount);
+    }
+    
     window.acceptFriend = function(senderMemNo, button) {
         fetch("/friendlist/accept", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: new URLSearchParams({ sender_mem_no: senderMemNo })
         })
         .then(res => {
-            if (!res.ok) {
-                throw new Error("응답 실패");
-            }
-            return res.text();  // 이건 ok 확인 후
+            if (!res.ok) throw new Error("응답 실패");
+            return res.text();
         })
         .then(text => {
-            alert(text);  // 서버에서 보낸 "친구 수락 완료"
-            location.reload();
+            alert(text);
             if (button) {
                 button.disabled = true;
                 button.textContent = "팔로잉";
+                removeNotificationAndContainerIfEmpty(button);
             }
         })
         .catch(err => {
@@ -97,41 +141,31 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 친구 요청 거절 함수 (전역 범위로 이동)
-    window.declineFriend = function(senderMemNo) {
+    window.declineFriend = function(senderMemNo, button) {
         fetch("/friendlist/declineFriend", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: new URLSearchParams({ sender_mem_no: senderMemNo })
         })
-        .then(response => response.text())  // 텍스트로 응답 받기
+        .then(response => response.text())
         .then(data => {
-            alert(data);  // 서버에서 보낸 메시지 (예: "친구 요청을 거절했습니다.")
-            location.reload();  // 페이지 새로 고침
+            alert(data);
+            if (button) removeNotificationAndContainerIfEmpty(button);
         })
         .catch(error => {
             console.error("친구 요청 거절 실패:", error);
             alert("요청을 처리하는 중 오류가 발생했습니다.");
         });
     }
-    
-    // 그룹 요청 수락 함수 (전역 범위로 이동)
+
     window.acceptGroup = function(group_no, mem_no, button) {
         fetch("/grouplist/accept", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: new URLSearchParams({ group_no: group_no,
-            							mem_no: mem_no
-            							})
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({ group_no, mem_no })
         })
         .then(res => {
-            if (!res.ok) {
-                throw new Error("응답 실패");
-            }
+            if (!res.ok) throw new Error("응답 실패");
             return res.text();
         })
         .then(text => {
@@ -139,12 +173,29 @@ document.addEventListener("DOMContentLoaded", () => {
             if (button) {
                 button.disabled = true;
                 button.textContent = "수락됨";
+                removeNotificationAndContainerIfEmpty(button);
             }
-            location.reload();
         })
         .catch(err => {
             console.error(err);
             alert("그룹 요청 수락에 실패했습니다.");
+        });
+    }
+
+    window.declineGroup = function(group_no, mem_no, button) {
+        fetch("/grouplist/declineGroup", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({ group_no, mem_no })
+        })
+        .then(response => response.text())
+        .then(data => {
+            alert(data);
+            if (button) removeNotificationAndContainerIfEmpty(button);
+        })
+        .catch(error => {
+            console.error("그룹 요청 거절 실패:", error);
+            alert("요청을 처리하는 중 오류가 발생했습니다.");
         });
     }
 

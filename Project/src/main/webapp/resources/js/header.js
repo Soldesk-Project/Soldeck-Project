@@ -1,4 +1,4 @@
-  document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
     const searchInput = document.getElementById("search");
     const searchButton = document.getElementById("searchBtn");
     const loginLink = document.getElementById("login");
@@ -80,7 +80,8 @@
         document.getElementById("keyword-text").textContent = "불러오기 실패";
       });
   }
-
+  
+  // 알람 모달 여는 함수
   function setupAlarmModal() {
     const alarmBtn = document.getElementById("alarmBtn");
     const modal = document.getElementById("alarmModal");
@@ -90,26 +91,15 @@
     if (alarmBtn && modal && closeBtn && alarmList) {
       alarmBtn.addEventListener("click", () => {
         modal.style.display = "block";
-        alarmList.innerHTML = "<li>불러오는 중...</li>";
+        
+        // 알림 뱃지 초기화
+        alarmCount = 0;
+        updateAlarmBadge(alarmCount);
 
-        fetch("/alarm/list")
-          .then((res) => res.json())
-          .then((data) => {
-            alarmList.innerHTML = "";
-            if (data.length === 0) {
-              alarmList.innerHTML = "<li>새로운 알림이 없습니다.</li>";
-            } else {
-              data.forEach((alarm) => {
-                const li = document.createElement("li");
-                li.textContent = alarm;
-                alarmList.appendChild(li);
-              });
-            }
-          })
-          .catch((err) => {
-            alarmList.innerHTML = "<li>알림을 불러오지 못했습니다.</li>";
-            console.error(err);
-          });
+        // 기존 알림 유지, 없으면 문구 표시
+        if (alarmList.children.length === 0) {
+            alarmList.innerHTML = "<li>새로운 알림이 없습니다.</li>";
+        }
       });
 
       closeBtn.addEventListener("click", () => (modal.style.display = "none"));
@@ -124,3 +114,17 @@
       });
     }
   }
+  
+  // 알람 개수 카운트 함수
+  function updateAlarmBadge(count) {
+	    const badge = document.getElementById("alarmBadge");
+	    if (!badge) return;
+
+	    if (count > 0) {
+	        badge.textContent = count;
+	        badge.style.display = "inline-block";
+	    } else {
+	        badge.textContent = "";
+	        badge.style.display = "none";
+	    }
+	}

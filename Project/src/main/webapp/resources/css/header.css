@@ -106,12 +106,31 @@ a:hover {
   filter: brightness(0) saturate(100%) invert(52%) sepia(92%) saturate(2043%) hue-rotate(-8deg) brightness(104%) contrast(104%);
 }
 #alarmBtn {
+	position: relative;
 	padding-top: 5px;
 	padding-left: 1px;
 	background: none;
 	border: none;
 	cursor: pointer; 
 }
+
+#alarmBadge {
+  display: none;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  font-size: 12px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* 아이콘 이미지 크기 */
 #alarmBtn img {
   width: 20px;

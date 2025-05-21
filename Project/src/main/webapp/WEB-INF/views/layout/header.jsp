@@ -39,6 +39,7 @@
               <div class="alarmIcon">
                 <button id="alarmBtn" type="button">
                   <img alt="요청알림" src="/resources/images/alarmIcon.png">
+                  <span id="alarmBadge">0</span>
                 </button>
               </div>
               <div class="communityIcon">
@@ -70,5 +71,5 @@
     <ul id="alarmList"></ul>
   </div>
 </div>
-
 <script type="text/javascript" src="/resources/js/header.js"></script>
+<script type="text/javascript" src="/resources/js/friendSocket.js"></script>
