@@ -77,9 +77,9 @@
 		                <input type="file" id="imageUpload" multiple="multiple" style="display: none;">
 		                <!-- 커스텀 버튼으로 label 사용 -->
 		                <label for="imageUpload" class="btn btn-sec">UPLOAD</label>
-                    </div>
-                    <div class="btn-comment">
-                        <button type="button" class="btn btn-sec" id="commentBtn">댓글 달기</button>
+	                    <div class="btn-comment">
+	                        <button type="button" class="btn btn-sec_c" id="commentBtn">입력</button>
+	                    </div>
                     </div>
                 </div>
                 

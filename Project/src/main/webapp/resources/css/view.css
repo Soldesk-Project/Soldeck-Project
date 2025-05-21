@@ -180,10 +180,6 @@ a:hover {
 #rest_name {
 	font-weight: bold;
 	font-size: 28px;
-	gap:350px;
-}
-#rest_name > :first-child {
-	flex: 0 0 135px;
 }
 #rest_add {
 	height: 48px;
@@ -273,11 +269,16 @@ a:hover {
   justify-content: space-between;
   align-items: center;
   gap: 10px;
-  height: 180px;
-  margin-bottom: 30px;
+  height: 210px;
+  margin-bottom: 10px;
+  border: 1px solid #EBEBEB;
+  border-radius: 15px;
+  padding: 10px 0px 10px 0px;
+  width: 1140px;
+  margin-left: 30px;
 }
 .comment-image-container {
-    margin-left: 30px;
+    margin-left: 15px;
     width: 100%;
     height: 100%;
     position: relative;
@@ -303,16 +304,11 @@ a:hover {
     gap: 10px;
     overflow-x: auto;
 }
-.attachment {
-	height: 100%;
-	border: 1px solid;
-	box-sizing: border-box;
-}
 .panel-body > div:nth-child(2) {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    margin-right: 30px;
+    margin-right: 10px;
     min-height: 100%;
     justify-content: end;
 }
@@ -337,14 +333,14 @@ a:hover {
 
 /* 더보기 버튼 스타일 */
 .more-btn {
-  width: 90px;
+  width: 60px;
   flex: 0 0 calc(25% - 11.5px);
   height: 100%;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 26px;
+  font-size: 15px;
   transition: background-color 0.3s ease;
   align-self: flex-start;
 }
@@ -405,7 +401,8 @@ a:hover {
 /* --------------- 댓글단 --------------- */
 .panel-footer {
     margin: 0 30px 30px 30px;
-    border: 1px solid #ddd;
+    border: 1px solid #EBEBEB;
+    border-radius: 15px;
 }
 
 /* 댓글 입력 */
@@ -420,7 +417,6 @@ a:hover {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    gap: 10px;
 }
 .textarea-wrapper {
     position: relative; /* 자식 요소의 절대 위치를 위해 상대 위치 설정 */
@@ -431,9 +427,9 @@ a:hover {
 }
 .text_comm {
     width: 100%;
-    height: 100px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    height: 130px;
+    border: 1px solid #EBEBEB;
+    border-radius: 8px;
     resize: unset;
     font-size: 14px;
     box-sizing: border-box;
@@ -463,11 +459,11 @@ a:hover {
 }
 .textarea-wrapper .btn-sec {
     position: absolute;
-    bottom: 10px; /* textarea 내부 오른쪽 아래 */
-    right: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 8px 15px;
+    bottom: 56px; /* textarea 내부 오른쪽 아래 */
+    right: 8px;
+    border: 1px solid #EBEBEB;
+    border-radius: 8px;
+    padding: 5px 10px;
     font-size: 14px;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -479,17 +475,29 @@ a:hover {
     flex-direction: column;
     align-items: flex-end;
     gap: 5px;
-    padding-top: 62px;
 }
 .btn-comment .btn-sec {
     background-color: white;
     color: black;
-    border: 1px solid #ddd;
+    border: 1px solid #EBEBEB;
     border-radius: 5px;
     padding: 8px 15px;
     font-size: 14px;
     cursor: pointer;
     transition: background-color 0.3s;
+}
+.textarea-wrapper .btn-sec_c{
+	position: absolute;
+	bottom: 19px;
+	right: 8px;
+	border: 1px solid #EBEBEB;
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    background-color: white;
+    color: black;
 }
 .yes-btn{
     background-color: white;
@@ -509,8 +517,8 @@ a:hover {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    width: 100px;
-    height: 40px;
+    width: 54px;
+    height: 22px;
     margin: auto;
 }
 #closeFavoriteAddModalBtn{
@@ -607,11 +615,6 @@ a:hover {
 }
 
 /* 댓글 보기 */
-.panel-footer-body{
-  margin: 5px 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
 .chat{
    list-style-type: none;
    padding: 10px;
@@ -619,7 +622,8 @@ a:hover {
    text-align: left;
 }
 .chat-full {
-        border: 1px solid #ddd;
+        border: 1px solid #EBEBEB;
+        border-radius:10px;
         padding: 10px;
         margin-bottom: 10px;
     }
@@ -693,6 +697,7 @@ a:hover {
     gap: 10px;
     height: 120px;
     overflow: overlay;
+    margin-left: 5px;
 }
 .comment-attachments .attachment {
 	width: 160px;
@@ -707,11 +712,6 @@ a:hover {
     margin: 10px;
     white-space: pre-wrap;
 }
-.chat-footer{
-  border: 1px solid #ddd;
-  border-radius: 5px;
-} 
-
 /* 모달 창 스타일 (예약)*/
 .modal {
   display: none;
