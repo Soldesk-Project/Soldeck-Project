@@ -38,19 +38,19 @@ public class FriendSocketHandler extends TextWebSocketHandler {
         if (session != null && session.isOpen()) {
             try {
                 String jsonMessage = String.format(
-                    "{\"mem_no\": %d, \"mem_nick\": \"%s\"}", mem_no, mem_nick);
+                    "{\"type\": \"friend\", \"mem_no\": %d, \"mem_nick\": \"%s\"}", mem_no, mem_nick);
                 session.sendMessage(new TextMessage(jsonMessage));
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
-    public void sendGroupRequestAlert(int targetMemNo, int mem_no, String mem_nick) {
+    public void sendGroupRequestAlert(int group_no, int targetMemNo, int mem_no, String mem_nick) {
     	WebSocketSession session = userSessions.get(targetMemNo);
     	if (session != null && session.isOpen()) {
     		try {
     			String jsonMessage = String.format(
-    					"{\"mem_no\": %d, \"mem_nick\": \"%s\"}", mem_no, mem_nick);
+    					"{\"type\": \"group\", \"group_no\": %d, \"mem_no\": %d, \"mem_nick\": \"%s\"}", group_no, mem_no, mem_nick);
     			session.sendMessage(new TextMessage(jsonMessage));
     		} catch (Exception e) {
     			e.printStackTrace();

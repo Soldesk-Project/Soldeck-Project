@@ -35,12 +35,18 @@ public interface GroupService {
     //내가 속한 모임 필터링
     public List<GroupDTO> getRandomGroupListWithoutFilter(int mem_no);
 	//채팅 가입하기
-	void insertGroup(int group_no, int mem_no);
+	void joinGroup(int group_no, int mem_no);
 	//검색어가 포함된 채팅 목록 불러오기
 	public List<GroupVO> getSimpleSearch(String keyword);
 	
 	// 그룹 가입 요청 (group_req 테이블에 삽입)
-	boolean insertGroupRequset(int group_no, int mem_no);	
+	boolean insertGroupRequset(int group_no, int mem_no);
+	
+	// 그룹 가입 요청 수락
+    boolean acceptGroupRequest(int group_no, int mem_no);
+    
+    // 친구 요청 거절
+ 	public boolean declineGroupRequest(int group_no, int mem_no);
 	
 	int getGroupOwnerMemNo(int group_no);
 	

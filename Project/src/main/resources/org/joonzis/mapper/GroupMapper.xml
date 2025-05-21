@@ -47,11 +47,6 @@
 	    	)
 	</insert>
 	
-	<insert id="joinGroup">
-		INSERT INTO GROUP_MEM VALUES(#{group_no}, #{mem_no}, null)
-	</insert>
-	
-	
 	<!-- 채팅방 번호 가져오기 -->
 	<resultMap id="groupResultMap" type="org.joonzis.domain.GroupVO">
 	    <result property="groupNo" column="GROUP_NO"/>
@@ -187,21 +182,44 @@
     	WHERE chat_title LIKE #{keyword}
 	</select>
 	
+	<!-- 모입 가입 요청 존재 여부 확인 -->
 	<select id="checkRequestExist" parameterType="map" resultType="int">
 	    SELECT COUNT(*) 
 	    FROM group_req 
 	    WHERE group_no = #{group_no} AND mem_no = #{mem_no}
 	</select>
 	
+	<!-- 모입 가입 요청 -->
 	<insert id="insertGroupRequset" parameterType="map">
 	    INSERT INTO group_req (req_no, group_no, mem_no, req_status)
 	    VALUES (group_request_seq.nextval, #{group_no}, #{mem_no}, 'PENDING')
 	</insert>
 	
+	<!-- 요청 상태 업데이트 -->
+    <update id="updateRequestStatus">
+        UPDATE GROUP_REQ
+        SET req_status = #{status}
+        WHERE group_no = #{group_no}
+          AND mem_no = #{mem_no}
+    </update>
+    
+    <!-- 요청 상태 초기화 -->
+    <delete id="deleteGroupRequest">
+    	DELETE FROM GROUP_REQ
+    	WHERE group_no = #{group_no}
+    	  AND mem_no = #{mem_no}
+    </delete>
+    
+    <insert id="joinGroup">
+		INSERT INTO GROUP_MEM VALUES(#{group_no}, #{mem_no}, null)
+	</insert>
+	
+	<!-- 모임장 회원 번호 검색 -->
 	<select id="getGroupOwnerMemNo" resultType="int">
 		SELECT mem_no FROM "GROUP" WHERE group_no = #{group_no}
 	</select>
 	
+	<!-- 자기 모임 확인 -->
 	<select id="getGroupListByMember" resultType="org.joonzis.domain.GroupVO">
     	SELECT
 		    g.GROUP_NO,

@@ -102,8 +102,8 @@ public class GroupServiceImpl implements GroupService {
 	}
 	
 	@Override
-	public void insertGroup(int group_no, int mem_no) {
-		mapper.insertGroup(group_no, mem_no);
+	public void joinGroup(int group_no, int mem_no) {
+		mapper.joinGroup(group_no, mem_no);
 	}
 	
 	@Override
@@ -120,7 +120,30 @@ public class GroupServiceImpl implements GroupService {
 		}
 		return false;
 	}
-
+	
+	
+	// 그룹 가입 요청 수락
+	@Override
+	public boolean acceptGroupRequest(int group_no, int mem_no) {
+		
+		System.out.println(("Accept group request: group_no=" + group_no + ", mem_no=" + mem_no));
+		// 요청 상태 업데이트
+		mapper.updateRequestStatus(group_no, mem_no, "ACCEPTED");
+		
+		// group_mem 테이블에 삽입
+		mapper.joinGroup(group_no, mem_no);
+		
+		// 수락 후 요청 테이블 비우기
+		mapper.deleteGroupRequest(group_no, mem_no);
+		return false;
+	}
+	
+	// 그룹 가입 요청 거절
+	@Override
+	public boolean declineGroupRequest(int group_no, int mem_no) {
+		mapper.deleteGroupRequest(group_no, mem_no);
+		return false;
+	}
 	@Override
 	public int getGroupOwnerMemNo(int group_no) {
 		return mapper.getGroupOwnerMemNo(group_no);

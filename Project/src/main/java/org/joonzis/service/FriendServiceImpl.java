@@ -62,7 +62,7 @@ public class FriendServiceImpl implements FriendService {
         mapper.insertFriendAfterRequestAccepted(senderMemNo, receiverMemNo);
         mapper.insertFriendAfterRequestAccepted(receiverMemNo, senderMemNo);
         
-        // 수락 후 요청 테이블 삭제
+        // 수락 후 요청 테이블 비우기
         mapper.deleteFriendRequest(senderMemNo, receiverMemNo);
 
         return true;

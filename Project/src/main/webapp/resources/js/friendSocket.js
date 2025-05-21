@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (senderMemNo) {
         // WebSocket 연결
-        socket = new WebSocket("wss://4617-14-52-79-21.ngrok-free.app/friendSocket");
+        socket = new WebSocket("wss://5da3-14-52-79-21.ngrok-free.app/friendSocket");
 
         socket.onopen = () => {
             socket.send(senderMemNo.toString());  // 서버에 내 mem_no 전달
@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
         socket.onmessage = (event) => {
             const data = JSON.parse(event.data); // 서버에서 받은 데이터(JSON 형태로 가정)
             console.log("받은 데이터:", data);
-            displayFriendRequestAlert(data);  // 알림 화면에 표시
+            displayRequestAlert(data);  // 알림 화면에 표시
         };
 
         socket.onclose = () => console.log("WebSocket 연결 종료");
@@ -32,10 +32,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // 친구 요청 알림을 화면에 표시
-    function displayFriendRequestAlert(data) {
+    function displayRequestAlert(data) {
         let notificationContainer = document.getElementById("notificationContainer");
 
-        // notificationContainer가 없으면 자바스크립트로 생성
         if (!notificationContainer) {
             notificationContainer = document.createElement("div");
             notificationContainer.id = "notificationContainer";
@@ -45,17 +44,26 @@ document.addEventListener("DOMContentLoaded", () => {
             notificationContainer.style.zIndex = "9999";
             notificationContainer.style.backgroundColor = "#fff";
             notificationContainer.style.border = "1px solid #ccc";
-            notificationContainer.style.padding = "10px";    
+            notificationContainer.style.padding = "10px";
             document.body.appendChild(notificationContainer);
         }
 
         const notification = document.createElement("div");
-        notification.classList.add("friend-request-notification");
-        notification.innerHTML = `
-            <p><strong>${data.mem_nick}</strong>님이 친구 요청을 보냈습니다.</p>
-            <button onclick="acceptFriend(${data.mem_no}, this)">수락</button>
-            <button onclick="declineFriend(${data.mem_no})">거절</button>
-        `;
+        notification.classList.add("request-notification");
+
+        if (data.type === "friend") {
+            notification.innerHTML = `
+                <p><strong>${data.mem_nick}</strong>님이 친구 요청을 보냈습니다.</p>
+                <button onclick="acceptFriend(${data.mem_no}, this)">수락</button>
+                <button onclick="declineFriend(${data.mem_no})">거절</button>
+            `;
+        } else if (data.type === "group") {
+            notification.innerHTML = `
+                <p><strong>${data.mem_nick}</strong>님이 <strong>${data.group_name}</strong> 그룹에 초대했습니다.</p>
+                <button onclick="acceptGroup(${data.group_no}, ${data.mem_no}, this)">수락</button>
+                <button onclick="declineGroup(${data.group_id}, ${data.mem_no})">거절</button>
+            `;
+        }
 
         notificationContainer.appendChild(notification);
     }
@@ -106,6 +114,37 @@ document.addEventListener("DOMContentLoaded", () => {
         .catch(error => {
             console.error("친구 요청 거절 실패:", error);
             alert("요청을 처리하는 중 오류가 발생했습니다.");
+        });
+    }
+    
+    // 그룹 요청 수락 함수 (전역 범위로 이동)
+    window.acceptGroup = function(group_no, mem_no, button) {
+        fetch("/grouplist/accept", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: new URLSearchParams({ group_no: group_no,
+            							mem_no: mem_no
+            							})
+        })
+        .then(res => {
+            if (!res.ok) {
+                throw new Error("응답 실패");
+            }
+            return res.text();
+        })
+        .then(text => {
+            alert(text);
+            if (button) {
+                button.disabled = true;
+                button.textContent = "수락됨";
+            }
+            location.reload();
+        })
+        .catch(err => {
+            console.error(err);
+            alert("그룹 요청 수락에 실패했습니다.");
         });
     }
 

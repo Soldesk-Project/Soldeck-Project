@@ -15,7 +15,7 @@ public interface GroupMapper {
 	// 그룹 선호 음식 
 	public void insertFoodKate(@Param("group_no") int group_no, @Param("food_no") int food_no);
 	// 그룹 참가
-	public void joinGroup(@Param("mem_no") int mem_no, @Param("group_no") int group_no); 
+	public void joinGroup(@Param("group_no") int group_no, @Param("mem_no") int mem_no); 
 	// 채팅방 생성
 	public int createChatRoom(ChatRoomVO vo);
 	
@@ -45,9 +45,6 @@ public interface GroupMapper {
     List<GroupDTO> getRandomGroupList(@Param("group_no") int group_no, @Param("mem_no") int mem_no);
 
     List<GroupDTO> getRandomGroupListWithoutFilter(@Param("mem_no") int mem_no);
-	
-	//채팅 가입하기 버튼
-	void insertGroup(@Param("group_no") int group_no, @Param("mem_no") int mem_no);
 	
 	//검색 시 채팅목록 불러오기
 	List<GroupVO> searchGroupBygroupname(@Param("keyword") String keyword);
