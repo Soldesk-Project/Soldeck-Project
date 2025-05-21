@@ -386,6 +386,7 @@ body {
     display: flex;
     gap: 5px;
     margin-bottom: 7px;
+    align-items: center;
 }
 .ratings:hover, .reviews:hover {
 	background: #e6e6e6;
