@@ -93,16 +93,18 @@ function handleFriendListClick(event) {
   // 메모 저장
   if (target.classList.contains("save-memo-btn")) {
     const friendMemNo = target.dataset.friendId;
-    const memoInput = target.closest(".memo_input").querySelector("input[name='fre_memo']");
+    const memoInput = target.closest(".profile").querySelector(".friend-memo-modify");
     const memo = memoInput.value.trim();
 
     fetch("/friendlist/saveMemo", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({ friend_mem_no: friendMemNo, fre_memo: memo })
+      method: 'POST',
+		headers: {
+			'Content-Type': 'application/json; charset=utf-8'
+		},
+		body: JSON.stringify({friend_mem_no: friendMemNo, fre_memo: memo})
     })
       .then(res => res.text())
-      .then(msg => alert(msg))
+      .then(msg => loadFriendList())
       .catch(error => {
         console.error("메모 저장 실패:", error);
         alert("메모 저장 중 오류가 발생했습니다.");
@@ -169,6 +171,23 @@ function loadFriendList() {
         const el = document.createElement("div");
         el.classList.add("friend-box");
 
+        
+        let foodEl = '';
+        if (friend.foodKateList && friend.foodKateList.length > 0) {
+        	foodEl = friend.foodKateList.map(food => `<span>${food}</span><br>`).join('');
+        } else {
+        	foodEl = '<span>선호음식 없음</span>';
+        }
+        
+        let bookmarkEl = '';
+        if (friend.bookMarkList && friend.bookMarkList.length > 0) {
+        	bookmarkEl = friend.bookMarkList.slice(0,3).map(bm =>
+                `<span class="rest_name">${bm.rest_name}</span>`
+            ).join('');
+        } else {
+        	bookmarkEl = '<span class="rest_name">즐겨찾기 없음</span>';
+        }
+        
         el.innerHTML = `
           <div class="profile">
             <img src="../resources/upload/${friend.friendMember.mem_img}" alt="프로필" width="80" height="80"
@@ -176,17 +195,28 @@ function loadFriendList() {
             <div class="nicknameBox">
               <p><a href="#" class="friend-name" data-friend-no="${friend.friend_mem_no}">${friend.friendMember.mem_nick}</a></p>
             </div>
-            <div class="memo_input">
-              <input type="text" name="fre_memo" value="${friend.fre_memo || ''}" placeholder="메모 입력" data-friend-id="${friend.friend_mem_no}" />
-              <button class="save-memo-btn" data-friend-id="${friend.friend_mem_no}">저장</button>
-              <div class="unfollowBtn">
-                <button class="unfollow-btn" data-friend-id="${friend.friend_mem_no}">언팔로우</button>
-              </div>
-            </div>
+            <div class="memo_content">
+              <span class="friend-memo">${friend.fre_memo||'//-----'}</span>
+              <input type="text" class="friend-memo-modify" value="${friend.fre_memo || ''}" placeholder="메모 입력" data-friend-id="${friend.friend_mem_no}" />
+        	</div>
+        	<button class="modify-memo-btn" data-friend-id="${friend.friend_mem_no}">수정</button>
+            <button class="save-memo-btn" data-friend-id="${friend.friend_mem_no}">저장</button>
+        	<button class="unfollow-btn" data-friend-id="${friend.friend_mem_no}">언팔로우</button>
           </div>
-        `;
+	      <div class="friend-info">
+	    	<span>선호 음식</span>
+	    	<div class="cate">
+	    		<span>${foodEl}</span>
+		    </div>
+	    	<span>즐겨찾기</span>
+    		<div>${bookmarkEl}</div>
+    	  </div>`;
+        
+        
         container.appendChild(el);
       });
+      modifyMemo();
+      clickFriendInfo();
     })
     .catch(error => console.error("친구 목록 로드 실패:", error));
 }
@@ -204,39 +234,57 @@ function loadRecommendedFriends() {
           .filter(bm => bm.is_public === "Y" && bm.rest)
           .slice(0, 3)
           .map(bm => `<li>#${bm.rest.rest_name}</li>`).join('');
-
         const el = document.createElement("div");
         el.classList.add("friend-box");
+
+        let foodEl = '';
+        if (friend.foodKateList && friend.foodKateList.length > 0) {
+        	foodEl = friend.foodKateList.map(food => `<span>${food}</span><br>`).join('');
+        } else {
+        	foodEl = '<span>선호음식 없음</span>';
+        }
+        
+        let bookmarkEl = '';
+        if (friend.bookMarkList && friend.bookMarkList.length > 0) {
+        	bookmarkEl = friend.bookMarkList.slice(0,3).map(bm =>
+                `<span class="rest_name">${bm.rest_name}</span>`
+            ).join('');
+        } else {
+        	bookmarkEl = '<span class="rest_name">즐겨찾기 없음</span>';
+        }
+        
         el.innerHTML = `
-          <div class="profile_random">
+          <div class="profile">
             <div class="profileTop">
               <img src="../resources/upload/${friend.friendMember.mem_img}" alt="프로필" width="80" height="80"
                 onerror="if (!this.dataset.error) { this.dataset.error = true; this.src='../resources/images/profile.png'; }">
               <div class="nicknameBox"><p>${friend.friendMember.mem_nick}</p></div>
               <div class="followBtn"><button onclick="follow(${friend.mem_no}, this)">팔로우</button></div>
             </div>
-            <div class="detailBox" style="display: none;">
-              <div class="preference"><p class="title">선호도</p><ul class="hashtags">${hashtags}</ul></div>
-              <div class="favorites"><p class="title">공개된 즐겨찾기 리스트</p>
-                <div class="scrollBox"><ul>${favorites}</ul></div></div>
+            <div class="friend-info">
+                <span>선호 음식</span>
+		    	<div class="cate><span>${foodEl}</span></div>
+		    	<span>즐겨찾기</span>
+	    		<div>${bookmarkEl}</div>
             </div>
           </div>
         `;
 
-        el.querySelector(".profile_random").addEventListener("click", function (e) {
-          if (e.target.tagName === "BUTTON") return;
-          document.querySelectorAll(".profile_random").forEach(profile => {
-            if (profile !== this) profile.querySelector(".detailBox").style.display = "none";
-          });
-          const detailBox = this.querySelector(".detailBox");
-          detailBox.style.display = detailBox.style.display === "none" ? "block" : "none";
-        });
+//        el.querySelector(".profile_random").addEventListener("click", function (e) {
+//          if (e.target.tagName === "BUTTON") return;
+//          document.querySelectorAll(".profile_random").forEach(profile => {
+//            if (profile !== this) profile.querySelector(".detailBox").style.display = "none";
+//          });
+//          const detailBox = this.querySelector(".detailBox");
+//          detailBox.style.display = detailBox.style.display === "none" ? "block" : "none";
+//        });
 
         container.appendChild(el);
       });
+      clickFriendInfo();
     });
-}
 
+}
 function setupFriendSearch() {
   const searchBtn = document.getElementById("friendSearchButton");
   const input = document.getElementById("searchInput");
@@ -302,6 +350,59 @@ function follow(friendMemNo, button) {
       alert("요청을 처리하는 중 오류가 발생했습니다.");
     });
 }
+// ======================== 기능 부여 함수 ========================= //
+function modifyMemo() {
+	document.querySelectorAll(".modify-memo-btn").forEach(modifyMemo => {
+		modifyMemo.addEventListener('click',e=>{
+    		console.log('수정 버튼');
+    		modifyMemo.closest(".profile").querySelector(".friend-memo").style.display='none';
+    		modifyMemo.closest(".profile").querySelector(".friend-memo-modify").style.display='inline';
+    		modifyMemo.closest(".profile").querySelector(".modify-memo-btn").style.display='none';
+    		modifyMemo.closest(".profile").querySelector(".save-memo-btn").style.display='inline';
+    	});
+    });
+}
+function clickFriendInfo() {
+	document.querySelectorAll('.friend-box').forEach(group=>{
+		group.addEventListener('click',e=>{
+			const tag = e.target.tagName.toLowerCase();
+			if (['button', 'span', 'img', 'p', 'a', 'input'].includes(tag)) {
+				return;
+			}
+			if(group.closest('.friend-box').querySelector('.friend-info').style.display=='none'){
+				group.closest('.friend-box').querySelector('.friend-info').style.display='flex';
+			}else{
+				group.closest('.friend-box').querySelector('.friend-info').style.display='none';
+			}
+		});
+	});
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 window.initFriendList = initFriendList;
 window.follow = follow;

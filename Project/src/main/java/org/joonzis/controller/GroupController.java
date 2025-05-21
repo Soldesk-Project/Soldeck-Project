@@ -1,5 +1,6 @@
 package org.joonzis.controller;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import org.joonzis.service.GroupService;
 import org.joonzis.websoket.FriendSocketHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,11 +23,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -43,6 +46,10 @@ public class GroupController {
 	@Autowired
 	private FriendSocketHandler friendSocketHandler;
 	
+	@Value("${file.upload-dir}")
+    private String uploadFolderPath;
+	
+	
 	 @GetMapping("/main") // 그룹 메인 페이지 요청 처리
 	    public String groupMain(HttpSession session, Model model) {
 	        log.info("그룹 메인 페이지 요청");
@@ -58,18 +65,34 @@ public class GroupController {
 	@Transactional
 	@ResponseBody
 	@PostMapping("/createGroup")
-	public ResponseEntity<String> createGroup(@RequestBody GroupDTO dto, HttpSession session, Model model) {
+	public ResponseEntity<String> createGroup(@ModelAttribute GroupDTO dto, HttpSession session, Model model, @RequestParam(value="group_img", required=false) MultipartFile group_img) {
 	    log.info("create..." + dto);
 	    MemberVO member = (MemberVO) session.getAttribute("loggedInUser");
         if (member == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다");
         }
-        dto.setMem_no(member.getMem_no());  // 회원 번호 설정
-        dto.setMax_mem(10);  // 최대 인원 설정
-
-        int result = service.createGroupAndChatRoom(dto);  // 그룹과 채팅방을 함께 생성
-	    
-        log.info(".............."+dto.getGroup_no());
+        // 회원 번호 설정
+        dto.setMem_no(member.getMem_no());  
+        // 최대 인원 설정
+        dto.setMax_mem(10);  
+	    //이미지 저장
+	    if (group_img != null && !group_img.isEmpty()) {
+	        String originalFilename = group_img.getOriginalFilename();
+	        // 회원 가입 시와 동일한 파일명 생성 규칙 적용 (저장 경로는 제외)
+	        String storedFilename = dto.getChat_title() + "_" + System.currentTimeMillis() + "_" + originalFilename;
+	        dto.setGroup_img(storedFilename); // MemberVO에 새로운 이미지 파일명 설정
+	        try {
+	            File saveFile = new File(uploadFolderPath, storedFilename);
+	            group_img.transferTo(saveFile);
+	            
+	        } catch (Exception e) {
+	            log.error("File upload failed: " + storedFilename, e);
+	        }
+	        log.info("새로운 이미지 파일명 설정: "+ storedFilename);
+	    }
+	    // 그룹과 채팅방을 함께 생성
+	    int result = service.createGroupAndChatRoom(dto);  
+	    // 선호음식 추가
 	    for(int interests:dto.getFoodList()) {
 	    	service.insertFoodKate(dto.getGroup_no(), interests);
 	    }

@@ -24,4 +24,7 @@ public interface MemberService {
 	MemberVO loginProcess(String mem_id, String mem_pw);
 	public boolean removeMember(int mem_no);
 	
+	public List<String> getFriendFoodKate(int friend_mem_no);
+	
+	
 }

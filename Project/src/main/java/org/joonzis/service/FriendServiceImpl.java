@@ -86,5 +86,9 @@ public class FriendServiceImpl implements FriendService {
 		return mapper.getPendingRequest(mem_no);
 	}
 	
-	
+	//메모 저장
+	@Override
+	public boolean updateFriendMemo(int mem_no, int friend_mem_no, String fre_memo) {
+		return mapper.updateFriendMemo(mem_no, friend_mem_no, fre_memo);
+	}
 }

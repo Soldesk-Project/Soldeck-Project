@@ -84,6 +84,27 @@
 			VALUES(event_info_seq.NEXTVAL)
 	</insert>
 	
+	<select id="getFriendFoodKate" resultType="String">
+		SELECT 
+		    f.FOOD_KATE
+		FROM 
+		    FOOD_KATE k
+		LEFT JOIN
+		    FOOD f ON k.FOOD_NO = f.FOOD_NO
+		WHERE 
+		    MEM_NO=#{friend_mem_no}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	<!-- 회원탈퇴 -->
 	<delete id="deleteMemberInfo" parameterType="int">
 		DELETE FROM MEMBER WHERE MEM_NO = #{mem_no}

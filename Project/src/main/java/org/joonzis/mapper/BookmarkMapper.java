@@ -14,5 +14,5 @@ public interface BookmarkMapper {
 	public boolean addBookmark(BookMarkVO vo);
 	public int check(@Param("mem_no") int mem_no, @Param("rest_no") int rest_no);
 	public int updateIsPublic(@Param("mem_no")int mem_no, @Param("rest_no")int rest_no, @Param("is_public")String is_public);
-	
+	public List<BookMarkDTO> getFriendBookMark(@Param("friend_mem_no") int friend_mem_no);
 }

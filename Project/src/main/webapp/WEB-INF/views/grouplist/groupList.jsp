@@ -22,7 +22,7 @@
 				</div>
 				<div class="groupList">
 					<div id="groupListContainer" class="scroll-container">
-						<!-- JS로 모임 div가 계속 추가됨 -->s
+						<!-- JS로 모임 div가 계속 추가됨 -->
 					</div>
 				</div>
 			</div>
@@ -55,7 +55,7 @@
 					<textarea placeholder="모임 소개" name="club-desc" class="input-textarea"></textarea>
 				</li>
 				<li>
-					<label class="input-label">나이 제한</label>
+					<span class="input-label">나이 제한</span>
 					<div class="age-range-container">
 						<input type="number" value="20" name="min-age" class="input-number">
 						<span>~</span>
@@ -63,18 +63,20 @@
 					</div>
 				</li>
 				<li>
-					<label class="input-label">성별</label>
+					<span class="input-label">성별 제한</span>
 					<div class="gender-container">
 						<label><input type="radio" name="gender" value="male" class="gender-radio"> 남성</label>
 						<label><input type="radio" name="gender" value="female" class="gender-radio"> 여성</label>
+						<label><input type="radio" name="gender" value="무관" class="gender-radio"> 무관</label>
 					</div>
 				</li>
 				<li>
-					<label class="input-label">공개 여부</label>
-					<input type="checkbox" class="public-checkbox"> 공개
+					<span class="input-label">공개 여부</span>
+					<label><input type="checkbox" class="public-checkbox"> 공개</label>
+					<span>&#8251 미선택시 비공개 처리됩니다</span>
 				</li>
 				<li>
-					<label class="input-label">선호 음식</label>
+					<span class="input-label">선호 음식</span>
 					<input type="checkbox" class="foods" id="korean" name="food" value="1">
 					<label for="korean">한식</label>
 					<input type="checkbox" class="foods" id="japanese" name="food" value="2">

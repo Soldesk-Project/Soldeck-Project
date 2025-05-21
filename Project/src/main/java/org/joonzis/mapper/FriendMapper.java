@@ -36,4 +36,13 @@ public interface FriendMapper {
 	// 오프라인 친구 요청 조회
 	List<FriendReqVO> getPendingRequest(@Param("mem_no") int mem_no);
 	
+	public boolean updateFriendMemo(@Param("mem_no") int mem_no, @Param("friend_mem_no") int friend_mem_no, @Param("fre_memo") String fre_memo);
+
+
+
+
+
+
+
+
 }

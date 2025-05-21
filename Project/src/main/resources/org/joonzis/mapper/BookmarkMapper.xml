@@ -43,4 +43,26 @@
         WHERE mem_no = #{mem_no}
           AND rest_no = #{rest_no}
     </update>
+    
+    
+    
+    <select id="getFriendBookMark" resultType="org.joonzis.domain.BookMarkDTO">
+		SELECT 
+		    b.REST_NO, 
+		    r.REST_NAME
+		FROM 
+		    BOOKMARK b
+		LEFT JOIN
+		    RESTAURANT r ON b.rest_no = r.rest_no
+		WHERE 
+		    MEM_NO=#{friend_mem_no}
+		AND
+			IS_PUBLIC='Y'
+	</select>
+    
+    
+    
+    
+    
+    
 </mapper>

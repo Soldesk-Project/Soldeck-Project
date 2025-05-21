@@ -13,5 +13,5 @@ public interface BookmarkService {
     public boolean addBookmark(BookMarkVO vo);
 	public boolean isBookmarked(int mem_no, int rest_no);
 	public boolean updateBookmarkPublicStatus(int mem_no, int rest_no, String is_public);
-	
+	public List<BookMarkDTO> getFriendBookMark(int friend_mem_no);
 }

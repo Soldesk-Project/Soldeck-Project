@@ -7,7 +7,9 @@ import javax.servlet.http.HttpSession;
 
 import org.joonzis.domain.FriendReqVO;
 import org.joonzis.domain.FriendVO;
+import org.joonzis.domain.GroupMemberDTO;
 import org.joonzis.domain.MemberVO;
+import org.joonzis.service.BookmarkService;
 import org.joonzis.service.FriendService;
 import org.joonzis.service.MemberService;
 import org.joonzis.websoket.FriendSocketHandler;
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -39,6 +42,9 @@ public class FriendController {
 	
 	@Autowired
 	MemberService service;
+
+	@Autowired
+	BookmarkService bservice;
 	
 	@Autowired
 	private FriendSocketHandler friendSocketHandler;
@@ -80,9 +86,13 @@ public class FriendController {
         if (member == null) {
             return Collections.emptyList();  // 로그인 안 되어 있으면 빈 리스트 반환
         }
-
         int mem_no = member.getMem_no();
-        return fservice.getFriendList(mem_no);  // JSON 응답
+        List<FriendVO> FriendList =fservice.getFriendList(mem_no);
+        for(FriendVO vo:FriendList) {
+        	vo.setBookMarkList(bservice.getFriendBookMark(vo.getFriend_mem_no()));
+        	vo.setFoodKateList(service.getFriendFoodKate(vo.getFriend_mem_no()));
+        }
+        return FriendList;  // JSON 응답
     }
 	
     @PostMapping("/unfollow")
@@ -107,7 +117,12 @@ public class FriendController {
          }
 
     	int mem_no = member.getMem_no();
-        return fservice.getRandomFriendList(mem_no);  // JSON 응답
+        List<FriendVO> FriendList =fservice.getRandomFriendList(mem_no);
+        for(FriendVO vo:FriendList) {
+        	vo.setBookMarkList(bservice.getFriendBookMark(vo.getFriend_mem_no()));
+        	vo.setFoodKateList(service.getFriendFoodKate(vo.getFriend_mem_no()));
+        }
+        return FriendList;
     }
     
     // 친구 요청
@@ -217,4 +232,30 @@ public class FriendController {
     public List<MemberVO> searchFriend(@RequestParam("keyword") String keyword) {
         return fservice.getSimpleSearch("%" + keyword + "%");
     }
+    
+    
+    @PostMapping(value = "/saveMemo", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Boolean> updateFriendMemo(@RequestBody FriendVO vo, HttpSession session) {
+		log.info("updateGRoupMemo..."+vo.getFre_memo());
+		MemberVO mvo = (MemberVO) session.getAttribute("loggedInUser");
+		boolean result=fservice.updateFriendMemo(mvo.getMem_no(), vo.getFriend_mem_no(), vo.getFre_memo());
+		return new ResponseEntity<Boolean>(result,HttpStatus.OK);
+	}
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

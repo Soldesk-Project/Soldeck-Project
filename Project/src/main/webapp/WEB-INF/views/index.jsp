@@ -26,11 +26,11 @@
 	
 	<!-- banner layout -->
 	<div class="banner_gap">
-    	<div class="banner" id="banner1">
-    		<a href="/"><img alt="배너1" src="resources/images/banner2.png"></a>
+    	<div class="banner1">
+    		<a href="/community/communityMain?page=0004"><img alt="배너1" src="resources/images/banner1.png"></a>
     	</div>
-    	<div class="banner" id="banner2">
-    		<a href="/"><img alt="배너2" src="resources/images/banner1.png"></a>
+    	<div class="banner2">
+    		<a href="/community/communityMain?page=0003"><img alt="배너2" src="resources/images/banner2.png"></a>
     	</div>
     </div>
 	

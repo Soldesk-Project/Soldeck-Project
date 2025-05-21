@@ -17,5 +17,6 @@ public class FriendVO {
 	
 	private MemberVO friendMember;
 	
-	private List<BookMarkVO> bookMarkList;
+	private List<BookMarkDTO> bookMarkList;
+	private List<String> foodKateList;
 }

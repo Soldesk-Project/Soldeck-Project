@@ -47,4 +47,15 @@ public class BookmarkServiceImpl implements BookmarkService{
 	public boolean updateBookmarkPublicStatus(int mem_no, int rest_no, String is_public) {
 		return mapper.updateIsPublic(mem_no, rest_no, is_public) > 0;
 	}
+	@Override
+	public List<BookMarkDTO> getFriendBookMark(int friend_mem_no) {
+		return mapper.getFriendBookMark(friend_mem_no);
+	}
+	
+	
+	
+	
+	
+	
+	
 }

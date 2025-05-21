@@ -33,7 +33,7 @@ public class GroupServiceImpl implements GroupService {
             ChatRoomVO chatRoomVO = new ChatRoomVO();
             chatRoomVO.setGroupNo(groupNo);
             result = mapper.createChatRoom(chatRoomVO);
-            mapper.joinGroup(dto.getMem_no(), groupNo);
+            mapper.joinGroup(groupNo, dto.getMem_no());
             if(result > 0) {
                 log.info("Chat room created successfully for group number: " + groupNo);
             }

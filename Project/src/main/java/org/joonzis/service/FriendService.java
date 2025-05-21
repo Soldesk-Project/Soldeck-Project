@@ -30,4 +30,6 @@ public interface FriendService {
 	// 오프라인 친구 요청 조회
 	List<FriendReqVO> getPendingRequest(@Param("mem_no") int mem_no);
 	
+	//메모 저장
+	public boolean updateFriendMemo(int mem_no, int friend_mem_no, String fre_memo);
 }

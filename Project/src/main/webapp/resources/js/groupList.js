@@ -246,25 +246,7 @@ function follow(groupNo, button) {
     });
 }
 //-----수락 시 상호작용-------------------------------------------------------------------
-function acceptFriend(senderMemNo) {
-    fetch("/friendlist/accept", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: new URLSearchParams({ sender_mem_no: senderMemNo })
-    })
-    .then(res => res.text())
-    .then(res => {
-       if (res.ok) {
-          alert("팔로우 완료!");
-          button.disabled = true;
-          button.textContent = "팔로잉";
-       } else {
-          alert("팔로우에 실패했습니다.");
-       }
-    });
-}
+
 //-----모임 검색 결과-------------------------------------------------------------------
 function searchGroupList() {
     const searchBtn = document.getElementById("groupSearchButton");
@@ -351,27 +333,30 @@ function createGroup() {
 		return;
 	}
 	
-	const data = {
-        chat_title : clubTilte.value,
-	    group_memo : clubDesc.value,
-	    lim_gender : gender.value,
-	    min_age : minAge.value,
-	    max_age : maxAge.value,
-	    is_public: isPublic ? 'Y' : 'N',
-	    foodList: foodList
-	}
+	const formData = new FormData();
+    formData.append('chat_title', clubTilte.value);
+    formData.append('group_memo', clubDesc.value);
+    formData.append('lim_gender', gender.value);
+    formData.append('min_age', minAge.value);
+    formData.append('max_age', maxAge.value);
+    formData.append('is_public', isPublic);
+    // foodList는 배열이므로 반복문으로 추가
+    foodList.forEach(food => formData.append('foodList', food));
+    // 이미지 파일 추가
+    const fileInput = document.getElementById('profileImageInput');
+    if (fileInput.files[0]) {
+        formData.append('group_img', fileInput.files[0]);
+    }
 	
 	fetch(`/grouplist/createGroup`, {
 	    method : 'post',
-	    body : JSON.stringify(data),
-	    headers : {
-	      'content-type' : 'application/json; charset=utf-8'
-	    }
+	    body: formData	
 	})
 	.then(response => response.text())
 	.then(result => {
 		alert('그룹 및 채팅방 생성 성공');
-	    closeModal();	
+	    closeModal();
+	    loadGroupList();
 	})
 	.catch(err => console.log(err));
 }

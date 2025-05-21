@@ -5,34 +5,36 @@ document.addEventListener("DOMContentLoaded", () => {
     let socket = null;
     let alarmCount = 0;
     
+    // 세션스토리지 알람 가져오기
     function getStoredAlarms() {
         const alarms = sessionStorage.getItem("alarms");
         return alarms ? JSON.parse(alarms) : [];
     }
-
+    
+    // 세션스토리지에 알람 저장
     function setStoredAlarms(alarms) {
         sessionStorage.setItem("alarms", JSON.stringify(alarms));
     }
     
     const pendingRequest = JSON.parse(document.body.dataset.pendingRequest || '[]');
     
-    // 1) 서버에서 온 pendingRequest 알림 먼저 화면에 표시
+    // 서버에서 온 pendingRequest 알림 먼저 화면에 표시
     pendingRequest.forEach(request => {
-        console.log("pendingRequest 데이터 확인:", request);
-        displayRequestAlert(request);
+        if (request.mem_nick) {
+            displayRequestAlert(request);
+        }
     });
 
-    // 2) 세션스토리지에 있는 알림 중 중복되지 않는 것만 화면에 표시
+    // 세션스토리지에 있는 알림 중 중복되지 않는 것만 화면에 표시
     const storedAlarms = getStoredAlarms();
     storedAlarms.forEach(alarm => {
         const alarmList = document.getElementById("alarmList");
         if (!alarmList) return;
 
-        // 중복 체크: mem_nick 포함 여부로 간단히 판별
         const exists = Array.from(alarmList.children).some(li =>
             li.textContent.includes(alarm.mem_nick)
         );
-        if (!exists) {
+        if (!exists && alarm.mem_nick) {
             displayRequestAlert(alarm);
         }
     });
@@ -78,6 +80,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 <button onclick="acceptGroup(${data.group_no}, ${data.mem_no}, this)">수락</button>
                 <button onclick="declineGroup(${data.group_no}, ${data.mem_no}, this)">거절</button>
             `;
+        }else{
+        	return;
         }
 
         alarmList.appendChild(li);

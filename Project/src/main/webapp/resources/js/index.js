@@ -559,3 +559,12 @@ el.addEventListener("dragstart", e => e.preventDefault());
 el.addEventListener("contextmenu", e => e.preventDefault());
 });
 });
+
+	
+document.querySelectorAll('.banner-gap a').forEach(e=>{
+	e.addEventListener('click',()=>{
+		e.preventDefault();
+		
+	})
+})
+	
