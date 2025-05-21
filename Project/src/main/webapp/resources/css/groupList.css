@@ -1,10 +1,12 @@
 /* body css*/
 body {
 	font-family: sans-serif;
-	margin: 0;
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
+}
+::-webkit-scrollbar {
+  display: none;
 }
 /*친구 검색창 css*/
 #searchResultContainer {
@@ -39,7 +41,14 @@ body {
     align-items: center;
     margin-bottom:20px;
 }
-
+.container_F a{
+	color: black;
+	text-decoration: none;
+}
+.container_F a:hover{
+	color: black;
+	text-decoration: underline;
+}
 .groupWrapper {
     display: flex;
     flex-direction: row;
@@ -158,7 +167,7 @@ h1,h2,h3,h4,h5,h6{
   display: flex;
   align-items: center;
   height: 80px;
-  width: 145px;
+  width: 130px;
 }
 .memo_input{
 	display: flex;
@@ -172,6 +181,7 @@ h1,h2,h3,h4,h5,h6{
     -webkit-box-orient: vertical;
     overflow: hidden;
     font-size: 15px;
+    word-break: break-all;
 }
 .group-memo-modify, .group-save-btn, .group-info{
 	display: none;
@@ -180,6 +190,8 @@ h1,h2,h3,h4,h5,h6{
 	border: none;
 	padding: 0;
 	border-bottom: 1px solid lightgray;
+	outline: none;
+	font-size: 15px;
 }
 .group-box button{
 	width: auto;
@@ -213,7 +225,12 @@ h1,h2,h3,h4,h5,h6{
     overflow: hidden;
     font-size: 15px;
 }	
-
+#searchInput{
+    width: 255px;
+    height: 30px;
+    border-radius: 20px;
+    padding: 0 10px;
+}
 
 
 

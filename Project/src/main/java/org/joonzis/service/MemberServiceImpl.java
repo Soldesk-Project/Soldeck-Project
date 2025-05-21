@@ -36,7 +36,10 @@ public class MemberServiceImpl implements MemberService{
         mapper.insertEventInfo(member.getMem_no());
     }
     
-        
+    @Override
+    public List<String> getFriendFoodKate(int friend_mem_no) {
+    	return mapper.getFriendFoodKate(friend_mem_no);
+    }    
 
 	@Override
 	public List<String> findId(String mem_name, String mem_birth, Long mem_phone) {

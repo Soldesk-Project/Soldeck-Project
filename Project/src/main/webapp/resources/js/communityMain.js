@@ -71,3 +71,44 @@ document.addEventListener('DOMContentLoaded', function () {
         defaultButton.click();
     }
 });
+
+
+
+
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const page = urlParams.get('page');
+
+document.addEventListener('DOMContentLoaded', () => {
+	setTimeout(() => {
+    console.log('DOMContentLoaded');
+    if (page != null) {
+        console.log('page 파라미터:', page);
+        const btn = document.querySelector('.major-category-button[data-major="event"]');
+        if (btn) {
+            btn.click();
+            console.log('.major-category-button 클릭');
+        } else {
+            console.log('.major-category-button 없음');
+        }
+
+        setTimeout(() => {
+            let links = document.querySelectorAll('.main-menu a');
+            console.log('링크 개수:', links.length);
+            let found = false;
+            for (let link of links) {
+                console.log('href:', link.getAttribute('href'), link.href);
+                if (link.getAttribute('href') === '/list/' + page || link.href.endsWith('/list/' + page)) {
+                    link.click();
+                    console.log('클릭 성공:', link);
+                    found = true;
+                    break;
+                }
+            }
+        }, 100);
+    	}
+	}, 100);
+	history.replaceState({}, '', window.location.pathname);	
+});
+
+

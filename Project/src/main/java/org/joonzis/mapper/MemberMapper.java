@@ -35,6 +35,8 @@ public interface MemberMapper {
 	public int deleteFoodKate(@Param("mem_no") int mem_no);
 	MemberVO loginProcess(@Param("mem_id") String mem_id);
 	
+	public List<String> getFriendFoodKate(@Param("friend_mem_no") int friend_mem_no);
+	
 	public void insertEventInfo(int mem_no);
 	public int deleteMemberInfo(int mem_no);
 	public int deleteReservesByMemNo(int mem_no);

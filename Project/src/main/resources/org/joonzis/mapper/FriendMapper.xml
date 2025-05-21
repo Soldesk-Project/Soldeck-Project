@@ -109,4 +109,12 @@
 		WHERE fr.mem_no2 = #{mem_no} AND fr.frd_req = 'PENDING'
 	</select>
 	
+	<update id="updateFriendMemo">
+		UPDATE FRIEND
+		SET FRE_MEMO=#{fre_memo}
+		WHERE MEM_NO=#{mem_no}
+		AND FRIEND_MEM_NO=#{friend_mem_no}
+	</update>
+	
+	
 </mapper>

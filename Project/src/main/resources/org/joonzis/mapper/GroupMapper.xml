@@ -15,19 +15,21 @@
 	        IS_PUBLIC,
 	        GROUP_MEMO,
 	        MIN_AGE,
-	        MAX_AGE
+	        MAX_AGE,
+	        GROUP_IMG
 	    )
 	    VALUES(
 	        GROUP_SEQ.NEXTVAL,
 	        #{mem_no},
-	        #{chat_title, jdbcType=VARCHAR},
+	        #{chat_title},
 	        sysdate,
 	        #{max_mem},
-	        #{lim_gender, jdbcType=VARCHAR},
-	        #{is_public, jdbcType=CHAR},
-	        #{group_memo, jdbcType=VARCHAR},
+	        #{lim_gender},
+	        #{is_public},
+	        #{group_memo},
 	        #{min_age},
-	        #{max_age}
+	        #{max_age},
+	        #{group_img, jdbcType=VARCHAR}
 	    )
 	</insert>
 	

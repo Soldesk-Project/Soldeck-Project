@@ -105,3 +105,14 @@ h2 {
 #emoji-btn:hover {
   transform: scale(1.2);
 }
+
+#closeChatBtn{
+	 border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #FF7D00;
+  color: white;
+      width: 55px;
+    height: 25px;
+  
+}
