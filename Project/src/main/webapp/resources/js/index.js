@@ -504,6 +504,11 @@ function updateDateTime() {
 				        todayElem.classList.add("not-today-selected");
 				      }
 				    }
+				    
+				    const dateKey = selectedDate.toISOString().split("T")[0];
+					if (!reserveMap[dateKey]) {
+						closePopup(); // 예약이 없으면 팝업 닫기
+					}
 				  }
 			});
 		});
@@ -515,7 +520,6 @@ function updateDateTime() {
 		const detailBox = document.getElementById("popup-details");
 
 		const reserves = reserveMap[date];
-		console.log(date);
 		const [year, month, day] = date.split("-");
 		const localDateStr = new Date(`${date}T00:00:00-16:00`).toLocaleDateString("ko-KR", {
 			month: 'long', day: 'numeric'

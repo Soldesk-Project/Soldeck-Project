@@ -1,6 +1,7 @@
 (function () {
     // 업로드 관련 변수
     const fileInput = document.querySelector('#imageUpload');
+    const uploadLabel = document.querySelector('label[for="imageUpload"]');
     const uploadResult = document.querySelector('.uploadResult ul');
     const sliderContainer = document.querySelector('.uploadResult .slider-container');
     const imageRegex = new RegExp("(.*?)\.(jpg|jpeg|png|gif)$", "i"); // 이미지 파일만 허용
@@ -10,6 +11,14 @@
     let currentIndex = 0;
     const imagesPerPage = 6;
 
+    uploadLabel.addEventListener('click', (event) => {
+        if (mem_no == 0) {
+            event.preventDefault();
+            event.stopPropagation();
+            alert('로그인 후 이용 해주세요.');
+        }
+    });
+    
     // 파일 입력 이벤트 리스너
     fileInput.addEventListener('change', () => {
         const files = fileInput.files;
