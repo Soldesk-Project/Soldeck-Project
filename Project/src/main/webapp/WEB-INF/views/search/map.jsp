@@ -22,23 +22,23 @@
 		<div id="sidebar-body"></div>
 	</div>
   <div id="map">
+	  <!-- 드롭다운 메뉴 추가 -->
+	  <select id="category-select">
+	      <option value="전체">전체</option>
+	      <option value="한식">한식</option>
+	      <option value="중식">중식</option>
+	      <option value="일식">일식</option>
+	      <option value="양식">양식</option>
+	      <option value="베트남식">베트남식</option>
+	  </select>
+	  <button class="changeLocationBtn">
+	  	<span class="btn_text">현 지도에서 검색</span>
+	  </button>
+	  <button class="resetLocationBtn">
+	  	<span class="btn_text">원래 위치로 이동</span>
+	  </button>
   
   </div>
-  <!-- 드롭다운 메뉴 추가 -->
-  <select id="category-select">
-      <option value="전체">전체</option>
-      <option value="한식">한식</option>
-      <option value="중식">중식</option>
-      <option value="일식">일식</option>
-      <option value="양식">양식</option>
-      <option value="베트남식">베트남식</option>
-  </select>
-  <button class="changeLocationBtn">
-  	<span class="btn_text">현 지도에서 검색</span>
-  </button>
-  <button class="resetLocationBtn">
-  	<span class="btn_text">원래 위치로 이동</span>
-  </button>
   
   <!-- 분리한 js 파일 연결 -->
   <script type="text/javascript" src="/resources/js/map.js"></script>

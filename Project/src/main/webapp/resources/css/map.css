@@ -69,6 +69,7 @@ img, a img {
 #map {
   flex: 1;
   height: 100%; /* 🔥 여기서 100vh 말고 100% */
+  position: relative;
 }
 .search-box{
 	border: 4px solid #FF7D00;
@@ -177,10 +178,14 @@ img, a img {
 
 .changeLocationBtn {
     display: none;
+    width: 140px;
+    height: 40px;
     position: absolute;
     bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
+    /* left: 640px;
+    transform: translateX(-50%); */
+    left: 50%; /* 기본적으로 중앙 기준 */
+    transform: translateX(-150px); /* 버튼 간격 조정 */
     z-index: 10;
     padding: 10px 20px;
     background-color: #2e8bff;
@@ -202,10 +207,14 @@ img, a img {
 
 .resetLocationBtn {
     display: none;
+    width: 140px;
+    height: 40px;
     position: absolute;
     bottom: 20px;
-    left: 58%;
-    transform: translateX(-50%);
+    /* left: 810px;
+    transform: translateX(-50%); */
+    left: 50%; /* 기본적으로 중앙 기준 */
+    transform: translateX(10px); /* 버튼 간격 조정 */
     z-index: 10;
     padding: 10px 20px;
     background-color: #2e8bff;
@@ -216,10 +225,21 @@ img, a img {
     font-weight: bold;
     cursor: pointer;
 }
+
+#sidebar:not(.collapsed) ~ #map .changeLocationBtn {
+    left: 640px;
+    transform: translateX(-50%);
+}
+
+#sidebar:not(.collapsed) ~ #map .resetLocationBtn {
+    left: 810px;
+    transform: translateX(-50%);
+}
+
 #category-select {
     position: absolute;
     top: 20px;
-    left: 24%;
+    left: 70px;
     transform: translateX(-50%);
     z-index: 10;
     width: 95px;

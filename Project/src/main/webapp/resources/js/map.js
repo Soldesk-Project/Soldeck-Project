@@ -301,8 +301,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
 toggleArrow.addEventListener('click', () => {
     sidebar.classList.toggle('collapsed');
-    toggleArrow.innerHTML = sidebar.classList.contains('collapsed') ? '&gt;' : '&lt;';
-    if (typeof map !== 'undefined') map.relayout();
+    toggleArrow.innerHTML = sidebar.classList.contains('collapsed') ? '>' : '<';
+    
+    const changeLocationBtn = document.querySelector('.changeLocationBtn');
+    const resetLocationBtn = document.querySelector('.resetLocationBtn');
+    
+    if (sidebar.classList.contains('collapsed')) {
+        // 사이드바 접힘: 버튼을 중앙에 가깝게 이동
+        changeLocationBtn.style.left = '50%'; // 지도 중앙 기준
+        changeLocationBtn.style.transform = 'translateX(-150px)'; // 버튼 간격 조정
+        resetLocationBtn.style.left = '50%';
+        resetLocationBtn.style.transform = 'translateX(10px)';
+    } else {
+        // 사이드바 펼쳐짐: 원래 위치로 복원
+        changeLocationBtn.style.left = '640px';
+        changeLocationBtn.style.transform = 'translateX(-50%)';
+        resetLocationBtn.style.left = '810px';
+        resetLocationBtn.style.transform = 'translateX(-50%)';
+    }
+    
+    sidebar.addEventListener('transitionend', () => {
+        if (typeof map !== 'undefined') {
+            map.relayout();
+        }
+    }, { once: true });
 });
 
 //현 지도에서 검색 버튼 이벤트 리스너
