@@ -232,8 +232,10 @@ function renderStoreDetails(data) {
     
     storeDetails.innerHTML = `
     	<div class="info-item" id="rest_name">
-            <div class="info-label">가게 이름 :</div>
             <div class="info-value">${storeData.rest_name || '정보 없음'}</div>
+	    	<div class="bookmark-container">
+	    		<button type="button" class="bookmark" id="bookmarkBtn">★</button>
+	    	</div>
         </div>
         <div class="info-item">
             <div class="info-label">가게 종류 :</div>
@@ -250,11 +252,6 @@ function renderStoreDetails(data) {
         <div class="info-item" id="rest_add">
             <div class="info-label">가게 주소 :</div>
             <div class="info-value">${storeData.rest_adr || '정보 없음'}</div>
-        </div>
-        <div class="tabel_favor">
-    		<div class="bookmark-container">
-    			<button type="button" class="bookmark" id="bookmarkBtn">★</button>
-    		</div>
         </div>
     `;
 
@@ -411,13 +408,9 @@ function showAvgRate() {
         const average = (typeof avg === 'number' && !isNaN(avg)) ? avg.toFixed(1) : '0.0';
 
         let html = `
-            <div class="store-item">
-                <span class="name">가게 총 평점</span>
+            <div class="store-item" id="all_rating">
+                <span class="nameAll">총 평점</span>
                 <span class="rating">${average}</span>
-            </div>
-            <div class="store-item" id="age_rate">
-                <span class="name">&lt;연령별 평점&gt;</span>
-                <span class="rating"></span>
             </div>
         `;
 

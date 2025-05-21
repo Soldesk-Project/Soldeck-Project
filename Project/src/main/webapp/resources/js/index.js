@@ -546,3 +546,12 @@ function updateDateTime() {
 	function closePopup() {
 		document.getElementById("reserve-popup").classList.add("hidden");
 	}
+	
+//링크 우클릭 드래그 젅부 막기
+window.addEventListener("DOMContentLoaded", () => {
+document.querySelectorAll("a.btn-fir").forEach(el => {
+el.setAttribute("draggable", "false");
+el.addEventListener("dragstart", e => e.preventDefault());
+el.addEventListener("contextmenu", e => e.preventDefault());
+});
+});

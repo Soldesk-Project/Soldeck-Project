@@ -30,8 +30,13 @@
 			    
 			    <div class="store-details">
 			    	<div class="store-tap">
+			    	<div class="homeAmenu">
 			    		<button class="tap-home active" data-target="store-info">홈</button>
 			    		<button class="tap-menu" data-target="store-menu">메뉴</button>
+			    	</div>
+				    <div class="store-reserve">
+		            	<button type="button" class="btn btn-fir" id="reservationBtn">예약</button>
+		            </div>
 			    	</div>
 			    	<div class="store-info"></div>
 			    	<div class="store-menu" style="display: none;"></div>
@@ -41,9 +46,6 @@
 				    <div class="store-map">
 				    	<div id="map" style="width: 100%; height: 100%;"></div>
 				    </div>
-				    <div class="store-reserve">
-		            	<button type="button" class="btn btn-fir" id="reservationBtn">예약</button>
-		            </div>
 			    </div>
             </div>
         </div>

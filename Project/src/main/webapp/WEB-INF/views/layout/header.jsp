@@ -5,7 +5,7 @@
   <div class="header_inner">
     <div class="logoLayout">
       <a href="/" draggable="false">
-        <img src="/resources/images/logo.png" alt="logo" style="width: 70px;" draggable="false">
+        <img src="/resources/images/logo.png" style="width: 70px;" draggable="false">
       </a>
     </div>
 
@@ -28,7 +28,7 @@
       <div class="profileBox">
         <div class="profileBox1">
           <div class="profile_img_box">
-            <img src="/resources/upload/${member.mem_img}" alt="프리포일" width="80" height="80"
+            <img src="/resources/upload/${member.mem_img}" alt="프로필" width="80" height="80"
               onerror="if (!this.dataset.error) { this.dataset.error = true; this.src='/resources/images/profile.png'; }">
           </div>
         </div>
@@ -43,7 +43,7 @@
               </div>
               <div class="communityIcon">
                 <a href="${pageContext.request.contextPath}/community/communityMain" id="communityBtn">
-                  <img alt="커미니티" src="/resources/images/communityIcon.png">
+                  <img alt="커뮤니티" src="/resources/images/communityIcon.png">
                 </a>
               </div>
             </div>
