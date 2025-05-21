@@ -48,6 +48,7 @@ const stars = document.querySelectorAll('#starRating .star');
 //별점 클릭 및 표시 업데이트
 stars.forEach(star => {
     star.addEventListener('click', () => {
+    	if(mem_no == 0) return alert('로그인 후 이용 해주세요.');
         ratingValue = parseInt(star.dataset.value);
         updateStars(ratingValue);
     });
@@ -112,7 +113,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 예약 관련 처리
     reservationBtn.addEventListener('click', () => {
-        if (mem_no == 0) return alert("로그인을 해주세요.");
+        if (mem_no == 0) return alert('로그인 후 이용 해주세요.');
         reservationModal.style.display = 'flex';
         selectedMonth = new Date().getMonth() + 1;
         monthSelect && (monthSelect.value = selectedMonth);
@@ -699,7 +700,7 @@ function handleCommentDelete(e) {
   if (!btn) return;
 
   const comNo = btn.dataset.com_no;
-  if (!comNo || !mem_no || mem_no === '0') return alert('로그인이 필요합니다.');
+  if (!comNo || !mem_no || mem_no === '0') return alert('로그인 후 이용 해주세요.');
   if (!confirm('정말로 이 코멘트를 삭제하시겠습니까?')) return;
 
   btn.disabled = true;
@@ -724,7 +725,7 @@ function handleCommentDelete(e) {
 
 function uploadComment() {
 	  const commentInput = document.querySelector("#comment");
-	  if (!mem_no || Number(mem_no) === 0) return alert("로그인을 해주세요.");
+	  if (!mem_no || Number(mem_no) === 0) return alert('로그인 후 이용 해주세요.');
 	  if (!commentInput) return console.error("코멘트 입력 필드(#comment)를 찾을 수 없습니다.");
 
 	  const content = commentInput.value.trim();
@@ -819,9 +820,9 @@ function handleFavoriteClick() {
     const favoriteDeleteModal = document.getElementById('favoriteDeleteModal');
 
     if (mem_no == 0) {
-        alert("즐겨찾기 기능은 로그인 후 가능합니다.")
-        const currentUrl = encodeURIComponent(window.location.pathname + window.location.search);
-        window.location.href = `/login/loginPage?redirectUrl=${currentUrl}`;
+        alert('로그인 후 이용 해주세요.');
+//        const currentUrl = encodeURIComponent(window.location.pathname + window.location.search);
+//        window.location.href = `/login/loginPage?redirectUrl=${currentUrl}`;
         return;
     }
 

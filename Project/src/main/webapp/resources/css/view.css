@@ -461,7 +461,7 @@ a:hover {
     background: url('/resources/images/yellow_star.png') no-repeat center;
     background-size: contain;
 }
-.textarea-wrapper .btn-sec {
+.textarea-wrapper .btn-one {
     position: absolute;
     bottom: 10px; /* textarea 내부 오른쪽 아래 */
     right: 20px;
@@ -481,7 +481,7 @@ a:hover {
     gap: 5px;
     padding-top: 62px;
 }
-.btn-comment .btn-sec {
+.btn-comment .btn-one {
     background-color: white;
     color: black;
     border: 1px solid #ddd;

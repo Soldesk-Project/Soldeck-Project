@@ -470,10 +470,10 @@ body {
 
 .reserve-circle {
 	position: absolute;
-	top: 0px; /* 위에서부터의 거리: 위치 조절 */
-	left: 5px; /* 왼쪽 여백 */
-	width: 28px;   /* 원 크기 */
-	height: 28px;
+	top: 1px; /* 위에서부터의 거리: 위치 조절 */
+	left: 5.5px; /* 왼쪽 여백 */
+	width: 26px;   /* 원 크기 */
+	height: 26px;
 	border: 2px solid red;
 	border-radius: 50%;
 	box-sizing: border-box;
@@ -495,10 +495,10 @@ body {
 .flatpickr-day.today::after {
   content: "";
   position: absolute;
-  top: 0px; /* reserve-circle과 동일한 위치 */
-  left: 5.1px;
-  width: 28px;
-  height: 28px;
+  top: 1px; /* reserve-circle과 동일한 위치 */
+  left: 5.5px;
+  width: 26px;
+  height: 26px;
   background: #FF7D00;
   border: 2px solid #FF7D00; /* reserve-circle과 동일한 스타일 */
   border-radius: 50%;
@@ -510,16 +510,18 @@ body {
   color: inherit;
 }
 .flatpickr-day.today.not-today-selected::after {
-  content: none;
+  /* content: none; */
+  background: none;
+  border-color: darkgrey;
 }
 /* hover 상태 배경 */
 .flatpickr-day:hover::after {
   content: "";
   position: absolute;
-  top: 0px;
-  left: 5.1px;
-  width: 28px;
-  height: 28px;
+  top: 1px;
+  left: 5.5px;
+  width: 26px;
+  height: 26px;
   background: lavender;
   border-radius: 50%;
   z-index: -1; /* 텍스트보다 뒤 */
@@ -531,10 +533,10 @@ body {
 .flatpickr-day.selected::after {
   content: "";
   position: absolute;
-  top: 0px;
-  left: 5.1px;
-  width: 28px;
-  height: 28px;
+  top: 1px;
+  left: 5.5px;
+  width: 26px;
+  height: 26px;
   background: #FF7D00;
   border-radius: 50%;
   z-index: -1;
@@ -557,7 +559,7 @@ body {
 
 .reserve-popup {
   position: absolute;
-  top: 118%;
+  top: 116%;
   right: -3%;
   transform: translate(-50%);
   background-color: #fff;

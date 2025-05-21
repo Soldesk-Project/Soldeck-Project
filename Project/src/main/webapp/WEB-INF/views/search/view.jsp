@@ -76,10 +76,10 @@
 		                <!-- input type="file"은 숨김 -->
 		                <input type="file" id="imageUpload" multiple="multiple" style="display: none;">
 		                <!-- 커스텀 버튼으로 label 사용 -->
-		                <label for="imageUpload" class="btn btn-sec">UPLOAD</label>
+		                <label for="imageUpload" class="btn btn-one">UPLOAD</label>
                     </div>
                     <div class="btn-comment">
-                        <button type="button" class="btn btn-sec" id="commentBtn">댓글 달기</button>
+                        <button type="button" class="btn btn-one" id="commentBtn">댓글 달기</button>
                     </div>
                 </div>
                 
