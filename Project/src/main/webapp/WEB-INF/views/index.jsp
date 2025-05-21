@@ -86,7 +86,7 @@
     					</a>
 			    	</li>
 			    	<li>
-			    		<a href="../search/map" class="btn btn-fir" data-value="베트남">
+			    		<a href="../search/map" class="btn btn-fir" data-value="베트남식">
 							<img src="resources/images/vietnam_food.png" alt="베트남 아이콘">
 				    		<p>베트남</p>
     					</a>

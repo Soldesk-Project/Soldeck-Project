@@ -12,7 +12,13 @@
         }
       });
     }
-    if (searchButton) searchButton.addEventListener("click", handleSearch);
+    
+    if (searchButton) {
+  	  searchButton.addEventListener('click', () => {
+  		  const keyword = document.getElementById('search').value;
+  		  handleSearch(keyword);
+  	  });
+    }
 
     if (loginLink) {
       loginLink.addEventListener("click", (e) => {

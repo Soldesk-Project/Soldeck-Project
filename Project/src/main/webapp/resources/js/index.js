@@ -450,7 +450,6 @@ function updateDateTime() {
 		})
 		.then(res => res.json())
 		.then(data => {
-			console.log(data);
 			// 날짜별로 묶어서 저장
 			reserveMap = data.reduce((acc, r) => {
 				const dateKey = toDateKeyKST(r.res_date);
