@@ -283,11 +283,20 @@ function storeMenu() {
     if (menuLoaded) return;
     
     getMenu(menuItems => {
-        storeMenus.innerHTML = menuItems.map(({ menu_name, menu_price }) => `
-            <div class="menu">
-                <span class="menu_name">${menu_name}</span>
-                <span class="menu_price">${menu_price}</span>
-            </div>`).join('');
+    	if (!menuItems || menuItems.length === 0) {
+            storeMenus.innerHTML = `<div class="menu-empty">메뉴 준비중...</div>`;
+        } else {
+            storeMenus.innerHTML = menuItems.map(({ menu_name, menu_price }) => `
+                <div class="menu">
+                    <span class="menu_name">${menu_name}</span>
+                    <span class="menu_price">${menu_price}</span>
+                </div>`).join('');
+        }
+//        storeMenus.innerHTML = menuItems.map(({ menu_name, menu_price }) => `
+//            <div class="menu">
+//                <span class="menu_name">${menu_name}</span>
+//                <span class="menu_price">${menu_price}</span>
+//            </div>`).join('');
         menuLoaded = true;
     });
 }
@@ -300,7 +309,10 @@ function getMenu(callback) {
     })
     .then(res => res.ok ? res.json() : Promise.reject(res))
     .then(data => callback(data || []))
-    .catch(err => console.error("Fetch error:", err.message), callback([]));
+    .catch(err => {
+        console.error("Fetch error:", err.message);
+        callback([]);
+    });
 }
 
 function showViewList() {
@@ -312,10 +324,22 @@ function showViewList() {
             const j = Math.floor(Math.random() * (i + 1));
             [images[i], images[j]] = [images[j], images[i]];
         }
+        
+        const hasRealImage = images.some(img => {
+            const src = img.rest_img_name || '';
+            return src && !src.includes('noImage.png');
+        });
+
+        if (!hasRealImage) {
+            imageUL.innerHTML = `<div class="no-image-text">이미지 준비중...</div>`;
+            return;
+        }
+        
         imageUL.innerHTML = images.map(({ rest_img_name }) => `
             <div class="slide">
                 <img src="${rest_img_name || '/resources/images/noImage.png'}" alt="이미지 없음" onerror="this.src='/resources/images/noImage.png';">
             </div>`).join('');
+        
         initializeSlides();
     });
 }
@@ -334,7 +358,7 @@ function getList(callback) {
 function initializeSlides() {
     const wrapper = document.querySelector('.slides-wrapper');
     let slides = [...document.querySelectorAll('.slide')];
-    if (slides.length === 0) return wrapper.innerHTML = '<div class="slide">이미지 준비중 입니다.</div>';
+    if (slides.length === 0) return;
 
     const validVisibleSlides = Math.min(visibleSlides, slides.length);
     slides.slice(0, validVisibleSlides).forEach(slide => wrapper.appendChild(slide.cloneNode(true)));
