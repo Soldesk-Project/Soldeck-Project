@@ -6,9 +6,6 @@ body {
     flex-direction: column;
     min-height: 100vh;
 }
-::-webkit-scrollbar {
-	display: none;
-}
 /*-------------------------------------*/
 .wrapper{
 	flex: 1;
@@ -29,7 +26,6 @@ body {
     justify-content: center;
 	height: 60px;
     align-items: center;
-    gap:50px;
 }
 .community-major-category-area > label {
     margin-right: 5px;
@@ -41,6 +37,7 @@ body {
     cursor: pointer;
     font-size: 18px;
     height: 100%;
+    width: 100px;
     border: none;
     color: white;
 }

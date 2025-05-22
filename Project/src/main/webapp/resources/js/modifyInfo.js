@@ -5,6 +5,12 @@ linkEle.rel = 'stylesheet';
 linkEle.href = CSS_FILE_PATH;
 document.head.appendChild(linkEle);
 
+const CSS_FILE_PATH = '/resources/css/common.css';
+let linkEle = document.createElement('link');
+linkEle.rel = 'stylesheet';
+linkEle.href = CSS_FILE_PATH;
+document.head.appendChild(linkEle);
+
 const CSS_FILE_PATH2 = '/resources/css/header.css';
 let linkEle2 = document.createElement('link');
 linkEle2.rel = 'stylesheet';

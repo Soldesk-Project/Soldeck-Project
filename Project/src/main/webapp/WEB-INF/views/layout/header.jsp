@@ -5,23 +5,24 @@
   <div class="header_inner">
     <div class="logoLayout">
       <a href="/" draggable="false">
-        <img src="/resources/images/logo.png" style="width: 70px;" draggable="false">
+        <img src="/resources/images/logo.png" style="width: 100px;" draggable="false">
       </a>
     </div>
-
-    <div class="searchLayout">
-      <div class="searchWrapper">
-        <input type="search" placeholder="검색어를 입력하세요." id="search">
-        <button id="searchBtn" type="button">
-          <img alt="검색버튼" src="/resources/images/searchImg.png">
-        </button>
-      </div>
-    </div>
-
-    <div id="popular-keywords">
-      <div class="indexTitle_header"># 인기 검색어</div>
-      <div class="keyword-rank" id="keyword-text">불러오는 중...</div>
-    </div>
+    <div class="keywordAsearch">
+	    <div id="popular-keywords">
+	      <div class="indexTitle_header"># 인기 검색어</div>
+	      <div class="keyword-rank" id="keyword-text">불러오는 중...</div>
+	    </div>
+	
+	    <div class="searchLayout">
+	      <div class="searchWrapper">
+	        <input type="search" placeholder="검색어를 입력하세요." id="search">
+	        <button id="searchBtn" type="button">
+	          <img alt="검색버튼" src="/resources/images/searchImg.png">
+	        </button>
+	      </div>
+	    </div>
+	</div>
 
     <c:if test="${sessionScope.loggedInUser != null}">
       <c:set var="member" value="${sessionScope.loggedInUser}" />
