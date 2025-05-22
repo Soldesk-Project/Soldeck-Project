@@ -19,6 +19,7 @@
 				<div class="my-point-div">
 
 				</div>
+				<button id="usePointBtn" class="use-point-btn">포인트 사용하러 가기</button>
 			</div>
 		</div>	
 	</div>	

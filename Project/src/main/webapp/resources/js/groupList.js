@@ -45,16 +45,22 @@ function loadGroupList() {
 		    if(group.min_age==0||group.max_age==0){
 		    	el.innerHTML+=
 		    		`<div class="group-info">
-		    			<span>성별 제한 : ${group.lim_gender}</span>
-		    			<span>나이 제한 : 없음</span>
-		    			<span>공개 여부 : ${group.is_public}</span>
+		    			<span>성별 제한</span>
+		    			<div>${group.lim_gender}</div>
+		    			<span>나이 제한</span>
+		    			<div>없음</div>
+		    			<span>공개 여부</span>
+		    			<div>${group.is_public}</div>
 		    		</div>`
 		    }else{
 		    	el.innerHTML+=
 		    		`<div class="group-info">
-		    			<span>성별 제한 : ${group.lim_gender}</span>
-	    	    		<span>나이 제한 : ${group.min_age}~${group.max_age}</span>
-			    		<span>공개 여부 : ${group.is_public}</span>
+		    			<span>성별 제한</span>
+		    			<div>${group.lim_gender}</div>
+	    	    		<span>나이 제한</span>
+	    	    		<div>${group.min_age}~${group.max_age}</div>
+			    		<span>공개 여부</span>
+			    		<div>${group.is_public}</div>
 	    	    	</div>`
 		    }
 	
@@ -123,7 +129,7 @@ function loadRandomGroupList() {
 		      </div>
 		    	<div class="group-info">
 		    		<p class="title">소개글</p>
-		    		<span>${introduce}</span>
+		    		<span class="group-introduce">${introduce}</span>
 		    	</div>
 		    `;
 		    container.appendChild(el);
@@ -170,11 +176,9 @@ function clickGroupInfo() {
 			if (['button', 'span', 'img', 'p', 'a', 'li'].includes(tag)) {
 				return;
 			}
-			if(group.closest('.group-box').querySelector('.group-info').style.display=='none'){
-				group.closest('.group-box').querySelector('.group-info').style.display='flex';
-			}else{
-				group.closest('.group-box').querySelector('.group-info').style.display='none';
-			}
+			const info = group.closest('.group-box').querySelector('.group-info');
+		    const isHidden = window.getComputedStyle(info).display === 'none';
+		    info.style.display = isHidden ? 'flex' : 'none';
 		});
 	});
 }

@@ -220,10 +220,9 @@ h1,h2,h3,h4,h5,h6{
 	width: 70px;
 }
 .followBtn{
-	margin-left: 10px;
-	align-items: center;
-	margin-top: 29px;
-	margin-bottom: 29px;
+    display: flex;
+    align-items: center;
+	margin-left: 300px;
 }
 .friend-memo{
 	width: 190px;

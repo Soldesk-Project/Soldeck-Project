@@ -20,7 +20,9 @@ public class SearchServiceImpl implements SearchService{
 	    SearchLogVO vo = new SearchLogVO();
 	    vo.setKeyword(keyword);
 	    vo.setIpAddress(ip);
-	    vo.setMem_no(memNo);
+	    if (memNo!=null) {
+	    	vo.setMem_no(memNo);
+		}
 	    smapper.insertSearchLog(vo);
 	}
 		

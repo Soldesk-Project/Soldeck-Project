@@ -119,8 +119,8 @@ public class FriendController {
     	int mem_no = member.getMem_no();
         List<FriendVO> FriendList =fservice.getRandomFriendList(mem_no);
         for(FriendVO vo:FriendList) {
-        	vo.setBookMarkList(bservice.getFriendBookMark(vo.getFriend_mem_no()));
-        	vo.setFoodKateList(service.getFriendFoodKate(vo.getFriend_mem_no()));
+        	vo.setBookMarkList(bservice.getFriendBookMark(vo.getMem_no()));
+        	vo.setFoodKateList(service.getFriendFoodKate(vo.getMem_no()));
         }
         return FriendList;
     }

@@ -14,6 +14,7 @@
 }
 .main-menu p{
     font-size: 1.2rem;
+    margin: 0px;
 }
 #canvas{
 	border: 1px solid gray;
@@ -25,23 +26,23 @@
     flex-direction: column;
     align-items: center;
 }
-#spin{
+.spin-btn, .use-point-btn{
 	display: block;
-	margin: 0 auto; 
-}
-.spin-btn{
 	background-color: #FF7D00;
 	color: white;
 	padding: 10px 15px;
 	border: none;
 	border-radius: 4px;
 	cursor: pointer;
-	margin: 30px 20px; 
+	margin:20px; 
 	width: 100px;
 	height: 40px;
 }
-.spin-btn:hover {
+.spin-btn:hover , .use-point-btn:hover{
 	box-shadow: 0 1px 3px rgba(0, 0, 0, .50);
+}
+.use-point-btn{
+	width: 160px;
 }
 #spin:disabled {
 	width: 150px;

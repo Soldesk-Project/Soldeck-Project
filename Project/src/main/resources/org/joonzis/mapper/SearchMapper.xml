@@ -6,13 +6,13 @@
   
 	<insert id="insertSearchLog" parameterType="org.joonzis.domain.SearchLogVO">
 	  INSERT INTO search_log (
-	    id, keyword, ip_address, user_id
+	    id, keyword, ip_address, mem_no
 	  )
 	  VALUES (
 	    search_log_seq.NEXTVAL,
 	    #{keyword},
 	    #{ipAddress},
-	    #{userId, jdbcType=INTEGER}
+	    #{mem_no, jdbcType=NUMERIC}	
 	  )
 	</insert>
 	

@@ -103,12 +103,12 @@ function handleFriendListClick(event) {
 		},
 		body: JSON.stringify({friend_mem_no: friendMemNo, fre_memo: memo})
     })
-      .then(res => res.text())
-      .then(msg => loadFriendList())
-      .catch(error => {
-        console.error("메모 저장 실패:", error);
+    .then(res => res.text())
+    .then(msg => loadFriendList())
+    .catch(error => {
+    	console.error("메모 저장 실패:", error);
         alert("메모 저장 중 오류가 발생했습니다.");
-      });
+    });
   }
 
   // 언팔로우
@@ -147,9 +147,10 @@ function handleFriendListClick(event) {
 
 // ======================== 기능별 로드 함수 ========================= //
 function initFriendList() {
-  loadFriendList();
-  loadRecommendedFriends();
-  setupFriendSearch();
+	loadRecommendedFriends();
+	loadFriendList();
+	setupFriendSearch();
+	
 }
 
 function loadFriendList() {
@@ -254,31 +255,21 @@ function loadRecommendedFriends() {
         }
         
         el.innerHTML = `
-          <div class="profile">
-            <div class="profileTop">
-              <img src="../resources/upload/${friend.friendMember.mem_img}" alt="프로필" width="80" height="80"
-                onerror="if (!this.dataset.error) { this.dataset.error = true; this.src='../resources/images/profile.png'; }">
-              <div class="nicknameBox"><p>${friend.friendMember.mem_nick}</p></div>
-              <div class="followBtn"><button onclick="follow(${friend.mem_no}, this)">팔로우</button></div>
-            </div>
-            <div class="friend-info">
-                <span>선호 음식</span>
-		    	<div class="cate><span>${foodEl}</span></div>
+	        <div class="profile">
+	        	<div class="profileTop">
+	            	<img src="../resources/upload/${friend.friendMember.mem_img||'profile.png'}" alt="프로필" width="80" height="80"
+	                	onerror="if (!this.dataset.error) { this.dataset.error = true; this.src='../resources/images/profile.png'; }">
+	              	<div class="nicknameBox"><p>${friend.friendMember.mem_nick}</p></div>
+	              	<div class="followBtn"><button onclick="follow(${friend.mem_no}, this)">팔로우</button></div>
+        		</div>
+        	</div>
+	        <div class="friend-info">
+	            <span>선호 음식</span>
+		    	<div class="cate"><span>${foodEl}</span></div>
 		    	<span>즐겨찾기</span>
 	    		<div>${bookmarkEl}</div>
-            </div>
-          </div>
+	        </div>
         `;
-
-//        el.querySelector(".profile_random").addEventListener("click", function (e) {
-//          if (e.target.tagName === "BUTTON") return;
-//          document.querySelectorAll(".profile_random").forEach(profile => {
-//            if (profile !== this) profile.querySelector(".detailBox").style.display = "none";
-//          });
-//          const detailBox = this.querySelector(".detailBox");
-//          detailBox.style.display = detailBox.style.display === "none" ? "block" : "none";
-//        });
-
         container.appendChild(el);
       });
       clickFriendInfo();
@@ -354,7 +345,6 @@ function follow(friendMemNo, button) {
 function modifyMemo() {
 	document.querySelectorAll(".modify-memo-btn").forEach(modifyMemo => {
 		modifyMemo.addEventListener('click',e=>{
-    		console.log('수정 버튼');
     		modifyMemo.closest(".profile").querySelector(".friend-memo").style.display='none';
     		modifyMemo.closest(".profile").querySelector(".friend-memo-modify").style.display='inline';
     		modifyMemo.closest(".profile").querySelector(".modify-memo-btn").style.display='none';
@@ -364,16 +354,16 @@ function modifyMemo() {
 }
 function clickFriendInfo() {
 	document.querySelectorAll('.friend-box').forEach(group=>{
+		if (group.dataset.hasClickFriendInfo){return;}
+	    group.dataset.hasClickFriendInfo = "true";
 		group.addEventListener('click',e=>{
 			const tag = e.target.tagName.toLowerCase();
 			if (['button', 'span', 'img', 'p', 'a', 'input'].includes(tag)) {
 				return;
 			}
-			if(group.closest('.friend-box').querySelector('.friend-info').style.display=='none'){
-				group.closest('.friend-box').querySelector('.friend-info').style.display='flex';
-			}else{
-				group.closest('.friend-box').querySelector('.friend-info').style.display='none';
-			}
+			const info = group.closest('.friend-box').querySelector('.friend-info');
+		    const isHidden = window.getComputedStyle(info).display === 'none';
+		    info.style.display = isHidden ? 'flex' : 'none';
 		});
 	});
 }

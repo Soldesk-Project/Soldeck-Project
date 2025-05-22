@@ -21,6 +21,7 @@
 		    	<p>출석체크 할 때마다 100p!</p>
 				<div class="my-point">
 				</div>			
+				<button id="usePointBtn" class="use-point-btn">포인트 사용하러 가기</button>
 		  	</div>
 		</div>
 	</div>	

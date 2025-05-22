@@ -128,9 +128,9 @@
 					<fieldset>
 						<input type="checkbox" class="foods" id="korean" name="food" value="1"  <c:if test="${fn:contains(foodList, '한식')}">checked</c:if>>
 						<label for="korean">한식</label>
-						<input type="checkbox" class="foods" id="japanese" name="food" value="2" <c:if test="${fn:contains(foodList, '중식')}">checked</c:if>>
+						<input type="checkbox" class="foods" id="chinese" name="food" value="2" <c:if test="${fn:contains(foodList, '중식')}">checked</c:if>>
 						<label for="chinese">중식</label>
-						<input type="checkbox" class="foods" id="chinese" name="food" value="3" <c:if test="${fn:contains(foodList, '일식')}">checked</c:if>>
+						<input type="checkbox" class="foods" id="japanese" name="food" value="3" <c:if test="${fn:contains(foodList, '일식')}">checked</c:if>>
 						<label for="japanese">일식</label>
 						<input type="checkbox" class="foods" id="western" name="food" value="4" <c:if test="${fn:contains(foodList, '양식')}">checked</c:if>>
 						<label for="western">양식</label>

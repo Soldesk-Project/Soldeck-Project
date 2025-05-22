@@ -241,8 +241,11 @@ public class SearchController {
 		System.out.println(">>> 로그 저장 진입 확인");
 		
 	    String ip = request.getRemoteAddr();
-	    Integer memNo = (Integer) request.getSession().getAttribute("mem_no");
-
+	    MemberVO member = (MemberVO) request.getSession().getAttribute("loggedInUser");
+	    Integer memNo=null;
+	    if (member!=null) {
+	    	memNo=member.getMem_no();
+		}
 	    System.out.println("✅ 검색 로그 저장 요청 수신: " + keyword + ", IP: " + ip + ", memNo: " + memNo);
 	    sservice.saveSearch(keyword, ip, memNo);
 

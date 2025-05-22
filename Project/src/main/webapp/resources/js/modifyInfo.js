@@ -167,7 +167,7 @@ function resetForm(originalPhone1Value) {
 	const phone2Input = document.getElementById('phone2');
 	const phone3Input = document.getElementById('phone3');
 	const foodCheckboxes = document.querySelectorAll('.foods');
-
+	
 	passwordInput.readOnly = true;
 	nicknameInput.readOnly = true;
 	emailInput.readOnly = true;
@@ -179,6 +179,10 @@ function resetForm(originalPhone1Value) {
 		checkbox.disabled = true;
 	})
 
+	// 프로필 점선 삭제
+	const profileDiv = document.querySelector('.info-profile-div');
+	profileDiv.style.border = 'none';
+	
 	// 버튼 상태 다시 설정 (수정 버튼 보이고, 완료/리셋/탈퇴 숨김)
 	const profileUploadDiv = document.querySelector('.info-profile-div-div');
 	const modifyFinishBtn = document.getElementById('modifyFinishBtn');

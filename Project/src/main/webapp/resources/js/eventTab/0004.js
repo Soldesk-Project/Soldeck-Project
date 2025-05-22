@@ -140,7 +140,9 @@ function closeModal(){
 document.querySelector('.close-modal').addEventListener('click',()=>{
 	closeModal();
 });
-
+document.querySelector('#usePointBtn').addEventListener('click',()=>{
+	location.href='/mypage/event';
+})
 	
 // 초기화
 loadAttendanceData(year, month);

@@ -147,6 +147,7 @@ h1,h2,h3,h4,h5,h6{
 	flex-direction: row;
     align-items: center;
     gap: 10px;
+    width: 555px;
 }
 .group_profile, .group-info{
 	display: flex;
@@ -201,7 +202,9 @@ h1,h2,h3,h4,h5,h6{
     border: none;
 }
 .follow-btn{
-    margin-left: 75px;
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
 }
 .group-box button:hover{
 	background-color: #FF7D00;
@@ -209,22 +212,37 @@ h1,h2,h3,h4,h5,h6{
 }
 .hashtags{
 	list-style: none;
+	margin: 0;
 	padding: 0;
-	margin: 0 20px;
-	width: 80px;
 }
 .group-info{
-	margin-left:100px;
+	height: 40px;
+    align-items: center;
+    gap: 20px;
+    margin-left: 10px;
+}
+.group-info div, .preference, .group-introduce{
+	display: flex;
+    flex-direction: column;
+    border: 1px solid #EBEBEB;
+    margin: 10px;
+    border-radius: 5px;
+    padding: 0 7px;
 }
 .group-info span{
-    width: 380px;
     white-space: pre-wrap;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
     font-size: 15px;
+}
+.group-introduce{
+    width: 380px;
 }	
+.title{
+	margin-left: 15px;
+}
 #searchInput{
     width: 255px;
     height: 30px;
