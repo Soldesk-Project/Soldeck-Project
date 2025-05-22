@@ -439,7 +439,7 @@ function renderAgeRateHtml(data) {
 
 // 탭 전환 처리
 document.addEventListener('DOMContentLoaded', () => {
-    const buttons = document.querySelectorAll('.store-tap button');
+    const buttons = document.querySelectorAll('.homeAmenu button');
     const contents = document.querySelectorAll('.store-info, .store-menu');
 
     const showTab = id => {
