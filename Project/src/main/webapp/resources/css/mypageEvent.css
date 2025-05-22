@@ -13,19 +13,12 @@ html, body{
 	align-items: center;
 }
 .main-menu{
-<<<<<<< Updated upstream
-	width: 1000px;
+	width: 1450px;
 	height: 900px;
 	border: 1px solid #ebebeb;
 	font-size: 20px;
 	overflow: auto;
-	margin-top: 15px;
 	border-radius: 15px;
-=======
-	height: 95%;
-	overflow: auto;
-	margin-top: 15px auto 0px auto;
->>>>>>> Stashed changes
 }
 .my-point-div{
 	text-align: center;
@@ -141,6 +134,8 @@ ul {
     background-color: #FF7700;
     justify-content: center;
 	height: 60px;
+	max-width: none;
+	min-width: 1370px; /* ✅ 이게 핵심: 최소 너비 유지 */
 }
 .side{
     list-style-type: none;
@@ -184,4 +179,7 @@ ul {
 	font-size: 12px;
 	text-align: left;
 	margin: 0px 10px 5px;
+}
+.res-name {
+	cursor: pointer;
 }

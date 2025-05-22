@@ -1,3 +1,4 @@
+/* 테스트용*/
 /*------------------ body / main menu -------------------------*/
 html, body {
 	margin: 0;
@@ -10,7 +11,6 @@ body {
 	min-height: 100vh;
 }
 .wrapper {
-	flex: 1;
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
@@ -24,10 +24,10 @@ body {
 }
 .mainBoxDesign{
 	flex: 1;
-	min-width: 0;
-	margin: 0px auto 80px auto;
+	margin-bottom: 80px;
 	display: flex;
 	background-color: white;
+	overflow: hidden;
 }
 .main-menu{
 	width: 100%;
@@ -36,28 +36,32 @@ body {
 	overflow: hidden;
 }
 .main-list{
-	flex: 1;
-	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	margin: 15px auto;
+	height: 770px;
+	background-color: white;
+	max-width: none;
+	min-width: 1335px;
+	padding: 20px;
 	min-height: 0;
+}
+.inner-main::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
 }
 .inner-main{
 	flex: 1;
-	overflow-y: auto;
 	min-height: 0;
 	max-height: 100%;
 	min-width: 0;
 	position: relative; /* 중요 */
 	display: flex;
   	flex-direction: column;
+	overflow-y: auto;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* 아래쪽 그림자 */
+  	border-radius: 10px;
+  	padding-top: 15px;
 }
-/*.inner-main::-webkit-scrollbar {
-	display:inline;
-    width: 10px;  
-}
-.inner-main::-webkit-scrollbar-thumb {
-    background:#FF7D00;
-    border-radius: 10px;
-}*/
 .booking-schedule{
 	padding: 0px;
 	display: flex;
@@ -89,10 +93,6 @@ body {
 	width: 100%;
 	flex-wrap: nowrap;
 	box-sizing: border-box;
-}
-.booking-list.past-booking {
-    background-color: #f2f2f2; /* 연한 회색 */
-    opacity: 0.7; /* 약간 투명하게 */
 }
 .booking-content-top-flex{
 	display: flex;
@@ -342,6 +342,8 @@ body {
     background-color: #FF7700;
     justify-content: center;
 	height: 60px;
+	max-width: none;
+	min-width: 1370px; /* ✅ 이게 핵심: 최소 너비 유지 */
 }
 .side{
     list-style-type: none;
@@ -386,5 +388,6 @@ body {
 	text-align: left;
 	margin: 0px 10px 5px;
 }
-
-/*------------ 버그 수정 확인 코드------------------*/
+.res-name {
+	cursor: pointer;
+}
