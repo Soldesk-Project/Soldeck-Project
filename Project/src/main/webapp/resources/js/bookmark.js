@@ -1,87 +1,36 @@
-//-----CSS 파일 추가-----------------------------------------
-const CSS_FILE_PATH = '/resources/css/bookmark.css';
-let linkEle = document.createElement('link');
-linkEle.rel = 'stylesheet';
-linkEle.href = CSS_FILE_PATH;
-document.head.appendChild(linkEle);
-
-const CSS_FILE_PATH2 = '/resources/css/header.css';
-let linkEle2 = document.createElement('link');
-linkEle2.rel = 'stylesheet';
-linkEle2.href = CSS_FILE_PATH2;
-document.head.appendChild(linkEle2);
-
-const CSS_FILE_PATH3 = '/resources/css/footer.css';
-let linkEle3 = document.createElement('link');
-linkEle3.rel = 'stylesheet';
-linkEle3.href = CSS_FILE_PATH3;
-document.head.appendChild(linkEle3);
-
-const CSS_FILE_PATH4 = '/resources/css/common.css';
-let linkEle4 = document.createElement('link');
-linkEle.rel = 'stylesheet';
-linkEle.href = CSS_FILE_PATH;
-document.head.appendChild(linkEle);
-//-----버튼 클릭 이벤트---------------------------------------------
-document.querySelectorAll('button').forEach(btn => {
-	btn.addEventListener('click', () => {
-		let type = btn.getAttribute("id");
-		
-		if(type == 'bookmarkBtn'){
-			openModal();
-		}else if(type == 'outBookMarkBtn'){
-			outBookmark();
-			closeModal();
-		}else if(type == 'cancelModalBtn'){
-	    	closeModal();
-		}else if(type == 'leftBtn'){
-			privateToPublicBookmark();
-		}else if(type == 'rightBtn'){
-			publicToPrivateBookmark();
-	    }
-	});
+////-----CSS 파일 추가-----------------------------------------
+const cssFiles = ['/resources/css/bookmark.css', '/resources/css/header.css', '/resources/css/footer.css'];
+cssFiles.forEach(path => {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = path;
+    document.head.appendChild(link);
 });
-//-----가게 이름 이동------------------------------------------
-document.querySelectorAll(".info-text a").forEach(moveRestView => {
-	moveRestView.addEventListener('click',e=>{
-		e.preventDefault();
-		const view = moveRestView.closest(".view").querySelector("#restNo").value;
-		console.log(view);
-		location.href="../search/view?rest_no="+view;
-	});
-})
-//document.querySelectorAll(".view-img img").forEach(moveRestView => {
-//	moveRestView.addEventListener('click',e=>{//더블클릭으로 이동
-//		e.preventDefault();
-//		const view = moveRestView.closest(".view").querySelector("#restNo").value;
-//		location.href="../search/view?rest_no="+view;
-//	});
-//})
-//-----북마크 아이템 클릭 시 restNo 저장---------------------------------------
-document.querySelectorAll(".view").forEach(viewItem => {
-    viewItem.addEventListener('click', function(e) {
-        // 클릭된 요소가 버튼, input, img 태그가 아닐 경우에만 restNo를 업데이트
-        if (!e.target.closest('button') && !e.target.closest('input') && !e.target.closest('img')) {
-            restNo = this.querySelector("#restNo").value;
-            isPublic = this.querySelector(".is-public").value;
-            // 선택된 아이템에 시각적인 효과를 줄 수도 있습니다 (예: 테두리 강조)
-            document.querySelectorAll(".view").forEach(v => v.classList.remove('selected'));
-            this.classList.add('selected');
-        }
+
+//----- 전역변수 ----------------
+let restNo = 0;
+let isPublic = '';
+const memberNo = document.getElementById('login-data').dataset.mem_no || '';
+const modal = document.querySelector('.bookmark-check-modal');
+
+//----- 공통 함수 ----------------
+function allViews() {
+    document.querySelectorAll('.view').forEach(view => {
+        view.style.display = '';
     });
-});
-//-----가게 이름 글자수에 맞게 input태그 길이 변경---------------------
-window.addEventListener('load', ()=>{
-	document.querySelectorAll('.res-name').forEach(input => resizeInput(input));
-});
+}
+
+function clearBtn() {
+    document.querySelectorAll('.btn, #all').forEach(btn => btn.classList.remove('active'));
+}
+
 function resizeInput(input) {
 	const size = input.nextElementSibling;
 	size.textContent = input.value;
 	size.style.font = window.getComputedStyle(input).font;
 	input.style.width = size.offsetWidth + 'px';
 }
-//-----즐겨찾기 삭제 확인 모달-------------------------------------------
-const modal = document.querySelector('.bookmark-check-modal');
+
 function openModal(){
   modal.style.display = 'block';
   document.body.style.overflow = 'hidden';
@@ -93,207 +42,177 @@ function closeModal(){
   restNo=0;
 }
 
-//-----데이터 가져오기 ------------------------------
-//즐겨찾기 -> 가게 번호
-let restNo;
-document.querySelectorAll(".bookmark").forEach(bookmarkBtn => {
-	bookmarkBtn.addEventListener('click',e=>{
-		e.preventDefault();
-		restNo = bookmarkBtn.closest(".view-info").querySelector("#restNo").value;
-	});
-})
-//멤버 번호
-let memberNo=document.querySelector("#memNo").value;
-//----- 즐겨찾기 삭제 함수-------------------------------------------------
-function outBookmark() {
-	console.log(restNo);
-	console.log(memberNo);
-
-	fetch(`/mypage/favorites/remove/${restNo}`, {
-		  method: 'DELETE',
-		  headers: {
-		    'Content-Type': 'application/json'
-		  },
-		  body: JSON.stringify({mem_no: memberNo, rest_no: restNo})
-		})
-		  .then(response => response.json())
-		  .then(data=>{
-		  	console.log(data);
-		  	location.reload();
-		  })
-		  .catch(e=>console.log(e));
+//----- 즐겨찾기 목록 비동기 로드 ------------------------
+function fetchBookmarkList() {
+    fetch('/mypage/getBookmark')
+        .then(response => {
+            if (response.status === 401) throw new Error('Unauthorized');
+            return response.json();
+        })
+        .then(renderBookmarks)
+        .catch(error => console.error('Error fetching bookmarks:', error));
 }
-//-----버튼 지역별 목록-----------------------------------------------------------
-//document.addEventListener('DOMContentLoaded', ()=>{
-//    const allBtn = document.getElementById('all');
-//    allBtn.classList.add('active');
-//    document.querySelectorAll('.view').forEach(view => {
-//        view.style.display = '';
-//    });
-//    allBtn.addEventListener('click',()=>{
-//    	allBtn.classList.add('active');
-//    	document.querySelectorAll('.view').forEach(view => {
-//            view.style.display = '';
-//        });
-//    	document.querySelectorAll('.btn').forEach(btn=>{
-//    		btn.classList.remove('active');
-//    	});
-//    });
-//    document.querySelectorAll('.btn').forEach(btn=>{
-//        btn.addEventListener('click', function(){
-//            if (this.classList.contains('active')) {
-//                this.classList.remove('active');
-//                allBtn.classList.add('active');
-//                document.querySelectorAll('.view').forEach(view=>{
-//                    view.style.display='';
-//                });
-//                return;
-//            }
-//            document.querySelectorAll('.btn').forEach(activeBtn=>{
-//                activeBtn.classList.remove('active');
-//                allBtn.classList.remove('active');
-//            });
-//            btn.classList.add('active');
-//            let region = this.value;
-//            document.querySelectorAll('.view').forEach(view=>{
-//                if (view.dataset.adr == region) {
-//                    view.style.display = '';
-//                } else {
-//                    view.style.display = 'none';
-//                }
-//            });
-//        });
-//    });
-//});
 
-document.addEventListener('DOMContentLoaded', ()=>{
-    const allBtn = document.getElementById('all');
-    let btns = document.querySelectorAll('.btn');
-    let views= document.querySelectorAll('.view');
-    
-    function allViews() {
-    	views.forEach(view => {
-    		view.style.display = '';
-    	});
-	}
-    function clearBtn() {
-		btns.forEach(btn=>{
-			allBtn.classList.remove('active');
-			btn.classList.remove('active');
-		});
-	}
-    
-    allViews();
-    allBtn.classList.add('active');
-    
-    allBtn.addEventListener('click',()=>{
-    	clearBtn();
-    	allBtn.classList.add('active');
-    	allViews();
+function renderBookmarks(data) {
+    const publicContainer = document.getElementById('public-bookmarks');
+    const privateContainer = document.getElementById('private-bookmarks');
+    publicContainer.innerHTML = '';
+    privateContainer.innerHTML = '';
+
+    data.forEach(bm => {
+        const container = bm.is_public === 'Y' ? publicContainer : privateContainer;
+        const view = document.createElement('div');
+        view.className = 'view';
+        view.dataset.adr = bm.rest_loc;
+        
+        const imgListHTML = bm.rest.map(rest => {
+            let rawUrl = rest.rest_img_name || '';
+            let thumbnailUrl = rawUrl;
+
+            if (rawUrl.includes('cthumb')) {
+                thumbnailUrl = rawUrl.replace(/C\d+x\d+\.q\d+/, 'C200x200.q60');
+            }
+
+            return `
+                <div class="view-img">
+                    <img alt="res img" src="${thumbnailUrl}" class="view-res-image" onerror="this.src='/resources/images/noImage.png';">
+                </div>
+            `;
+        }).join('');
+        
+        view.innerHTML = `
+            <div class="view-info">
+                <div><button type="button" class="bookmark">★</button></div>
+                <div class="info-text">
+                    <a href="#" draggable="false">
+                        <input type="text" class="res-name" value="${bm.rest_name}" readonly>
+                        <span class="input-size"></span>
+                    </a>
+                    <input type="text" class="res-cate" value="${bm.rest_cate}" readonly>
+                    <input type="hidden" id="restNo" value="${bm.rest_no}">
+                    <input type="hidden" class="is-public" value="${bm.is_public}">
+                    <input type="hidden" class="rest-adr" value="${bm.rest_loc}">
+                </div>
+            </div>
+            <div class="view-img-list">${imgListHTML}</div>
+        `;
+        container.appendChild(view);
+        resizeInput(view.querySelector('.res-name'));
     });
+
+    allViews();
+    document.getElementById('all').classList.add('active');
+}
+
+//----- 즐겨찾기 삭제 -------------------------------------------------
+function outBookmark() {
+    if (!restNo) return;
     
-    btns.forEach(btn=>{
-        btn.addEventListener('click', function(){
+    fetch(`/mypage/favorites/remove/${restNo}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ mem_no: memberNo, rest_no: restNo })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data) {
+        	fetchBookmarkList();
+            closeModal();
+        }
+    })
+    .catch(error => console.error('Error deleting bookmark:', error));
+}
+
+//----- 즐겨찾기 공개/비공개 전환 ------------------
+function updateBookmarkVisibility(toPublic) {
+    if (!restNo) return alert('가게가 선택되지 않았습니다');
+
+    if ((toPublic && isPublic === 'Y') || (!toPublic && isPublic === 'N')) {
+        alert(toPublic ? '이미 공개 즐겨찾기입니다' : '이미 비공개 즐겨찾기입니다');
+        return;
+    }
+
+    const url = toPublic ? '/mypage/bookmark/public' : '/mypage/bookmark/private';
+
+    fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ mem_no: memberNo, rest_no: restNo })
+    })
+    .then(res => res.json())
+    .then(success => {
+        if (success) fetchBookmarkList();
+    })
+    .catch(err => console.error('Error updating bookmark:', err));
+}
+
+//----- 이벤트 바인딩 ------------------------------
+document.addEventListener('DOMContentLoaded', () => {
+	fetchBookmarkList();
+	
+    const allBtn = document.getElementById('all');
+    const filterBtns = document.querySelectorAll('.btn');
+
+    // 전체 버튼 이벤트
+    allBtn.addEventListener('click', () => {
+        clearBtn();
+        allBtn.classList.add('active');
+        allViews();
+    });
+
+    // 지역 버튼 이벤트
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function () {
+            const views = document.querySelectorAll('.view'); // 동적으로 views 갱신
             if (this.classList.contains('active')) {
-            	clearBtn();
+                clearBtn();
                 allBtn.classList.add('active');
                 allViews();
                 return;
             }
-            
             clearBtn();
-            btn.classList.add('active');
-            
-            views.forEach(view=>{
-            	view.style.display=(view.dataset.adr == this.value)?'':'none';
+            this.classList.add('active');
+            views.forEach(view => {
+                view.style.display = (view.dataset.adr === this.value) ? '' : 'none';
             });
         });
     });
-});
+    
+    //-----버튼 클릭 이벤트---------------------------------------------
+    document.querySelector('.bookmark-list').addEventListener('click', (e) => {
+        const target = e.target;
+        const view = target.closest('.view');
 
-//-----가게 선택시 정보 가져오기---------------------------------------------------------------
-let isPublic;
+        if (!view) return;
 
-document.querySelectorAll('.view').forEach(view=>{
-	view.addEventListener('click', function(e){
-		if (e.target.closest('button')||e.target.closest('input')){
-			return;
-		}
-		
-		
-		if (this.classList.contains('active')) {
-			this.classList.remove('active');
-			restNo=0;
-    		return;
-		}
-		document.querySelectorAll('.view').forEach(view2=>{
-    		view2.classList.remove('active');
-    	});
-    	restNo = this.closest(".view").querySelector("#restNo").value;
-    	isPublic= this.closest(".view").querySelector(".is-public").value;
-		view.classList.add('active');
+        restNo = view.querySelector('#restNo').value;
+        isPublic = view.querySelector('.is-public').value;
+
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        view.classList.add('active');
+        
+        // 북마크 삭제 모달, 가게 이름 클릭 이동
+        if (target.classList.contains('bookmark')) {
+            e.preventDefault();
+            openModal();
+        } else if (target.closest('.info-text a')) {
+            e.preventDefault();
+            location.href = `../search/view?rest_no=${restNo}`;
+        }
+    });
+    
+    // 모달 버튼 이벤트
+    document.getElementById('outBookMarkBtn').addEventListener('click', outBookmark);
+    document.getElementById('cancelModalBtn').addEventListener('click', closeModal);
+
+    // 공개/비공개 전환 버튼
+    document.getElementById('leftBtn').addEventListener('click', () => updateBookmarkVisibility(true));
+    document.getElementById('rightBtn').addEventListener('click', () => updateBookmarkVisibility(false));
+    
+    // 사이드바 탭 active 유지
+    const currentPath = window.location.pathname.replace(/\/$/, '').toLowerCase();
+    document.querySelectorAll('.side li a').forEach(link => {
+        const href = new URL(link.href).pathname.replace(/\/$/, '').toLowerCase();
+        if (href === currentPath) link.classList.add('active');
     });
 });
-//-----버튼으로 즐겨찾기 설정 변경--------------------------------------------------------
-function publicToPrivateBookmark() {
-	if (restNo==0 || restNo==null) {
-		alert('가게가 선택되지 않았습니다');
-		return;
-	}
-	if (isPublic=='N') {
-		alert('이미 비공개 즐겨찾기 입니다');
-		return;
-	}
-	fetch('/mypage/bookmark/private', {
-		  method: 'POST',
-		  headers: {
-		    'Content-Type': 'application/json'
-		  },
-		  body: JSON.stringify({mem_no: memberNo, rest_no: restNo})
-		})
-		  .then(response => response.json())
-		  .then(data=>{
-		  	console.log(data);
-		  	location.reload();
-		  })
-		  .catch(e=>console.log(e));
-	
-}
-function privateToPublicBookmark() {
-	if (restNo==0 || restNo==null) {
-		alert('가게가 선택되지 않았습니다');
-		return;
-	}
-	if (isPublic=='Y') {
-		alert('이미 공개 즐겨찾기 입니다');
-		return;
-	}
-	fetch('/mypage/bookmark/public', {
-		  method: 'POST',
-		  headers: {
-		    'Content-Type': 'application/json'
-		  },
-		  body: JSON.stringify({mem_no: memberNo, rest_no: restNo})
-		})
-		  .then(response => response.json())
-		  .then(data=>{
-		  	console.log(data);
-		  	location.reload();
-		  })
-		  .catch(e=>console.log(e));
-}
-//사이드 탭 클릭 후 active 유지
-window.addEventListener('DOMContentLoaded', () => {
-
-	  const links = document.querySelectorAll('.side li a');
-	  const currentPath = window.location.pathname.replace(/\/$/, '').toLowerCase();
-
-	  links.forEach(link => {
-	    const href = link.getAttribute('href');
-	    const absoluteHref = new URL(href, window.location.origin).pathname.replace(/\/$/, '').toLowerCase();
-
-	    if (currentPath === absoluteHref) {
-	      link.classList.add('active');
-	    }
-	  });
-	});
