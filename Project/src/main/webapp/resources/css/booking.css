@@ -25,7 +25,7 @@ body {
 .mainBoxDesign{
 	flex: 1;
 	min-width: 0;
-	margin-bottom: 80px;
+	margin: 0px auto 80px auto;
 	display: flex;
 	background-color: white;
 }

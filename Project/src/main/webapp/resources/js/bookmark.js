@@ -32,10 +32,30 @@ function resizeInput(input) {
 	input.style.width = size.offsetWidth + 'px';
 }
 
-function openModal(){
-  modal.style.display = 'block';
-  document.body.style.overflow = 'hidden';
-}
+function openModal(relativeToButton) {
+	  const modal = document.querySelector('.bookmark-check-modal');
+
+	  if (modal.style.display === 'block') {
+	    closeModal(); // 이미 열려 있으면 닫기
+	    return;
+	  }
+
+	  modal.style.visibility = 'hidden';
+	  modal.style.display = 'block';
+
+	  const rect = relativeToButton.getBoundingClientRect();
+	  const modalHeight = modal.offsetHeight;
+
+	  // 2. 위치 계산: 버튼 오른쪽 + 약간의 간격
+	  const top = window.scrollY + rect.top;
+	  const left = window.scrollX + rect.right + 10; // 버튼 오른쪽 + 10px 여유
+
+	  modal.style.top = `${top}px`;
+	  modal.style.left = `${left}px`;
+
+	  modal.style.visibility = 'visible';
+	  document.body.style.overflow = 'hidden';
+	}
 
 function closeModal(){
   modal.style.display = 'none';
@@ -203,9 +223,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // 북마크 삭제 모달, 가게 이름 클릭 이동
         if (target.classList.contains('bookmark')) {
             e.preventDefault();
+<<<<<<< Updated upstream
             restNo = newRestNo;
             isPublic = newIsPublic;
             openModal();
+=======
+            openModal(target);
+>>>>>>> Stashed changes
         } else if (target.closest('.info-text a')) {
             e.preventDefault();
             if (!newRestNo) {

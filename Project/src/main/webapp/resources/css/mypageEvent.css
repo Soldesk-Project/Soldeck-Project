@@ -13,6 +13,7 @@ html, body{
 	align-items: center;
 }
 .main-menu{
+<<<<<<< Updated upstream
 	width: 1000px;
 	height: 900px;
 	border: 1px solid #ebebeb;
@@ -20,6 +21,11 @@ html, body{
 	overflow: auto;
 	margin-top: 15px;
 	border-radius: 15px;
+=======
+	height: 95%;
+	overflow: auto;
+	margin-top: 15px auto 0px auto;
+>>>>>>> Stashed changes
 }
 .my-point-div{
 	text-align: center;

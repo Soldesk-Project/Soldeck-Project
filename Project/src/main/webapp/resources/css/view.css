@@ -35,7 +35,14 @@ img, a img {
     transition: transform 0.5s ease-in-out; /* JavaScript와 트랜지션 동기화 */
     gap: 20px; /* 이미지 간 20px 간격 */
 }
-
+.no-image-text {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 250px;
+	font-size: xxx-large;
+}
 .slide {
     flex: 0 0 248px; /* 슬라이드 너비 고정 */
     display: flex;
@@ -130,7 +137,7 @@ a:hover {
 }
 .store-details {
     flex: 5;
-    height: 80%;
+    height: 88%;
     border: 1px solid #EBEBEB;
     border-radius: 15px;
     padding: 10px 20px;
@@ -236,11 +243,19 @@ a:hover {
     overflow: hidden; /* 넘치는 텍스트 숨김 */
     text-overflow: ellipsis; /* 넘치는 텍스트에 ... 표시 */
 }
+.menu-empty {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 230px;
+	font-size: xxx-large;
+}
 .store-function{
 	flex: 5;
 }
 .store-map {
-    height: 325px; /* 미니맵 높이 */
+    height: 355px; /* 미니맵 높이 */
 }
 
 #map {
@@ -297,6 +312,10 @@ a:hover {
     width: 100%;
     height: 100%;
     object-fit: fill;
+}
+.image .attachment {
+	width: 100%;
+	height: 100%;
 }
 .comment_image_attachments {
 	height: 100%;
@@ -460,7 +479,7 @@ a:hover {
 .textarea-wrapper .btn-one {
     position: absolute;
     bottom: 56px; /* textarea 내부 오른쪽 아래 */
-    right: 8px;
+    right: 23px;
     border: 1px solid #EBEBEB;
     border-radius: 8px;
     padding: 5px 10px;
@@ -473,7 +492,7 @@ a:hover {
 .textarea-wrapper .btn-one_c {
     position: absolute;
     bottom: 18px; /* textarea 내부 오른쪽 아래 */
-    right: 8px;
+    right: 23px;
     border: 1px solid #EBEBEB;
     border-radius: 8px;
     padding: 5px 10px;
