@@ -150,11 +150,13 @@
 	<!-- 즐겨찾기 추가 모달 -->
 	<div class="modal" id="favoriteAddModal">
 		<div class="modal-content">
-			<h3>추가할 즐겨찾기의 공개/비공개를 설정해주세요.</h3>
+			<div class="first_bookmarkM">
+				<h2>추가할 즐겨찾기의 공개/비공개를 설정해주세요.</h2>
+				<button type="button" class="btn btn-close" id="closeFavoriteAddModalBtn">X</button>
+			</div>
 			<div class="favorite-modal-content">
 				<button type="button" class="btn btn-sec" id="publicFavoriteBtn">공개</button>
 				<button type="button" class="btn btn-sec" id="privateFavoriteBtn">비공개</button>
-				<button type="button" class="btn btn-close" id="closeFavoriteAddModalBtn">취소</button>
 			</div>
 		</div>
 	</div>
@@ -162,7 +164,10 @@
 	<!-- 즐겨찾기 삭제 모달 -->
 	<div class="modal" id="favoriteDeleteModal">
 		<div class="modal-content">
-			<p>즐겨찾기를 삭제하시겠습니까?</p>
+			<div class="first_bookmarkM_cancle">
+				<h2>즐겨찾기를 삭제하시겠습니까?</h2>
+				<button type="button" class="btn btn-close" id="closeFavoriteAddModalBtn">X</button>
+			</div>
 			<div class="favorite-modal-content">
 			    <button class="yes-btn" id="deleteFavoriteBtn">예</button>
 				<button class="cancle-modal-btn" id="closeFavoriteDeleteModalBtn">아니오</button>
