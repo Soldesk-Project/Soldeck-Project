@@ -8,12 +8,6 @@ body {
   display: flex;
   height: 100%; /* 다시 명확히 body에만 flex 적용 */
 }
-img, a img {
-  -webkit-user-drag: none;
-  -moz-user-drag: none;
-  -ms-user-drag: none;
-  user-drag: none;
-}
 #sidebar {
   display: flex;  /* 🔥 추가 */
   flex-direction: column;  /* 🔥 추가 */

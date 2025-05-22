@@ -1,9 +1,3 @@
-img, a img {
-  -webkit-user-drag: none;
-  -moz-user-drag: none;
-  -ms-user-drag: none;
-  user-drag: none;
-}
 /* 화면 전체 */
 .container {
     margin:120px auto 20px auto;

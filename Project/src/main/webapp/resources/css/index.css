@@ -1,9 +1,3 @@
-img, a img {
-  -webkit-user-drag: none;
-  -moz-user-drag: none;
-  -ms-user-drag: none;
-  user-drag: none;
-}
 body {
     font-family: sans-serif;
     margin: 0;

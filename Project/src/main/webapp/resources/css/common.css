@@ -4,9 +4,6 @@ img, a img {
 	-ms-user-drag: none;
 	user-drag: none;
 }
-::-webkit-scrollbar {
-	display: none;
-}
 button {
   background: none;
   border: none;
@@ -25,4 +22,7 @@ input {
   -moz-appearance: none;
   appearance: none;
   background-color: transparent; /* 배경도 없애려면 */
+}
+body,html {
+	font-family: sans-serif;
 }
