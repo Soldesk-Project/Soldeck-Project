@@ -27,18 +27,19 @@
 						<button type="button" class="btn" id="ulsanBtn" value="울산">울산</button>
 						<button type="button" class="btn" id="jejuBtn" value="제주">제주</button>
 					</div>
-			  	
+			  		<div class="bookmark_title_s">
+			  			<div class="list-title"><span>공개 즐겨찾기</span></div>
+		  				<div class="list-title"><span>비공개 즐겨찾기</span></div>
+		  			</div>
 				  	<div class="bookmark-list">
 				  		<div class="list-main">
-				  			<div class="list-title"><span>공개 즐겨찾기</span></div>
 				  			<div class="list-content" id="public-bookmarks"></div>
 				  		</div>
 				  		<div class="change-bookmark-button">
-				  			<button type="button" class="change-btn" id="rightBtn">▶</button>
-				  			<button type="button" class="change-btn" id="leftBtn">◀</button>
+				  			<button type="button" class="change-btn" id="rightBtn">&gt;</button>
+				  			<button type="button" class="change-btn" id="leftBtn">&lt;</button>
 				  		</div>
 			  			<div class="list-main">
-			  				<div class="list-title"><span>비공개 즐겨찾기</span></div>
 				  			<div class="list-content" id="private-bookmarks"></div>
 			  			</div>
 			  		</div>

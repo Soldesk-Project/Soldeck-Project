@@ -16,8 +16,7 @@ body{
 	border-radius: 20px;
 	font-size: 20px;
 	overflow: hidden;
-	margin-top: 13px;
-	margin-bottom: 40px;
+	margin: 13px auto 40px auto;
 	padding-top: 10px;
 }
 .inner-main{

@@ -1,3 +1,4 @@
+/* 테스트용*/
 /*------------------ body / main menu -------------------------*/
 html, body {
 	margin: 0;
@@ -10,11 +11,10 @@ body {
 	min-height: 100vh;
 }
 .wrapper {
-	flex: 1;
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
-	margin-top: 90px;
+	padding-top: 90px;
 }
 .container {
 	flex: 1;
@@ -24,10 +24,10 @@ body {
 }
 .mainBoxDesign{
 	flex: 1;
-	min-width: 0;
 	margin-bottom: 80px;
 	display: flex;
 	background-color: white;
+	overflow: hidden;
 }
 .main-menu{
 	width: 100%;
@@ -39,6 +39,19 @@ body {
 	display: flex;
 	justify-content: center;
 	background-color: #ff9e4b;
+	max-width: none;
+	min-width: 1370px; /* ✅ 이게 핵심: 최소 너비 유지 */
+}
+.bookmark_title_s{
+	display: flex;
+	flex-direction: row;
+	gap: 550px;
+	justify-content: center;
+	align-items: center;
+	padding:5px 0px;
+	max-width: none;
+	min-width: 1370px; /* ✅ 이게 핵심: 최소 너비 유지 */
+	background-color: #fafbfd;
 }
 .btn, .all-btn{
 	margin: 0px 10px;
@@ -66,24 +79,31 @@ body {
 }
 .bookmark-list{
 	display: flex;
-	justify-content: space-between;
-	margin: 15px 30px;
-	height: 565px;
+	justify-content: center;
+	margin: 15px auto;
+	height: 770px;
 	background-color: white;
+	max-width: none;
+	min-width: 1200px; /* ✅ 이게 핵심: 최소 너비 유지 */
+	padding: 20px;
+  	gap: 30px; /* 좌우 여백 */
 }
 .list-title{
 	margin:10px;
 }
-.list-title span{
-	font-size: 20px;
-	margin: 10px;
+.list-title span {
+  font-size: 22px;
+  font-weight: bold;
+  padding-bottom: 5px;
 }
 .list-main {
 	flex: 1;
 	display: flex;
 	flex-direction: column;
 	overflow: hidden;
-	max-height: 565px;
+	max-height: 640px;
+	min-width:650px;
+	max-width:650px;
 	align-items: center;
 	border: 1px solid #EBEBEB;
 	border-radius: 10px;
@@ -92,6 +112,7 @@ body {
 	flex: 1;
 	overflow: overlay;
 	min-height: 0;
+	margin-top: 25px;
 }
 .inner-content {
 	flex: 1;
@@ -108,6 +129,7 @@ body {
   	border: 1px double white;
   	border-radius: 10px;
 	padding: 5px;
+	margin-bottom: 7px;
 }
 .view.active{
 	border: 1px double #F7F3EA;
@@ -119,8 +141,8 @@ body {
 	display: flex;
 }
 .view-img{
-	width: 120px;
-	height: 100px;
+	width: 140px;
+	height: 120px;
 	border-radius: 10px;
 	overflow: hidden;
     margin: 0 10px;
@@ -144,9 +166,9 @@ body {
 .info-text input{
 	outline: none;
 	border: none;
-	font-size: 15px;
+	font-size: 18px;
 	margin: 3px;
-	max-width: 170px;
+	max-width: 250px;
 }
 .res-cate{
 	width: 50px;
@@ -168,12 +190,18 @@ body {
 }
 .res-cate{
     width: 50px;
+	background-color: #ffe0b2;
+	color: #ff7700;
+	padding: 2px 8px;
+	border-radius: 999px;
+	font-size: 12px;
+	text-align: center;
 }
 .bookmark{
 	background: none;
 	border: none;
 	cursor: pointer;
-	font-size: 20px;
+	font-size: 30px;
 	color: #FFD700;
 	transition: color 0.2s;
 }
@@ -192,42 +220,44 @@ body {
     margin: 0px 10px;
 }
 .change-btn{
-	background-color: white;
     color: gray;
     width: 45px;
     height: 45px;
     font-size: 30px;
-    margin: 5px;
+    margin: 20px 0px;
     padding: 0;
     border: none;
     display: flex;
     justify-content: center;
     align-items: flex-end;
+    border-radius: 50%;
+	background: #f2f2f2;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+	transition: all 0.2s;
 }
 .change-btn:hover{
 	transition: color 0.2s;
+	background: #ddd;
 	color: black;
 }
 /*-----------------------모달-------------------------------*/
-.bookmark-check-modal{
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    display: none;
-    position: fixed;
-    top: 35%;
-    left: 55%;
-    transform: translate(-50%, -50%);
-	background: rgba(0,0,0,0.2);
-  	z-index: 999;
+.bookmark-check-modal {
+  position: absolute; /* 기존 fixed → absolute로 변경 */
+  display: none;
+  border-radius: 15px;
+  background: rgba(0,0,0,0.01);
+  z-index: 999;
 }
 .inner-modal{
 	text-align: center;
 	background: #fff;
 	padding: 20px 25px;
 	border-radius: 8px;
-	box-shadow: 0 4px 24px rgba(0,0,0,0.2);
-	min-width: 300px;
+	min-width: 200px;
+	max-height: 100px;
+	display: flex;
+	flex-direction: column;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 .bookmark-modal-content{
 	display: flex;
@@ -235,8 +265,8 @@ body {
 	justify-content: center;
 }
 .out-bookmark-btn{
-    background-color: #FF7D00;
-    color: white;
+    background-color: white;
+    color: black;
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
@@ -246,8 +276,8 @@ body {
     margin: auto;
 }
 .cancle-modal-btn{
-	background-color: #e53935;
-    color: white;
+    background-color: white;
+    color: black;
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
@@ -263,6 +293,8 @@ body {
     background-color: #FF7700;
     justify-content: center;
 	height: 60px;
+	max-width: none;
+	min-width: 1370px; /* ✅ 이게 핵심: 최소 너비 유지 */
 }
 .side{
     list-style-type: none;
