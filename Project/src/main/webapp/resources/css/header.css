@@ -189,7 +189,7 @@ input[type="search"]::-webkit-search-cancel-button {
   padding: px 12px;
   background-color: #FF7D00;
   color: white;
-  margin-right: 15px;
+  margin: 0 15px 0 258px;
 }
 #login:hover{
   background-color: #e96c00;
@@ -227,7 +227,7 @@ input[type="search"]::-webkit-search-cancel-button {
 .profileBox2{
 	align-items: center;
 	justify-content: center;
-	width: 165px;
+	width: 240px;
 }
 .nickname {
     font-weight: 500;
