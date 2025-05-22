@@ -111,12 +111,10 @@
 				<div class="info-title">
 					<b>연락처</b>	
 				</div>
-				<div class="info-content">
-					<div>
+				<div class="info-content phone-group">
 						<input type="text" class="info-phone" id="phone1" name="phoneNumber" value="0${fn:substring(member.mem_phone, 0, 2)}" readonly="readonly"><span class="dash">-</span>
 						<input type="text" class="info-phone" id="phone2" name="phoneNumber" value="${fn:substring(member.mem_phone, 2, 6)}" readonly="readonly"><span class="dash">-</span>
 						<input type="text" class="info-phone" id="phone3" name="phoneNumber" value="${fn:substring(member.mem_phone, 6, 10)}" readonly="readonly">
-					</div>
 					<div id="phoneErrorMessage" class="message error phone-error"></div>
 				</div>
 			</div>
