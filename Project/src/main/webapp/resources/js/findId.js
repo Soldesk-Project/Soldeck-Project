@@ -36,7 +36,12 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             body: `name=${encodeURIComponent(name)}&birthDate=${encodeURIComponent(birthDate)}&contact=${encodeURIComponent(contact)}`,
         })
-        .then(response => response.text())
+        .then(response => {
+        	if (!response.ok){
+        		throw new Error(`HTTP error! status: ${response.status}`);
+        	}
+        	return response.text();
+        })
         .then(data => {
             resultDiv.textContent = data;
             resultContainer.style.display = 'block';
