@@ -3,6 +3,7 @@
 
 
 <link rel="stylesheet" href="../resources/css/groupList.css">
+<link rel="stylesheet" href="../resources/css/common.css">
 
 <body style="overflow-y: scroll;" data-mem-no="${sessionScope.loggedInUser.mem_no}">
 	

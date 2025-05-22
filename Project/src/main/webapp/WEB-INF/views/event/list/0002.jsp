@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/resources/css/eventTab/0002.css">
+<link rel="stylesheet" href="/resources/css/common.css">
 <title>Insert title here</title>
 </head>
 <body>

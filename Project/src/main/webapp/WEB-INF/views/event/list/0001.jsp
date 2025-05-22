@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/resources/css/eventTab/0001.css">
+<link rel="stylesheet" href="/resources/css/common.css">
 <meta name="description" content="Ripped T-Rex/Dino game of Chromium">
 <meta property="og:title" content="Play the hidden T-Rex Dinosaur game of Chromium .">
 <meta property="og:type" content="article">

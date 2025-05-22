@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="../resources/css/header.css">
 <link rel="stylesheet" href="../resources/css/friendList.css">
+<link rel="stylesheet" href="../resources/css/common.css">
 <link rel="stylesheet" href="../resources/css/footer.css">
 </head>
 <body style="overflow-y: scroll;"

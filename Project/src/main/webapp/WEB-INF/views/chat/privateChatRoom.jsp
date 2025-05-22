@@ -9,6 +9,7 @@
 
   <!-- CSS 파일 연결 -->
   <link rel="stylesheet" type="text/css" href="/resources/css/chatroom.css">
+  <link rel="stylesheet" href="../resources/css/common.css">
 </head>
 <body>
 

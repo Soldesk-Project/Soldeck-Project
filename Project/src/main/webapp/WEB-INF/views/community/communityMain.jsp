@@ -8,6 +8,7 @@
     <title>커뮤니티 메인</title>
     <link rel="stylesheet" href="/resources/css/header.css">
     <link rel="stylesheet" href="/resources/css/communityMain.css">
+    <link rel="stylesheet" href="../resources/css/common.css">
     <link rel="stylesheet" href="/resources/css/footer.css">
 </head>
 <body>
