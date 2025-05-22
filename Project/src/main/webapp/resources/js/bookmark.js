@@ -223,13 +223,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // 북마크 삭제 모달, 가게 이름 클릭 이동
         if (target.classList.contains('bookmark')) {
             e.preventDefault();
-<<<<<<< Updated upstream
             restNo = newRestNo;
             isPublic = newIsPublic;
-            openModal();
-=======
             openModal(target);
->>>>>>> Stashed changes
         } else if (target.closest('.info-text a')) {
             e.preventDefault();
             if (!newRestNo) {

@@ -141,6 +141,8 @@ ul {
     background-color: #FF7700;
     justify-content: center;
 	height: 60px;
+	max-width: none;
+	min-width: 1370px; /* ✅ 이게 핵심: 최소 너비 유지 */
 }
 .side{
     list-style-type: none;
@@ -184,4 +186,7 @@ ul {
 	font-size: 12px;
 	text-align: left;
 	margin: 0px 10px 5px;
+}
+.res-name {
+	cursor: pointer;
 }
