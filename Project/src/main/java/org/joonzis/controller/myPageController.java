@@ -144,7 +144,7 @@ public class myPageController {
 	    return "redirect:/mypage/myInfo";
 	}
 	
-	@PostMapping("/removeMember")
+	@PostMapping(value = "/removeMember", produces = "text/plain; charset=UTF-8")
 	public ResponseEntity<String> removeMember(@RequestParam("mem_no") int mem_no, HttpSession session) {
 	    log.info("removeMember... mem_no: " + mem_no);
 
