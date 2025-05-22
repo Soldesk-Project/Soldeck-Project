@@ -5,12 +5,6 @@ linkEle.rel = 'stylesheet';
 linkEle.href = CSS_FILE_PATH;
 document.head.appendChild(linkEle);
 
-const CSS_FILE_PATH = '/resources/css/common.css';
-let linkEle = document.createElement('link');
-linkEle.rel = 'stylesheet';
-linkEle.href = CSS_FILE_PATH;
-document.head.appendChild(linkEle);
-
 const CSS_FILE_PATH2 = '/resources/css/header.css';
 let linkEle2 = document.createElement('link');
 linkEle2.rel = 'stylesheet';
@@ -22,6 +16,12 @@ let linkEle3 = document.createElement('link');
 linkEle3.rel = 'stylesheet';
 linkEle3.href = CSS_FILE_PATH3;
 document.head.appendChild(linkEle3);
+
+const CSS_FILE_PATH4 = '/resources/css/common.css';
+let linkEle4 = document.createElement('link');
+linkEle.rel = 'stylesheet';
+linkEle.href = CSS_FILE_PATH;
+document.head.appendChild(linkEle);
 //사이드 탭 클릭 후 active 유지
 window.addEventListener('DOMContentLoaded', () => {
 

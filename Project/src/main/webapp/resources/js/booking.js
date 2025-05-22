@@ -5,12 +5,6 @@ linkEle.rel = 'stylesheet';
 linkEle.href = CSS_FILE_PATH;
 document.head.appendChild(linkEle);
 
-const CSS_FILE_PATH = '/resources/css/common.css';
-let linkEle = document.createElement('link');
-linkEle.rel = 'stylesheet';
-linkEle.href = CSS_FILE_PATH;
-document.head.appendChild(linkEle);
-
 const CSS_FILE_PATH2 = '/resources/css/header.css';
 let linkEle2 = document.createElement('link');
 linkEle2.rel = 'stylesheet';
@@ -22,6 +16,12 @@ let linkEle3 = document.createElement('link');
 linkEle3.rel = 'stylesheet';
 linkEle3.href = CSS_FILE_PATH3;
 document.head.appendChild(linkEle3);
+
+const CSS_FILE_PATH4 = '/resources/css/common.css';
+let linkEle4 = document.createElement('link');
+linkEle.rel = 'stylesheet';
+linkEle.href = CSS_FILE_PATH;
+document.head.appendChild(linkEle);
 //-----가게 이름 글자수에 맞게 input태그 길이 변경---------------------
 window.addEventListener('load', ()=>{
 	document.querySelectorAll('.res-name').forEach(input => resizeInput(input));
