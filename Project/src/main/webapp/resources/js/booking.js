@@ -194,22 +194,18 @@ const modal4 = document.querySelector('.save-memo-modal');
 //즐겨찾기 삭제
 function openDeleteBookmarkModal(){
 	modal1.style.display = 'block';
-	document.body.style.overflow = 'hidden';
 }
 //즐겨찾기 추가
 function openAddBookmarkModal() {
 	modal2.style.display = 'block';
-	document.body.style.overflow = 'hidden';
 }
 //예약 취소
 function openBookingCancelModal() {
 	modal3.style.display = 'block';
-	document.body.style.overflow = 'hidden';
 }
 //메모 저장
 function openSaveMemoModal() {
 	modal4.style.display = 'block';
-	document.body.style.overflow = 'hidden';
 }
 //모달 창 닫기
 function closeModal(){
@@ -217,7 +213,6 @@ function closeModal(){
 	modal2.style.display = 'none';
 	modal3.style.display = 'none';
 	modal4.style.display = 'none';
-	document.body.style.overflow = 'auto';
 }
 //-----모달 작동 함수------------------------------------------------------------
 //----- 즐겨찾기 삭제 함수-------------------------------------------------

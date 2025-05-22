@@ -54,12 +54,10 @@ function openModal(relativeToButton) {
 	  modal.style.left = `${left}px`;
 
 	  modal.style.visibility = 'visible';
-	  document.body.style.overflow = 'hidden';
 	}
 
 function closeModal(){
   modal.style.display = 'none';
-  document.body.style.overflow = 'auto';
   restNo=0;
 }
 
