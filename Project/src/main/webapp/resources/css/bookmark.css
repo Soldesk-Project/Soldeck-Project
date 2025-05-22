@@ -84,7 +84,7 @@ body {
 }
 .list-content {
 	flex: 1;
-	overflow: hidden;
+	overflow: overlay;
 	min-height: 0;
 }
 .inner-content {
@@ -113,7 +113,7 @@ body {
 	display: flex;
 }
 .view-img{
-	width: 100px;
+	width: 120px;
 	height: 100px;
 	border-radius: 10px;
 	overflow: hidden;
@@ -300,4 +300,7 @@ body {
 	font-size: 12px;
 	text-align: left;
 	margin: 0px 10px 5px;
+}
+.res-name {
+	cursor: pointer;
 }

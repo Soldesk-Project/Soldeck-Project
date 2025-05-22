@@ -160,17 +160,22 @@ public class myPageController {
 	
 	@GetMapping("/bookmark")
 	public String bookmark(Model model, HttpSession session) {
-		MemberVO mvo = (MemberVO) session.getAttribute("loggedInUser");
-		int mem_no = mvo.getMem_no();
-		log.info("bookmark..."+mem_no);
-		List<BookMarkDTO> bookmarkList = bservice.getBookMark(mem_no);
-		for (BookMarkDTO bm : bookmarkList) {
-		    List<RestVO> rest = rservice.getRest(bm.getRest_no());
-	        bm.setRest(rest);
-		}
-		model.addAttribute("bookmarkList", bookmarkList);
-
+		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
+	    model.addAttribute("member", loggedInMember != null ? loggedInMember : new MemberVO());
+	    
 		return "/mypage/bookmark";
+	}
+	@GetMapping(value = "/getBookmark", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<BookMarkDTO>> getBookmark(HttpSession session) {
+	    MemberVO mvo = (MemberVO) session.getAttribute("loggedInUser");
+	    int mem_no = mvo.getMem_no();
+	    log.info("getBookmark...{}" + mem_no);
+	    List<BookMarkDTO> bookmarkList = bservice.getBookMark(mem_no);
+	    for (BookMarkDTO bm : bookmarkList) {
+	        List<RestVO> rest = rservice.getRest(bm.getRest_no());
+	        bm.setRest(rest);
+	    }
+	    return new ResponseEntity<>(bookmarkList, HttpStatus.OK);
 	}
 	// 상세 페이지 즐겨찾기 상태 확인
     @GetMapping("/favorites/status/{restNo}")
