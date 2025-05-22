@@ -1,24 +1,64 @@
+/* 테스트용*/
 /*------------------ body / main menu -------------------------*/
-html, body{
+html, body {
 	margin: 0;
-    padding: 0;
-    height: 100%;
+	padding: 0;
+	height: 100%;
 }
-.container{
-	height: 1000px;
-	margin-bottom: 20px; 
-	margin-top: 90px;
+body {
 	display: flex;
 	flex-direction: column;
-	align-items: center;
+	min-height: 100vh;
+}
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	margin-top: 100px;
+}
+.container {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	min-height: 0;
+}
+.mainBoxDesign{
+	flex: 1;
+	margin-bottom: 80px;
+	display: flex;
+	background-color: white;
+	overflow: hidden;
 }
 .main-menu{
-	width: 1450px;
-	height: 900px;
-	border: 1px solid #ebebeb;
-	font-size: 20px;
-	overflow: auto;
-	border-radius: 15px;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+}
+.main-list{
+	margin: 15px auto;
+	height: 770px;
+	background-color: white;
+	max-width: none;
+	min-width: 1429px;
+	padding: 20px;
+	min-height: 0;
+}
+.inner-main{
+	flex: 1;
+	min-height: 0;
+	max-height: 100%;
+	min-width: 0;
+	position: relative; /* 중요 */
+	display: flex;
+  	flex-direction: column;
+	overflow-y: auto;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* 아래쪽 그림자 */
+  	border-radius: 10px;
+  	padding-top: 15px;
+}
+.inner-main::-webkit-scrollbar {
+  display: none;
 }
 .my-point-div{
 	text-align: center;
@@ -133,7 +173,6 @@ ul {
     width: 100%;
     background-color: #FF7700;
     justify-content: center;
-	height: 60px;
 	max-width: none;
 	min-width: 1370px; /* ✅ 이게 핵심: 최소 너비 유지 */
 }

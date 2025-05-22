@@ -17,7 +17,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
-	margin-top: 90px;
+	margin-top: 100px;
 }
 .container{
 	flex:1;
@@ -289,7 +289,6 @@ b{
     width: 100%;
     background-color: #FF7700;
     justify-content: center;
-	height: 60px;
 }
 .side{
     list-style-type: none;

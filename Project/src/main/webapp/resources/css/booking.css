@@ -14,7 +14,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
-	margin-top: 90px;
+	margin-top: 100px;
 }
 .container {
 	flex: 1;
@@ -42,12 +42,9 @@ body {
 	height: 770px;
 	background-color: white;
 	max-width: none;
-	min-width: 1335px;
+	min-width: 1429px;
 	padding: 20px;
 	min-height: 0;
-}
-.inner-main::-webkit-scrollbar {
-  display: none; /* Chrome, Safari */
 }
 .inner-main{
 	flex: 1;
@@ -61,6 +58,13 @@ body {
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* 아래쪽 그림자 */
   	border-radius: 10px;
   	padding-top: 15px;
+}
+.inner-main::-webkit-scrollbar {
+  display: none;
+}
+input, textarea{
+	outline: none;
+	border-width: 0;
 }
 .booking-schedule{
 	padding: 0px;
@@ -341,7 +345,6 @@ body {
     width: 100%;
     background-color: #FF7700;
     justify-content: center;
-	height: 60px;
 	max-width: none;
 	min-width: 1370px; /* ✅ 이게 핵심: 최소 너비 유지 */
 }

@@ -10,43 +10,47 @@
 </head>
 <body>
   <jsp:include page="../layout/header.jsp"/>
-  
-  <div class="container">
-	<div class="side-menu">
-  		<jsp:include page="../layout/sideMenu.jsp"/>
-	</div>
-	<div class="main-menu">
-		<div class="inner-main">
-			<c:forEach var="co" items="${commentList}">
-				<div class="review-list">
-					<div class="img-div">
-						<img alt="" src="${co.rest_img_name}">
-					</div>
-					<div class="review-content">
-						<div class="appraisal">
-							<div class="appraisal-div">
-								<span class="rest-name">${co.rest_name }</span>
-								<span>평점</span>
-								<span class="score">${co.com_rate }</span>
-								<input type="hidden" class="com-no" value="${co.com_no }">
-								<input type="hidden" class="mem-no" value="${co.mem_no }">
-								<button type="button" class="remove-btn" id="removeBtn">삭제</button>
+  <div class="wrapper">
+	  <div class="container">
+		<div class="side-menu">
+	  		<jsp:include page="../layout/sideMenu.jsp"/>
+		</div>
+		<div class="mainBoxDesign">
+			<div class="main-menu">
+				<div class="main-list">
+					<div class="inner-main">
+						<c:forEach var="co" items="${commentList}">
+							<div class="review-list">
+								<div class="img-div">
+									<img alt="" src="${co.rest_img_name}">
+								</div>
+								<div class="review-content">
+									<div class="appraisal">
+										<div class="appraisal-div">
+											<span class="rest-name">${co.rest_name }</span>
+											<span>평점</span>
+											<span class="score">${co.com_rate }</span>
+											<input type="hidden" class="com-no" value="${co.com_no }">
+											<input type="hidden" class="mem-no" value="${co.mem_no }">
+											<button type="button" class="remove-btn" id="removeBtn">삭제</button>
+										</div>
+									</div>
+									<div class="review-comment">
+										<pre class="comment">${co.com_con }</pre>
+									</div>
+									<div class="rest-info">
+										<input type="hidden" class="rest-no" value="${co.rest_no }">	
+										<a href="#" class="rest-review-info">▶ 댓글 위치로 이동</a>
+									</div>
+								</div>
 							</div>
-						</div>
-						<div class="review-comment">
-							<pre class="comment">${co.com_con }</pre>
-						</div>
-						<div class="rest-info">
-							<input type="hidden" class="rest-no" value="${co.rest_no }">	
-							<a href="#" class="rest-review-info">▶ 댓글 위치로 이동</a>
-						</div>
+						</c:forEach>
+						
 					</div>
 				</div>
-			</c:forEach>
-
-			
+			</div>
 		</div>
-	</div>
+	 </div>
  </div>
  
 	<div id="customConfirm" class="delete-comment-modal">

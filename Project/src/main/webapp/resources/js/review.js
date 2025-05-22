@@ -43,11 +43,9 @@ const innerModal = document.querySelector('.inner-modal');
 
 function openModal(){
   modal.style.display = 'block';
-  document.body.style.overflow = 'hidden';
 }
 function closeModal(){
   modal.style.display = 'none';
-  document.body.style.overflow = 'auto';
 }
 //모달 밖 아무곳이나 눌렀을 때 창 닫히기
 modal.addEventListener('click', function (e) {

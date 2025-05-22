@@ -14,7 +14,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
-	padding-top: 90px;
+	padding-top: 100px;
 }
 .container {
 	flex: 1;
@@ -292,7 +292,6 @@ body {
     width: 100%;
     background-color: #FF7700;
     justify-content: center;
-	height: 60px;
 	max-width: none;
 	min-width: 1370px; /* ✅ 이게 핵심: 최소 너비 유지 */
 }
