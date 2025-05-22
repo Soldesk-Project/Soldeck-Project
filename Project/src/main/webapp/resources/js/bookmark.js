@@ -1,5 +1,5 @@
 ////-----CSS 파일 추가-----------------------------------------
-const cssFiles = ['/resources/css/bookmark.css', '/resources/css/header.css', '/resources/css/footer.css'];
+const cssFiles = ['/resources/css/bookmark.css', '/resources/css/header.css', '/resources/css/footer.css', '/resources/css/common.css'];
 cssFiles.forEach(path => {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
@@ -12,6 +12,7 @@ let restNo = 0;
 let isPublic = '';
 const memberNo = document.getElementById('login-data').dataset.mem_no || '';
 const modal = document.querySelector('.bookmark-check-modal');
+let currentRegion = '';
 
 //----- 공통 함수 ----------------
 function allViews() {
@@ -100,8 +101,16 @@ function renderBookmarks(data) {
         resizeInput(view.querySelector('.res-name'));
     });
 
-    allViews();
-    document.getElementById('all').classList.add('active');
+    if (currentRegion) {
+        const views = document.querySelectorAll('.view');
+        views.forEach(view => {
+            view.style.display = (view.dataset.adr === currentRegion) ? '' : 'none';
+        });
+        document.querySelector(`.btn[value="${currentRegion}"]`).classList.add('active');
+    } else {
+        allViews();
+        document.getElementById('all').classList.add('active');
+    }
 }
 
 //----- 즐겨찾기 삭제 -------------------------------------------------
@@ -158,6 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
         clearBtn();
         allBtn.classList.add('active');
         allViews();
+        currentRegion = '';
     });
 
     // 지역 버튼 이벤트
@@ -168,10 +178,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 clearBtn();
                 allBtn.classList.add('active');
                 allViews();
+                currentRegion = '';
                 return;
             }
             clearBtn();
             this.classList.add('active');
+            currentRegion = this.value;
             views.forEach(view => {
                 view.style.display = (view.dataset.adr === this.value) ? '' : 'none';
             });
@@ -185,19 +197,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!view) return;
 
-        restNo = view.querySelector('#restNo').value;
-        isPublic = view.querySelector('.is-public').value;
+        const newRestNo = view.querySelector('#restNo').value;
+        const newIsPublic = view.querySelector('.is-public').value;
 
-        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        view.classList.add('active');
-        
         // 북마크 삭제 모달, 가게 이름 클릭 이동
         if (target.classList.contains('bookmark')) {
             e.preventDefault();
+            restNo = newRestNo;
+            isPublic = newIsPublic;
             openModal();
         } else if (target.closest('.info-text a')) {
             e.preventDefault();
-            location.href = `../search/view?rest_no=${restNo}`;
+            if (!newRestNo) {
+                alert('유효한 가게를 선택하세요');
+                return;
+            }
+            location.href = `../search/view?rest_no=${newRestNo}`;
+        } else {
+            if (restNo === newRestNo) {
+                // 이미 선택된 가게면 해제
+                restNo = 0;
+                isPublic = '';
+                document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            } else {
+                // 새 가게 선택
+                restNo = newRestNo;
+                isPublic = newIsPublic;
+                document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+                view.classList.add('active');
+            }
         }
     });
     
