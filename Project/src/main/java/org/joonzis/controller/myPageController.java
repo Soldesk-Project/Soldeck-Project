@@ -170,11 +170,7 @@ public class myPageController {
 	    MemberVO mvo = (MemberVO) session.getAttribute("loggedInUser");
 	    int mem_no = mvo.getMem_no();
 	    log.info("getBookmark...{}" + mem_no);
-	    List<BookMarkDTO> bookmarkList = bservice.getBookMark(mem_no);
-	    for (BookMarkDTO bm : bookmarkList) {
-	        List<RestVO> rest = rservice.getRest(bm.getRest_no());
-	        bm.setRest(rest);
-	    }
+	    List<BookMarkDTO> bookmarkList = bservice.getBookmarkWithImages(mem_no);
 	    return new ResponseEntity<>(bookmarkList, HttpStatus.OK);
 	}
 	// 상세 페이지 즐겨찾기 상태 확인

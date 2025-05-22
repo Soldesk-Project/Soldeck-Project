@@ -1,21 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.joonzis.mapper.BookmarkMapper">
-	
-	<!-- bookmark 정보 가져오기 
-		SELECT MEM_NO, REST_NO, IS_PUBLIC FROM BOOKMARK WHERE MEM_NO=#{mem_no}
-	-->
-	<select id="getBookMark" resultType="org.joonzis.domain.BookMarkDTO">
-		SELECT 
-		    b.MEM_NO, b.REST_NO, b.IS_PUBLIC, 
-		    r.REST_NAME, r.REST_LOC, r.REST_CATE
-		FROM 
-		    BOOKMARK b
-		LEFT JOIN
-		    RESTAURANT r ON b.rest_no = r.rest_no
-		WHERE 
-		    MEM_NO=#{mem_no}
+
+	<select id="getBookmarkWithImages" resultMap="bookmarkWithImagesMap">
+	    <![CDATA[
+	    SELECT 
+	        b.MEM_NO, b.REST_NO, b.IS_PUBLIC, 
+	        r.REST_NAME, r.REST_LOC, r.REST_CATE,
+	        i.REST_IMG_NAME
+	    FROM 
+	        BOOKMARK b
+	    LEFT JOIN 
+	        RESTAURANT r ON b.REST_NO = r.REST_NO
+	    LEFT JOIN 
+	        (
+	            SELECT * FROM (
+	                SELECT 
+	                    rest_img_no, rest_no, rest_img_name,
+	                    ROW_NUMBER() OVER (PARTITION BY rest_no ORDER BY rest_img_no) rn
+	                FROM rest_img
+	            ) WHERE rn <= 3
+	        ) i ON r.REST_NO = i.REST_NO
+	    WHERE 
+	        b.MEM_NO = #{mem_no}
+	    ]]>
 	</select>
+	<resultMap id="bookmarkWithImagesMap" type="org.joonzis.domain.BookMarkDTO">
+	    <id property="rest_no" column="REST_NO"/>
+	    <result property="mem_no" column="MEM_NO"/>
+	    <result property="is_public" column="IS_PUBLIC"/>
+	    <result property="rest_name" column="REST_NAME"/>
+	    <result property="rest_loc" column="REST_LOC"/>
+	    <result property="rest_cate" column="REST_CATE"/>
+	    
+	    <collection property="rest" ofType="org.joonzis.domain.RestVO">
+	        <result property="rest_img_name" column="REST_IMG_NAME"/>
+	    </collection>
+	</resultMap>
 	
 	<!-- bookmark된 가게 번호 가져오기 -->
 	<select id="getBookMarkRestNo" resultType="int">

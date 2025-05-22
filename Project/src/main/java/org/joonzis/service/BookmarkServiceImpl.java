@@ -19,13 +19,8 @@ public class BookmarkServiceImpl implements BookmarkService{
 	private BookmarkMapper mapper;
 
 	@Override
-	public List<BookMarkDTO> getBookMark(int mem_no) {
-		List<BookMarkDTO> result=mapper.getBookMark(mem_no);
-		for(BookMarkDTO rest:result)
-			if (rest.getRest_name().length()>=10) {
-				rest.setRest_name(rest.getRest_name().substring(0, 10)+"...");
-			}
-		return mapper.getBookMark(mem_no);
+	public List<BookMarkDTO> getBookmarkWithImages(int mem_no) {
+		return mapper.getBookmarkWithImages(mem_no);
 	}
 	@Override
 	public List<Integer> getBookMarkRestNo(int mem_no) {

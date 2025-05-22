@@ -103,28 +103,6 @@
     	    REST_NO = #{rest_no}
 	</select>
 	
-	<select id="getRest" resultType="org.joonzis.domain.RestVO">
-	<![CDATA[
-		SELECT 
-		    i.REST_IMG_NAME,
-		    i.REST_IMG_NO
-		FROM 
-		    RESTAURANT r
-		LEFT JOIN 
-		    (SELECT *
-		    FROM (
-		        SELECT 
-		            rest_img_no, rest_no, rest_img_name,
-		            ROW_NUMBER() OVER (PARTITION BY rest_no ORDER BY rest_img_no) rn
-		        FROM rest_img
-		    )
-		    WHERE rn <= 3
-		) i ON r.REST_NO = i.REST_NO
-		WHERE 
-		    r.REST_NO = #{rest_no}
-    ]]>
-	</select>
-	
 	<insert id="addReserve" parameterType="org.joonzis.domain.ReserveVO">
         INSERT INTO RESERVE (RES_NO, MEM_NO, REST_NO, RES_DATE, RES_TIME, RES_MEMO, RES_PERSONNEL)
         VALUES (
