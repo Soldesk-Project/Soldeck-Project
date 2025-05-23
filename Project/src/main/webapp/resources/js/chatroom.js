@@ -94,8 +94,12 @@ function initializeChatroom() {
     if (window.ws && window.ws.readyState !== WebSocket.CLOSED) {
       window.ws.close();  // 기존 연결 있으면 닫기
     }
+<<<<<<< Updated upstream
     window.ws = new WebSocket("wss://1987-14-52-79-21.ngrok-free.app/chat/" + roomNo);
     console.log("WebSocket 생성:", window.ws)
+=======
+    window.ws = new WebSocket("wss://5da3-14-52-79-21.ngrok-free.app/chat/" + roomNo);
+>>>>>>> Stashed changes
     window.ws.onopen = function(event) {
       const firstMessage = JSON.stringify({ type: "register", mem_no: mem_no });
       window.ws.send(firstMessage);
@@ -164,7 +168,6 @@ function initializeChatroom() {
         room_no: roomNo
       };
       
-      console.log(chatMessage);
 
       if (chatMessage.file) {
         const reader = new FileReader();
@@ -187,9 +190,7 @@ function initializeChatroom() {
 window.chatContext = parseChatContextFromMeta();
 
 if (!window.chatContext) {
-  console.error("chatContext가 없습니다. 초기화를 대기합니다.");
   window.addEventListener("chatContextReady", () => {
-    console.log("chatContext 준비 완료, 채팅방 초기화 시작");
     initializeChatroom();
   }, { once: true });
 } else {

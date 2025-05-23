@@ -232,7 +232,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (searchInput.disabled) {
-            console.log("searchInput이 비활성화되어 있습니다. 활성화합니다.");
             searchInput.disabled = false;
         }
         searchInput.removeEventListener("change", handleSearch);
@@ -333,7 +332,6 @@ locationBtn.addEventListener('click', () => {
     currentLat = currentCenter.getLat(); // 현재 중심 좌표를 기준 위치로 업데이트
     currentLon = currentCenter.getLng();
     const zoomLevel = map.getLevel(); // 현재 줌 레벨 가져오기
-    console.log('현재 중심 좌표 기준으로 거리 계산:', currentLat, currentLon, '줌 레벨:', zoomLevel);
 
     const keyword = sessionStorage.getItem('keyword') || '전체'; // 카테고리 키워드 가져오기, 기본값은 '전체'
 
@@ -384,7 +382,6 @@ function handleSearch(event) {
         sessionStorage.removeItem('keyword');
         window.location.href = "/search/map"; // 검색은 페이지 리로드 유지
     } else {
-        console.log("검색어가 비어 있습니다.");
         alert("검색어를 입력하세요.");
     }
 }

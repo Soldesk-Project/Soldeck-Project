@@ -380,7 +380,6 @@ async function modify(mem_no, prefixSelect){
     formData.append('mem_phone', phoneNumber);
     
     for (let [key, value] of formData.entries()) {
-        console.log(key, value);
     }
 
     try {
@@ -393,7 +392,6 @@ async function modify(mem_no, prefixSelect){
             throw new Error('수정 실패: ' + errorText);
         }
         const result = await response.text();
-        console.log('수정 성공:', result);
         location.href = '/mypage/myInfo'; 
     } catch (error) {
         console.error('수정 실패:', error.message);
@@ -407,15 +405,11 @@ async function remove(mem_no){
                 const response = await fetch('/mypage/removeMember?mem_no='+mem_no, {
                     method: 'POST'
                 });
-                console.log("Response Status:", response.status);
-                console.log("Response OK:", response.ok);
                 const responseText = await response.text(); // 응답 텍스트 받기
-                console.log("Response Text:", responseText);
 
                 if (!response.ok) {
                     throw new Error('탈퇴 실패: 서버 응답 상태 ' + response.status + ', 내용: ' + responseText);
                 }
-                console.log('탈퇴 성공:', responseText);
                 alert(responseText); // 성공 메시지 표시
                 location.href = '/';
             } catch (error) {

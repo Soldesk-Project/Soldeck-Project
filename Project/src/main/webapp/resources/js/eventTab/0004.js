@@ -61,7 +61,6 @@ function loadAttendanceData(year, month) {
     .then(res => res.json())
     .then(data => {
     	const days = Array.isArray(data) ? data : [];
-    	console.log(days);
         attendance = days.reduce((acc, day) => {
             acc[day] = true;
             return acc;

@@ -48,11 +48,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         socket.onmessage = (event) => {
             const data = JSON.parse(event.data);
-            console.log("받은 데이터:", data);
             displayRequestAlert(data);
         };
 
-        socket.onclose = () => console.log("WebSocket 연결 종료");
         socket.onerror = (err) => console.error("WebSocket 오류", err);
     }
 

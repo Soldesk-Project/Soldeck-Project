@@ -37,7 +37,6 @@ document.addEventListener('DOMContentLoaded', function () {
         script.src = jsPath;
         script.setAttribute('data-dynamic', 'true'); // 식별용
         script.onload = () => {
-            console.log(jsPath + ' 로드 완료');
             // jsPath에 따라 초기화 함수 호출
             if (jsPath.includes('friendList.js') && typeof initFriendList === 'function') {
                 initFriendList();
@@ -55,7 +54,6 @@ document.addEventListener('DOMContentLoaded', function () {
         button.addEventListener('click', function () {
         	const category = this.dataset.major;
             if (!scriptMap.hasOwnProperty(category)) {
-                console.error('정의되지 않은 카테고리:', category);
                 return;
             }
             loadContent(category);
@@ -81,26 +79,18 @@ const page = urlParams.get('page');
 
 document.addEventListener('DOMContentLoaded', () => {
 	setTimeout(() => {
-    console.log('DOMContentLoaded');
     if (page != null) {
-        console.log('page 파라미터:', page);
         const btn = document.querySelector('.major-category-button[data-major="event"]');
         if (btn) {
             btn.click();
-            console.log('.major-category-button 클릭');
-        } else {
-            console.log('.major-category-button 없음');
         }
 
         setTimeout(() => {
             let links = document.querySelectorAll('.main-menu a');
-            console.log('링크 개수:', links.length);
             let found = false;
             for (let link of links) {
-                console.log('href:', link.getAttribute('href'), link.href);
                 if (link.getAttribute('href') === '/list/' + page || link.href.endsWith('/list/' + page)) {
                     link.click();
-                    console.log('클릭 성공:', link);
                     found = true;
                     break;
                 }

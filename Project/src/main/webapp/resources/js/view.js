@@ -838,7 +838,6 @@ function formatDate(dateString) {
 
 // 즐겨찾기 처리
 function handleFavoriteClick() {
-//    console.log("handleFavoriteClick isFavorite:", window.isFavorite);
     const bookmarkBtnElement = document.getElementById('bookmarkBtn');
     const favoriteAddModal = document.getElementById('favoriteAddModal');
     const favoriteDeleteModal = document.getElementById('favoriteDeleteModal');

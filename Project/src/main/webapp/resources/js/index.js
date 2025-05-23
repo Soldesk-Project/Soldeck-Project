@@ -138,7 +138,6 @@ document.addEventListener("DOMContentLoaded", function () {
             e.preventDefault(); // 기본 이동 막기
 
             let keyword = btn.dataset.value;
-//            console.log("클릭된 키워드:", keyword);
 
             sessionStorage.setItem('keyword', keyword);
             sessionStorage.setItem('actionType', 'category');

@@ -76,8 +76,6 @@ function handleFriendListClick(event) {
         script.onload = () => {
           if (window.chatContext) {
             window.dispatchEvent(new Event("chatContextReady"));
-          } else {
-            console.warn("chatContext가 아직 준비되지 않았습니다.");
           }
         };
         document.body.appendChild(script);

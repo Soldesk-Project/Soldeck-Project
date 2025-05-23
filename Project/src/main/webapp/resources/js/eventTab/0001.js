@@ -2078,11 +2078,9 @@ function save1Score() {
 	    .then(response => response.json())
 	    .then(result => {
 	    	if(result) {
-	    		console.log("점수 갱신 성공!");
 	//          location.reload();
 	    		openModal();
 	        } else {
-	        	console.log("기존 점수보다 낮거나 같아서 갱신되지 않았습니다.");
 	        }
 	    	highScoreValue='';
 	    	loadGame1RankData();

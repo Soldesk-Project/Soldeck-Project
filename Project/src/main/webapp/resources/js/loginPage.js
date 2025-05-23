@@ -39,7 +39,6 @@ document.querySelectorAll('button').forEach( btn => {
 const LOGIN_FAIL_MSG = "아이디 또는 비밀번호가 일치하지 않습니다.";
 
 function login() {
-	console.log(1);
     let userId = document.getElementById('userId').value;
     let password = document.getElementById('password').value;
 
@@ -68,7 +67,6 @@ function login() {
     })
     .then(response => response.text())
     .then(data => {
-        console.log(data);
         
         if (data === 'success') {
         	location.href = `${redirectUrl}`; // 로그인 성공 시 메인 페이지로 리다이렉트 (루트 경로 가정)

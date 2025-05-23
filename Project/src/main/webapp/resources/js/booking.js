@@ -217,8 +217,6 @@ function closeModal(){
 //-----모달 작동 함수------------------------------------------------------------
 //----- 즐겨찾기 삭제 함수-------------------------------------------------
 function deleteBookmark() {
-	console.log(restNo);
-	console.log(memberNo);
 	
 	fetch(`/mypage/favorites/remove/${restNo}`, {
 		  method: 'DELETE',
@@ -229,7 +227,6 @@ function deleteBookmark() {
 		})
 		  .then(response => response.json())
 		  .then(data=>{
-		  	console.log(data);
 		  	document.querySelectorAll('.bookmark').forEach(btn => {
 				const targetRestNo = btn.closest('.booking-info').querySelector('#restNo').value;
 				if (targetRestNo === restNo) {
@@ -264,9 +261,6 @@ if (privateFavoriteBtn) {
 }
 
 function addBookmark() {
-	console.log("restNo:", restNo);
-	console.log("memberNo:", memberNo);
-	console.log("isPublic from input:", isPublicInput.value); // hidden input 값 확인
 
 	fetch('/mypage/bookmark/add', {
 		method: 'POST',
@@ -277,7 +271,6 @@ function addBookmark() {
 	})
 	.then(response => response.json())
 	.then(data => {
-		console.log("서버 응답:", data);
 		document.querySelectorAll('.bookmark').forEach(btn => {
 			const targetRestNo = btn.closest('.booking-info').querySelector('#restNo').value;
 			if (targetRestNo === restNo) {
@@ -291,7 +284,6 @@ function addBookmark() {
 }
 //-----예약 취소 함수--------------------------------------
 function bookingCancel() {
-	console.log(resNo);
 	fetch('/mypage/booking/del', {
 		  method: 'POST',
 		  headers: {
@@ -301,7 +293,6 @@ function bookingCancel() {
 		})
 		  .then(response => response.json())
 		  .then(data=>{
-		  	console.log(data);
 		  	location.reload();
 		  })
 		  .catch(e=>console.log(e));
@@ -318,8 +309,6 @@ function checkMemo() {
 	}
 }
 function saveMemo() {
-	console.log(memo);
-	console.log(resNo);
 	fetch('/mypage/booking/memoUpdate', {
 		  method: 'POST',
 		  headers: {
@@ -329,7 +318,6 @@ function saveMemo() {
 		})
 		  .then(response => response.json())
 		  .then(data=>{
-		  	console.log(data);
 		  	location.reload();
 		  })
 		  .catch(e=>console.log(e));

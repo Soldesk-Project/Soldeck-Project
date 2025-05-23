@@ -54,14 +54,12 @@ document.querySelectorAll(".main-menu a").forEach(event=>{
 					const script = document.createElement('script');
 					script.src = jsPath;
 					script.setAttribute('data-dynamic', 'true');
-					script.onload = () => console.log(jsPath + ' 로드 완료');
 					document.body.appendChild(script);
 				} else {
 					deleteScript();
 					const script = document.createElement('script');
 					script.src = jsPath;
 					script.setAttribute('data-dynamic', 'true');
-					script.onload = () => console.log(jsPath + ' 로드 완료');
 					document.body.appendChild(script);
 				}
 			}
@@ -74,10 +72,8 @@ document.querySelectorAll(".main-menu a").forEach(event=>{
 	})
 })
 function deleteScript() {
-	console.log('delete함수');
 	
 	const dynamicScripts = document.querySelectorAll('script[data-dynamic="true"]');
-	console.log(dynamicScripts);
     dynamicScripts.forEach(script => script.parentNode.removeChild(script));
 //	const scriptPaths = [
 //		'/resources/js/eventTab/0001.js',

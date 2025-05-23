@@ -48,7 +48,6 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     })
     .catch(error => {
-      console.error('비밀번호 조회 실패:', error);
       resultDiv.textContent = '비밀번호 조회에 실패했습니다. 잠시 후 다시 시도해주세요.';
       resultContainer.style.display = 'block';
     });

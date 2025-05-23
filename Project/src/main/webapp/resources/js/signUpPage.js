@@ -300,7 +300,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const phoneNumber = prefixValue  + phone1Input.value + phone2Input.value;
             formData.append('phone', phoneNumber);
             
-            console.log('Sending FormData:', formData); // 콘솔에 FormData 객체 확인
 
             fetch('/login/signUpProcess', {
                 method: 'POST',
@@ -315,7 +314,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 return response.text();
             })
             .then(result => {
-                console.log('회원가입 성공:', result);
                 window.location.href = '/login/loginPage'; // 성공 후 리다이렉트
             })
             .catch(error => {

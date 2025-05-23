@@ -12,7 +12,6 @@ let selectedCategory = '';
 const locationSelect = document.querySelector('.location-select_select');
 locationSelect.addEventListener('change', function () {
     selectedRegion = this.value;
-//    console.log(selectedRegion);
     showList();
     showSearchList();
 });
@@ -31,7 +30,6 @@ categoryButtons.forEach(button => {
             vietBtn: '베트남식'
         };
         selectedCategory = categoryMap[this.id] || '';
-//        console.log(selectedCategory);
         showList();
         showSearchList();
     });
@@ -48,18 +46,15 @@ function setupEventListeners() {
     imageCon.addEventListener('click', (event) => {
     	// 드래그로 판단되면 클릭 이벤트 무시
         if (Math.abs(dragDistance) > DRAG_THRESHOLD) {
-            console.log('드래그로 판단됨, 클릭 이벤트 무시');
             return;
         }
         
         if (event.target.tagName === 'IMG' || event.target.tagName === 'P') {
             if (event.target.tagName === 'IMG') {
                 const imageSrc = event.target.src;
-//                console.log('이미지 클릭됨:', imageSrc);
             }
             if (event.target.tagName === 'P') {
                 const storeName = event.target.textContent;
-//                console.log('클릭한 가게 이름 :', storeName);
             }
 
             const slide = event.target.closest('.slide');
@@ -75,7 +70,6 @@ function setupEventListeners() {
                 return;
             }
 
-//            console.log('클릭한 가게 번호:', restNo);
             window.location.href = `/search/view?rest_no=${restNo}`;
         }
     });
@@ -95,11 +89,6 @@ function showList() {
     	if (!Array.isArray(jsonArray)) {
             console.error('jsonArray가 배열이 아닙니다:', jsonArray);
             return;
-        }
-        if (jsonArray.length > 0) {
-//            console.log('getList 반환 데이터:', jsonArray.length);
-        } else {
-            console.log('jsonArray에 데이터가 없습니다.');
         }
 
         for (let i = jsonArray.length - 1; i > 0; i--) {
@@ -135,7 +124,6 @@ function getList(callback) {
     if (selectedRegion) params.append('region', selectedRegion);
     if (selectedCategory) params.append('category', selectedCategory);
     const url = `/search/search/filterData${params.toString() ? '?' + params.toString() : ''}`;
-//    console.log("Fetching URL:", url);
     fetch(url, {
         headers: {
             'Accept': 'application/json'
@@ -148,7 +136,6 @@ function getList(callback) {
             return response.json();
         })
         .then(data => {
-            console.log("Search Fetch data:", data);
             callback(data || []); // 데이터가 없으면 빈 배열 전달
         })
         .catch(err => {
@@ -326,11 +313,9 @@ function setupEventListeners2() {
         if (event.target.tagName === 'IMG' || (event.target.tagName === 'P' && event.target.classList.contains('store-name'))) {
             if (event.target.tagName === 'IMG') {
                 const imageSrc = event.target.src;
-//                console.log('이미지 클릭됨:', imageSrc);
             }
             if (event.target.tagName === 'P') {
                 const storeName = event.target.textContent;
-//                console.log('클릭한 가게 이름:', storeName);
             }
 
             const storeBlock = event.target.closest('.store-block');
@@ -346,7 +331,6 @@ function setupEventListeners2() {
                 return;
             }
 
-//            console.log('클릭한 가게 번호:', restNo);
              window.location.href = `/search/view?rest_no=${restNo}`;
         }
     });
@@ -377,7 +361,6 @@ function showSearchList() {
 
         data.forEach(json => {
             const restNo = json.rest_no || 'default'; // rest_no가 없으면 기본값 설정
-//            console.log('검색 결과 데이터:', json); // 디버깅 로그 추가
             msg += `<div class="store-block" data-rest-no="${restNo}">`;
             msg += `<div class="store-image">`;
             msg += `<img src="${json.rest_img_name || '/resources/images/noImage.png'}" alt="가게 이미지 1">`;
@@ -409,7 +392,6 @@ function getSearch(callback) {
 
     // 기존 경로 파라미터 방식 대신 쿼리 파라미터 방식으로 변경
     const url = `/search/search/searchData${params.toString() ? '?' + params.toString() : ''}`;
-//    console.log("Fetching URL:", url);
     fetch(url, {
         headers: {
             'Accept': 'application/json'
@@ -422,7 +404,6 @@ function getSearch(callback) {
             return response.json();
         })
         .then(data => {
-            console.log("Search Received data:", data);
             callback(data || []);
         })
         .catch(err => {

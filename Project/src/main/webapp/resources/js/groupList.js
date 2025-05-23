@@ -100,7 +100,6 @@ function loadRandomGroupList() {
 			    5: "베트남요리"
 			};
 		data.forEach(group => {
-			console.log(group.foodList);
 		    const hashtags = (group.foodList || []).slice(0, 3)
 	        .map(no => `<li>${foodMap[no] || '기타'}</li>`)
 	        .join('');
@@ -146,7 +145,6 @@ function loadRandomGroupList() {
 function modifyMemo() {
 	document.querySelectorAll(".group-modify-btn").forEach(modifyMemo => {
 		modifyMemo.addEventListener('click',e=>{
-    		console.log('수정 버튼');
     		modifyMemo.closest(".group_profile").querySelector(".group-memo").style.display='none';
     		modifyMemo.closest(".group_profile").querySelector(".group-memo-modify").style.display='inline';
     		modifyMemo.closest(".group_profile").querySelector(".group-modify-btn").style.display='none';
@@ -156,7 +154,6 @@ function modifyMemo() {
     });
 	document.querySelectorAll(".group-save-btn").forEach(modifyMemo => {
 		modifyMemo.addEventListener('click',e=>{
-			console.log('수정 완료 버튼');
 			let memo=modifyMemo.closest(".group-box").querySelector(".group-memo-modify").value;
 			let groupNo=modifyMemo.closest(".group-box").querySelector(".group-no").value;
 			saveGroupMemo(memo, groupNo);

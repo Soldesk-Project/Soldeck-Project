@@ -114,8 +114,6 @@ document.querySelectorAll(".rest-review-info").forEach(moveView => {
 })
 //-----리뷰 삭제 함수---------------------------------------------------
 function removeReview() {
-	console.log(comNo);
-	console.log(memNo);
 	fetch('/mypage/review/del', {
 		  method: 'POST',
 		  headers: {
@@ -125,7 +123,6 @@ function removeReview() {
 		})
 		  .then(response => response.json())
 		  .then(data=>{
-		  	console.log(data);
 		  	location.reload();
 		  })
 		  .catch(e=>console.log(e));
