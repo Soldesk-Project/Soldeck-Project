@@ -258,6 +258,17 @@ input, textarea{
 	width: 100px;
 	height: 40px;
 }
+.booking-completed-btn{
+	margin: 10px 20px;
+	background-color: #D3D3D3;
+	color: white;
+	padding: 10px 15px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	width: 100px;
+	height: 40px;
+}
 .booking-memo-btn{
 	width: 50px;
 	height: 25px;
