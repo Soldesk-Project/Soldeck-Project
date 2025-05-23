@@ -40,7 +40,7 @@
 						                    <input type="hidden" class="member-no" value="${rl.mem_no }">
 										</div>
 									</div>
-								<button type="button" class="booking-cancel-btn">예약취소</button>
+								<button type="button" class="booking-action-btn">예약취소</button>
 								</div>
 							<div class="border-div">
 			                    <div class="info-text">

@@ -49,48 +49,66 @@ document.querySelectorAll(".booking-img img").forEach(moveRestView => {
 })
 // --- 과거 여부 판단 ---
 document.addEventListener('DOMContentLoaded', function() {
-    const bookingLists = document.querySelectorAll('.booking-list');
-    const currentDateTime = new Date(); // 현재 시간
+	const bookingLists = document.querySelectorAll('.booking-list');
+	const currentDateTime = new Date(); // 현재 시간
 
-    bookingLists.forEach(function(bookingList) {
-        const resDateInput = bookingList.querySelector('.booking-date.date');
-        const resTimeInput = bookingList.querySelector('.booking-date.time');
+	bookingLists.forEach(function(bookingList) {
+		const resDateInput = bookingList.querySelector('.booking-date.date');
+		const resTimeInput = bookingList.querySelector('.booking-date.time');
         
-        // 날짜 형식 변환: "yyyy - MM - dd" -> "yyyy-MM-dd" (fmt:formatDate 패턴 고려)
-        const resDateStr = resDateInput.value.replace(/\s/g, ''); 
-        const resTimeStr = resTimeInput.value; // "HH:MM" 형식
+		// 날짜 형식 변환: "yyyy - MM - dd" -> "yyyy-MM-dd" (fmt:formatDate 패턴 고려)
+		const resDateStr = resDateInput.value.replace(/\s/g, ''); 
+		const resTimeStr = resTimeInput.value; // "HH:MM" 형식
 
-        const [year, month, day] = resDateStr.split('-').map(Number);
-        const [hour, minute] = resTimeStr.split(':').map(Number);
-        const bookingDateTime = new Date(year, month - 1, day, hour, minute); // 월은 0부터 시작
+		const [year, month, day] = resDateStr.split('-').map(Number);
+		const [hour, minute] = resTimeStr.split(':').map(Number);
+		const bookingDateTime = new Date(year, month - 1, day, hour, minute); // 월은 0부터 시작
 
-        const cancelButton = bookingList.querySelector('.booking-cancel-btn');
-        const memoButton = bookingList.querySelector('.booking-memo-btn'); // '수정' 버튼
-        const memoModifyInput = bookingList.querySelector('.booking-memo-modify'); // 수정 입력창
-        const saveMemoBtn = bookingList.querySelector('.check-memo'); // '저장' 버튼
+		const actionButton = bookingList.querySelector('.booking-action-btn');
+		const memoButton = bookingList.querySelector('.booking-memo-btn'); // '수정' 버튼
+		const memoModifyInput = bookingList.querySelector('.booking-memo-modify'); // 수정 입력창
+		const saveMemoBtn = bookingList.querySelector('.check-memo'); // '저장' 버튼
 
-        if (bookingDateTime < currentDateTime) {
-            // 과거 예약인 경우
-            bookingList.classList.add('past-booking'); // .past-booking 클래스 추가
+		if (bookingDateTime < currentDateTime) {
+			// 과거 예약인 경우
+			bookingList.classList.add('past-booking'); // .past-booking 클래스 추가
 
-            if (cancelButton) {
-                cancelButton.textContent = '예약완료'; // 텍스트 변경
-                cancelButton.disabled = true; // 버튼 비활성화
-            }
+			if (actionButton) {
+				actionButton.textContent = '예약완료'; // 텍스트 변경
+				actionButton.disabled = true; // 버튼 비활성화
+				actionButton.classList.add('booking-completed-btn');
+				actionButton.classList.remove('booking-cancel-btn');
+			}
 
-            // 메모 관련 기능 비활성화 및 숨김
-            if (memoButton) {
-                memoButton.style.display = 'none'; // 수정 버튼 숨김
-            }
-            if (memoModifyInput) {
-                memoModifyInput.style.display = 'none'; // 수정 입력창 숨김
-                memoModifyInput.readOnly = true; // 읽기 전용
-            }
-            if (saveMemoBtn) {
-                saveMemoBtn.style.display = 'none'; // 저장 버튼 숨김
-            }
-        }
-    });
+			// 메모 관련 기능 비활성화 및 숨김
+			if (memoButton) {
+				memoButton.style.display = 'none'; // 수정 버튼 숨김
+			}
+			if (memoModifyInput) {
+				memoModifyInput.style.display = 'none'; // 수정 입력창 숨김
+				memoModifyInput.readOnly = true; // 읽기 전용
+			}
+			if (saveMemoBtn) {
+				saveMemoBtn.style.display = 'none'; // 저장 버튼 숨김
+			}
+		} else{
+			//미래 예약인 경우
+			if (actionButton){
+				actionButton.classList.add('booking-cancel-btn');
+				actionButton.classList.remove('booking-completed-btn');
+			}
+		}
+	});
+	//예약취소버튼 이벤트 리스너 추가
+	document.querySelectorAll(".booking-cancel-btn").forEach(cancelBtn => {
+		cancelBtn.addEventListener('click', e => {
+			e.preventDefault();
+			// 예약 취소 모달을 띄우기 전에 resNo를 설정
+			resNo = cancelBtn.closest(".booking-schedule").querySelector(".reserve-no").value;
+			console.log("resNo:" + resNo);
+			openBookingCancelModal(); // 예약 취소 모달 함수 호출
+		});
+	});
 });
 
 //-----페이지 로딩시 즐겨찾기 유무 판단 / 즐겨찾기 유무에 따라 이벤트 부여----------------------------------------------
@@ -132,13 +150,13 @@ document.querySelectorAll(".bookmark").forEach(bookmarkBtn => {
 	});
 })
 // 예약취소 버튼 -> 예약 번호
-let resNo;
-document.querySelectorAll(".booking-cancel-btn").forEach(bookingCancelBtn => {
-	bookingCancelBtn.addEventListener('click',e=>{
-		e.preventDefault();
-		resNo = bookingCancelBtn.closest(".booking-schedule").querySelector(".reserve-no").value;
-	});
-})
+//let resNo;
+//document.querySelectorAll(".booking-cancel-btn").forEach(bookingCancelBtn => {
+//	bookingCancelBtn.addEventListener('click',e=>{
+//		e.preventDefault();
+//		resNo = bookingCancelBtn.closest(".booking-schedule").querySelector(".reserve-no").value;
+//	});
+//})
 // 메모저장 버튼 -> 예약 번호
 let memo;
 document.querySelectorAll(".booking-memo-btn").forEach(modifyMemo => {
@@ -165,23 +183,21 @@ document.addEventListener("DOMContentLoaded", ()=>{
 //-----버튼들 클릭 이벤트-------------------------------------------
 document.querySelectorAll("button").forEach(btn=>{
 	btn.addEventListener('click',e=>{
-		let type=btn.getAttribute('id');
+		let idType=btn.getAttribute('id');
 		
-		if(type=='bookingCancelBtn'){
-			openBookingCancelModal();
-	    }else if(type=='outBookMarkBtn'){
+		if(idType=='outBookMarkBtn'){
 	    	deleteBookmark();
 	    	closeModal();
-	    }else if(type=='addBookMarkBtn'){
+	    }else if(idType=='addBookMarkBtn'){
 	    	addBookmark();
 	    	closeModal();
-		}else if(type=='cancelBookingBtn'){
+		}else if(idType=='cancelBookingBtn'){
 			bookingCancel();
 			closeModal();
-		}else if(type=='memoUpdateBtn'){
+		}else if(idType=='memoUpdateBtn'){
 			saveMemo();
 			closeModal();
-		}else if(type=='cancelModalBtn'){
+		}else if(idType=='cancelModalBtn'){
 			closeModal();
 		}
 	});
@@ -202,6 +218,7 @@ function openAddBookmarkModal() {
 //예약 취소
 function openBookingCancelModal() {
 	modal3.style.display = 'block';
+	console.log("modal3.style.display 설정 후:", modal3.style.display);
 }
 //메모 저장
 function openSaveMemoModal() {
@@ -343,7 +360,7 @@ function showModalToLeft(modalSelector, triggerBtn) {
 	  }
 
 	  // 예약취소 버튼
-	  document.querySelectorAll('#bookingCancelBtn').forEach(btn => {
+	  document.querySelectorAll('.booking-cancel-btn').forEach(btn => {
 	    btn.addEventListener('click', function (e) {
 	      e.preventDefault();
 	      hideAllModals();
@@ -374,7 +391,7 @@ function showModalToLeft(modalSelector, triggerBtn) {
 	  // 모달 외부 클릭 시 닫기
 	  document.addEventListener('click', function (e) {
 	    const isModalClick = e.target.closest('.modal-popup');
-	    const isTrigger = e.target.closest('#bookingCancelBtn, #bookmarkBtn, #saveMemoBtn');
+	    const isTrigger = e.target.closest('.booking-cancel-btn, #bookingCancelBtn, #bookmarkBtn, #saveMemoBtn');
 	    if (!isModalClick && !isTrigger) {
 	      hideAllModals();
 	    }
