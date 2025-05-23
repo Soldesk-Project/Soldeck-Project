@@ -10,7 +10,7 @@ const loginData = document.getElementById('login-data');
 const mem_no = loginData.dataset.mem_no || '';
 let restNo = null;
 let currentIndex = 0;
-const visibleSlides = 4;
+const visibleSlides = 6;
 let selectedDate = null;
 let selectedTime = null;
 let selectedPersonnel = null;
@@ -352,7 +352,7 @@ function getList(callback) {
     })
     .then(res => res.ok ? res.json() : Promise.reject(res))
     .then(data => callback(data || []))
-    .catch(err => console.error("Fetch error:", err.message), callback([]));
+    .catch(err => callback([]));
 }
 
 function initializeSlides() {

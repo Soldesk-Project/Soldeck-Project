@@ -94,12 +94,8 @@ function initializeChatroom() {
     if (window.ws && window.ws.readyState !== WebSocket.CLOSED) {
       window.ws.close();  // 기존 연결 있으면 닫기
     }
-<<<<<<< Updated upstream
     window.ws = new WebSocket("wss://1987-14-52-79-21.ngrok-free.app/chat/" + roomNo);
     console.log("WebSocket 생성:", window.ws)
-=======
-    window.ws = new WebSocket("wss://5da3-14-52-79-21.ngrok-free.app/chat/" + roomNo);
->>>>>>> Stashed changes
     window.ws.onopen = function(event) {
       const firstMessage = JSON.stringify({ type: "register", mem_no: mem_no });
       window.ws.send(firstMessage);

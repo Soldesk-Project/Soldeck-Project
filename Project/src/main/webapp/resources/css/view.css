@@ -8,6 +8,7 @@
 /* --------------- 가게 정보단 --------------- */
 .page-header {
     margin: 30px;
+    margin-bottom: 15px;
 }
 .slideshow-container {
     position: relative;
@@ -39,7 +40,7 @@
 	font-size: xxx-large;
 }
 .slide {
-    flex: 0 0 248px; /* 슬라이드 너비 고정 */
+    flex: 0 0 250px; /* 슬라이드 너비 고정 */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -143,7 +144,7 @@ a:hover {
 	margin-bottom: 15px;
 	display: flex;
 	flex-direction: row;
-	gap:350px;
+	gap:520px;
 }
 .store-tap button {
 	background: none;
@@ -280,11 +281,11 @@ a:hover {
   align-items: center;
   gap: 10px;
   height: 210px;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
   border: 1px solid #EBEBEB;
   border-radius: 15px;
   padding: 10px 0px 10px 0px;
-  width: 1140px;
+  width: 1690px;
   margin-left: 30px;
 }
 .comment-image-container {
@@ -300,7 +301,7 @@ a:hover {
     gap: 15px;
 }
 .image-wrapper .image {
-    flex: 0 0 calc(25% - 11.5px);
+    flex: 0 0 calc(16.7% - 11.5px);
     height: 100%;
 }
 .image-wrapper .image img {
