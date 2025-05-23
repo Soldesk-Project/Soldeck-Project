@@ -25,7 +25,6 @@ public class GroupServiceImpl implements GroupService {
         // 1. 그룹 생성
         int result = mapper.createGroup(dto);
         if(result > 0) {
-            log.info("Group created successfully: " + dto);
             
             // 2. 그룹 번호가 생성되면, 해당 그룹 번호로 채팅방 생성
             int groupNo = dto.getGroup_no();  // 그룹 번호를 받아옵니다.
@@ -35,7 +34,6 @@ public class GroupServiceImpl implements GroupService {
             result = mapper.createChatRoom(chatRoomVO);
             mapper.joinGroup(groupNo, dto.getMem_no());
             if(result > 0) {
-                log.info("Chat room created successfully for group number: " + groupNo);
             }
         } else {
             log.error("Group creation failed: " + dto);
@@ -127,7 +125,6 @@ public class GroupServiceImpl implements GroupService {
 	@Override
 	public boolean acceptGroupRequest(int group_no, int mem_no) {
 		
-		System.out.println(("Accept group request: group_no=" + group_no + ", mem_no=" + mem_no));
 		// 요청 상태 업데이트
 		mapper.updateRequestStatus(group_no, mem_no, "ACCEPTED");
 		
@@ -149,7 +146,6 @@ public class GroupServiceImpl implements GroupService {
 	// 오프라인시 그룹 요청 조회
 	@Override
 	public List<GroupReqVO> getPendingRequest(int mem_no) {
-		System.out.println("mem_no" + mem_no);
 		return mapper.getPendingRequest(mem_no);
 	}
 	

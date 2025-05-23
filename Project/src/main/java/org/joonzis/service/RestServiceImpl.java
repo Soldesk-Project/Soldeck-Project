@@ -24,47 +24,40 @@ public class RestServiceImpl implements RestService{
 	// 전체 가게 목록
 	@Override
 	public List<RestVO> getList() {
-		log.info("getList...");
 		return mapper.findAll();
 	}
 	
 	// 특정 가게 목록
 	@Override
 	public List<RestVO> likeKateData(List<String> foodList) {
-		log.info("likeKateData...");
 		return mapper.likeKateData(foodList);
 	}
 	
 	// 특정 가게 검색
 	@Override
     public List<RestVO> todayData() {
-        log.info("todayData... ");
         return mapper.todayData();
     }
 	
 	// 가게 찾기
 	@Override
 	public List<RestVO> get(int rest_no) {
-		log.info("get..." + rest_no);
 		return mapper.findByNo(rest_no);
 	}
 	
 	// 가게 메뉴 찾기
 	@Override
 	public List<MenuVO> getMenu(int rest_no) {
-		log.info("get..." + rest_no);
 		return mapper.getMenu(rest_no);
 	}
 	
 	@Override
 	public List<RestVO> getRest(int rest_no) {
-		log.info("getRest..."+rest_no);
 		return mapper.getRest(rest_no);
 	}
 	
 	@Override
     public void addReserve(ReserveVO reservation) {
-        log.info("addReserve..." + reservation);
         
         // 필수 데이터 검증
         if (reservation.getRes_date() == null) {
@@ -94,7 +87,6 @@ public class RestServiceImpl implements RestService{
 	
 	@Override
     public List<String> getReservedTimes(int rest_no, String res_date) {
-		log.info("getReservedTimes..." + rest_no + res_date);
         return mapper.getReservedTimes(rest_no, res_date);
     }
 	

@@ -48,19 +48,13 @@ public class CommentServiceImpl implements CommentService {
 	@Transactional
 		@Override
 		public int addComment(CommentVO vo) {
-			log.info("addComment... " + vo);
-			log.info("com_attachList: " + vo.getCom_attachList()); // 디버깅 로그
 			
 			int addCount = mapper.addComment(vo);
-			log.info("addCount: " + addCount); // 삽입 결과 확인
 			int currentCom_no = vo.getCom_no();
-			log.info("currentCom_no: " + currentCom_no); // 삽입 후 com_no 확인
 			
 			if (vo.getCom_attachList() != null && !vo.getCom_attachList().isEmpty()) {
-				log.info("Processing attachments for com_no: " + vo.getCom_no());
 				vo.getCom_attachList().forEach(attach -> {
 					attach.setCom_no(currentCom_no);
-					log.info("Inserting attach: " + attach); // 각 attach 로그
 					attachMapper.insert(attach);
 				});
 			} else {
@@ -90,10 +84,8 @@ public class CommentServiceImpl implements CommentService {
 	            // 물리적 파일 삭제
 	            String fileName = attach.getAtt_uuid() + "_" + attach.getAtt_name();
 	            File file = new File(uploadFolderPath, fileName);
-	            log.info("Attempting to delete physical file: " + file.getAbsolutePath());
 	            if (file.exists()) {
 	                if (file.delete()) {
-	                    log.info("Deleted physical file: " + fileName);
 	                } else {
 	                    log.error("Failed to delete physical file: " + fileName + ", path: " + file.getAbsolutePath());
 	                }
@@ -102,19 +94,16 @@ public class CommentServiceImpl implements CommentService {
 	            }
 	            // DB에서 첨부 파일 삭제
 	            attachMapper.delete(attach.getAtt_uuid());
-	            log.info("Deleted attachment from DB: " + attach.getAtt_uuid());
 	        }
 	    }
 	    
 	    int result = mapper.deleteComment(com_no);
-	    log.info("Comment deleted, com_no: " + com_no + ", result: " + result);
 	    return result;
 	}
 	
 	// 코멘트 평균 평점
 	@Override
 	public double getAvgRate(int rest_no) {
-		log.info("getAvgRate... " + rest_no);
 		return mapper.getAvgRate(rest_no);
 	}
 	
@@ -125,7 +114,6 @@ public class CommentServiceImpl implements CommentService {
 	
 	@Override
 	public List<CommentVO> getAgeAvgRate(int rest_no) {
-		log.info("getAgeAvgRate... " + rest_no);
 		return mapper.getAgeAvgRate(rest_no);
 	}
 	

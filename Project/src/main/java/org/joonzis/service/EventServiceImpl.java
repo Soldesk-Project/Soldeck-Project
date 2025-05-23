@@ -16,33 +16,6 @@ public class EventServiceImpl implements EventService{
 	
 	@Autowired
 	private EventMapper mapper;
-	
-	
-//	@Override
-//	public boolean checkSpin(int mem_no) {
-//		log.info("service......");
-//	    LocalDate now = LocalDate.now();
-//	    log.info("현재 날짜: " + now);
-//	    
-//	    Date lastSpin = mapper.checkSpin(mem_no);
-//	    log.info("DB에서 조회한 lastSpin: " + lastSpin);
-//	    
-//	    LocalDate lastSpinDate = null;
-//	    if (lastSpin != null) {
-//	        if (lastSpin instanceof java.sql.Date) {
-//	            lastSpinDate = ((java.sql.Date) lastSpin).toLocalDate();
-//	        } else {
-//	            lastSpinDate = lastSpin.toInstant()
-//	                                 .atZone(ZoneId.systemDefault())
-//	                                 .toLocalDate();
-//	        }
-//	    }
-//	    log.info("변환된 lastSpinDate: " + lastSpinDate);
-//	    
-//	    boolean result = lastSpinDate == null || !lastSpinDate.isEqual(now);
-//	    log.info("결과: " + result);
-//	    return result;
-//	}
 
 	@Override
 	public boolean savePoint(int mem_no, int point) {
