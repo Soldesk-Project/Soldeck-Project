@@ -105,9 +105,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     break;
                 }
             }
-        }, 100);
+        }, 200);
     	}
-	}, 100);
+	}, 200);
 	history.replaceState({}, '', window.location.pathname);	
 });
 
