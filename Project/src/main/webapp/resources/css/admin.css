@@ -1,0 +1,127 @@
+/* 사이드바 컨테이너 */
+.main-menu {
+  position: fixed;    /* 화면에 고정 */
+  top: 0;
+  left: 0;
+  width: auto;      /* 사이드바 너비 */
+  height: auto;     /* 화면 전체 높이 */
+  background-color: #2c3e50; /* 진한 파랑 */
+  padding-top: 20px; /* 위 여백 */
+  box-sizing: border-box;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+/* 리스트 기본 스타일 제거 */
+.main-menu ul.side {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* 리스트 아이템 스타일 */
+.main-menu ul.side li {
+  margin-bottom: 20px;
+}
+
+/* 링크 스타일 */
+.main-menu ul.side li a {
+  display: block;
+  padding: 12px 20px;
+  color: #ecf0f1; /* 밝은 회색 */
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  border-left: 4px solid transparent;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* 호버 시 배경색, 글자색, 왼쪽 보더 변경 */
+.main-menu ul.side li a:hover,
+.main-menu ul.side li a:focus {
+  background-color: #34495e;
+  color: #ffffff;
+  border-left: 4px solid #e74c3c; /* 빨간색 강조선 */
+  outline: none;
+}
+
+/* 활성 메뉴일 때 (예: .active 클래스 추가해서 사용) */
+.main-menu ul.side li a.active {
+  background-color: #e74c3c;
+  color: white;
+  border-left: 4px solid #c0392b;
+}
+
+/* 회원 목록 제목 */
+h2 {
+  margin-top: 100px;
+  font-size: 28px;
+  color: #2c3e50;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* 테이블 기본 스타일 */
+table {
+  width: 1200px;
+  margin: 0 auto 50px auto; /* 가운데 정렬 + 아래 여백 */
+  border-collapse: collapse;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* 테이블 헤더 스타일 */
+table thead tr {
+  background-color: #34495e;
+  color: white;
+  text-align: center;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+/* 테이블 바디 행 스타일 */
+table tbody tr {
+  background-color: #f9f9f9;
+  transition: background-color 0.3s ease;
+}
+
+table tbody tr:nth-child(even) {
+  background-color: #e9ecef;
+}
+
+/* 행 호버 효과 */
+table tbody tr:hover {
+  background-color: #d1d8e0;
+}
+
+/* 테이블 셀 스타일 */
+table th, table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  text-align: center;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+/* 삭제 버튼 스타일 */
+button {
+  background-color: #e74c3c;
+  border: none;
+  color: white;
+  padding: 6px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #c0392b;
+}
+
+/* form 요소 내부에서 버튼 크기 조정 */
+form {
+  margin: 0;
+}
