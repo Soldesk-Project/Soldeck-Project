@@ -40,7 +40,6 @@ public class ChatController {
 	
 	@GetMapping("/main") // 채팅 메인 페이지 요청 처리
 	public String chatMain(HttpSession session, Model model) {
-	    log.info("채팅 메인 페이지 요청");
 	    MemberVO member = (MemberVO) session.getAttribute("loggedInUser");
 	    if (member == null) {
 	        return "redirect:/login/loginPage"; // 로그인 안 되어 있으면 로그인 페이지로 리다이렉트
@@ -161,15 +160,8 @@ public class ChatController {
 
 	    List<PrivateChatLogVO> chatLogs = privateChatService.getChatLogsByRoomNo(room);
 	    
-	    if (chatLogs == null) {
-	        System.out.println("chatLogs가 null입니다.");
-	    } else {
-	        System.out.println("chatLogs 크기: " + chatLogs.size());
-	    }
-	    
 	    chatLogs.forEach(chatLog -> {
 	        if (chatLog == null) {
-	            System.out.println("chatLog가 null입니다."); // 디버깅용
 	            return;
 	        }
 
@@ -181,7 +173,6 @@ public class ChatController {
 	                chatLog.setMsg(parts[1]);
 	            }
 	        } else {
-	            System.out.println("유효하지 않은 chatLog 포맷: " + log);
 	            chatLog.setSender("알 수 없음");
 	            chatLog.setMsg(log != null ? log : "");
 	        }

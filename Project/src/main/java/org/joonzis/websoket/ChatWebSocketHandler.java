@@ -36,7 +36,6 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         roomSessions.computeIfAbsent(groupNo, k -> new CopyOnWriteArrayList<>()).add(session);
         session.getAttributes().put("groupNo", groupNo);
 
-        log.info("접속: " + session.getId() + " / 그룹: " + groupNo);
     }
     
     @Override

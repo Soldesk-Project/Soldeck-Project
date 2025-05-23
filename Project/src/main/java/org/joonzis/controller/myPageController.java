@@ -14,7 +14,6 @@ import org.joonzis.domain.GroupMemberDTO;
 import org.joonzis.domain.MemberVO;
 import org.joonzis.domain.ReserveRestDTO;
 import org.joonzis.domain.ReserveVO;
-import org.joonzis.domain.RestVO;
 import org.joonzis.service.BookmarkService;
 import org.joonzis.service.CommentService;
 import org.joonzis.service.GroupService;
@@ -66,7 +65,6 @@ public class myPageController {
 		}
 		int mem_no = loggedInMember.getMem_no();
 		
-		log.info("modifyInfo..."+mem_no);
 		int foodKate[]=service.getFoodKateInfo(mem_no);
 		List<String> foodList = new ArrayList<>();
 	    for (int f : foodKate) {
@@ -103,8 +101,6 @@ public class myPageController {
 	    }
 	    vo.setMem_no(loggedInMember.getMem_no());
 
-	    log.info("수정 요청 데이터: " + vo);
-	    log.info("Upload Folder Path: " + uploadFolderPath);
 
 	    if (profileImage != null && !profileImage.isEmpty()) {
 	        String originalFilename = profileImage.getOriginalFilename();
@@ -118,11 +114,9 @@ public class myPageController {
 	        } catch (Exception e) {
 	            log.error("File upload failed: " + storedFilename, e);
 	        }
-	        log.info("새로운 이미지 파일명 설정: "+ storedFilename);
 	    } else {
 	        MemberVO currentMemberInfo = service.getMemberInfo(loggedInMember.getMem_no());
 	        vo.setMem_img(currentMemberInfo.getMem_img()); // 기존 이미지 유지
-	        log.info("기존 이미지 유지: "+ vo);
 	    }
 	    // food_kate 테이블 데이터 삭제
 	    service.deleteFoodKate(vo.getMem_no());
@@ -146,7 +140,6 @@ public class myPageController {
 	
 	@PostMapping(value = "/removeMember", produces = "text/plain; charset=UTF-8")
 	public ResponseEntity<String> removeMember(@RequestParam("mem_no") int mem_no, HttpSession session) {
-	    log.info("removeMember... mem_no: " + mem_no);
 
 	    boolean isRemoved = service.removeMember(mem_no);
 
@@ -169,7 +162,6 @@ public class myPageController {
 	public ResponseEntity<List<BookMarkDTO>> getBookmark(HttpSession session) {
 	    MemberVO mvo = (MemberVO) session.getAttribute("loggedInUser");
 	    int mem_no = mvo.getMem_no();
-	    log.info("getBookmark...{}" + mem_no);
 	    List<BookMarkDTO> bookmarkList = bservice.getBookmarkWithImages(mem_no);
 	    return new ResponseEntity<>(bookmarkList, HttpStatus.OK);
 	}
@@ -229,20 +221,17 @@ public class myPageController {
         }
 
         boolean result = bservice.deleteBookmark(mem_no, targetRestNo);
-				log.info("result..." + result);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
     
 	@PostMapping(value = "/bookmark/private", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> updateBookmarkToPrivate(@RequestBody BookMarkVO vo) {
-		log.info("updateBookmarkToPrivate...");
 		boolean result = bservice.updateBookmarkPublicStatus(vo.getMem_no(), vo.getRest_no(), "N");
 		return new ResponseEntity<Boolean>(result,HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/bookmark/public", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> updateBookmarkToPublic(@RequestBody BookMarkVO vo) {
-		log.info("updateBookmarkToPublic...");
 		boolean result = bservice.updateBookmarkPublicStatus(vo.getMem_no(), vo.getRest_no(), "Y");
 		return new ResponseEntity<Boolean>(result,HttpStatus.OK);
 	}
@@ -251,51 +240,34 @@ public class myPageController {
 	public String booking(Model model, HttpSession session) {
 		MemberVO mvo = (MemberVO) session.getAttribute("loggedInUser");
 		int mem_no = mvo.getMem_no();
-		log.info("booking..."+mem_no);
 		List<ReserveRestDTO> reserveList=rservice.getReserveList(mem_no);
 		model.addAttribute("reserveList", reserveList);
 		return "/mypage/booking";
 	}
 	@PostMapping(value = "/booking/del", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> cancelBooking(@RequestBody ReserveVO vo) {
-		log.info("delBookmark..."+vo.getRes_no());
 		boolean result=rservice.cancelBooking(vo.getRes_no());
 		return new ResponseEntity<Boolean>(result,HttpStatus.OK);
 	}
 	@PostMapping(value = "/booking/memoUpdate", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> updateReserveMemo(@RequestBody ReserveVO vo) {
-		log.info("updateReserveMemo..."+vo.getRes_no());
-		log.info("updateReserveMemo..."+vo.getRes_memo());
 		boolean result=rservice.updateReserveMemo(vo.getRes_no(), vo.getRes_memo());
 		return new ResponseEntity<Boolean>(result,HttpStatus.OK);
 	}
-	
-	@GetMapping("/club")
-	public String club(Model model, HttpSession session) {
-		MemberVO mvo = (MemberVO) session.getAttribute("loggedInUser");
-		int mem_no = mvo.getMem_no();
-		log.info("club..."+mem_no);
-		List<GroupMemberDTO> groups = groupService.getAllGroups(mem_no);
-		model.addAttribute("groupList", groups);
-		return "/mypage/club";
-	}
+
 	@PostMapping(value = "/club/memoUpdate", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> updateGRoupMemo(@RequestBody GroupMemberDTO dto, HttpSession session) {
-		log.info("updateGRoupMemo..."+dto.getGroup_no());
 		MemberVO mvo = (MemberVO) session.getAttribute("loggedInUser");
 		boolean result=groupService.updateGroupMemo(mvo.getMem_no(), dto.getGroup_no(), dto.getGroup_usermemo());
-		log.info(result);
 		return new ResponseEntity<Boolean>(result,HttpStatus.OK);
 	}
 	@PostMapping(value = "/groupBookmark/del", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> cancelGroupBookmark(@RequestBody GroupMemberDTO dto) {
-		log.info("cancelGroupBookmark..."+dto.getGroup_no()+dto.getMem_no());
 		boolean result=groupService.cancelGroupBookmark(dto.getGroup_no(), dto.getMem_no());
 		return new ResponseEntity<Boolean>(result,HttpStatus.OK);
 	}
 	@PostMapping(value = "/groupBookmark/add", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> addGroupBookmark(@RequestBody GroupMemberDTO dto) {
-		log.info("addGroupBookmark..."+dto.getGroup_no()+dto.getMem_no());
 		boolean result=groupService.addGroupBookmark(dto.getGroup_no(),dto.getMem_no());
 		return new ResponseEntity<Boolean>(result,HttpStatus.OK);
 	}
@@ -304,7 +276,6 @@ public class myPageController {
 	public String review(Model model, HttpSession session) {
 		MemberVO mvo = (MemberVO) session.getAttribute("loggedInUser");
 		int mem_no = mvo.getMem_no();
-		log.info("review..."+mem_no);
 		List<CommentDTO> comment = cservice.getCommentList(mem_no);
 		model.addAttribute("commentList", comment);
 		return "/mypage/review";
@@ -312,14 +283,12 @@ public class myPageController {
 	
 	@PostMapping(value = "/review/del", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> deleteComment(@RequestBody CommentVO vo) {
-		log.info("deleteComment..."+vo.getCom_no()+vo.getMem_no());
 		int result=cservice.deleteComment(vo.getCom_no(), vo.getMem_no());
 		return new ResponseEntity<Boolean>((result==1?true:false),HttpStatus.OK);
 	}
 
 	@GetMapping("/event")
 	public String event() {
-		log.info("event...");
 		return "/mypage/event";
 	}
 }

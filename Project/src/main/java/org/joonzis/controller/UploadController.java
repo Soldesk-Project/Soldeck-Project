@@ -45,27 +45,20 @@ public class UploadController {
 
     @PostConstruct
     public void init() {
-        log.info("PostConstruct called");
-        log.info("Loaded uploadFolderPath (before decoding): " + uploadFolderPath);
         try {
             // URL 디코딩 적용
             uploadFolderPath = URLDecoder.decode(uploadFolderPath, StandardCharsets.UTF_8.name());
             servletContext.setAttribute("uploadFolderPath", uploadFolderPath);
-            log.info("Stored uploadFolderPath in ServletContext: " + uploadFolderPath);
         } catch (Exception e) {
             log.error("Failed to decode uploadFolderPath", e);
         }
-        log.info("Loaded uploadFolderPath (after decoding): " + uploadFolderPath);
     }
 
     @ResponseBody
     @PostMapping(value = "/uploadAsyncAction", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<List<AttachVO>> uploadAsyncPost(MultipartFile[] uploadFile) {
-        log.info("upload async post ...");
-        log.info("Upload Folder Path: " + uploadFolderPath);
 
         if (uploadFolderPath == null) {
-            log.error("uploadFolderPath is null in uploadAsyncPost");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
@@ -76,7 +69,6 @@ public class UploadController {
         if (!uploadDir.exists()) {
             try {
                 Files.createDirectories(uploadDir.toPath());
-                log.info("Created upload directory: " + uploadFolderPath);
             } catch (IOException e) {
                 log.error("Failed to create upload directory", e);
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -85,15 +77,11 @@ public class UploadController {
 
         for (MultipartFile multipartFile : uploadFile) {
             if (multipartFile.isEmpty()) {
-                log.warn("Skipping empty file");
                 continue;
             }
 
             AttachVO attachDTO = new AttachVO();
             String uploadFileName = multipartFile.getOriginalFilename();
-            log.info("--------------------");
-            log.info("Upload File Name: " + uploadFileName);
-            log.info("Upload File Size: " + multipartFile.getSize());
 
             // UUID를 추가하여 파일명 중복 방지
             UUID uuid = UUID.randomUUID();
@@ -114,7 +102,6 @@ public class UploadController {
         }
 
         if (list.isEmpty()) {
-            log.warn("No valid files were uploaded");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(list, HttpStatus.OK);
@@ -123,11 +110,9 @@ public class UploadController {
     @PostMapping("/deleteFile")
     @ResponseBody
     public ResponseEntity<String> deleteFile(@RequestBody String att_name) {
-        log.info("deleteFile: " + att_name);
 
         try {
             if (uploadFolderPath == null) {
-                log.error("uploadFolderPath is null in deleteFile");
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
@@ -137,11 +122,9 @@ public class UploadController {
 
             // 파일 경로 구성
             File file = new File(uploadFolderPath, fileName);
-            log.info("Attempting to delete file: " + file.getAbsolutePath());
 
             if (file.exists()) {
                 if (file.delete()) {
-                    log.info("File deleted: " + fileName);
                     return new ResponseEntity<>("deleted", HttpStatus.OK);
                 } else {
                     log.error("Failed to delete file: " + fileName);
@@ -160,22 +143,16 @@ public class UploadController {
     @GetMapping("/resources/upload/{filename:.+}")
     public ResponseEntity<Resource> serveFile(@PathVariable("filename") String filename) {
         try {
-            log.info("Serving file: " + filename);
-            log.info("uploadFolderPath: " + uploadFolderPath);
             if (uploadFolderPath == null) {
-                log.error("uploadFolderPath is null in serveFile");
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
             if (filename == null || filename.trim().isEmpty()) {
-                log.error("Filename is null or empty");
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
             Path filePath = Paths.get(uploadFolderPath, filename);
-            log.info("Full file path: " + filePath.toString());
             File file = filePath.toFile();
             if (!file.exists()) {
-                log.warn("File not found: " + filename);
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
 

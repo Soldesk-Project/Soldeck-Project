@@ -14,8 +14,8 @@ import org.joonzis.domain.MemberVO;
 import org.joonzis.service.GroupService;
 import org.joonzis.websoket.FriendSocketHandler;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -52,7 +52,6 @@ public class GroupController {
 	
 	 @GetMapping("/main") // 그룹 메인 페이지 요청 처리
 	    public String groupMain(HttpSession session, Model model) {
-	        log.info("그룹 메인 페이지 요청");
 	        MemberVO member = (MemberVO) session.getAttribute("loggedInUser");
 	        if (member == null) {
 	            return "redirect:/login/loginPage"; // 로그인 안 되어 있으면 로그인 페이지로 리다이렉트
@@ -66,7 +65,6 @@ public class GroupController {
 	@ResponseBody
 	@PostMapping("/createGroup")
 	public ResponseEntity<String> createGroup(@ModelAttribute GroupDTO dto, HttpSession session, Model model, @RequestParam(value="group_img", required=false) MultipartFile group_img) {
-	    log.info("create..." + dto);
 	    MemberVO member = (MemberVO) session.getAttribute("loggedInUser");
         if (member == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다");
@@ -88,7 +86,6 @@ public class GroupController {
 	        } catch (Exception e) {
 	            log.error("File upload failed: " + storedFilename, e);
 	        }
-	        log.info("새로운 이미지 파일명 설정: "+ storedFilename);
 	    }
 	    // 그룹과 채팅방을 함께 생성
 	    int result = service.createGroupAndChatRoom(dto);  
@@ -236,11 +233,8 @@ public class GroupController {
             e.printStackTrace();
         }
         
-        log.info(pendingRequestJson);
-
         // 세션에 저장
         if (pendingRequestJson != null) {
-        	System.out.println(pendingRequestJson);
         	session.setAttribute("pendingRequest", pendingRequestJson);
         }
 

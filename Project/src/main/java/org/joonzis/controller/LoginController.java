@@ -76,7 +76,6 @@ public class LoginController {
                 log.error("Error decoding redirectUrl: " + e.getMessage());
             }
         } else {
-            log.info("No redirectUrl provided");
         }
         return "login/loginPage";
     }

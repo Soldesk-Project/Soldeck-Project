@@ -108,7 +108,6 @@ public class SearchController {
 	    List<RestVO> storeList = service.get(rest_no);
 	    
 	    if (storeList == null || storeList.isEmpty()) {
-	        log.warn("No store found for rest_no: {}" + rest_no);
 	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	    }
 	    
@@ -121,7 +120,6 @@ public class SearchController {
 		List<MenuVO> menuList = service.getMenu(rest_no);
 		
 		if (menuList == null || menuList.isEmpty()) {
-			log.warn("No store found for rest_no: {}" + rest_no);
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
@@ -203,7 +201,6 @@ public class SearchController {
 	        String decodedKeywords = URLDecoder.decode(keywords, StandardCharsets.UTF_8.toString());
 	        List<String> keywordList = Arrays.asList(decodedKeywords.split(","));
 //	        List<String> keywordList = Arrays.asList(keywords.split(","));
-	        log.info("Search keywords: " + keywordList);
 
 	        List<RestVO> list = service.getSearch(keywordList);
 	        list.forEach(rest -> {
@@ -238,7 +235,6 @@ public class SearchController {
 	@PostMapping("/log")
 	@ResponseBody
 	public ResponseEntity<String> insertSearchLog(@RequestParam String keyword, HttpServletRequest request) {
-		System.out.println(">>> 로그 저장 진입 확인");
 		
 	    String ip = request.getRemoteAddr();
 	    MemberVO member = (MemberVO) request.getSession().getAttribute("loggedInUser");
@@ -246,7 +242,6 @@ public class SearchController {
 	    if (member!=null) {
 	    	memNo=member.getMem_no();
 		}
-	    System.out.println("✅ 검색 로그 저장 요청 수신: " + keyword + ", IP: " + ip + ", memNo: " + memNo);
 	    sservice.saveSearch(keyword, ip, memNo);
 
 	    return ResponseEntity.ok("로그 저장 완료");

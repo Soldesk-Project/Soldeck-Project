@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 
 import org.joonzis.domain.FriendReqVO;
 import org.joonzis.domain.FriendVO;
-import org.joonzis.domain.GroupMemberDTO;
 import org.joonzis.domain.MemberVO;
 import org.joonzis.service.BookmarkService;
 import org.joonzis.service.FriendService;
@@ -51,7 +50,6 @@ public class FriendController {
 	
 	@GetMapping("/main") // 친구 목록 데이터 HTML 조각 반환 (AJAX 전용)
     public String getFriendListHTML(HttpSession session, Model model) {
-        log.info("친구 목록 HTML 요청 (AJAX)");
         MemberVO member = (MemberVO) session.getAttribute("loggedInUser");
         if (member == null) {
             return "redirect:/login/loginPage"; // 또는 에러 응답
@@ -63,7 +61,6 @@ public class FriendController {
 	@PostMapping("/friend/memoUpdate")
 	public String updateMemo(@RequestParam("mem_id") String memId,
 	                         @RequestParam("friendMemo") String memo) {
-	    log.info("메모 저장 - ID: " + memId + ", Memo: " + memo);
 	    //service.updateFriendMemo(memId, memo);
 	    return "redirect:/friend/list"; // 저장 후 리다이렉트
 	}
@@ -141,7 +138,6 @@ public class FriendController {
 
         if (sent) {
             // 웹소켓 알림 전송
-            //String msg = member.getMem_nick() + "님이 친구 요청을 보냈습니다.";
             friendSocketHandler.sendFriendRequestAlert(receiverMemNo, senderMemNo, member.getMem_nick());
             return ResponseEntity.ok("요청이 전송되었습니다");
         } else {
@@ -236,7 +232,6 @@ public class FriendController {
     
     @PostMapping(value = "/saveMemo", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> updateFriendMemo(@RequestBody FriendVO vo, HttpSession session) {
-		log.info("updateGRoupMemo..."+vo.getFre_memo());
 		MemberVO mvo = (MemberVO) session.getAttribute("loggedInUser");
 		boolean result=fservice.updateFriendMemo(mvo.getMem_no(), vo.getFriend_mem_no(), vo.getFre_memo());
 		return new ResponseEntity<Boolean>(result,HttpStatus.OK);

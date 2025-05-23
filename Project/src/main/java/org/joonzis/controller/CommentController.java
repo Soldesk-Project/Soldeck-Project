@@ -6,7 +6,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.joonzis.domain.AttachVO;
 import org.joonzis.domain.CommentVO;
 import org.joonzis.domain.MemberVO;
 import org.joonzis.domain.RestVO;
@@ -16,7 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,19 +34,15 @@ public class CommentController {
 	// 코멘트 목록 조회
     @GetMapping(value = "/pages/{rest_no}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CommentVO>> getComments(@PathVariable("rest_no") int rest_no) {
-    	log.info("getComments..." + rest_no);
     	return new ResponseEntity<List<CommentVO>>(service.getCommentsByRestNo(rest_no), HttpStatus.OK);
     }
     
     // 코멘트 등록
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, String>> addComment(@RequestBody CommentVO vo) {
-    	log.info("addComment request received: " + vo);
-    	log.info("com_attachList: " + vo.getCom_attachList()); // 디버깅 로그
     	
     	try {
     		int addCount = service.addComment(vo);
-    		log.info("Reply Insert Count: " + addCount);
     		Map<String, String> response = new HashMap<>();
     		response.put("status", addCount == 1 ? "success" : "failure");
     		return new ResponseEntity<>(response, HttpStatus.OK);
@@ -88,14 +82,12 @@ public class CommentController {
     // 코멘트 평균 평점
     @GetMapping(value = "/rate/{rest_no}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Double> getAvgRate(@PathVariable("rest_no") int rest_no) {
-    	log.info("getAvgRate..." + rest_no);
     	return new ResponseEntity<>(service.getAvgRate(rest_no), HttpStatus.OK);
     }
     
     // 연령별 코멘트 평균 평점
     @GetMapping(value = "/ageRate/{rest_no}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CommentVO>> getAgeAvgRate(@PathVariable("rest_no") int rest_no) {
-    	log.info("getAgeAvgRate..." + rest_no);
     	return new ResponseEntity<List<CommentVO>>(service.getAgeAvgRate(rest_no), HttpStatus.OK);
     }
     

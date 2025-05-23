@@ -39,20 +39,17 @@ public class EventController {
             // 로그인되지 않은 경우 처리 (예: 로그인 페이지로 리다이렉트)
             return "redirect:/login/loginPage?redirectUrl=" + URLEncoder.encode("/event/eventMain", StandardCharsets.UTF_8);
         }
-        log.info("eventMain...");
         return "/event/main";
     }
 	
 	@ResponseBody
 	@GetMapping(value = "/list/0001", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<EventVO> eventTab1() {
-		log.info("eventTab...1");
 		return eservice.getGame1Rank();
 	}
 	@ResponseBody
 	@GetMapping(value = "/list/0001/myScore", produces = MediaType.APPLICATION_JSON_VALUE)
 	public EventVO eventTab1MyScore(HttpSession session) {
-		log.info("eventTab...1-1");
 		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
 		int mem_no = loggedInMember.getMem_no();
 		return eservice.getMyGame1Rank(mem_no);
@@ -60,13 +57,11 @@ public class EventController {
 	@ResponseBody
 	@GetMapping(value = "/list/0002", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<EventVO> eventTab2() {
-		log.info("eventTab...2");
 		return eservice.getGame2Rank();
 	}
 	@ResponseBody
 	@GetMapping(value = "/list/0002/myScore", produces = MediaType.APPLICATION_JSON_VALUE)
 	public EventVO eventTab2MyScore(HttpSession session) {
-		log.info("eventTab...2-2");
 		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
 		int mem_no = loggedInMember.getMem_no();
 		return eservice.getMyGame2Rank(mem_no);
@@ -75,7 +70,6 @@ public class EventController {
 	@ResponseBody
 	@GetMapping(value = "/list/point", produces = MediaType.APPLICATION_JSON_VALUE)
 	public EventVO eventTab3(HttpSession session) {
-		log.info("eventTab...3");
 		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
 		int mem_no = loggedInMember.getMem_no();
 		return eservice.getPoint(mem_no);
@@ -83,13 +77,11 @@ public class EventController {
 
 	@GetMapping("/list/0004")
 	public void eventTab4() {
-		log.info("eventTab...4");
 	}
 	
 	
 	@PostMapping(value = "/event/savePoint", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> savePoint(@RequestBody EventVO vo, HttpSession session) {
-		log.info("savePoint...");
 		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
 		if (loggedInMember == null) {
 		    return new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED);
@@ -100,7 +92,6 @@ public class EventController {
 	}
 	@PostMapping(value = "/event/saveGameScore1", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> saveGameScore1(@RequestBody EventVO vo, HttpSession session) {
-		log.info("saveGameScore1...");
 		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
 		if (loggedInMember == null) {
 		    return new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED);
@@ -111,7 +102,6 @@ public class EventController {
 	}
 	@PostMapping(value = "/event/saveGameScore2", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> saveGameScore2(@RequestBody EventVO vo, HttpSession session) {
-		log.info("saveGameScore2...");
 		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
 		if (loggedInMember == null) {
 			return new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED);
@@ -123,7 +113,6 @@ public class EventController {
 
 	@PostMapping(value = "/event/checkAttendance", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> checkAttendance(@RequestBody EventVO vo, HttpSession session) {
-		log.info("checkAttendance...");
 		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
 		int mem_no = loggedInMember.getMem_no();
 		boolean result=eservice.checkAttendance(mem_no, vo.getAttendance_date());
@@ -132,7 +121,6 @@ public class EventController {
 	@ResponseBody
 	@PostMapping(value = "/event/loadAttendance", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Integer> loadAttendance(@RequestBody EventVO vo, HttpSession session) {
-		log.info("loadAttendance...");
 		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
 		int mem_no = loggedInMember.getMem_no();
 		return eservice.loadAttendance(mem_no, vo.getYear(), vo.getMonth());
