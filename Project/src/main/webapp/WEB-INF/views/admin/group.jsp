@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,9 +8,9 @@
 <title>Insert title here</title>
 </head>
 <link rel="stylesheet" href="../resources/css/header.css">
-    <link rel="stylesheet" href="../resources/css/admin.css">
+<link rel="stylesheet" href="../resources/css/admin.css">
 <body>
-	<%@ include file="../layout/header.jsp" %>
+	<%@ include file="../layout/header.jsp"%>
 	<div class="main-menu" style="margin-top: 500px">
 		<ul class="side">
 			<li class="side-myinfo"><a href="/admin/member" class="a-myinfo">회원 관리</a></li>
@@ -23,47 +23,70 @@
 			<li class="side-add"><a href="/admin/add"class="a-add">매장 등록</a></li>
 		</ul>
 	</div>
-	
+
 	<h2 style="margin-top: 100px;">모임 목록</h2>
+	<form id="searchForm" method="get" action="/admin/group" class="category-form">
+		<input type="text" name="keyword" placeholder="모임 검색" value="${pageMaker.cri.keyword}" oninput="resetPageNum()"/>
+	
+		<button type="submit">검색</button>
+			
+		<input type="hidden" name="pageNum" id="pageNum" value="${pageMaker.cri.pageNum}" />
+		<input type="hidden" name="amount" value="${pageMaker.cri.amount}" />
+	</form>
 
 	<table border="1" cellpadding="10">
 	    <thead>
-	        <tr>
-	            <th>모임 번호</th>
-	            <th>모임 이름</th>
-	            <th>모임 생성일</th>
-	            <th>모임장 번호</th>
-	            <th>삭제</th>
-	        </tr>
-	    </thead>
-	    <tbody>
-	        <c:forEach var="group" items="${groupList}">
-	            <tr>
-	                <td>${group.group_no}</td>
-	                <td>${group.chat_title}</td>
-	                <td>${group.reg_date}</td>
-	                <td>${group.mem_no}</td>
-	                <td>
-	                    <form action="/admin/deleteGroup" method="post" onsubmit="return confirm('정말 삭제하시겠습니까?');">
-	                        <input type="hidden" name="group_no" value="${group.group_no}" />
-	                        <button type="submit">삭제</button>
-	                    </form>
-	                </td>
-	            </tr>
-	        </c:forEach>
-	    </tbody>
+			<tr>
+				<th>모임 번호</th>
+				<th>모임 이름</th>
+				<th>모임 생성일</th>
+				<th>모임장 번호</th>
+				<th>삭제</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach var="group" items="${list}">
+				<tr>
+					<td>${group.group_no}</td>
+					<td>${group.chat_title}</td>
+					<td>${group.reg_date}</td>
+					<td>${group.mem_no}</td>
+					<td>
+						<form action="/admin/deleteGroup" method="post"
+							onsubmit="return confirm('정말 삭제하시겠습니까?');">
+							<input type="hidden" name="group_no" value="${group.group_no}" />
+							<button type="submit">삭제</button>
+						</form>
+					</td>
+				</tr>
+			</c:forEach>
+		</tbody>
 </table>
-	
-	<script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const storeManagementLink = document.querySelector('.main-menu .side-restaurant');
-            const restaurantMenu = document.querySelector('.restaurant-menu');
+		
+	<!-- page -->
+	<div class="page-wrap">
+		<ul class="page-nation">
+			<c:if test="${pageMaker.prev}">
+				<li class="previous"><a
+					href="/admin/group?pageNum=${pageMaker.startPage - 1}&amount=${pageMaker.cri.amount}">&lt;</a>
+				</li>
+			</c:if>
 
-            storeManagementLink.addEventListener('click', function(event) {
-                event.preventDefault(); // 기본 링크 동작 방지
-                restaurantMenu.style.display = restaurantMenu.style.display === 'none' ? 'block' : 'none';
-            });
-        });
-    </script>
+			<c:forEach var="num" begin="${pageMaker.startPage}"
+				end="${pageMaker.endPage}" step="1">
+				<li><a
+					href="/admin/group?pageNum=${num}&amount=${pageMaker.cri.amount}"
+					class="${pageMaker.cri.pageNum == num ? 'active' : ''}">${num}</a>
+				</li>
+			</c:forEach>
+
+			<c:if test="${pageMaker.next}">
+				<li class="next"><a
+					href="/admin/group?pageNum=${pageMaker.endPage + 1}&amount=${pageMaker.cri.amount}">&gt;</a>
+				</li>
+			</c:if>
+		</ul>
+	</div>
 </body>
+<script type="text/javascript" src="/resources/js/admin.js"></script>
 </html>

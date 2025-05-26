@@ -92,9 +92,6 @@ public class MemberServiceImpl implements MemberService{
 		return mapper.insertApply(mem_no, product);
 	}
 	
-	
-	
-	
 	@Transactional
 	@Override
 	public boolean removeMember(int mem_no) {

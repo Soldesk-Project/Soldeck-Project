@@ -50,11 +50,18 @@
               </div>
             </div>
             <div class="mypageAndlouout">
-              <div class="mypage_text"><a href="/mypage/myInfo">마이페이지</a></div>
-              <form id="logoutForm" action="/login/logout" method="POST" style="display: none;"></form>
-              <div><a href="#" onclick="document.getElementById('logoutForm').submit();">로그아웃</a></div>
-            </div>
-          </div>
+			  <c:choose>
+			    <c:when test="${sessionScope.loggedInUser.mem_id == 'adminaccount'}">
+			      <div class="mypage_text"><a href="/admin/member">관리자페이지</a></div>
+			    </c:when>
+			    <c:otherwise>
+			      <div class="mypage_text"><a href="/mypage/myInfo">마이페이지</a></div>
+			    </c:otherwise>
+			  </c:choose>
+			
+			  <form id="logoutForm" action="/login/logout" method="POST" style="display: none;"></form>
+			  <div><a href="#" onclick="document.getElementById('logoutForm').submit();">로그아웃</a></div>
+			</div>
         </div>
       </div>
     </c:if>

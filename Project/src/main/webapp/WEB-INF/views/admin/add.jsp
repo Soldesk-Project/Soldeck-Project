@@ -25,17 +25,6 @@
 	</div>
 	
 	<h2 style="margin-top: 100px;">매장 등록</h2>
-	
-	<script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const storeManagementLink = document.querySelector('.main-menu .side-restaurant');
-            const restaurantMenu = document.querySelector('.restaurant-menu');
-
-            storeManagementLink.addEventListener('click', function(event) {
-                event.preventDefault(); // 기본 링크 동작 방지
-                restaurantMenu.style.display = restaurantMenu.style.display === 'none' ? 'block' : 'none';
-            });
-        });
-    </script>
 </body>
+<script type="text/javascript" src="/resources/js/admin.js"></script>
 </html>

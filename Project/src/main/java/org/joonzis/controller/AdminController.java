@@ -1,10 +1,7 @@
 package org.joonzis.controller;
 
-import java.util.List;
-
-import org.joonzis.domain.GroupVO;
-import org.joonzis.domain.MemberVO;
-import org.joonzis.domain.RestVO;
+import org.joonzis.domain.Criteria;
+import org.joonzis.domain.PageDTO;
 import org.joonzis.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,32 +19,41 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
-	@GetMapping("/adminPage")
-    public String adminPage() {
-        return "admin/adminPage";  // templates/admin/adminPage.html 반환
-    }
-	
 	@GetMapping("/member")
-    public String adminMemberPage(Model model) {
-		List<MemberVO> memberList = adminService.getAllMember(); // 모든 회원 조회
-        model.addAttribute("memberList", memberList);
-        return "admin/member";  // templates/admin/adminPage.html 반환
+    public String adminMemberPage(Model model, Criteria cri) {
+		
+		int total = adminService.getTotalMemberRecordCount();
+	    PageDTO pdto = new PageDTO(cri, total);
+
+	    model.addAttribute("list", adminService.getAllMemberWithPaging(cri));
+	    model.addAttribute("pageMaker", pdto);
+	    
+	    return "admin/member";
     }
 	
 	@GetMapping("/group")
-    public String adminGroupPage(Model model) {
-		List<GroupVO> groupList = adminService.getAllGroup();
-		model.addAttribute("groupList", groupList);
+    public String adminGroupPage(Model model, Criteria cri) {
+		
+		int total = adminService.getTotalGroupRecordCount();
+	    PageDTO pdto = new PageDTO(cri, total);
+
+	    model.addAttribute("list", adminService.getAllGroupWithPaging(cri));
+	    model.addAttribute("pageMaker", pdto);
         return "admin/group";  // templates/admin/adminPage.html 반환
     }
 	
 	@GetMapping("/restaurant")
-    public String adminRestaurantPage(Model model) {
-		List<RestVO> restaurantList = adminService.getAllRestaurant();
-		model.addAttribute("restaurantList", restaurantList);
-        return "admin/restaurant";  // templates/admin/adminPage.html 반환
-    }
-	
+	public String adminRestaurantPage(Model model, Criteria cri) {
+		
+		int total = adminService.getTotalRestRecordCount(cri);
+		PageDTO pdto = new PageDTO(cri, total);
+		
+		model.addAttribute("list", adminService.getRestWithPaging(cri));
+		model.addAttribute("pageMaker", pdto);
+		
+		return "admin/restaurant";
+	}
+
 	@GetMapping("/add")
     public String adminRestaurantAdd(Model model) {
         return "admin/add";

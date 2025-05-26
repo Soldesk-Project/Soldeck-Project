@@ -1,0 +1,18 @@
+document.addEventListener('DOMContentLoaded', function() {
+    const storeManagementLink = document.querySelector('.main-menu .side-restaurant');
+    const restaurantMenu = document.querySelector('.restaurant-menu');
+
+    storeManagementLink.addEventListener('click', function(event) {
+        event.preventDefault(); // 기본 링크 동작 방지
+        restaurantMenu.style.display = restaurantMenu.style.display === 'none' ? 'block' : 'none';
+    });
+});
+
+function resetPageNumAndSubmit() {
+	document.getElementById('pageNum').value = 1;
+    document.getElementById('searchForm').submit();
+  }
+  
+function resetPageNum() {
+    document.getElementById('pageNum').value = 1;
+  }

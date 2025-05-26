@@ -70,6 +70,8 @@ function login() {
         
         if (data === 'success') {
         	location.href = `${redirectUrl}`; // 로그인 성공 시 메인 페이지로 리다이렉트 (루트 경로 가정)
+        } else if(data === 'admin'){
+        	location.href = "/admin/member";
         } else if (data === 'fail') {
         	alert(LOGIN_FAIL_MSG);
             return;

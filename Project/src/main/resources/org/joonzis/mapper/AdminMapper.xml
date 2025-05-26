@@ -3,16 +3,102 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.joonzis.mapper.AdminMapper">
-	
-	<select id="getAllGroup" resultType="org.joonzis.domain.GroupVO">
-		SELECT * FROM "GROUP" ORDER BY GROUP_NO DESC
+
+	<select id="getAllGroupWithPaging"
+		resultType="org.joonzis.domain.GroupVO"
+		parameterType="org.joonzis.domain.Criteria">
+		<![CDATA[
+			select *
+			from (select group_no, chat_title, reg_date, mem_no, ROWNUM rn
+				from (select group_no, chat_title, reg_date, mem_no
+				    from "GROUP"
+				    where 1=1
+		]]>
+		<if test="keyword != null and keyword != ''">
+			AND chat_title LIKE '%' || #{keyword} || '%'
+		</if>
+	        <![CDATA[
+				    order by group_no desc)
+				where rownum <= #{pageNum} * #{amount})
+			where rn > (#{pageNum} - 1) * #{amount}
+		]]>
 	</select>
-	
-	<select id="getAllMember" resultType="org.joonzis.domain.MemberVO">
-		SELECT * FROM MEMBER ORDER BY MEM_NO DESC
+
+	<select id="getTotalGroupRecordCount" resultType="int"
+		parameterType="org.joonzis.domain.Criteria">
+		SELECT COUNT(*) FROM "GROUP"
+		<where>
+			<if test="keyword != null and keyword != ''">
+				chat_title LIKE '%' || #{keyword} || '%'
+			</if>
+		</where>
 	</select>
-	
-	<select id="getAllRestaurant" resultType="org.joonzis.domain.RestVO">
-		SELECT * FROM RESTAURANT ORDER BY REST_NO DESC
+
+	<select id="getAllMemberWithPaging"
+		resultType="org.joonzis.domain.MemberVO"
+		parameterType="org.joonzis.domain.Criteria">
+		<![CDATA[
+			select *
+			from (select mem_no, mem_id, mem_name, mem_email, mem_date, ROWNUM rn
+				from (select mem_no, mem_id, mem_name, mem_email, mem_date
+				    from member
+				    where 1=1
+		]]>
+		<if test="keyword != null and keyword != ''">
+			AND mem_name LIKE '%' || #{keyword} || '%'
+		</if>
+			<![CDATA[
+					order by mem_no desc)
+				where rownum <= #{pageNum} * #{amount})
+			where rn > (#{pageNum} - 1) * #{amount}
+		]]>
+	</select>
+
+	<select id="getTotalMemberRecordCount" resultType="int"
+		parameterType="org.joonzis.domain.Criteria">
+		SELECT COUNT(*) FROM MEMBER
+		<where>
+			<if test="keyword != null and keyword != ''">
+				mem_name LIKE '%' || #{keyword} || '%'
+			</if>
+		</where>
+	</select>
+
+	<select id="getRestWithPaging"
+		resultType="org.joonzis.domain.RestVO"
+		parameterType="org.joonzis.domain.Criteria">
+	  <![CDATA[
+	    SELECT * FROM (
+	      SELECT rest_no, rest_name, ROWNUM rn FROM (
+	        SELECT rest_no, rest_name
+	        FROM restaurant
+	        WHERE 1=1
+	  ]]>
+		<if test="category != null and category != ''">
+			AND rest_cate = #{category}
+		</if>
+		<if test="keyword != null and keyword != ''">
+			AND rest_name LIKE '%' || #{keyword} || '%'
+		</if>
+	  <![CDATA[
+	        ORDER BY rest_no DESC
+	      )
+	      WHERE ROWNUM <= #{pageNum} * #{amount}
+	    )
+	    WHERE rn > (#{pageNum} - 1) * #{amount}
+	  ]]>
+	</select>
+
+	<select id="getTotalRestRecordCount" resultType="int"
+		parameterType="org.joonzis.domain.Criteria">
+		SELECT COUNT(*) FROM restaurant
+		<where>
+			<if test="category != null and category != ''">
+				rest_cate = #{category}
+			</if>
+			<if test="keyword != null and keyword != ''">
+				AND rest_name LIKE '%' || #{keyword} || '%'
+			</if>
+		</where>
 	</select>
 </mapper>

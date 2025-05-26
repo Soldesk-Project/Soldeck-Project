@@ -38,30 +38,13 @@ public class ChatController {
 	@Autowired
 	PrivateChatService privateChatService;
 	
-	@GetMapping("/main") // 채팅 메인 페이지 요청 처리
-	public String chatMain(HttpSession session, Model model) {
-	    MemberVO member = (MemberVO) session.getAttribute("loggedInUser");
-	    if (member == null) {
-	        return "redirect:/login/loginPage"; // 로그인 안 되어 있으면 로그인 페이지로 리다이렉트
-	    }
-	
-	    int mem_no = member.getMem_no();
-	    List<GroupMemberDTO> groups = service.getAllGroups(mem_no);
-	    model.addAttribute("groupList", groups); // 참여하고 있는 그룹 목록을 모델에 추가
-	    return "chat/chatRoom";
-	}
-	
 	// 그룹채팅방
 	@GetMapping("/chatRoom/{groupNo}")
 	public String goChatRoom(@PathVariable("groupNo") int groupNo, HttpSession session, Model model) {
 		MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInUser");
-		if (loggedInMember == null) {
-			return "redirect:/login/loginPage";
-		}
+	
 		int mem_no = loggedInMember.getMem_no();
-		
-		
-		
+			
 		List<GroupMemberDTO> groups = service.getAllGroups(mem_no);
 	    
 	    // groupNo에 해당하는 그룹을 찾기
@@ -123,9 +106,6 @@ public class ChatController {
 	@GetMapping("/privateRoom/{roomNo}")
 	public String goPrivateChatRoom(@PathVariable("roomNo") String roomNo, HttpSession session, Model model) {
 	    MemberVO loginUser = (MemberVO) session.getAttribute("loggedInUser");
-	    if (loginUser == null) {
-	        return "redirect:/login/loginPage";
-	    }
 
 	    int myNo = loginUser.getMem_no();
 	    String myNick = loginUser.getMem_nick();
