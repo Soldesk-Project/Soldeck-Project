@@ -24,38 +24,8 @@
 		</ul>
 	</div>
 	
-	<h2 style="margin-top: 100px;">회원 목록</h2>
-
-	<table border="1" cellpadding="10">
-	    <thead>
-	        <tr>
-	            <th>회원 번호</th>
-	            <th>아이디</th>
-	            <th>이름</th>
-	            <th>이메일</th>
-	            <th>가입일</th>
-	            <th>삭제</th>
-	        </tr>
-	    </thead>
-	    <tbody>
-	        <c:forEach var="member" items="${memberList}">
-	            <tr>
-	                <td>${member.mem_no}</td>
-	                <td>${member.mem_id}</td>
-	                <td>${member.mem_name}</td>
-	                <td>${member.mem_email}</td>
-	                <td>${member.mem_date}</td>
-	                <td>
-	                    <form action="/admin/deleteMember" method="post" onsubmit="return confirm('정말 삭제하시겠습니까?');">
-	                        <input type="hidden" name="mem_no" value="${member.mem_no}" />
-	                        <button type="submit">삭제</button>
-	                    </form>
-	                </td>
-	            </tr>
-	        </c:forEach>
-	    </tbody>
-</table>
-
+	<h2 style="margin-top: 100px;">매장 등록</h2>
+	
 	<script>
         document.addEventListener('DOMContentLoaded', function() {
             const storeManagementLink = document.querySelector('.main-menu .side-restaurant');

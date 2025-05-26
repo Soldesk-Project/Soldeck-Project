@@ -47,4 +47,9 @@ public class AdminController {
 		model.addAttribute("restaurantList", restaurantList);
         return "admin/restaurant";  // templates/admin/adminPage.html 반환
     }
+	
+	@GetMapping("/add")
+    public String adminRestaurantAdd(Model model) {
+        return "admin/add";
+    }
 }

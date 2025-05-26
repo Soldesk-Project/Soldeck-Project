@@ -15,7 +15,12 @@
 		<ul class="side">
 			<li class="side-myinfo"><a href="/admin/member" class="a-myinfo">회원 관리</a></li>
 			<li class="side-bookmark"><a href="/admin/group"class="a-bookmark">모임 관리</a></li>
-			<li class="side-booking"><a href="/admin/restaurant"class="a-booking">매장 관리</a></li>
+			<li class="side-restaurant"><a>매장 관리</a></li>
+		</ul>
+	</div><div class="restaurant-menu" style="margin-top: 500px; display: none;">
+		<ul class="side">
+			<li class="side-booking"><a href="/admin/restaurant"class="a-booking">매장 목록</a></li>
+			<li class="side-add"><a href="/admin/add"class="a-add">매장 등록</a></li>
 		</ul>
 	</div>
 	
@@ -48,5 +53,17 @@
 	        </c:forEach>
 	    </tbody>
 </table>
+	
+	<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const storeManagementLink = document.querySelector('.main-menu .side-restaurant');
+            const restaurantMenu = document.querySelector('.restaurant-menu');
+
+            storeManagementLink.addEventListener('click', function(event) {
+                event.preventDefault(); // 기본 링크 동작 방지
+                restaurantMenu.style.display = restaurantMenu.style.display === 'none' ? 'block' : 'none';
+            });
+        });
+    </script>
 </body>
 </html>
