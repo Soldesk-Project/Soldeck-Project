@@ -1,5 +1,7 @@
 package org.joonzis.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -18,23 +20,27 @@ import org.joonzis.domain.MenuVO;
 import org.joonzis.domain.PopularKeywordVO;
 import org.joonzis.domain.ReserveRestDTO;
 import org.joonzis.domain.ReserveVO;
+import org.joonzis.domain.RestDTO;
 import org.joonzis.domain.RestVO;
 import org.joonzis.service.MemberService;
 import org.joonzis.service.RestService;
 import org.joonzis.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.extern.log4j.Log4j;
 
@@ -51,7 +57,34 @@ public class SearchController {
 	
 	@Autowired
 	private SearchService sservice;
+	
+	@Value("${file.upload-dir}")
+    private String uploadDir;
 		
+	@PostMapping(value = "/restAdd")
+    public String restAdd(@ModelAttribute RestDTO restDTO, 
+    						@RequestParam("images") MultipartFile[] images){
+		RestVO RestVO = restDTO.getRest();
+	    List<MenuVO> menuList = restDTO.getMenuList();
+		List<String> storedFileNames = new ArrayList<>();
+		for (MultipartFile image : images) {
+	        if (!image.isEmpty()) {
+	        	 try {
+	                 File uploadPath = new File(uploadDir);
+	                 String originalFilename = image.getOriginalFilename();
+	                 String storedFilename = RestVO.getRest_name() + "_" + System.currentTimeMillis() + "_" + originalFilename;
+	                 File destFile = new File(uploadPath + "/" + storedFilename);
+
+	                 image.transferTo(destFile);
+	                 storedFileNames.add(storedFilename);
+	             } catch (IOException | IllegalStateException e) {
+	                 e.printStackTrace();
+	             }
+	        }
+	    }
+		service.addRest(RestVO, storedFileNames, menuList);
+		return "redirect:/admin/restaurant";
+	}
 	// index페이지 취향 추천픽 데이터
 	@GetMapping(value = "/index/likeKateData", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<RestVO>> likeKateData(HttpSession session) {

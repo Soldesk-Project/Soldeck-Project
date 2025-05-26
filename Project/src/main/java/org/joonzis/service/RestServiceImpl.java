@@ -3,6 +3,8 @@ package org.joonzis.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.joonzis.domain.MenuVO;
 import org.joonzis.domain.ReserveRestDTO;
@@ -11,6 +13,7 @@ import org.joonzis.domain.RestVO;
 import org.joonzis.mapper.RestMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.log4j.Log4j;
 
@@ -54,6 +57,27 @@ public class RestServiceImpl implements RestService{
 	@Override
 	public List<RestVO> getRest(int rest_no) {
 		return mapper.getRest(rest_no);
+	}
+	
+	@Transactional
+	@Override
+	public void addRest(RestVO RestVO, List<String> list, List<MenuVO> menuList) {
+		mapper.addRest(RestVO);
+		RestVO.setRest_no(mapper.findByName(RestVO.getRest_name()));
+		var imgNoList = IntStream.rangeClosed(1, 10)
+                .boxed()
+                .collect(Collectors.toList());
+		for (Integer img_no : imgNoList) {
+            mapper.addRestImg(RestVO.getRest_no(), img_no);
+        }
+		for (int i = 0; i < list.size(); i++) {
+		    String img_name = list.get(i);
+		    int img_no = i + 1; // img_no는 1부터 시작
+		    mapper.updateRestImg(RestVO.getRest_no(), img_name, img_no);
+		}
+		for (MenuVO menu : menuList) {
+			mapper.addRestMenu(RestVO.getRest_no(), menu.getMenu_name(), menu.getMenu_price());
+	    }
 	}
 	
 	@Override
