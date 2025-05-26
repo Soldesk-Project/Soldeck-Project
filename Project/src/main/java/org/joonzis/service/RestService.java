@@ -28,6 +28,7 @@ public interface RestService {
 	public List<ReserveRestDTO> getReserve(int mem_no);
 
 	public void addReserve(ReserveVO reservation);
+	public void addRest(RestVO RestVO, List<String> list, List<MenuVO> menuList);
 	
 	// 예약된 시간 목록 조회
     public List<String> getReservedTimes(int rest_no, String res_date);

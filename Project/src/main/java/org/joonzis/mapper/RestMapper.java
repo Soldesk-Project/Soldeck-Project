@@ -22,6 +22,14 @@ public interface RestMapper {
 	
 	// 가게 찾기
 	public List<RestVO> findByNo(int rest_no);
+	
+	public int findByName(String rest_name);
+	
+	public void addRestImg(@Param("rest_no") int rest_no, @Param("img_no") int img_no);
+	
+	public void updateRestImg(@Param("rest_no") int rest_no, @Param("img_name") String img_name, @Param("img_no") int img_no);
+	
+	public void addRestMenu(@Param("rest_no") int rest_no, @Param("menu_name") String menu_name, @Param("menu_price") String menu_price);
 
 	// 가게 메뉴 찾기
 	public List<MenuVO> getMenu(int rest_no);
@@ -31,6 +39,7 @@ public interface RestMapper {
 	public List<ReserveRestDTO> getReserve(int mem_no);
 	
 	public void addReserve(ReserveVO reservation);
+	public void addRest(RestVO RestVO);
 	
 	// 특정 날짜와 음식점에 예약된 시간 목록 조회
 	public List<String> getReservedTimes(@Param("rest_no") int rest_no, @Param("res_date") String res_date);

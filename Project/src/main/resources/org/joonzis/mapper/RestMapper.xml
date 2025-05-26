@@ -6,7 +6,43 @@
 	<select id="findAll" resultType="org.joonzis.domain.RestVO">
 		SELECT * FROM RESTAURANT
 	</select>
+	
+	<select id="findByName" parameterType="String" resultType="int">
+		SELECT REST_NO FROM RESTAURANT WHERE REST_NAME = #{rest_name}
+	</select>
 
+	<insert id="addRest" parameterType="org.joonzis.domain.RestVO">
+        INSERT INTO RESTAURANT (REST_NO, REST_NAME, REST_ADR, REST_PHONE, REST_BH, REST_INFO, REST_LOC, REST_CATE, LATITUDE, LONGITUDE)
+        VALUES (
+            SEQ_REST.NEXTVAL, 
+            #{rest_name},
+            #{rest_adr},
+            #{rest_phone},
+            #{rest_bh},
+            #{rest_info},
+            #{rest_loc},
+            #{rest_cate},
+            0,
+            0
+        )
+    </insert>
+    
+    <insert id="addRestImg">
+	    INSERT INTO rest_img (REST_NO, REST_IMG_NO, REST_IMG_NAME)
+	    VALUES (#{rest_no}, #{img_no}, NULL)
+	</insert>
+	
+	<update id="updateRestImg">
+	  UPDATE rest_img
+	  SET REST_IMG_NAME = #{img_name}
+	  WHERE REST_NO = #{rest_no} AND REST_IMG_NO = #{img_no}
+	</update>
+	
+	<insert id="addRestMenu">
+	    INSERT INTO menu (rest_no, menu_name, menu_price)
+	    VALUES (#{rest_no}, #{menu_name}, #{menu_price})
+	</insert>
+	
 	<select id="likeKateData" resultType="org.joonzis.domain.RestVO" parameterType="list">
 	<![CDATA[
 	    WITH first_image AS (
