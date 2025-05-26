@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +10,7 @@
 </head>
 <link rel="stylesheet" href="../resources/css/header.css">
     <link rel="stylesheet" href="../resources/css/admin.css">
-    <link rel="stylesheet" href="../resources/css/add.css">
+    <link rel="stylesheet" href="../resources/css/update.css">
 <body>
 	<%@ include file="../layout/header.jsp" %>
 	<div class="main-menu" style="margin-top: 500px">
@@ -25,25 +26,35 @@
 		</ul>
 	</div>
 	
-	<h2 style="margin-top: 100px;">매장 등록</h2>
+	<h2 style="margin-top: 100px;">매장 수정</h2>
 	
 	<div class="container">
-		<form action="/search/restUpdate" method="post" enctype="multipart/form-data">
+		<form action="/search/restAdd" method="post" enctype="multipart/form-data">
 			<div class="formGroup">
-	            <label>매장 이름: <input type="text" name="rest.rest_name" required></label><br>
-	            <label>매장 주소: <input type="text" name="rest.rest_adr" required></label><br>
-	            <label>매장 번호: <input type="text" name="rest.rest_phone" required></label><br>
-	            <label>매장 영업시간: <input type="text" name="rest.rest_bh" required></label><br>
-	            <label>매장 정보: <input type="text" name="rest.rest_info" required></label><br>
-	            <label>매장 지역: <input type="text" name="rest.rest_loc" required></label><br>
-	            <label>매장 종류: <input type="text" name="rest.rest_cate" required></label><br>
-	            <label>매장 사진:
-			        <input type="file" name="images" accept="image/*" multiple>
-			        <small>최대 10장까지 업로드 가능</small>
-			    </label><br>
-			    
+				<input type="hidden" name="rest.rest_no" value="${restVO.rest_no}">
+	            <label>매장 이름: <input type="text" name="rest.rest_name" value="${restVO.rest_name}" required></label><br>
+	            <label>매장 주소: <input type="text" name="rest.rest_adr" value="${restVO.rest_adr}" required></label><br>
+	            <label>매장 번호: <input type="text" name="rest.rest_phone" value="${restVO.rest_phone}" required></label><br>
+	            <label>매장 영업시간: <input type="text" name="rest.rest_bh" value="${restVO.rest_bh}" required></label><br>
+	            <label>매장 정보: <input type="text" name="rest.rest_info" value="${restVO.rest_info}" required></label><br>
+	            <label>매장 지역: <input type="text" name="rest.rest_loc" value="${restVO.rest_loc}" required></label><br>
+	            <label>매장 종류: <input type="text" name="rest.rest_cate" value="${restVO.rest_cate}" required></label><br>
+			    <label>새 매장 사진 (선택):
+	                <input type="file" name="images" accept="image/*" multiple>
+	                <small>최대 10장까지 업로드 가능 / 미업로드 시 기존 유지</small>
+	            </label><br>
 			    <div id="menuContainer">
-			    </div>
+                <c:forEach var="menu" items="${menuList}" varStatus="status">
+                    <div class="menu-item">
+                        <label>메뉴 이름: 
+                            <input type="text" name="menuList[${status.index}].menu_name" value="${menu.menu_name}" required>
+                        </label>
+                        <label>메뉴 가격: 
+                            <input type="text" name="menuList[${status.index}].menu_price" value="${menu.menu_price}" required>
+                        </label>
+                    </div>
+                </c:forEach>
+            </div>
 
   				  <button type="button" onclick="addMenuItem()">메뉴 추가</button>
             </div>
@@ -79,7 +90,7 @@
             });
         });
         
-        let menuIndex = 0;
+        let menuIndex = ${fn:length(menuList)} || 0;
 
         function addMenuItem() {
             const container = document.getElementById('menuContainer');
@@ -94,5 +105,4 @@
         }
     </script>
 </body>
-<script type="text/javascript" src="/resources/js/admin.js"></script>
 </html>

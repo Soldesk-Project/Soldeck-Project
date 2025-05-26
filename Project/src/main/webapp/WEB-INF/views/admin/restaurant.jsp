@@ -56,9 +56,10 @@
 				<tr>
 					<td>${restaurant.rest_no}</td>
 					<td>${restaurant.rest_name}</td>
-					<td>
+					<td class="flex">
 						<form action="/admin/deleteGroup" method="post" onsubmit="return confirm('정말 삭제하시겠습니까?');">
-							<input type="hidden" name="rest_no" value="${restaurant.rest_no}" />
+						<input type="hidden" class="rest_no" name="rest_no" value="${restaurant.rest_no}" />
+						<button type="button" class="update_btn">수정</button>
 							<button type="submit">삭제</button>
 						</form>
 					</td>
@@ -89,6 +90,28 @@
 			</c:if>
 		</ul>
 	</div>	          
+	<script>
+	document.addEventListener('DOMContentLoaded', function () {
+	    const updateButtons = document.querySelectorAll('.update_btn');
+
+	    updateButtons.forEach(function (button) {
+	        button.addEventListener('click', function () {
+	            const restNoInput = button.parentElement.querySelector('.rest_no');
+
+	            if (restNoInput) {
+	                const rest_no = restNoInput.value;
+	                console.log("rest_no:", rest_no);
+
+	                if (rest_no) {
+	                    location.href = `/admin/update?rest_no=${rest_no}`;
+	                }
+	            }
+	        });
+	    });
+	});
+
+</script>
+
 </body>
 	<script type="text/javascript" src="/resources/js/admin.js"></script>
 </html>
