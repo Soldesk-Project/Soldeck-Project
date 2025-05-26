@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.joonzis.domain.ApplyVO;
 import org.joonzis.domain.BookMarkDTO;
 import org.joonzis.domain.BookMarkVO;
 import org.joonzis.domain.CommentDTO;
@@ -291,4 +292,21 @@ public class myPageController {
 	public String event() {
 		return "/mypage/event";
 	}
+	
+	
+	@PostMapping(value = "/event/apply", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Boolean> applyProduct(@RequestBody ApplyVO vo, HttpSession session) {
+		MemberVO mvo = (MemberVO) session.getAttribute("loggedInUser");
+		boolean result=service.insertApply(mvo.getMem_no(), vo.getProduct());
+		return new ResponseEntity<Boolean>(result,HttpStatus.OK);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

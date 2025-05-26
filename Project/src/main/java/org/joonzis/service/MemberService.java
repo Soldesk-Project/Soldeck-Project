@@ -23,6 +23,7 @@ public interface MemberService {
     public void insertFoodKate(int mem_no, int food_no);
 	MemberVO loginProcess(String mem_id, String mem_pw);
 	public boolean removeMember(int mem_no);
+	public boolean insertApply(int mem_no, String product); 
 	
 	public List<String> getFriendFoodKate(int friend_mem_no);
 	

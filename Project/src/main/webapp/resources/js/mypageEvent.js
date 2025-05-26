@@ -76,6 +76,19 @@ document.querySelectorAll('.point-btn').forEach(btn=>{
 				loadMyPointData();
 			})
 			.catch(err => console.log(err));
+			
+			fetch('/mypage/event/apply',{
+				method : 'post',
+				headers : {
+					'content-type' : 'application/json; charset=utf-8'
+				},
+				body : JSON.stringify({product: product})
+			})
+			.then(response => response.json())
+			.then(result => {
+				console.log('응모 완료')
+			})
+			.catch(err => console.log(err));
 		}else{
 			alert('포인트가 부족합니다');
 			return;

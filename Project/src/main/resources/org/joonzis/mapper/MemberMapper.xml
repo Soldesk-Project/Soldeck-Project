@@ -95,7 +95,9 @@
 		    MEM_NO=#{friend_mem_no}
 	</select>
 	
-	
+	<insert id="insertApply">
+		INSERT INTO APPLY VALUES(APPLY_SEQ.nextval, #{mem_no}, #{product})
+	</insert>
 	
 	
 	
