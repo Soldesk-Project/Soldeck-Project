@@ -23,43 +23,51 @@
 		<div class="searchBox">
 			<button class="friend-tab-button active" data-tab="my">내 친구</button>
 			<button class="friend-tab-button" data-tab="recommend">추천 친구</button>
-			<p class="searchTitle">친구 검색</p>
-			<input type="text" id="searchInput" placeholder="친구 검색">
-			<button id="friendSearchButton">검색</button>
 		</div>
 
-		<div id="searchResultContainer"></div>
 
 		<!-- 친구 탭 UI -->
 		<div class="friendWrapper">
 			<!-- 탭 콘텐츠 -->
-			<div class="friendTabContent">
-				<!-- 내 친구 목록 -->
-				<div id="tab-my" class="friendTabPane active">
-					<div class="friendTitle">
-						<h2>내 친구 목록</h2>
+				<div class="friendTabContent">
+					<!-- 내 친구 목록 -->
+					<div id="tab-my" class="friendTabPane active">
+							<div class="friendSearchBox">
+								<p class="searchTitle">친구 검색</p>
+								<input type="text" id="searchInput" placeholder="친구 검색" autocomplete="off">
+								<button id="friendSearchButton">검색</button>
+							</div>
+								<div id="searchResultContainer"></div>
+						<div class="friendTitle">
+							<h2>친구 목록</h2>
+						</div>
+						<div class="friendList">
+							<div id="friendListContainer" class="scroll-container">
+								<!-- JS로 프로필 div가 계속 추가됨 -->
+							</div>
+						</div>
 					</div>
-					<div class="friendList">
-						<div id="friendListContainer" class="scroll-container">
-							<!-- JS로 프로필 div가 계속 추가됨 -->
+	
+					<!-- 친구 추천 목록 -->
+					<div id="tab-recommend" class="friendTabPane">
+						<div class="friendSearchBox">
+							<p class="searchTitle">친구 검색</p>
+							<input type="text" id="searchInput" placeholder="친구 검색" autocomplete="off">
+							<button id="friendSearchButton">검색</button>
+						</div>
+							<div id="searchResultContainer"></div>
+						<div class="friend_RandomTitle">
+							<h2>친구 추천 목록</h2>
+						</div>
+						<div class="friendRandomlist">
+							<div id="friendListRandomContainer" class="scroll-container">
+								<!-- JS로 프로필 div가 계속 추가됨 -->
+							</div>
 						</div>
 					</div>
 				</div>
-
-				<!-- 친구 추천 목록 -->
-				<div id="tab-recommend" class="friendTabPane">
-					<div class="friend_RandomTitle">
-						<h2>친구 추천 목록</h2>
-					</div>
-					<div class="friendRandomlist">
-						<div id="friendListRandomContainer" class="scroll-container">
-							<!-- JS로 프로필 div가 계속 추가됨 -->
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- 채팅방을 표시할 곳 -->
-			<div id="chat-container"></div>
+				<!-- 채팅방을 표시할 곳 -->
+				<div id="chat-container"></div>
 		</div>
 	</div>
 

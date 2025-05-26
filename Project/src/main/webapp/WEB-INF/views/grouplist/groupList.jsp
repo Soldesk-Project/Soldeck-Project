@@ -11,19 +11,23 @@
 		<div class="searchBox">
 			<button id="myGroupBtn">내 모임</button>
 			<button id="randomGroupBtn">추천 모임</button>
-			<p class="searchTitle">모임 검색</p>
-			<input type="text" id="searchInput" placeholder="모임 검색">
-			<button id="groupSearchButton">검색</button>
 			<button id="createGroupBtn">모임 만들기</button>
 		</div>
-		<div id="searchResultContainer"></div>
 		<div class="groupWrapper">
-			<div class="groupListBox">
-				<div class="groupTitle">
+			<div class="groupBox">
+				<div class="groupSearchBox">
+					<p class="searchTitle">모임 검색</p>
+					<input type="text" id="searchInput" placeholder="모임 검색" autocomplete="off">
+					<button id="groupSearchButton">검색</button>
 				</div>
-				<div class="groupList">
-					<div id="groupListContainer" class="scroll-container">
-						<!-- JS로 모임 div가 계속 추가됨 -->
+					<div id="searchResultContainer"></div>
+				<div class="groupListBox">
+					<div class="groupTitle">
+					</div>
+					<div class="groupList">
+						<div id="groupListContainer" class="scroll-container">
+							<!-- JS로 모임 div가 계속 추가됨 -->
+						</div>
 					</div>
 				</div>
 			</div>

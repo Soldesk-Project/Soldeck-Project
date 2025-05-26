@@ -6,25 +6,34 @@ body {
 	min-height: 100vh;
 }
 /*친구 검색창 css*/
+.friendSearchBox{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 10px;
+	width: 690px;
+}
 #searchResultContainer {
   max-height: 0;
   opacity: 0;
   overflow: hidden;
   transition: all 0.3s ease;
-  margin-top: 10px;
+  margin: 0 auto;
+  padding: 10px 15px;
 }
-
 #searchResultContainer.show {
   max-height: 500px;
   opacity: 1;
 }
-
 .friend-item{
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	gap:10px;
 }
-
+.friend-item img{
+	border-radius: 50%
+}
 /* 친구 목록 css */
 /* 스크롤 */
 .scroll-container {
@@ -35,7 +44,6 @@ body {
 .container_F {
     display: flex;
     flex-direction: column;
-    align-items: center;
     margin-bottom:20px;
 }
 .container_F a{
@@ -50,10 +58,11 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 40px;
-    margin-top: 20px;
+    margin-top: 30px;
 }
-
+.friendTabContent{
+	width: 602px;
+}
 .friendListBox, .friendListRandomBox {
     width: 600px;
 }
@@ -61,7 +70,6 @@ body {
 h1,h2,h3,h4,h5,h6{
 	margin: 10px 0px;
 }
-
 /* 각 타이틀 포지션 */
 .TitleRow {
 	display: flex;
@@ -75,36 +83,37 @@ h1,h2,h3,h4,h5,h6{
 .friend_RandomTitle {
 	flex: 1; /* 동일한 너비 분배 (선택사항) */
 }
-
 .friendTitle h2,
 .friend_RandomTitle h2 {
 	margin: 0;
+	text-align: left;
 }
 .friend_RandomTitle{
 	margin-left: 10px;
 }
-
 /* 박스 레이아웃 */
 .friendList {
 	width: 600px;
-	height: 600px;
+	height: 500px;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	border: 1px solid black;
 	border-radius: 10px;
 	overflow-y: auto;
 }
-
+.friendList::-webkit-scrollbar{
+	display: none;
+}
 .friendRandomlist{
 	width: 600px;
-	height: 600px;
+	height: 500px;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	border: 1px solid black;
-	border-radius: 10px;
 	overflow-y: auto;
+}
+.friendRandomlist::-webkit-scrollbar{
+	display: none;
 }
 .friendRow {
   display: flex;
@@ -117,7 +126,8 @@ h1,h2,h3,h4,h5,h6{
 	gap: 20px; /* 원하는 여백 */
 	justify-content: center; /* 가운데 정렬 */
 	align-items: center;
-	width: 800px;
+	background-color: #ff9e4b;
+	max-height: 40px;
 }
 .searchBox button{
 	border-radius: 20px;
@@ -135,6 +145,7 @@ h1,h2,h3,h4,h5,h6{
 }
 .searchTitle{
 	width: auto;
+	color: black;
 }
 .friendSearch{
 	width: 300px;
@@ -147,15 +158,12 @@ h1,h2,h3,h4,h5,h6{
 	width: 50px;
 	height: 22px;
 }
-
 .scroll-container {
 	width: 100%;
 	height: auto;
 }
-
 .friend-box{
 	margin: 10px;
-	border: 1px double #FF7D00;
 	border-radius: 10px;
 }
 .friend-box button{
@@ -179,12 +187,14 @@ h1,h2,h3,h4,h5,h6{
 	margin-left: 10px;
 	align-items: center;
 }
+.profile img{
+	border-radius: 50%
+}
 .profile_random{
 	display: flex;
 	gap: 20px; /* 원할 경우 요소 간 여백 직접 지정 */
 	margin-left: 10px;
 }
-
 .detailBox {
   margin-top: 10px;
   padding: 10px;
@@ -193,19 +203,16 @@ h1,h2,h3,h4,h5,h6{
   display: none;
   animation: fadeIn 0.3s ease-in-out;
 }
-
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
 }
-
 .nicknameBox {
   display: flex;
   align-items: center;
   height: 80px;
   width: 130px;
 }
-
 .nicknameBox p{
 	margin: 0;
 }
@@ -250,7 +257,6 @@ h1,h2,h3,h4,h5,h6{
 .friend-info div{
 	display: flex;
 	flex-direction: column;
-	border: 1px solid #EBEBEB;
 	margin: 10px;
 	border-radius: 5px;
 	padding: 0 7px;
@@ -278,23 +284,19 @@ h1,h2,h3,h4,h5,h6{
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
-
 .notification-content {
   display: flex;
   align-items: center;
   gap: 10px;
 }
-
 .request-icon {
   width: 32px;
   height: 32px;
 }
-
 .notification-buttons {
   display: flex;
   gap: 10px;
 }
-
 .accept-btn {
   background-color: #4CAF50;
   color: white;
@@ -303,7 +305,6 @@ h1,h2,h3,h4,h5,h6{
   border-radius: 6px;
   cursor: pointer;
 }
-
 .decline-btn {
   background-color: #f44336;
   color: white;
@@ -312,7 +313,6 @@ h1,h2,h3,h4,h5,h6{
   border-radius: 6px;
   cursor: pointer;
 }
-
 .accept-btn:hover,
 .decline-btn:hover {
   opacity: 0.9;
@@ -320,15 +320,16 @@ h1,h2,h3,h4,h5,h6{
 .friendTabPane {
   display: none; /* 기본적으로 모든 콘텐츠는 숨김 */
 }
-
 .friendTabPane.active {
   display: block; /* active 클래스가 있는 콘텐츠만 표시 */
 }
 #searchInput{
-    width: 255px;
+    width: 455px;
     height: 30px;
     border-radius: 20px;
+    border:1px solid #EBEBEB;
     padding: 0 10px;
+    background-color: white;
 }
 #friendSearchButton{
 	margin-right: 100px;

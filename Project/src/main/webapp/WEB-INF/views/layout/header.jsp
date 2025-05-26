@@ -16,7 +16,7 @@
 	
 	    <div class="searchLayout">
 	      <div class="searchWrapper">
-	        <input type="search" placeholder="검색어를 입력하세요." id="search">
+	        <input type="search" placeholder="검색어를 입력하세요." id="search" autocomplete="off">
 	        <button id="searchBtn" type="button">
 	          <img alt="검색버튼" src="/resources/images/searchImg.png">
 	        </button>

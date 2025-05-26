@@ -11,13 +11,12 @@ body {
 	flex: 1;
 	display: flex;
 	flex-direction: column;
-	min-height: 100vh;
+	min-height: 85vh;
 	margin-top: 100px;
 }
 .community-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 .community-major-category-area {
     display: flex;
@@ -44,13 +43,6 @@ body {
 .community-major-category-area button.active {
     background-color: white;
     color: black;
-}
-.community-content-area {
-    display: flex;
-    width: 100%;
-    gap: 20px;
-    align-items: flex-start; /* 상단 기준 정렬 */
-    justify-content: center;
 }
 .community-popular-posts {
     width: 20%; /* 좋아요 순 게시글 영역 너비 조정 */
