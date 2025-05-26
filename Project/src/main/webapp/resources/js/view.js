@@ -931,9 +931,7 @@ function updateInitialBookmarkUI() {
     	} else {
     		bookmarkBtnElement.classList.remove('active');    // 즐겨찾기 X: 회색 별 (active 클래스 추가)
     	}
-	} else {
-		console.error("updateInitialBookmarkUI에서 bookmarkBtn 요소를 찾을 수 없습니다.");
-    }
+	}
 }
 
 //북마크 UI 업데이트 (즐겨찾기 상태에 따라 별 색상 변경)
@@ -945,8 +943,6 @@ function updateBookmarkUI() {
 		} else {
 			bookmarkBtnElement.classList.remove('active');    // 즐겨찾기 X: 회색 별
 		}
-	} else {
-		console.error("updateBookmarkUI에서 bookmarkBtn 요소를 찾을 수 없습니다.");
 	}
 }
 

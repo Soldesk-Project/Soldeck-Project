@@ -6,6 +6,9 @@ window.addEventListener('keydown', function(e) {
 	if (e.keyCode === 32 && e.target === document.body) {
 	  	e.preventDefault();
   	}
+	if (e.keyCode===27) {
+		closeModal();
+	}
 });
 
 // 출석 정보 저장 객체

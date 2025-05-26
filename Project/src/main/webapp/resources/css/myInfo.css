@@ -6,6 +6,9 @@ body {
     flex-direction: column;
     min-height: 100vh; /*영역을 남김없이 쓴다는 뜻 대략..*/
 }
+body::-webkit-scrollbar {
+  display: none;
+}
 input:focus,
 button:focus,
 textarea:focus,

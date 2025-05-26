@@ -98,6 +98,63 @@
 									</div>
 								</div>
 							</li>
+							<li>
+								<div class="use-point">
+									<div class="use-point-list-img">
+										<img alt="응모 제품 사진" src="../resources/images/event_point_5.png" class="use-point-img">
+									</div>
+									<div class="point-list-title">
+										<span>사랑의 하츄핑 하우스</span>
+									</div>
+									<div class="point-list-time">
+										<span>응모 기간</span>
+										 : 2025.04.01 ~
+									</div>
+									<div class="amount-used-point">
+										<span>소모 포인트</span>
+										 : 300p
+										 <button data-product="toy" data-point="300" class="point-btn">응모하기</button>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="use-point">
+									<div class="use-point-list-img">
+										<img alt="응모 제품 사진" src="../resources/images/event_point_6.png" class="use-point-img">
+									</div>
+									<div class="point-list-title">
+										<span>배달의 민족 쿠폰</span>
+									</div>
+									<div class="point-list-time">
+										<span>응모 기간</span>
+										 : 2025.04.01 ~
+									</div>
+									<div class="amount-used-point">
+										<span>소모 포인트</span>
+										 : 100p
+										 <button data-product="coupon" data-point="100" class="point-btn">응모하기</button>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="use-point">
+									<div class="use-point-list-img">
+										<img alt="응모 제품 사진" src="../resources/images/event_point_7.png" class="use-point-img">
+									</div>
+									<div class="point-list-title">
+										<span>라바돈의 죽음모자</span>
+									</div>
+									<div class="point-list-time">
+										<span>응모 기간</span>
+										 : 2025.04.01 ~
+									</div>
+									<div class="amount-used-point">
+										<span>소모 포인트</span>
+										 : 3600p
+										 <button data-product="toy" data-point="3600" class="point-btn">응모하기</button>
+									</div>
+								</div>
+							</li>
 						</ul>
 					</div>
 				</div>

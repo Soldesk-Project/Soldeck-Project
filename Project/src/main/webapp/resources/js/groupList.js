@@ -320,10 +320,6 @@ function createGroup() {
 	const foodList = Array.from(checked).map(food => Number(food.value));	
 	
 	
-	if (count < 1 || count > 3) {
-		alert('선호 음식은 1개 이상, 3개 이하로 선택해주세요.');
-		return;
-	}
 	
 	if(!clubTilte.value){
 		alert("모임 이름을 입력해 주세요");
@@ -331,6 +327,10 @@ function createGroup() {
 	}
 	if (!checkMemo.test(clubDesc.value)) {
 		alert("200자 미만으로 작성");
+		return;
+	}
+	if (count < 1 || count > 3) {
+		alert('선호 음식은 1개 이상, 3개 이하로 선택해주세요.');
 		return;
 	}
 	
@@ -383,7 +383,20 @@ profileImageInput.addEventListener('change', function() {
         previewImage.src = '#';
     }
 });
-
+//-----엔터 esc 클릭 이벤트-------------------------------------------------------------------
+document.addEventListener('keydown', e=> {
+	if (e.keyCode===27) {
+		closeModal();
+	}
+	if (e.keyCode === 13) {
+		const isModalHidden = window.getComputedStyle(groupModal).display === 'none';
+		if (isModalHidden) {
+			document.getElementById("groupSearchButton").click();
+		} else {
+			createGroup();
+		}
+	}
+});
 //-----버튼 클릭 이벤트-------------------------------------------------------------------
 document.querySelectorAll('button').forEach(btn => {
 	btn.addEventListener('click', () => {

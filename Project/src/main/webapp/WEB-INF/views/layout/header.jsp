@@ -62,6 +62,7 @@
 			  <form id="logoutForm" action="/login/logout" method="POST" style="display: none;"></form>
 			  <div><a href="#" onclick="document.getElementById('logoutForm').submit();">로그아웃</a></div>
 			</div>
+		</div>
         </div>
       </div>
     </c:if>

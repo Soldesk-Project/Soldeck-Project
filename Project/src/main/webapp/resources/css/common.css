@@ -26,6 +26,6 @@ input {
 body,html {
 	font-family: sans-serif;
 }
-::-webkit-scrollbar {
+body::-webkit-scrollbar {
   display: none;
 }

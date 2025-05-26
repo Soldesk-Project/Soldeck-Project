@@ -73,7 +73,6 @@ document.querySelectorAll('.point-btn').forEach(btn=>{
 			.then(response => response.json())
 			.then(result => {
 				openModal(product);
-				loadMyPointData();
 			})
 			.catch(err => console.log(err));
 			
@@ -86,7 +85,7 @@ document.querySelectorAll('.point-btn').forEach(btn=>{
 			})
 			.then(response => response.json())
 			.then(result => {
-				console.log('응모 완료')
+					loadMyPointData();
 			})
 			.catch(err => console.log(err));
 		}else{
