@@ -808,14 +808,14 @@ a:hover {
   background-color: #e0e0e0;
 }
 .day.selected {
-  background-color: #007bff;
+  background-color: #FF7D00;
   color: #fff;
-  border-color: #007bff;
+  border-color: #FF7D00;
 }
 .day.selected:hover {
-  background-color: #007bff; /* 선택된 상태의 배경색 유지 */
+  background-color: #FF7D00; /* 선택된 상태의 배경색 유지 */
   color: #fff; /* 선택된 상태의 텍스트 색상 유지 */
-  border-color: #007bff; /* 선택된 상태의 테두리 색상 유지 */
+  border-color: #FF7D00; /* 선택된 상태의 테두리 색상 유지 */
 }
 /* 시간 선택 스타일 */
 .time-selection {
@@ -846,9 +846,9 @@ a:hover {
   background-color: #e0e0e0;
 }
 .time-btn.selected {
-  background-color: #007bff;
+  background-color: #FF7D00;
   color: #fff;
-  border-color: #007bff;
+  border-color: #FF7D00;
 }
 .time-btn:disabled, .time-btn.disabled {
     background-color: #e9ecef;
@@ -886,9 +886,9 @@ a:hover {
   background-color: #e0e0e0;
 }
 .personnel-btn.selected {
-  background-color: #007bff;
+  background-color: #FF7D00;
   color: #fff;
-  border-color: #007bff;
+  border-color: #FF7D00;
 }
 .personnel-btn:disabled, .personnel-btn.disabled {
     background-color: #e9ecef;
@@ -916,11 +916,11 @@ a:hover {
   background-color: #e0e0e0;
 }
 .btn.btn-confirm {
-  background-color: #007bff;
+  background-color: #FF7D00;
   color: #fff;
 }
 .btn.btn-confirm:hover {
-  background-color: #0056b3;
+  background-color: #DA6B00;
 }
 .favorite-modal-content{
 	display: flex;
