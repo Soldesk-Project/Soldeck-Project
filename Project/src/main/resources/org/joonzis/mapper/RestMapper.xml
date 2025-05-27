@@ -22,8 +22,8 @@
             #{rest_info},
             #{rest_loc},
             #{rest_cate},
-            0,
-            0
+            #{latitude},
+            #{longitude}
         )
     </insert>
     

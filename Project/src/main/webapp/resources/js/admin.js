@@ -1,3 +1,4 @@
+// 사이드바 매장 관리 클릭 시 등록, 수정 스크립트
 document.addEventListener('DOMContentLoaded', function() {
     const storeManagementLink = document.querySelector('.main-menu .side-restaurant');
     const restaurantMenu = document.querySelector('.restaurant-menu');
@@ -8,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// 페이지 이동 시 1페이지로 이동
 function resetPageNumAndSubmit() {
 	document.getElementById('pageNum').value = 1;
     document.getElementById('searchForm').submit();

@@ -48,6 +48,10 @@
 			<tr>
 				<th>가게 번호</th>
 				<th>가게 이름</th>
+				<th>가게 주소</th>
+				<th>가게 번호</th>
+				<th>가게 지역</th>
+				<th>가게 분류</th>
 				<th>삭제</th>
 			</tr>
 		</thead>
@@ -55,7 +59,11 @@
 			<c:forEach var="restaurant" items="${list}">
 				<tr>
 					<td>${restaurant.rest_no}</td>
-					<td>${restaurant.rest_name}</td>
+					<td><a href="/search/view?rest_no=${restaurant.rest_no}">${restaurant.rest_name}</a></td>
+					<td>${restaurant.rest_adr}</td>
+					<td>${restaurant.rest_phone}</td>
+					<td>${restaurant.rest_loc}</td>
+					<td>${restaurant.rest_cate}</td>
 					<td class="flex">
 				        <form action="/admin/deleteRestaurnt" method="post" onsubmit="return confirm('정말 삭제하시겠습니까?');">
 				            <input type="hidden" name="rest_no" value="${restaurant.rest_no}">
@@ -90,6 +98,5 @@
 		</ul>
 	</div>	          
 </body>
-	<script type="text/javascript" src="/resources/js/admin.js"></script>
-</body>
+<script type="text/javascript" src="/resources/js/admin.js" defer></script>
 </html>

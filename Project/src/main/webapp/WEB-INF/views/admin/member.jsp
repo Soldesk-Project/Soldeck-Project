@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,7 +52,7 @@
 					<td>${member.mem_id}</td>
 					<td>${member.mem_name}</td>
 					<td>${member.mem_email}</td>
-					<td>${member.mem_date}</td>
+					<td><fmt:formatDate value="${member.mem_date}" pattern="yyyy-MM-dd" /></td>
 					<td>
 						<form action="/admin/deleteMember" method="post"
 							onsubmit="return confirm('정말 삭제하시겠습니까?');">
@@ -87,6 +88,6 @@
 			</c:if>
 		</ul>
 	</div>
-<script type="text/javascript" src="/resources/js/admin.js"></script>	
 </body>
+<script type="text/javascript" src="/resources/js/admin.js" defer></script>	
 </html>

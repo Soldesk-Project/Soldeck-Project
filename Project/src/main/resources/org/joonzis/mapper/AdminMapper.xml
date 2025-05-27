@@ -69,8 +69,8 @@
 		parameterType="org.joonzis.domain.Criteria">
 	  <![CDATA[
 	    SELECT * FROM (
-	      SELECT rest_no, rest_name, ROWNUM rn FROM (
-	        SELECT rest_no, rest_name
+	      SELECT rest_no, rest_name, rest_adr, rest_phone, rest_loc, rest_cate, ROWNUM rn FROM (
+	        SELECT rest_no, rest_name, rest_adr, rest_phone, rest_loc, rest_cate
 	        FROM restaurant
 	        WHERE 1=1
 	  ]]>

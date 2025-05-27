@@ -88,6 +88,6 @@
 			</c:if>
 		</ul>
 	</div>
-<script type="text/javascript" src="/resources/js/admin.js"></script>
 </body>
+<script type="text/javascript" src="/resources/js/admin.js" defer></script>
 </html>
