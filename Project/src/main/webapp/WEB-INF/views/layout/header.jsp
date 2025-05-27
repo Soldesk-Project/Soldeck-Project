@@ -51,18 +51,17 @@
             </div>
             <div class="mypageAndlouout">
 			  <c:choose>
-			    <c:when test="${sessionScope.loggedInUser.mem_id == 'adminaccount'}">
+			    <c:when test="${sessionScope.loggedInUser.mem_id == 'adminaccount' || sessionScope.loggedInUser.mem_id == 'admin1111'}">
 			      <div class="mypage_text"><a href="/admin/member">관리자페이지</a></div>
 			    </c:when>
 			    <c:otherwise>
 			      <div class="mypage_text"><a href="/mypage/myInfo">마이페이지</a></div>
 			    </c:otherwise>
 			  </c:choose>
-			
 			  <form id="logoutForm" action="/login/logout" method="POST" style="display: none;"></form>
 			  <div><a href="#" onclick="document.getElementById('logoutForm').submit();">로그아웃</a></div>
 			</div>
-		</div>
+			</div>
         </div>
       </div>
     </c:if>

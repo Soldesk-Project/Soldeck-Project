@@ -16,3 +16,25 @@ function resetPageNumAndSubmit() {
 function resetPageNum() {
     document.getElementById('pageNum').value = 1;
   }
+
+//document.querySelectorAll('.update_btn').forEach(button => {
+//    button.addEventListener('click', () => {
+//        const row = button.closest('tr');
+//        const restNoInput = row.querySelector('.rest_no');
+//
+//        console.log("row:", row);
+//        console.log("restNoInput:", restNoInput);
+//        console.log("restNoInput.value:", restNoInput?.value);
+//
+//        const rest_no = restNoInput?.value.trim();  // ✅ 이 줄 반드시 필요!
+//        console.log("정상 추출된 rest_no:", rest_no);
+//
+//        if (rest_no && !isNaN(rest_no)) {
+//            const url = `/admin/update?rest_no=${rest_no}`;
+//            console.log("이동할 주소:", url);
+//            location.href = url;
+//        } else {
+//            alert("매장 번호가 올바르지 않습니다.");
+//        }
+//    });
+//});

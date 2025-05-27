@@ -87,6 +87,6 @@
 			</c:if>
 		</ul>
 	</div>
-</body>
 <script type="text/javascript" src="/resources/js/admin.js"></script>
+</body>
 </html>

@@ -131,7 +131,7 @@ form {
 }
 
 .restaurant-menu {
-    position: fixed;    /* 화면에 고정 */
+  position: fixed;    /* 화면에 고정 */
   top: 68px;
   left: 108px;
   width: auto;      /* 사이드바 너비 */

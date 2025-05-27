@@ -17,7 +17,7 @@ public class AdminInterceptor implements HandlerInterceptor {
         }
 
         MemberVO user = (MemberVO) session.getAttribute("loggedInUser");
-        if (!"adminaccount".equals(user.getMem_id())) {
+        if (!"adminaccount".equals(user.getMem_id()) && !"admin1111".equals(user.getMem_id())) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "관리자만 접근 가능합니다.");
             return false;
         }

@@ -3,11 +3,13 @@ package org.joonzis.controller;
 import org.joonzis.domain.Criteria;
 import org.joonzis.domain.PageDTO;
 import org.joonzis.service.AdminService;
+import org.joonzis.service.MemberService;
 import org.joonzis.service.RestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -23,6 +25,9 @@ public class AdminController {
 	
 	@Autowired
 	private RestService restService;
+	
+	@Autowired
+	private MemberService memberService;
 	
 	@GetMapping("/member")
     public String adminMemberPage(Model model, Criteria cri) {
@@ -64,10 +69,10 @@ public class AdminController {
         return "admin/add";
     }
 	
-	@GetMapping("/update")
-	public String adminRestaurantUpdate(Model model, @RequestParam("rest_no") int rest_no) {
-		model.addAttribute("restVO", restService.get(rest_no)); // RestVO
-		model.addAttribute("menuList", "매장메뉴리스트"); // List<MenuVO>
-		return "admin/update";
+	@PostMapping("/deleteMember")
+	public String deleteMember(@RequestParam("mem_no") int mem_no) {
+		memberService.removeMember(mem_no);
+		
+		return "redirect:/admin/member";
 	}
 }

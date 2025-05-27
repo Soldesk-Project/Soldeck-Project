@@ -262,7 +262,7 @@ public class LoginController {
             }
             
             // 관리자 계정인 경우
-            if ("adminaccount".equals(mem_id)) {
+            if ("adminaccount".equals(mem_id) || "admin1111".equals(mem_id)) {
                 return "admin"; // 프론트엔드에서 "admin" 응답을 처리해 관리자 페이지로 이동
             }
             
