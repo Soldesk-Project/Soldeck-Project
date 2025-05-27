@@ -91,15 +91,11 @@ input, textarea{
 	padding: 0px;
 }
 .booking-list{
-	flex:1;
-	flex-shrink: 0;
-	position: relative;
 	height: auto;
+	min-height: 300px;
 	display: flex;
-	flex-direction: row;
-	width: 100%;
-	flex-wrap: nowrap;
-	box-sizing: border-box;
+	border-bottom: 1px solid #ebebeb;
+	margin: 0 auto;
 }
 .booking-content-top-flex{
 	display: flex;

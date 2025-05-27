@@ -114,6 +114,9 @@ body {
 	min-height: 0;
 	margin-top: 25px;
 }
+.list-content::-webkit-scrollbar {
+  display: none;
+}
 .inner-content {
 	flex: 1;
 	overflow-y: auto;

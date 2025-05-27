@@ -5,26 +5,35 @@ body {
 	flex-direction: column;
 	min-height: 100vh;
 }
-/*친구 검색창 css*/
+/*모임 검색창 css*/
+.groupSearchBox{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 10px;
+	width: 690px;
+}
 #searchResultContainer {
   max-height: 0;
   opacity: 0;
   overflow: hidden;
   transition: all 0.3s ease;
-  margin-top: 10px;
+  margin:0 auto;
+  padding: 10px 15px;
 }
-
 #searchResultContainer.show {
   max-height: 500px;
   opacity: 1;
 }
-
 .group-item{
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	margin-bottom: 15px;
 }
-
+.group-item{
+	border-radius: 50%
+}
 /* 채팅 목록 css */
 /* 스크롤 */
 .scroll-container {
@@ -35,7 +44,6 @@ body {
 .container_F {
     display: flex;
     flex-direction: column;
-    align-items: center;
     margin-bottom:20px;
 }
 .container_F a{
@@ -50,10 +58,12 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 40px;
-    margin-top: 20px;
+    margin-top: 30px;
 }
-
+.groupBox{
+	display: flex;
+	flex-direction: column;
+}
 .groupListBox, .groupListRandomBox {
     width: 600px;
 }
@@ -61,7 +71,6 @@ body {
 h1,h2,h3,h4,h5,h6{
 	margin: 10px 0px;
 }
-
 /* 각 타이틀 포지션 */
 .TitleRow {
 	display: flex;
@@ -70,22 +79,19 @@ h1,h2,h3,h4,h5,h6{
 	margin-bottom: 20px;
 	margin-left: 10px;
 }
-
 .groupTitle{
 	flex: 1; /* 동일한 너비 분배 (선택사항) */
 }
-
 .groupTitle h2{
 	margin: 0;
 }
 /* 박스 레이아웃 */
 .groupList {
 	width: 600px;
-	height: 600px;
+	height: 500px;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	border: 1px solid black;
 	border-radius: 10px;
 	overflow-y: auto;
 }
@@ -103,7 +109,8 @@ h1,h2,h3,h4,h5,h6{
 	gap: 20px; /* 원하는 여백 */
 	justify-content: center; /* 가운데 정렬 */
 	align-items: center;
-	width: 800px;
+	background-color: #ff9e4b;
+	max-height: 40px;
 }
 .searchBox button{
 	border-radius: 20px;
@@ -123,13 +130,11 @@ h1,h2,h3,h4,h5,h6{
 	height: 30px;
 	align-items: flex-start;
 	margin: 16px 0px 16px 0px;
-	
 }
 .searchBtn{
 	width: 50px;
 	height: 22px;
 }
-
 .scroll-container {
 	width: 100%;
 	height: auto;
@@ -241,14 +246,13 @@ h1,h2,h3,h4,h5,h6{
 	margin-left: 15px;
 }
 #searchInput{
-    width: 255px;
+    width: 455px;
     height: 30px;
     border-radius: 20px;
+    border:1px solid #EBEBEB;
     padding: 0 10px;
+    background-color: white;
 }
-
-
-
 /*-----모달---------------------------------------------------------------*/
 #modal {
   display: none;
@@ -260,7 +264,6 @@ h1,h2,h3,h4,h5,h6{
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1000;
 }
-
 .group-modal-content {
   background-color: white;
   margin: 8% auto;
@@ -270,7 +273,6 @@ h1,h2,h3,h4,h5,h6{
   max-width: 500px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-
 .modal-title a {
   font-size: 1.5rem;
   font-weight: bold;
@@ -280,22 +282,18 @@ h1,h2,h3,h4,h5,h6{
   text-decoration: none;
   color: black;
 }
-
 .modal-body ul {
   list-style: none;
   padding: 0;
 }
-
 .modal-body ul li {
   margin-bottom: 1rem;
 }
-
 .image-container {
   display: flex;
   flex-direction: column;
     align-items: center;	
 }
-
 .image-placeholder {
   width: 128px;
   height: 128px;
@@ -312,11 +310,6 @@ h1,h2,h3,h4,h5,h6{
 .previewImage {
     display: none;
 }
-
-
-
-
-
 .input-text, .input-textarea {
   width: 100%;
   padding: 8px;
@@ -324,74 +317,61 @@ h1,h2,h3,h4,h5,h6{
   border-radius: 5px;
   box-sizing: border-box;
 }
-
 .input-text:focus, .input-textarea:focus {
   outline: none;
   border-color: #3b82f6;
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
 }
-
 .input-textarea {
   height: 100px;
   resize: none;
 }
-
 .input-label {
   display: block;
   margin-bottom: 8px;
   font-weight: 600;
 }
-
 .age-range-container {
   display: flex;
   align-items: center;
   gap: 8px;
 }
-
 .input-number {
   width: 64px;
   padding: 8px;
   border: 1px solid #d1d5db;
   border-radius: 5px;
 }
-
 .input-number:focus {
   outline: none;
   border-color: #3b82f6;
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
 }
-
 .gender-container {
   display: flex;
   gap: 16px;
 }
-
 .gender-radio {
   margin-right: 4px;
 }
-
 .public-checkbox {
   margin-right: 4px;
 }
-
 .modal-footer {
   display: flex;
   justify-content: flex-end;
   gap: 0.5rem;
 }
-
 .btn-cancel, .btn-create {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
-
 .btn-cancel {
   background-color: #FF7D00;
   color: white;
 }
-
 .btn-create {
   background-color: #FF7D00;
   color: white;
@@ -406,9 +386,3 @@ h1,h2,h3,h4,h5,h6{
     padding: 3px 10px;
     margin-top: 5px;
 }
-
-
-
-
-
-

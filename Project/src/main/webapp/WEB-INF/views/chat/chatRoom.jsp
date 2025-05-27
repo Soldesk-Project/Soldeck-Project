@@ -14,7 +14,7 @@
 <body>
 <div class="chat-head">
   <h2>${chatTitle}</h2>
- <button id="closeChatBtn">닫기 ✖</button>
+ <button id="closeChatBtn">✖</button>
 </div>
 
   <!-- 채팅창 -->

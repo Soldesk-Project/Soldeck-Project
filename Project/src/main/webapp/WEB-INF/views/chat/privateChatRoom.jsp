@@ -14,8 +14,8 @@
 <body>
 
 <div class="chat-head">
-  <h2>${friendNick}님과의 채팅</h2>
-  <button id="closeChatBtn">닫기 ✖</button>
+  <h2>${friendNick}</h2>
+  <button id="closeChatBtn">✖</button>
 </div>
   <!-- 채팅창 -->
   <div class="chat-container" data-room-type="private" data-room-no="${roomNo}">
@@ -27,7 +27,7 @@
     <input type="text" id="msg" placeholder="메시지 입력" />
     <!-- <input type="file" id="fileInput" accept="image/*" /> -->
     <button id="emoji-btn">😊</button>
-    <button id="sendBtn" onclick="sendMessage()">보내기</button>  
+    <button id="sendBtn" onclick="sendMessage()">전송</button>  
   </div>
   <div id="chat-meta"
      data-current-nick="${currentNick}"

@@ -73,10 +73,9 @@ input, textarea{
 	width: 900px;
 	height: auto;
 	min-height: 160px;
-	margin-left:10px;
-	margin-bottom: 10px;
 	display: flex;
 	border-bottom: 1px solid #ebebeb;
+	margin: 0 auto;
 }
 .img-div{
 	width: 140px;
