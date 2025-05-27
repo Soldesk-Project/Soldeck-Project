@@ -3,6 +3,7 @@ package org.joonzis.controller;
 import org.joonzis.domain.Criteria;
 import org.joonzis.domain.PageDTO;
 import org.joonzis.service.AdminService;
+import org.joonzis.service.GroupService;
 import org.joonzis.service.MemberService;
 import org.joonzis.service.RestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class AdminController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private GroupService groupService;
 	
 	@GetMapping("/member")
     public String adminMemberPage(Model model, Criteria cri) {
@@ -74,7 +78,6 @@ public class AdminController {
 		memberService.removeMember(mem_no);
 		
 		return "redirect:/admin/member";
-
 	}
 	
 	@PostMapping("/deleteRestaurnt")
@@ -84,9 +87,10 @@ public class AdminController {
 		return "redirect:/admin/restaurant";
 		
 	}
-	
-	
-	
-	
-	
+	@PostMapping("/deleteGroup")
+	public String deleteGroup(@RequestParam("group_no") int group_no, @RequestParam("mem_no") int mem_no) {
+		groupService.remove(group_no, mem_no);
+		
+		return "redirect:/admin/group";
+	}
 }

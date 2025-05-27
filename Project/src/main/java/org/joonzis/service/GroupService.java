@@ -57,5 +57,7 @@ public interface GroupService {
 	public List<GroupVO> getGroupListByMember(int mem_no);
 	
 	public String getGroupName(int group_no);
+	
+	void remove(int group_no, int mem_no);
 
 }

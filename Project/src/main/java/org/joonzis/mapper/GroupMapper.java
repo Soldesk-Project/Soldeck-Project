@@ -71,4 +71,6 @@ public interface GroupMapper {
 	public List<GroupVO> getGroupListByMember(int mem_no);
 	
 	public String getGroupName(@Param("group_no") int group_no);
+	
+	void remove(@Param("group_no") int group_no, @Param("mem_no") int mem_no);
 }

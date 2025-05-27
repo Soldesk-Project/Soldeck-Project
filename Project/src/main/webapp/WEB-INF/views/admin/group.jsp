@@ -55,6 +55,7 @@
 						<form action="/admin/deleteGroup" method="post"
 							onsubmit="return confirm('정말 삭제하시겠습니까?');">
 							<input type="hidden" name="group_no" value="${group.group_no}" />
+							<input type="hidden" name="mem_no" value="${group.mem_no }">
 							<button type="submit">삭제</button>
 						</form>
 					</td>

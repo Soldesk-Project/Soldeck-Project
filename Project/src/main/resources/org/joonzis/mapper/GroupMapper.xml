@@ -172,8 +172,14 @@
 		)
 	</select>
 	
+	<!-- 그룹 언팔로우 -->
 	<delete id="removeGroup">
 		DELETE GROUP_MEM WHERE GROUP_NO=#{group_no} AND MEM_NO=#{mem_no}	
+	</delete>
+	
+	<!-- 관리자가 그룹 삭제 -->
+	<delete id="remove">
+		DELETE "GROUP" WHERE GROUP_NO=#{group_no} AND MEM_NO=#{mem_no}
 	</delete>
 	
 	

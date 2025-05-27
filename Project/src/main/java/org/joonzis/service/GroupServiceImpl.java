@@ -163,6 +163,8 @@ public class GroupServiceImpl implements GroupService {
 	public String getGroupName(int group_no) {
 		return mapper.getGroupName(group_no);
 	}
-	
-	
+	@Override
+	public void remove(int group_no, int mem_no) {
+		mapper.remove(group_no, mem_no);
+	}
 }
