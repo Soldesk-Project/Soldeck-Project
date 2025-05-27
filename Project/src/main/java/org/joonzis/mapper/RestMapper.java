@@ -20,7 +20,7 @@ public interface RestMapper {
 	public List<RestVO> todayData();
 	
 	// 가게 찾기
-	public List<RestVO> findByNo(int rest_no);
+	public List<RestVO> findByNo(@Param("rest_no") int rest_no);
 	
 	public int findByName(String rest_name);
 	
@@ -31,7 +31,7 @@ public interface RestMapper {
 	public void addRestMenu(@Param("rest_no") int rest_no, @Param("menu_name") String menu_name, @Param("menu_price") String menu_price);
 
 	// 가게 메뉴 찾기
-	public List<MenuVO> getMenu(int rest_no);
+	public List<MenuVO> getMenu(@Param("rest_no") int rest_no);
 	
 	public List<RestVO> getRest(int rest_no);
 
@@ -56,4 +56,7 @@ public interface RestMapper {
 	// 썸네일 + 전체 가게
 	public List<RestVO> getAllRestWithThumbnail();
 
+	
+	public void deleteRestaurnt(@Param("rest_no") int rest_no);
+	
 }

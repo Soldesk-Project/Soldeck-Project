@@ -31,17 +31,19 @@
 	<div class="container">
 		<form action="/search/restAdd" method="post" enctype="multipart/form-data">
 			<div class="formGroup">
-				<input type="hidden" name="rest.rest_no" value="${restVO.rest_no}">
-	            <label>매장 이름: <input type="text" name="rest.rest_name" value="${restVO.rest_name}" required></label><br>
-	            <label>매장 주소: <input type="text" name="rest.rest_adr" value="${restVO.rest_adr}" required></label><br>
-	            <label>매장 번호: <input type="text" name="rest.rest_phone" value="${restVO.rest_phone}" required></label><br>
-	            <label>매장 영업시간: <input type="text" name="rest.rest_bh" value="${restVO.rest_bh}" required></label><br>
-	            <label>매장 정보: <input type="text" name="rest.rest_info" value="${restVO.rest_info}" required></label><br>
-	            <label>매장 지역: <input type="text" name="rest.rest_loc" value="${restVO.rest_loc}" required></label><br>
-	            <label>매장 종류: <input type="text" name="rest.rest_cate" value="${restVO.rest_cate}" required></label><br>
+				<c:forEach var="rest" items="${restVO}">
+					<input type="hidden" name="rest.rest_no" value="${rest.rest_no}">
+		            <label>매장 이름: <input type="text" name="rest.rest_name" value="${rest.rest_name}" required></label><br>
+		            <label>매장 주소: <input type="text" name="rest.rest_adr" value="${rest.rest_adr}" required></label><br>
+		            <label>매장 번호: <input type="text" name="rest.rest_phone" value="${rest.rest_phone}" required></label><br>
+		            <label>매장 영업시간: <input type="text" name="rest.rest_bh" value="${rest.rest_bh}" required></label><br>
+		            <label>매장 정보: <input type="text" name="rest.rest_info" value="${rest.rest_info}" required></label><br>
+		            <label>매장 지역: <input type="text" name="rest.rest_loc" value="${rest.rest_loc}" required></label><br>
+		            <label>매장 종류: <input type="text" name="rest.rest_cate" value="${rest.rest_cate}" required></label><br>
+			    </c:forEach>
 			    <label>새 매장 사진 (선택):
 	                <input type="file" name="images" accept="image/*" multiple>
-	                <small>최대 10장까지 업로드 가능 / 미업로드 시 기존 유지</small>
+	                <small>최대 10장까지 업로드 가능 / 미업로드 시 기존 유지</small>	
 	            </label><br>
 			    <div id="menuContainer">
                 <c:forEach var="menu" items="${menuList}" varStatus="status">

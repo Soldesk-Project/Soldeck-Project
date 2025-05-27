@@ -389,12 +389,7 @@ document.addEventListener('keydown', e=> {
 		closeModal();
 	}
 	if (e.keyCode === 13) {
-		const isModalHidden = window.getComputedStyle(groupModal).display === 'none';
-		if (isModalHidden) {
-			document.getElementById("groupSearchButton").click();
-		} else {
-			createGroup();
-		}
+		document.getElementById("groupSearchButton").click();
 	}
 });
 //-----버튼 클릭 이벤트-------------------------------------------------------------------

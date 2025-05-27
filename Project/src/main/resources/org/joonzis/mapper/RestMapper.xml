@@ -108,7 +108,7 @@
 	]]>
 	</select>
 	
-	<select id="findByNo" resultType="org.joonzis.domain.RestVO">
+	<select id="findByNo" resultType="org.joonzis.domain.RestVO" parameterType="int">
 		SELECT 
         r.REST_NO,
         r.REST_NAME,
@@ -129,7 +129,7 @@
         r.REST_NO = #{rest_no}
 	</select>
 	
-	<select id="getMenu" resultType="org.joonzis.domain.MenuVO">
+	<select id="getMenu" resultType="org.joonzis.domain.MenuVO" parameterType="int">
 		SELECT
 	        MENU_NAME,
 	        MENU_PRICE
@@ -290,5 +290,10 @@
 	    WHERE 
 	        i.REST_IMG_NO = 1
 	</select>
+	
+
+	<delete id="deleteRestaurnt" parameterType="int">
+		DELETE RESTAURANT WHERE REST_NO=#{rest_no}
+	</delete>
 
 </mapper>

@@ -62,7 +62,7 @@ document.querySelectorAll('.point-btn').forEach(btn=>{
 		let point=Number(btn.dataset.point);
 		let myPoint=document.querySelector('.my-point').dataset.myPoint;
 		//기능 구현 없이 따로 포인트가 차감되는 것만 구현
-		if(myPoint>point){
+		if(myPoint>=point){
 			fetch('/event/savePoint',{
 				method : 'post',
 				headers : {
@@ -113,6 +113,19 @@ document.querySelector('#closeModalBtn').addEventListener('click',()=>{
 	closeModal();
 });
 
+
+
+window.addEventListener('keydown', function(e) {
+	 if (modal.style.display === 'block') {
+        // ESC만 허용, 나머지는 모두 막기
+        if (e.keyCode === 27) {
+            closeModal();
+        }
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+    }
+});	
 
 
 

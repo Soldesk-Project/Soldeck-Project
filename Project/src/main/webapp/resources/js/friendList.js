@@ -301,7 +301,7 @@ function setupFriendSearch() {
 
               return `
                 <div class="friend-item">
-                  <img src="${imgSrc}" width="80" alt="프로필"
+                  <img src="${imgSrc}" width="80" alt="프로필" height="80"
                        onerror="this.onerror=null; this.src='../resources/upload/profile.png';">
                   <span>${friend.mem_nick}</span>
                   <div class="followBtn"><button onclick="follow(${friend.mem_no}, this)">팔로우</button></div>

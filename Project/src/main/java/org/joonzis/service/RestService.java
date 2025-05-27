@@ -29,6 +29,7 @@ public interface RestService {
 
 	public void addReserve(ReserveVO reservation);
 	public void addRest(RestVO RestVO, List<String> list, List<MenuVO> menuList);
+	public void deleteRestaurnt(int rest_no);
 	
 	// 예약된 시간 목록 조회
     public List<String> getReservedTimes(int rest_no, String res_date);

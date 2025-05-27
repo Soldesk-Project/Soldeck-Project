@@ -57,7 +57,7 @@
 					<td>${restaurant.rest_no}</td>
 					<td>${restaurant.rest_name}</td>
 					<td class="flex">
-				        <form action="/admin/deleteGroup" method="post" onsubmit="return confirm('정말 삭제하시겠습니까?');">
+				        <form action="/admin/deleteRestaurnt" method="post" onsubmit="return confirm('정말 삭제하시겠습니까?');">
 				            <input type="hidden" name="rest_no" value="${restaurant.rest_no}">
 				            <button type="submit">삭제</button>
 				        </form>

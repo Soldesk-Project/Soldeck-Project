@@ -74,5 +74,19 @@ public class AdminController {
 		memberService.removeMember(mem_no);
 		
 		return "redirect:/admin/member";
+
 	}
+	
+	@PostMapping("/deleteRestaurnt")
+	public String deleteRestaurnt(@RequestParam("rest_no") int rest_no) {
+		restService.deleteRestaurnt(rest_no);
+		
+		return "redirect:/admin/restaurant";
+		
+	}
+	
+	
+	
+	
+	
 }

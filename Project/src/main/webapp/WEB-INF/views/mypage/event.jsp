@@ -37,7 +37,7 @@
 									<div class="amount-used-point">
 										<span>소모 포인트</span>
 										 : 1000p
-										<button data-product="iPad" data-point="1000" class="point-btn">응모하기</button>
+										<button data-product="아이패드" data-point="1000" class="point-btn">응모하기</button>
 									</div>
 								</div>
 							</li>
@@ -56,7 +56,7 @@
 									<div class="amount-used-point">
 										<span>소모 포인트</span>
 										 : 1500p
-										 <button data-product="stanByMe" data-point="1500" class="point-btn">응모하기</button>
+										 <button data-product="스탠바이미" data-point="1500" class="point-btn">응모하기</button>
 									</div>
 								</div>
 							</li>
@@ -75,7 +75,7 @@
 									<div class="amount-used-point">
 										<span>소모 포인트</span>
 										 : 2000p
-										 <button data-product="GalaxyBook" data-point="2000" class="point-btn">응모하기</button>
+										 <button data-product="갤럭시북" data-point="2000" class="point-btn">응모하기</button>
 									</div>
 								</div>
 							</li>
@@ -94,7 +94,7 @@
 									<div class="amount-used-point">
 										<span>소모 포인트</span>
 										 : 500p
-										 <button data-product="switch" data-point="500" class="point-btn">응모하기</button>
+										 <button data-product="닌텐도 스위치" data-point="500" class="point-btn">응모하기</button>
 									</div>
 								</div>
 							</li>
@@ -113,7 +113,7 @@
 									<div class="amount-used-point">
 										<span>소모 포인트</span>
 										 : 300p
-										 <button data-product="toy" data-point="300" class="point-btn">응모하기</button>
+										 <button data-product="사랑의 하츄핑 하우스" data-point="300" class="point-btn">응모하기</button>
 									</div>
 								</div>
 							</li>
@@ -132,7 +132,7 @@
 									<div class="amount-used-point">
 										<span>소모 포인트</span>
 										 : 100p
-										 <button data-product="coupon" data-point="100" class="point-btn">응모하기</button>
+										 <button data-product="배민 쿠폰" data-point="100" class="point-btn">응모하기</button>
 									</div>
 								</div>
 							</li>
@@ -151,7 +151,7 @@
 									<div class="amount-used-point">
 										<span>소모 포인트</span>
 										 : 3600p
-										 <button data-product="toy" data-point="3600" class="point-btn">응모하기</button>
+										 <button data-product="라바돈" data-point="3600" class="point-btn">응모하기</button>
 									</div>
 								</div>
 							</li>

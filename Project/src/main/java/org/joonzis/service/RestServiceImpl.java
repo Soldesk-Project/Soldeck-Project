@@ -143,4 +143,13 @@ public class RestServiceImpl implements RestService{
 	public List<ReserveRestDTO> getReserve(int mem_no) {
 		return mapper.getReserve(mem_no);
 	}
+	@Override
+	public void deleteRestaurnt(int rest_no) {
+		mapper.deleteRestaurnt(rest_no);
+	}
+	
+	
+	
+	
+	
 }
