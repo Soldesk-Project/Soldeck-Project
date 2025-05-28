@@ -806,32 +806,62 @@ function uploadComment() {
 
 //댓글 입력 제한 ----------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
-  const textarea = document.getElementById('comment');
-  const maxChars = 500;
-  const maxLines = 20;
-  const lineHeight = parseFloat(getComputedStyle(textarea).lineHeight) || 20;
+	  const textarea = document.getElementById('comment');
+	  const maxBytes = 1000;
+	  const maxLines = 21;
+	  const lineHeight = parseFloat(getComputedStyle(textarea).lineHeight) || 20;
 
-  textarea.setAttribute('rows', maxLines);
+	  textarea.setAttribute('rows', maxLines);
 
-  textarea.addEventListener('input', () => {
-    textarea.value = textarea.value.slice(0, maxChars);
+	  // UTF-8 바이트 수 계산 및 자르기
+	  function sliceByByte(str, maxBytes) {
+	    let bytes = 0;
+	    let result = '';
 
-    let lines = textarea.value.split('\n');
-    if (lines.length > maxLines) {
-      textarea.value = lines.slice(0, maxLines).join('\n');
-    }
+	    for (let i = 0; i < str.length; i++) {
+	      const char = str[i];
+	      const code = str.charCodeAt(i);
 
-    while (Math.floor(textarea.scrollHeight / lineHeight) > maxLines && textarea.value.length > 0) {
-      textarea.value = textarea.value.slice(0, -1);
-    }
-  });
+	      // UTF-8 바이트 계산
+	      if (code <= 0x7F) {
+	        bytes += 1;
+	      } else if (code <= 0x7FF) {
+	        bytes += 2;
+	      } else if (code <= 0xFFFF) {
+	        bytes += 3;
+	      } else {
+	        bytes += 4;
+	      }
 
-  textarea.addEventListener('keydown', e => {
-    if (e.key === 'Enter' && textarea.value.split('\n').length >= maxLines) {
-      e.preventDefault();
-    }
-  });
-});
+	      if (bytes > maxBytes) break;
+	      result += char;
+	    }
+
+	    return result;
+	  }
+
+	  textarea.addEventListener('input', () => {
+	    // 줄 수 제한
+	    let lines = textarea.value.split('\n');
+	    if (lines.length > maxLines) {
+	      lines = lines.slice(0, maxLines);
+	    }
+
+	    // 줄 단위로 먼저 자르고, 바이트 제한 적용
+	    textarea.value = sliceByByte(lines.join('\n'), maxBytes);
+
+	    // 실제 스크롤 높이 기반으로도 체크
+	    while (Math.floor(textarea.scrollHeight / lineHeight) > maxLines && textarea.value.length > 0) {
+	      textarea.value = textarea.value.slice(0, -1);
+	    }
+	  });
+
+	  textarea.addEventListener('keydown', e => {
+	    if (e.key === 'Enter' && textarea.value.split('\n').length >= maxLines) {
+	      e.preventDefault();
+	    }
+	  });
+	});
 
 function formatDate(dateString) {
   return dateString ? new Date(dateString).toISOString().split('T')[0] : '날짜 없음';
