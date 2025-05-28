@@ -4,9 +4,12 @@ import java.io.File;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpSession;
 
@@ -21,6 +24,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -88,12 +93,12 @@ public class LoginController {
     @PostMapping(value = "/findIdProcess", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String findIdProcess(@RequestParam("name") String mem_name, @RequestParam("birthDate") String mem_birth, @RequestParam("contact") String mem_phone) {
-    	Long phone = Long.parseLong(mem_phone.replaceAll("[^0-9]", ""));
-        List<String> foundIds = memberservice.findId(mem_name, mem_birth.substring(0, 8), phone);
+    	Long phone = Long.parseLong(mem_phone);
+        List<String> foundIds = memberservice.findId(mem_name, mem_birth, phone);
         if (!foundIds.isEmpty()) {
             return String.join(", ", foundIds);
         } else {
-            return "아이디를 찾을 수 없습니다.";
+            return "아이디 조회에 실패했습니다. 잠시 후 다시 시도해주세요.";
         }
     }
     
@@ -102,7 +107,7 @@ public class LoginController {
         return "login/findPw";
     }
     
-    @PostMapping("/findPwProcess")
+    @PostMapping(value = "/findPwProcess", produces = "text/plain; charset=UTF-8")
     @ResponseBody
     public String findPwProcess(@RequestParam("Id") String mem_id, @RequestParam("birthDate") String mem_birth, @RequestParam("contact") String mem_phone) {
     	Long phone = Long.parseLong(mem_phone); // String을 Long으로 변환
@@ -110,7 +115,7 @@ public class LoginController {
     	if (foundPw != null) {
     		return foundPw;
     	} else {
-    		return "비밀번호를 찾을 수 없습니다";
+    		return "비밀번호 조회에 실패했습니다. 잠시 후 다시 시도해주세요.";
     	}
     }
     

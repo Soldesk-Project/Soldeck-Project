@@ -6,24 +6,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const nameInput = document.getElementById('name');
     const birthDateInput = document.getElementById('birthDate');
     const contactInput = document.getElementById('contact');
-
     findIdBtn.addEventListener('click', function() {
         const name = nameInput.value;
         const birthDate = birthDateInput.value;
         const contact = contactInput.value;
-
         if (!name) {
             alert('이름을 입력해주세요.');
             nameInput.focus();
             return;
         }
-
         if (!birthDate) {
             alert('생년월일을 입력해주세요.');
             birthDateInput.focus();
             return;
         }
-
         if (!contact) {
             alert('연락처를 입력해주세요.');
             contactInput.focus();
@@ -52,7 +48,6 @@ document.addEventListener('DOMContentLoaded', function() {
             resultContainer.style.display = 'block';
         });
     });
-
     findPwPageBtn.addEventListener('click', function() {
         window.location.href = 'findPw';
     });
