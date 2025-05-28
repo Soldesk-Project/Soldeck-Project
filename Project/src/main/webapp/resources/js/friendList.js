@@ -140,7 +140,7 @@ function handleFriendListClick(event) {
     document.querySelectorAll(".friendTabPane").forEach(pane => pane.classList.remove("active"));
     const activePane = document.getElementById(`tab-${targetTab}`);
     if (activePane) activePane.classList.add("active");
-    document.querySelector('.show').style.display='none';
+    document.querySelector('#searchResultContainer').style.display='none';
     document.getElementById("searchInput").value='';
   }
 }
