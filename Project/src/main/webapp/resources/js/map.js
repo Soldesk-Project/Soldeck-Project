@@ -74,10 +74,6 @@ function renderMapWithPlaces(places, myLat, myLon, maxDistance = Infinity, zoomL
         resetLocationBtn.style.display = 'block';
     });
     
-    if (showCurrentLocationMarker) {
-        displayMarker(new kakao.maps.LatLng(myLat, myLon), '<div style="padding:5px;">여기가 현재 위치입니다!</div>', map);
-    }
-
     sidebarBody.innerHTML = '';
     
     places.forEach(place => {

@@ -50,6 +50,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     alert("위도/경도 변환 중 오류가 발생했습니다.");
                 });
             });
+            
+            const storeManagementLink = document.querySelector('.main-menu .side-restaurant');
+            const restaurantMenu = document.querySelector('.restaurant-menu');
+
+            storeManagementLink.addEventListener('click', function(event) {
+                event.preventDefault(); // 기본 링크 동작 방지
+                restaurantMenu.style.display = restaurantMenu.style.display === 'none' ? 'block' : 'none';
+            });
         });
         
         let menuIndex = 0;

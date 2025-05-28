@@ -404,3 +404,6 @@ input, textarea{
 .res-name {
 	cursor: pointer;
 }
+#alarmBadge {
+	right: 7px;
+}

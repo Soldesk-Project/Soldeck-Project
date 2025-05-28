@@ -929,3 +929,7 @@ a:hover {
 	justify-content: space-around;
 	padding-bottom: 10px;
 }
+
+#alarmBadge {
+	right: 7px;
+}

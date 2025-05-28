@@ -37,8 +37,8 @@
 	            <label>매장 정보: <input type="text" name="rest.rest_info" required></label><br>
 	            <label>매장 지역: <input type="text" name="rest.rest_loc" required></label><br>
 	            <label>매장 종류: <input type="text" name="rest.rest_cate" required></label><br>
-	            <label>매장 위도: <input type="text" name="rest.latitude" id="rest_lat" readonly></label><br>
-				<label>매장 경도: <input type="text" name="rest.longitude" id="rest_lng" readonly></label><br>
+				<input type="hidden" name="rest.latitude" id="rest_lat" readonly><br>
+				<input type="hidden" name="rest.longitude" id="rest_lng" readonly><br>
 	            <label>매장 사진:
 			        <input type="file" name="images" accept="image/*" multiple>
 			        <small>최대 10장까지 업로드 가능</small>

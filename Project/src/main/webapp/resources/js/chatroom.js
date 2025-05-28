@@ -70,6 +70,8 @@ function initializeChatroom() {
 
     window.chatBox.appendChild(messageDiv);
   });
+  
+  window.chatBox.scrollTop = window.chatBox.scrollHeight;
 
   // 웹소켓 재연결 함수
   function reconnectWebSocket(roomNo) {

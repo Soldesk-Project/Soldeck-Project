@@ -3,6 +3,9 @@ body {
 }
 
 
+#alarmBadge{
+	right: 15px;
+}
 /* 사이드바 컨테이너 */
 .main-menu {
   position: fixed;    /* 화면에 고정 */

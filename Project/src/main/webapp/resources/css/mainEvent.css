@@ -58,3 +58,6 @@ ul {
 .event-list-time span{
 	color: #0080ff;
 }
+#alarmBadge {
+	right: 7px;
+}

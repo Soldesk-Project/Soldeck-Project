@@ -29,3 +29,11 @@ body,html {
 body::-webkit-scrollbar {
   display: none;
 }
+
+/* 체크박스에는 기본 appearance 복구 */
+input[type="checkbox"] {
+  appearance: checkbox; /* 최신 브라우저 */
+  -webkit-appearance: checkbox;
+  -moz-appearance: checkbox;
+  background-color: initial;
+}

@@ -225,3 +225,6 @@ ul {
 .res-name {
 	cursor: pointer;
 }
+#alarmBadge {
+	right: 7px;
+}
