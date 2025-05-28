@@ -42,7 +42,7 @@ body input{
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	margin-bottom: 15px;
+	gap:10px;
 }
 .group-item{
 	border-radius: 50%
@@ -227,8 +227,19 @@ h1,h2,h3,h4,h5,h6{
 }
 .follow-btn button{
 	width: 60px;
+	border: none;                  /* 테두리 없음 */
+    border-radius: 33px;
 }
-.group-box button:hover{
+
+.followBtn button{
+	width: 60px;
+    height: 25px;
+    border-radius: 33px;
+    border: none;
+    padding: 0;
+}
+
+.group-box button:hover, .followBtn button:hover{
 	background-color: #FF7D00;
 	color: white;
 }

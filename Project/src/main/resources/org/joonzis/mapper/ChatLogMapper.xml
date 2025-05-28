@@ -22,7 +22,7 @@
 	</resultMap>
 	
 	<select id="getChatsByGroupNo" resultMap="ChatLogMap">
-	    SELECT * FROM GROUP_CHAT_LOG WHERE GROUP_NO = #{groupNo}
+	    SELECT * FROM GROUP_CHAT_LOG WHERE GROUP_NO = #{groupNo} ORDER BY CHAT_TIME ASC
 	</select>
 	
 	<resultMap id="PrivateChatLogMap" type="org.joonzis.domain.PrivateChatLogVO">
