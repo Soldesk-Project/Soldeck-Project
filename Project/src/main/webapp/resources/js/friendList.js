@@ -133,13 +133,15 @@ function handleFriendListClick(event) {
   // 탭 전환
   if (target.classList.contains("friend-tab-button")) {
     const targetTab = target.dataset.tab;
-
+    
     document.querySelectorAll(".friend-tab-button").forEach(btn => btn.classList.remove("active"));
     target.classList.add("active");
 
     document.querySelectorAll(".friendTabPane").forEach(pane => pane.classList.remove("active"));
     const activePane = document.getElementById(`tab-${targetTab}`);
     if (activePane) activePane.classList.add("active");
+    document.querySelector('.show').style.display='none';
+    document.getElementById("searchInput").value='';
   }
 }
 
@@ -283,6 +285,7 @@ function setupFriendSearch() {
 
   const doSearch = () => {
     const keyword = input.value.trim();
+    resultContainer.style.display='';
     if (!keyword) {
       resultContainer.classList.remove("show");
       resultContainer.innerHTML = "";

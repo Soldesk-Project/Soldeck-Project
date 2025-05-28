@@ -13,14 +13,14 @@
 			<button id="randomGroupBtn">추천 모임</button>
 			<button id="createGroupBtn">모임 만들기</button>
 		</div>
-		<div class="groupWrapper">
-			<div class="groupBox">
 				<div class="groupSearchBox">
 					<p class="searchTitle">모임 검색</p>
 					<input type="text" id="searchInput" placeholder="모임 검색" autocomplete="off">
 					<button id="groupSearchButton">검색</button>
 				</div>
 					<div id="searchResultContainer"></div>
+		<div class="groupWrapper">
+			<div class="groupBox">
 				<div class="groupListBox">
 					<div class="groupTitle">
 					</div>

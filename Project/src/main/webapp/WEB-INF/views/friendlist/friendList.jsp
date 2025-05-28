@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="../resources/css/header.css">
 <link rel="stylesheet" href="../resources/css/friendList.css">
-<link rel="stylesheet" href="../resources/css/common.css">
+
 <link rel="stylesheet" href="../resources/css/footer.css">
 </head>
 <body style="overflow-y: scroll;"
@@ -25,6 +25,12 @@
 			<button class="friend-tab-button" data-tab="recommend">추천 친구</button>
 		</div>
 
+		<div class="friendSearchBox">
+			<p class="searchTitle">친구 검색</p>
+			<input type="text" id="searchInput" placeholder="친구 검색" autocomplete="off">
+			<button id="friendSearchButton">검색</button>
+		</div>
+		<div id="searchResultContainer"></div>
 
 		<!-- 친구 탭 UI -->
 		<div class="friendWrapper">
@@ -32,12 +38,6 @@
 				<div class="friendTabContent">
 					<!-- 내 친구 목록 -->
 					<div id="tab-my" class="friendTabPane active">
-							<div class="friendSearchBox">
-								<p class="searchTitle">친구 검색</p>
-								<input type="text" id="searchInput" placeholder="친구 검색" autocomplete="off">
-								<button id="friendSearchButton">검색</button>
-							</div>
-								<div id="searchResultContainer"></div>
 						<div class="friendTitle">
 							<h2>친구 목록</h2>
 						</div>
@@ -50,12 +50,6 @@
 	
 					<!-- 친구 추천 목록 -->
 					<div id="tab-recommend" class="friendTabPane">
-						<div class="friendSearchBox">
-							<p class="searchTitle">친구 검색</p>
-							<input type="text" id="searchInput" placeholder="친구 검색" autocomplete="off">
-							<button id="friendSearchButton">검색</button>
-						</div>
-							<div id="searchResultContainer"></div>
 						<div class="friend_RandomTitle">
 							<h2>친구 추천 목록</h2>
 						</div>

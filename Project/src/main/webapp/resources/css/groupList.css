@@ -5,13 +5,26 @@ body {
 	flex-direction: column;
 	min-height: 100vh;
 }
+body input{
+  border: revert;
+  box-shadow: revert;
+  -webkit-appearance: revert;
+  -moz-appearance: revert;
+  appearance: revert;
+  background-color: revert;
+}
+.groupWrapper button{
+	background: revert;
+	
+}
 /*모임 검색창 css*/
 .groupSearchBox{
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	gap: 10px;
-	width: 690px;
+	width: auto;
+	justify-content: center;
 }
 #searchResultContainer {
   max-height: 0;
@@ -59,6 +72,7 @@ body {
     flex-direction: row;
     justify-content: center;
     margin-top: 30px;
+    gap: 20px;
 }
 .groupBox{
 	display: flex;
@@ -81,6 +95,9 @@ h1,h2,h3,h4,h5,h6{
 }
 .groupTitle{
 	flex: 1; /* 동일한 너비 분배 (선택사항) */
+	height: 55px;
+	display: flex;
+	align-items: center;
 }
 .groupTitle h2{
 	margin: 0;
@@ -88,12 +105,14 @@ h1,h2,h3,h4,h5,h6{
 /* 박스 레이아웃 */
 .groupList {
 	width: 600px;
-	height: 500px;
+	height: 562px;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
 	border-radius: 10px;
 	overflow-y: auto;
+	border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 .groupList::-webkit-scrollbar{
   display: none;
@@ -141,8 +160,6 @@ h1,h2,h3,h4,h5,h6{
 }
 .group-box{
 	margin: 10px;
-	border: 1px double #FF7D00;
-	border-radius: 10px;
 }
 .group_profileTop{
 	display: flex;
@@ -207,6 +224,9 @@ h1,h2,h3,h4,h5,h6{
     display: flex;
     flex: 1;
     justify-content: flex-end;
+}
+.follow-btn button{
+	width: 60px;
 }
 .group-box button:hover{
 	background-color: #FF7D00;

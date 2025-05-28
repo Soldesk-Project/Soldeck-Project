@@ -5,13 +5,26 @@ body {
 	flex-direction: column;
 	min-height: 100vh;
 }
+body input{
+  border: revert;
+  box-shadow: revert;
+  -webkit-appearance: revert;
+  -moz-appearance: revert;
+  appearance: revert;
+  background-color: revert;
+}
+.friendWrapper button{
+	background: revert;
+	
+}
 /*친구 검색창 css*/
 .friendSearchBox{
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	gap: 10px;
-	width: 690px;
+	width: auto;
+    justify-content: center;
 }
 #searchResultContainer {
   max-height: 0;
@@ -59,6 +72,7 @@ body {
     flex-direction: row;
     justify-content: center;
     margin-top: 30px;
+    gap: 20px;
 }
 .friendTabContent{
 	width: 602px;
@@ -82,11 +96,14 @@ h1,h2,h3,h4,h5,h6{
 .friendTitle,
 .friend_RandomTitle {
 	flex: 1; /* 동일한 너비 분배 (선택사항) */
+    height: 55px;
+    display: flex;
 }
 .friendTitle h2,
 .friend_RandomTitle h2 {
 	margin: 0;
 	text-align: left;
+	align-content: center;
 }
 .friend_RandomTitle{
 	margin-left: 10px;
@@ -94,12 +111,14 @@ h1,h2,h3,h4,h5,h6{
 /* 박스 레이아웃 */
 .friendList {
 	width: 600px;
-	height: 500px;
+	height: 562px;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
 	border-radius: 10px;
 	overflow-y: auto;
+	border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 .friendList::-webkit-scrollbar{
 	display: none;
@@ -166,14 +185,14 @@ h1,h2,h3,h4,h5,h6{
 	margin: 10px;
 	border-radius: 10px;
 }
-.friend-box button{
+.friend-box button, #friendSearchButton, .followBtn button{
     min-width: 45px;
     height: 25px;
     border-radius: 33px;
     border: none;
     padding: 0;
 }
-.friend-box button:hover{
+.friend-box button:hover, #friendSearchButton:hover, .followBtn button:hover{
 	background-color: #FF7D00;
 	color: white;
 }
@@ -227,6 +246,9 @@ h1,h2,h3,h4,h5,h6{
     align-items: center;
 	margin-left: auto;
 }
+.followBtn button{
+	width: 60px;
+}
 .friend-memo{
 	width: 190px;
 	white-space: pre-wrap;
@@ -260,6 +282,7 @@ h1,h2,h3,h4,h5,h6{
 	margin: 10px;
 	border-radius: 5px;
 	padding: 0 7px;
+	border: 1px solid #EBEBEB;
 }
 .rest_name{
 	width: 250px;
@@ -314,6 +337,7 @@ h1,h2,h3,h4,h5,h6{
   border-radius: 6px;
   cursor: pointer;
 }
+
 .accept-btn:hover,
 .decline-btn:hover {
   opacity: 0.9;
@@ -325,13 +349,10 @@ h1,h2,h3,h4,h5,h6{
   display: block; /* active 클래스가 있는 콘텐츠만 표시 */
 }
 #searchInput{
-    width: 455px;
+    width: 425px;
     height: 30px;
     border-radius: 20px;
     border:1px solid #EBEBEB;
     padding: 0 10px;
     background-color: white;
-}
-#friendSearchButton{
-	margin-right: 100px;
 }
