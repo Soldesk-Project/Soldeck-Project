@@ -51,5 +51,7 @@ public interface MemberMapper {
 	public int deleteEventInfoByMemNo(int mem_no);
 	public int deleteGroupMemByMemNo(int mem_no);
 	public int deleteGroupReqByMemNo(int mem_no);
+	public int deleteSearchLogByMemNo(int mem_no);
+	
 	
 }

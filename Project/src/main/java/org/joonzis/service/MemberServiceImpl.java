@@ -106,6 +106,7 @@ public class MemberServiceImpl implements MemberService{
         mapper.deleteEventInfoByMemNo(mem_no);
         mapper.deleteGroupMemByMemNo(mem_no);
         mapper.deleteGroupReqByMemNo(mem_no);
+        mapper.deleteSearchLogByMemNo(mem_no);
         return mapper.deleteMemberInfo(mem_no) == 1;
 	}
 	
