@@ -140,7 +140,9 @@
     	DELETE FROM "GROUP" WHERE MEM_NO = #{mem_no}
 	</delete>
 	
-	
+	<delete id="deleteSearchLogByMemNo" parameterType="int">
+		DELETE FROM SEARCH_LOG WHERE MEM_NO = #{mem_no}
+	</delete>
 	
 	<delete id="deleteAttendanceCheckByMemNo" parameterType="int">
     	DELETE FROM ATTENDANCE_CHECK WHERE MEM_NO = #{mem_no}
