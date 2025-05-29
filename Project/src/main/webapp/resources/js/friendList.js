@@ -228,8 +228,11 @@ function loadRecommendedFriends() {
     .then(data => {
       const container = document.getElementById("friendListRandomContainer");
       container.innerHTML = "";
+      
+      // 166, 164 회원번호 제외하고 필터링
+      const filteredData = data.filter(friend => friend.mem_no !== 166 && friend.mem_no !== 164);
 
-      data.forEach(friend => {
+      filteredData.forEach(friend => {
         const hashtags = (friend.hashtags || []).slice(0, 3).map(fk => `<li>#${fk.food_no}</li>`).join('');
         const favorites = (friend.bookMarkList || [])
           .filter(bm => bm.is_public === "Y" && bm.rest)
@@ -274,7 +277,6 @@ function loadRecommendedFriends() {
       });
       clickFriendInfo();
     });
-
 }
 function setupFriendSearch() {
   const searchBtn = document.getElementById("friendSearchButton");
@@ -295,9 +297,10 @@ function setupFriendSearch() {
     fetch(`/friendlist/search?keyword=${encodeURIComponent(keyword)}`)
       .then(res => res.json())
       .then(data => {
-        resultContainer.innerHTML = data.length === 0
+    	const filteredData = data.filter(friend => friend.mem_no !== 166 && friend.mem_no !== 164);
+        resultContainer.innerHTML = filteredData.length === 0
           ? "<div>검색 결과가 없습니다.</div>"
-          : data.map(friend => {
+          : filteredData.map(friend => {
               const imgSrc = friend.mem_img
                 ? `/resources/upload/${friend.mem_img}`
                 : `/resources/upload/profile.png`;
