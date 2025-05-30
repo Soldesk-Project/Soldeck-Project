@@ -52,7 +52,7 @@ function loadGame1MyData() {
 				<td>닉네임</td>
 				<td>점수</td>
 			</tr>`;
-		if (data.game_score_1>0 ){
+		if (data.game_score_1>=0 ){
 			ranking+= `
 				<tr>
 					<td>${data.mem_nick }</td>
