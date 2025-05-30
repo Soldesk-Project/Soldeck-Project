@@ -95,7 +95,7 @@ const sliderIndexes = { // 함수 내에서 sliderIndexes를 관리
         friend: 0
     };
 
-function moveSlider(name, direction) {
+function moveSliderIndex(name, direction) {
     if (name === 'image') {
         currentImageIndex += direction;
 
