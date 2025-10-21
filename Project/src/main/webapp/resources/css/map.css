@@ -75,8 +75,7 @@ body {
 #search-boxBtn {
   position: absolute;
   right: 21px;
-  top: 5.5%;
-  transform: translateY(-50%);
+
   background: none;
   border: none;
   cursor: pointer;
@@ -85,6 +84,7 @@ body {
   width: 27px;
   height: 27px;
   filter: brightness(0) saturate(100%) invert(52%) sepia(92%) saturate(2043%) hue-rotate(-8deg) brightness(104%) contrast(104%);
+  margin-top: 15px;
 }
 /* 가게 리스트 스타일 */
 .store-item {

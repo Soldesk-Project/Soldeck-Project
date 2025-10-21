@@ -243,8 +243,8 @@
 	<!-- 오프라인시 그룹 요청 확인 -->
 	<select id="getPendingRequest" resultType="org.joonzis.domain.GroupReqVO">
 	   SELECT  gr.group_no,
-		       gr.mem_no,        -- 요청자 회원번호
-		       g.chat_title,     -- 그룹 이름
+		       gr.mem_no,
+		       g.chat_title,
 		       g.group_img,
 		       gr.req_status
 		FROM group_req gr
