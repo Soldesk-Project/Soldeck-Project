@@ -96,7 +96,7 @@ function initializeChatroom() {
     if (window.ws && window.ws.readyState !== WebSocket.CLOSED) {
       window.ws.close();  // 기존 연결 있으면 닫기
     }
-    window.ws = new WebSocket("wss://52.78.25.188/chat/" + roomNo);
+    window.ws = new WebSocket("ws://52.78.25.188/chat/" + roomNo);
     console.log("WebSocket 생성:", window.ws)
     window.ws.onopen = function(event) {
       const firstMessage = JSON.stringify({ type: "register", mem_no: mem_no });
