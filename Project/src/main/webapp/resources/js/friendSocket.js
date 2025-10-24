@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     if (senderMemNo) {
-        socket = new WebSocket("ws://52.78.25.188/friendSocket");
+        socket = new WebSocket("ws://52.78.25.188:9099/friendSocket");
 
         socket.onopen = () => {
             socket.send(senderMemNo.toString());
